@@ -1,0 +1,31 @@
+{
+  "id": 19822550,
+  "description": "This repository holds the datasets and replicaiton package for the ICSE'20 paper entitled \"Improving the Effectivness of Traceability Link Recovery using Hierarchial Bayesian Networks\"",
+  "name": "ICSE20-Comet-Data-Replication-Package",
+  "name_with_namespace": "SEMERU-Code-Public / Data / ICSE20-Comet-Data-Replication-Package",
+  "path": "icse20-comet-data-replication-package",
+  "path_with_namespace": "SEMERU-Code-Public/Data/icse20-comet-data-replication-package",
+  "created_at": "2020-07-08T00:35:35.531Z",
+  "default_branch": "main",
+  "tag_list": [],
+  "topics": [],
+  "ssh_url_to_repo": "git@gitlab.com:SEMERU-Code-Public/Data/icse20-comet-data-replication-package.git",
+  "http_url_to_repo": "https://gitlab.com/SEMERU-Code-Public/Data/icse20-comet-data-replication-package.git",
+  "web_url": "https://gitlab.com/SEMERU-Code-Public/Data/icse20-comet-data-replication-package",
+  "readme_url": null,
+  "forks_count": 0,
+  "avatar_url": null,
+  "star_count": 0,
+  "last_activity_at": "2020-07-08T00:35:35.531Z",
+  "visibility": "public",
+  "namespace": {
+    "id": 3790837,
+    "name": "Data",
+    "path": "Data",
+    "kind": "group",
+    "full_path": "SEMERU-Code-Public/Data",
+    "parent_id": 1180075,
+    "avatar_url": "/uploads/-/system/group/avatar/3790837/semeru-rounded.png?v=1647295072",
+    "web_url": "https://gitlab.com/groups/SEMERU-Code-Public/Data"
+  }
+}

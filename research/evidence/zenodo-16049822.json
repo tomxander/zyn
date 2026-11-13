@@ -1,0 +1,169 @@
+{
+  "created": "2025-07-18T01:32:22.428558+05:30",
+  "modified": "2025-10-27T17:42:32.81158+05:30",
+  "id": 16049822,
+  "conceptrecid": "15656471",
+  "doi": "10.5281/zenodo.16049822",
+  "conceptdoi": "10.5281/zenodo.15656471",
+  "doi_url": "https://doi.org/10.5281/zenodo.16049822",
+  "metadata": {
+    "title": "QuRE Dataset",
+    "doi": "10.5281/zenodo.16049822",
+    "publication_date": "2025-07-17",
+    "description": "<p>Please cite this dataset as:&nbsp;<strong>Femmer, H., Houdek, F., Unterbusch, M., &amp; Vogelsang, A. (2025, September). Description and Comparative Analysis of QuRE: A New Industrial Requirements Quality Dataset. In <em>2025 IEEE 33rd International Requirements Engineering Conference Workshops (REW)</em> (pp. 23&ndash;29).</strong></p>\n<p>The paper describing the dataset can be found here: https://ieeexplore.ieee.org/abstract/document/11190221</p>\n<p>&nbsp;</p>\n<p>This record contains the dataset (<code>QuRE.csv</code>) and replication package (<code>QuRE-analysis-main.zip</code>) associated with the paper <em>\"Description and Comparative Analysis of QuRE: A New Industrial Requirements Quality Dataset.\"</em></p>\n<p>The QuRE (Quality in Requirements) dataset consists of 2,111 industrial requirements, annotated through a real-world quality review process conducted over several years. The dataset has been used extensively in an industrial context and is now released to the research community to support empirical studies on requirements quality.</p>\n<p>This version (1.0.1) corrects a previous issue in which the file&nbsp;<code>1_QuRE_description.ipynb</code> was empty.</p>\n<p>The accompanying replication package includes descriptive statistics, comparative analyses with existing and synthetic requirements datasets, and additional material to facilitate reuse and validation.</p>",
+    "access_right": "open",
+    "creators": [
+      {
+        "name": "Femmer, Henning",
+        "affiliation": "South Westphalia University of Applied Sciences",
+        "orcid": "0000-0002-6059-4635"
+      },
+      {
+        "name": "Houdek, Frank",
+        "affiliation": "Mercedes-Benz AG Sindelfingen",
+        "orcid": "0000-0003-3132-6698"
+      },
+      {
+        "name": "Unterbusch, Max",
+        "affiliation": "University of Duisburg-Essen"
+      },
+      {
+        "name": "Vogelsang, Andreas",
+        "affiliation": "University of Duisburg-Essen",
+        "orcid": "0000-0003-1041-0815"
+      }
+    ],
+    "keywords": [
+      "Requirements Engineering",
+      "Requirements",
+      "Software Engineering"
+    ],
+    "version": "1.0.1",
+    "language": "eng",
+    "custom": {
+      "code:programmingLanguage": [
+        {
+          "id": "python",
+          "title": {
+            "en": "Python"
+          }
+        }
+      ]
+    },
+    "resource_type": {
+      "title": "Dataset",
+      "type": "dataset"
+    },
+    "meeting": {
+      "title": "2025 IEEE 33rd International Requirements Engineering Conference Workshops",
+      "acronym": "REW",
+      "dates": "1-5 September, 2025",
+      "place": "Valencia, Spain",
+      "url": "https://conf.researchr.org/home/re-2025"
+    },
+    "license": {
+      "id": "cc-by-4.0"
+    },
+    "communities": [
+      {
+        "id": "re-data"
+      }
+    ],
+    "relations": {
+      "version": [
+        {
+          "index": 1,
+          "is_last": true,
+          "parent": {
+            "pid_type": "recid",
+            "pid_value": "15656471"
+          }
+        }
+      ]
+    }
+  },
+  "title": "QuRE Dataset",
+  "links": {
+    "self": "https://zenodo.org/api/records/16049822",
+    "self_html": "https://zenodo.org/records/16049822",
+    "preview_html": "https://zenodo.org/records/16049822?preview=1",
+    "doi": "https://doi.org/10.5281/zenodo.16049822",
+    "self_doi": "https://doi.org/10.5281/zenodo.16049822",
+    "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.16049822",
+    "reserve_doi": "https://zenodo.org/api/records/16049822/draft/pids/doi",
+    "parent": "https://zenodo.org/api/records/15656471",
+    "parent_html": "https://zenodo.org/records/15656471",
+    "parent_doi": "https://doi.org/10.5281/zenodo.15656471",
+    "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.15656471",
+    "self_iiif_manifest": "https://zenodo.org/api/iiif/record:16049822/manifest",
+    "self_iiif_sequence": "https://zenodo.org/api/iiif/record:16049822/sequence/default",
+    "files": "https://zenodo.org/api/records/16049822/files",
+    "media_files": "https://zenodo.org/api/records/16049822/media-files",
+    "latest": "https://zenodo.org/api/records/16049822/versions/latest",
+    "latest_html": "https://zenodo.org/records/16049822/latest",
+    "versions": "https://zenodo.org/api/records/16049822/versions",
+    "draft": "https://zenodo.org/api/records/16049822/draft",
+    "access_links": "https://zenodo.org/api/records/16049822/access/links",
+    "access_grants": "https://zenodo.org/api/records/16049822/access/grants",
+    "access_users": "https://zenodo.org/api/records/16049822/access/users",
+    "access_request": "https://zenodo.org/api/records/16049822/access/request",
+    "access": "https://zenodo.org/api/records/16049822/access",
+    "communities": "https://zenodo.org/api/records/16049822/communities",
+    "communities-suggestions": "https://zenodo.org/api/records/16049822/communities-suggestions",
+    "request_deletion": "https://zenodo.org/api/records/16049822/request-deletion",
+    "file_modification": "https://zenodo.org/api/records/16049822/file-modification",
+    "quota_increase": "https://zenodo.org/api/records/16049822/quota-increase",
+    "requests": "https://zenodo.org/api/records/16049822/requests"
+  },
+  "updated": "2025-10-27T17:42:32.81158+05:30",
+  "recid": "16049822",
+  "revision": 12,
+  "files": [
+    {
+      "id": "7b7cdc10-f9e6-440f-aa82-e77d10df4842",
+      "key": "QuRE.csv",
+      "size": 332428,
+      "checksum": "md5:80565e3b8996d8af1598813aafc87cb3",
+      "links": {
+        "self": "https://zenodo.org/api/records/16049822/files/QuRE.csv/content"
+      }
+    },
+    {
+      "id": "c25b8aeb-0898-4217-bb16-d5e0c238ffe8",
+      "key": "description.md",
+      "size": 534,
+      "checksum": "md5:e7b7a3526c0471fe6853daa13e5613d7",
+      "links": {
+        "self": "https://zenodo.org/api/records/16049822/files/description.md/content"
+      }
+    },
+    {
+      "id": "cb2edb6b-ada4-4731-8572-2700de9b752b",
+      "key": "QuRE-Analysis-main.zip",
+      "size": 7165040,
+      "checksum": "md5:359030500a5d12a0b2ef8e1eb40f426b",
+      "links": {
+        "self": "https://zenodo.org/api/records/16049822/files/QuRE-Analysis-main.zip/content"
+      }
+    }
+  ],
+  "swh": {},
+  "owners": [
+    {
+      "id": "1342568"
+    }
+  ],
+  "status": "published",
+  "stats": {
+    "downloads": 1458,
+    "unique_downloads": 1305,
+    "views": 2097,
+    "unique_views": 1884,
+    "version_downloads": 1366,
+    "version_unique_downloads": 1216,
+    "version_unique_views": 1608,
+    "version_views": 1812
+  },
+  "state": "done",
+  "submitted": true
+}

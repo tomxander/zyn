@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T16:46:43+00:00",
+  "title": "Design System: Zyn",
+  "extensions": {
+    "colorMeta": {
+      "z0": {
+        "role": "neutral",
+        "displayName": "Zone 0 Ink",
+        "canonical": "#121211",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Text, rules, solid fills, primary button, open run, current tab."
+      },
+      "z1": {
+        "role": "neutral",
+        "displayName": "Zone I",
+        "canonical": "#222220",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Primary button on hover; wedge cell 9."
+      },
+      "z2": {
+        "role": "neutral",
+        "displayName": "Zone II",
+        "canonical": "#363633",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Wedge cell 8; soft rules in dark."
+      },
+      "z3": {
+        "role": "neutral",
+        "displayName": "Zone III",
+        "canonical": "#4C4C48",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Secondary text (light)."
+      },
+      "z4": {
+        "role": "neutral",
+        "displayName": "Zone IV",
+        "canonical": "#63635E",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Legends (light); tracing overlay rule."
+      },
+      "z5": {
+        "role": "neutral",
+        "displayName": "Zone V",
+        "canonical": "#7C7C76",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Muted status mark."
+      },
+      "z6": {
+        "role": "neutral",
+        "displayName": "Zone VI",
+        "canonical": "#97968F",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Scrollbar; wedge cell 4."
+      },
+      "z7": {
+        "role": "neutral",
+        "displayName": "Zone VII",
+        "canonical": "#B4B3AC",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Legend on ink cells; legends and rules in dark."
+      },
+      "z8": {
+        "role": "neutral",
+        "displayName": "Zone VIII",
+        "canonical": "#D1D0C9",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Soft inner rules, tracing lines; secondary text in dark."
+      },
+      "z9": {
+        "role": "neutral",
+        "displayName": "Zone IX",
+        "canonical": "#E6E4DE",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Hover, sheet beneath (light); first decided wedge cell."
+      },
+      "z10": {
+        "role": "neutral",
+        "displayName": "Zone X Paper",
+        "canonical": "#F7F6F2",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Ink in dark."
+      },
+      "light-table": {
+        "role": "neutral",
+        "displayName": "Light Table",
+        "canonical": "oklch(93.7% 0.008 91.5)",
+        "dark": "#141413",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Page ground."
+      },
+      "record-sheet": {
+        "role": "neutral",
+        "displayName": "Record Sheet",
+        "canonical": "oklch(98.5% 0.004 91.4)",
+        "dark": "#1C1C1A",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Every sheet, sidebar, inputs, ruled rows, drawers."
+      },
+      "filtration-blue": {
+        "role": "primary",
+        "displayName": "Filtration Blue",
+        "canonical": "oklch(51.2% 0.181 260.5)",
+        "dark": "#5C9DFF",
+        "tonalRamp": [
+          "oklch(15% 0.181 260.5)",
+          "oklch(25% 0.181 260.5)",
+          "oklch(35% 0.181 260.5)",
+          "oklch(45% 0.181 260.5)",
+          "oklch(55% 0.181 260.5)",
+          "oklch(65% 0.181 260.5)",
+          "oklch(80% 0.181 260.5)",
+          "oklch(95% 0.181 260.5)"
+        ],
+        "purpose": "Primary key cell, focus ring, current tab square, switch on. Nowhere else."
+      },
+      "on-accent": {
+        "role": "primary",
+        "displayName": "On Accent",
+        "canonical": "#FFFFFF",
+        "dark": "#07111F",
+        "tonalRamp": [
+          "#121211",
+          "#222220",
+          "#4C4C48",
+          "#63635E",
+          "#7C7C76",
+          "#B4B3AC",
+          "#E6E4DE",
+          "#F7F6F2"
+        ],
+        "purpose": "Key letter on the blue cell."
+      },
+      "ok": {
+        "role": "status",
+        "displayName": "Ok Mark",
+        "canonical": "oklch(51.3% 0.115 156.8)",
+        "dark": "#3DD68C",
+        "tonalRamp": [
+          "oklch(15% 0.115 156.8)",
+          "oklch(25% 0.115 156.8)",
+          "oklch(35% 0.115 156.8)",
+          "oklch(45% 0.115 156.8)",
+          "oklch(55% 0.115 156.8)",
+          "oklch(65% 0.115 156.8)",
+          "oklch(80% 0.115 156.8)",
+          "oklch(95% 0.115 156.8)"
+        ],
+        "purpose": "Approved or passed mark only."
+      },
+      "warn": {
+        "role": "status",
+        "displayName": "Warn Mark",
+        "canonical": "oklch(52.4% 0.127 54.5)",
+        "dark": "#F5A04D",
+        "tonalRamp": [
+          "oklch(15% 0.127 54.5)",
+          "oklch(25% 0.127 54.5)",
+          "oklch(35% 0.127 54.5)",
+          "oklch(45% 0.127 54.5)",
+          "oklch(55% 0.127 54.5)",
+          "oklch(65% 0.127 54.5)",
+          "oklch(80% 0.127 54.5)",
+          "oklch(95% 0.127 54.5)"
+        ],
+        "purpose": "Needs a person mark only."
+      },
+      "info": {
+        "role": "status",
+        "displayName": "Info Mark",
+        "canonical": "oklch(51.7% 0.148 253.6)",
+        "dark": "#5CB1FF",
+        "tonalRamp": [
+          "oklch(15% 0.148 253.6)",
+          "oklch(25% 0.148 253.6)",
+          "oklch(35% 0.148 253.6)",
+          "oklch(45% 0.148 253.6)",
+          "oklch(55% 0.148 253.6)",
+          "oklch(65% 0.148 253.6)",
+          "oklch(80% 0.148 253.6)",
+          "oklch(95% 0.148 253.6)"
+        ],
+        "purpose": "Edited or advice mark only."
+      },
+      "bad": {
+        "role": "status",
+        "displayName": "Bad Mark",
+        "canonical": "oklch(50.1% 0.178 28.7)",
+        "dark": "#FF7A70",
+        "tonalRamp": [
+          "oklch(15% 0.178 28.7)",
+          "oklch(25% 0.178 28.7)",
+          "oklch(35% 0.178 28.7)",
+          "oklch(45% 0.178 28.7)",
+          "oklch(55% 0.178 28.7)",
+          "oklch(65% 0.178 28.7)",
+          "oklch(80% 0.178 28.7)",
+          "oklch(95% 0.178 28.7)"
+        ],
+        "purpose": "Broken or conflict mark only."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The run title only, uppercase, max 32ch."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section, drawer and empty-state titles, uppercase."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Item text on the current sheet; the largest text on a sheet."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Item text and running text."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Quotes, messages, captions, inputs, provenance values."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Legends, table headers, tags, filter label cells; uppercase by style."
+      },
+      "label-lg": {
+        "displayName": "Label large",
+        "purpose": "Buttons, tabs, filters, status and check legends; uppercase by style."
+      },
+      "mono-id": {
+        "displayName": "Mono ID",
+        "purpose": "Item IDs."
+      },
+      "mono-figure": {
+        "displayName": "Mono figure",
+        "purpose": "Stat figures in the counts row."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 10px 28px -12px rgba(18,18,17,.30), 0 2px 4px rgba(18,18,17,.06)",
+        "dark": "0 12px 32px -12px rgba(0,0,0,.7), 0 2px 4px rgba(0,0,0,.4)",
+        "purpose": "The current sheet only."
+      },
+      {
+        "name": "float",
+        "value": "0 18px 48px -16px rgba(18,18,17,.38), 0 2px 6px rgba(18,18,17,.08)",
+        "dark": "0 20px 52px -16px rgba(0,0,0,.8)",
+        "purpose": "Drawers, palette, select menus, toasts."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.2, 0, 0, 1)",
+        "purpose": "Every CSS transition; no bounce."
+      },
+      {
+        "name": "fast",
+        "value": "120ms",
+        "purpose": "Colour changes, press."
+      },
+      {
+        "name": "base",
+        "value": "180ms",
+        "purpose": "The current sheet lifting, switch thumb."
+      },
+      {
+        "name": "slow",
+        "value": "260ms",
+        "purpose": "Theme change, wedge filling, sheet developing in."
+      },
+      {
+        "name": "loop",
+        "value": "1600ms",
+        "purpose": "One loader cycle."
+      },
+      {
+        "name": "instant",
+        "value": "0.01ms",
+        "purpose": "All durations under reduced motion."
+      },
+      {
+        "name": "press",
+        "value": "scale 0.98",
+        "purpose": "Buttons while pressed."
+      },
+      {
+        "name": "spring-layout",
+        "value": "spring stiffness 420, damping 40, mass 0.8",
+        "purpose": "Sheet reflow when filters change (60 sheets or fewer), tab and run highlights."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "860px",
+        "purpose": "At and below: one column, sidebar stacks above the record."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one decision that moves the item forward: a solid ink bar with its key letter in the blue cell.",
+      "html": "<button class=\"ds-btn-primary\" data-key=\"a\">Approve</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; height: 34px; min-width: 132px; padding: 0 0 0 12px; gap: 6px; background: var(--zyn-ink, #121211); color: var(--zyn-sheet, #FBFAF7); border: 1.5px solid var(--zyn-ink, #121211); border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 500; font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; transition: background-color var(--zyn-fast, 120ms) var(--zyn-ease, cubic-bezier(.2,0,0,1)), scale var(--zyn-fast, 120ms) var(--zyn-ease, cubic-bezier(.2,0,0,1)); } .ds-btn-primary::after { content: attr(data-key); align-self: stretch; display: grid; place-items: center; min-width: 30px; margin-left: auto; background: var(--zyn-accent, #1F5FCC); color: var(--zyn-on-accent, #FFFFFF); font-family: var(--zyn-font-mono, 'Cascadia Mono', Consolas, monospace); font-variant-numeric: tabular-nums; letter-spacing: 0; } .ds-btn-primary:hover { background: var(--zyn-z1, #222220); } .ds-btn-primary:active { scale: .98; } .ds-btn-primary:focus-visible { outline: 2px solid var(--zyn-ring, #1F5FCC); outline-offset: 2px; }"
+    },
+    {
+      "name": "Plain Button",
+      "kind": "button",
+      "refersTo": "button-plain",
+      "description": "The opposite decision and stage actions: ruled, square, with a small key box when keyed.",
+      "html": "<button class=\"ds-btn\" data-key=\"r\">Reject</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; min-width: 132px; padding: 0 12px; background: var(--zyn-sheet, #FBFAF7); color: var(--zyn-ink, #121211); border: 1.5px solid var(--zyn-rule, #121211); border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 500; font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; transition: background-color var(--zyn-fast, 120ms) var(--zyn-ease, cubic-bezier(.2,0,0,1)), scale var(--zyn-fast, 120ms) var(--zyn-ease, cubic-bezier(.2,0,0,1)); } .ds-btn::after { content: attr(data-key); font-family: var(--zyn-font-mono, 'Cascadia Mono', Consolas, monospace); font-variant-numeric: tabular-nums; text-transform: uppercase; letter-spacing: 0; font-size: 11px; color: var(--zyn-ink-3, #63635E); border: 1px solid var(--zyn-rule-soft, #D1D0C9); padding: 0 4px; margin-left: 4px; line-height: 1.5; } .ds-btn:hover { background-color: var(--zyn-hover, #E6E4DE); } .ds-btn:active { scale: .98; } .ds-btn:focus-visible { outline: 2px solid var(--zyn-ring, #1F5FCC); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Low-weight actions: no rule or fill; underlines on hover.",
+      "html": "<button class=\"ds-btn-ghost\">Show more</button>",
+      "css": ".ds-btn-ghost { height: 34px; padding: 0 12px; background: transparent; color: var(--zyn-ink, #121211); border: 1.5px solid transparent; border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 500; font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-btn-ghost:hover { text-decoration: underline; text-underline-offset: 4px; } .ds-btn-ghost:focus-visible { outline: 2px solid var(--zyn-ring, #1F5FCC); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Square ruled field with a legend above; focus is a 2px blue ring.",
+      "html": "<label class=\"ds-field\"><span>Reviewer</span><input class=\"ds-input\" placeholder=\"Your name\"></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 4px; } .ds-field > span { font-size: 11px; color: var(--zyn-ink-3, #63635E); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-input { min-height: 34px; padding: 6px 12px; background: var(--zyn-sheet, #FBFAF7); color: var(--zyn-ink, #121211); border: 1.5px solid var(--zyn-rule, #121211); border-radius: 0; font-family: var(--zyn-font-body, Bahnschrift, 'Segoe UI', system-ui, sans-serif); font-size: 13.5px; transition: box-shadow var(--zyn-fast, 120ms) var(--zyn-ease, cubic-bezier(.2,0,0,1)); } .ds-input::placeholder { color: var(--zyn-ink-3, #63635E); } .ds-input:focus { outline: none; box-shadow: 0 0 0 2px var(--zyn-ring, #1F5FCC); }"
+    },
+    {
+      "name": "Tab Bar",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Segmented ruled bar; the current segment is solid ink with a blue square.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab\" aria-selected=\"true\">Items <i>42</i></button><button class=\"ds-tab\">Checks <i>7</i></button><button class=\"ds-tab\">Export</button></div>",
+      "css": ".ds-tabs { display: flex; border: 1.5px solid var(--zyn-rule, #121211); background: var(--zyn-sheet, #FBFAF7); } .ds-tab { flex: 1 0 auto; min-height: 34px; padding: 6px 16px; border: 0; border-right: 1px solid var(--zyn-rule-soft, #D1D0C9); background: none; cursor: pointer; color: var(--zyn-ink-2, #4C4C48); font-size: 12px; font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; transition: color var(--zyn-fast, 120ms) var(--zyn-ease, cubic-bezier(.2,0,0,1)); } .ds-tab:last-child { border-right: 0; } .ds-tab i { font-style: normal; font-family: var(--zyn-font-mono, 'Cascadia Mono', Consolas, monospace); font-variant-numeric: tabular-nums; font-size: 11px; margin-left: 6px; letter-spacing: 0; } .ds-tab:hover:not([aria-selected]) { background-color: var(--zyn-hover, #E6E4DE); } .ds-tab[aria-selected] { background: var(--zyn-ink, #121211); color: var(--zyn-sheet, #FBFAF7); font-weight: 700; } .ds-tab[aria-selected]::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 6px; vertical-align: 1px; background: var(--zyn-accent, #1F5FCC); } .ds-tab:focus-visible { outline: 2px solid var(--zyn-ring, #1F5FCC); outline-offset: -4px; }"
+    },
+    {
+      "name": "Status Marks",
+      "kind": "chip",
+      "refersTo": "status-mark",
+      "description": "An 11px square plus a legend: filled approved, dotted open, half edited, struck closed, cross-hatched broken.",
+      "html": "<div class=\"ds-marks\"><span class=\"ds-mark ok\">Approved</span><span class=\"ds-mark warn\">Open</span><span class=\"ds-mark info\">Edited</span><span class=\"ds-mark muted\">Closed</span><span class=\"ds-mark bad\">Broken</span></div>",
+      "css": ".ds-marks { display: flex; flex-wrap: wrap; gap: 16px; } .ds-mark { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; line-height: 1; color: var(--zyn-ink, #121211); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-mark::before { content: ''; width: 11px; height: 11px; border: 1.5px solid currentColor; } .ds-mark.ok::before { background: var(--zyn-ok, #157A4B); border-color: var(--zyn-ok, #157A4B); } .ds-mark.warn::before { border-style: dotted; border-color: var(--zyn-warn, #A0520A); } .ds-mark.info::before { border-color: var(--zyn-info, #1868BA); background: linear-gradient(135deg, var(--zyn-info, #1868BA) 50%, transparent 50%); } .ds-mark.muted { color: var(--zyn-ink-3, #63635E); } .ds-mark.muted::before { border-color: var(--zyn-muted, #7C7C76); background: linear-gradient(to top right, transparent calc(50% - 1px), var(--zyn-muted, #7C7C76) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)); } .ds-mark.bad::before { border-color: var(--zyn-bad, #B3261E); background-image: var(--zyn-crosshatch, repeating-linear-gradient(135deg, rgba(18,18,17,.34) 0 1px, transparent 1px 6px), repeating-linear-gradient(45deg, rgba(18,18,17,.34) 0 1px, transparent 1px 6px)); }"
+    },
+    {
+      "name": "Filter Strip",
+      "kind": "chip",
+      "refersTo": "filter",
+      "description": "Ruled legend strip with an ink label cell; on is a solid square, off a dotted one.",
+      "html": "<div class=\"ds-filters\"><span class=\"ds-filter-label\">Status</span><button class=\"ds-filter\" aria-pressed=\"true\">Open <i>407</i></button><button class=\"ds-filter\" aria-pressed=\"false\">Confirmed <i>0</i></button></div>",
+      "css": ".ds-filters { display: inline-flex; align-items: stretch; border: 1.5px solid var(--zyn-rule, #121211); background: var(--zyn-sheet, #FBFAF7); } .ds-filter-label { display: flex; align-items: center; padding: 0 8px; font-size: 11px; color: var(--zyn-sheet, #FBFAF7); background: var(--zyn-ink, #121211); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-filter { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 8px; border: 0; border-left: 1px solid var(--zyn-rule-soft, #D1D0C9); background: transparent; cursor: pointer; font-size: 12px; color: var(--zyn-ink, #121211); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-filter-label + .ds-filter { border-left: 0; } .ds-filter::before { content: ''; width: 9px; height: 9px; border: 1.5px dotted var(--zyn-ink-3, #63635E); } .ds-filter[aria-pressed='true']::before { background: var(--zyn-ink, #121211); border: 1.5px solid var(--zyn-ink, #121211); } .ds-filter[aria-pressed='false'] { color: var(--zyn-ink-3, #63635E); } .ds-filter:hover { background-color: var(--zyn-hover, #E6E4DE); } .ds-filter i { font-style: normal; font-family: var(--zyn-font-mono, 'Cascadia Mono', Consolas, monospace); font-variant-numeric: tabular-nums; font-size: 11px; color: var(--zyn-ink-3, #63635E); letter-spacing: 0; } .ds-filter:focus-visible { outline: 2px solid var(--zyn-ring, #1F5FCC); outline-offset: 2px; }"
+    },
+    {
+      "name": "Current Record Sheet",
+      "kind": "card",
+      "refersTo": "card-current",
+      "description": "The lifted sheet: 2px rule, lift shadow, the sheet beneath at its edge, source on a tracing overlay, hatch over the evidence.",
+      "html": "<div class=\"ds-stack\"><article class=\"ds-sheet\"><div class=\"ds-head\"><b>REQ-PWR-001</b><span>V1</span><span>Performance</span></div><p class=\"ds-text\">The cluster shall enter the ACTIVE state within <mark>1.5 s</mark> of IGN changing from OFF to ON.</p><p class=\"ds-quote\">Source: \"3.1 The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.\"</p></article><article class=\"ds-sheet ds-collapsed\"><div class=\"ds-head\"><b>REQ-PWR-002</b><span>V2</span></div></article></div>",
+      "css": ".ds-stack { display: flex; flex-direction: column; padding: 8px 12px 8px 4px; } .ds-sheet { position: relative; left: -3px; margin: 0 0 16px; padding: 24px 32px; background: var(--zyn-sheet, #FBFAF7); color: var(--zyn-ink, #121211); border: 2px solid var(--zyn-rule, #121211); box-shadow: var(--zyn-shadow-lift, 0 10px 28px -12px rgba(18,18,17,.30), 0 2px 4px rgba(18,18,17,.06)); font-family: var(--zyn-font-body, Bahnschrift, 'Segoe UI', system-ui, sans-serif); } .ds-sheet::before { content: ''; position: absolute; inset: 6px -7px -7px 6px; z-index: -1; background: var(--zyn-sheet-under, #E6E4DE); border: 1px solid var(--zyn-rule, #121211); } .ds-sheet.ds-collapsed { left: 0; margin: 0; padding: 8px 16px; border-width: 1.5px; box-shadow: none; cursor: pointer; } .ds-sheet.ds-collapsed::before { display: none; } .ds-sheet.ds-collapsed:hover { background-color: var(--zyn-hover, #E6E4DE); } .ds-head { display: flex; gap: 12px; align-items: center; } .ds-head b { font-family: var(--zyn-font-mono, 'Cascadia Mono', Consolas, monospace); font-variant-numeric: tabular-nums; font-size: 13.5px; } .ds-head span { font-size: 11px; color: var(--zyn-ink-3, #63635E); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-text { margin: 8px 0 0; font-size: 18px; line-height: 1.5; max-width: 78ch; } .ds-text mark { background: var(--zyn-hatch-dense, repeating-linear-gradient(135deg, rgba(18,18,17,.34) 0 1px, transparent 1px 3.5px)); color: inherit; padding: 0 2px; box-shadow: inset 0 -1px 0 var(--zyn-ink, #121211); } .ds-quote { margin: 8px 0 0; padding: 8px 12px; font-size: 13.5px; line-height: 1.55; color: var(--zyn-ink-2, #4C4C48); background: var(--zyn-tracing, rgba(251,250,247,.78)); border: 1px solid var(--zyn-ink-3, #63635E); rotate: -0.25deg; transform-origin: left center; }"
+    },
+    {
+      "name": "Counts Row With Wedge",
+      "kind": "custom",
+      "refersTo": "stats",
+      "description": "One ruled row of counts in tabular mono and the eleven-step wedge: hatched undecided, decided filling z9 to z0.",
+      "html": "<div class=\"ds-stats\"><div class=\"ds-stat\"><span>Approved</span><b>38</b></div><div class=\"ds-stat\"><span>Rejected</span><b>10</b></div><div class=\"ds-stat\"><span>Proposed</span><b>0</b></div><div class=\"ds-wedge-cell\"><span>Decided 48 of 120</span><div class=\"ds-wedge\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>",
+      "css": ".ds-stats { display: flex; flex-wrap: wrap; border: 1.5px solid var(--zyn-rule, #121211); background: var(--zyn-sheet, #FBFAF7); color: var(--zyn-ink, #121211); } .ds-stat { padding: 6px 16px; min-width: 104px; border-right: 1px solid var(--zyn-rule-soft, #D1D0C9); } .ds-stat span, .ds-wedge-cell span { display: block; font-size: 11px; color: var(--zyn-ink-3, #63635E); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; } .ds-stat b { display: block; font-family: var(--zyn-font-mono, 'Cascadia Mono', Consolas, monospace); font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 400; line-height: 1.2; } .ds-wedge-cell { flex: 1; min-width: 220px; display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 6px 16px; } .ds-wedge { display: grid; grid-template-columns: repeat(11, 1fr); height: 14px; border: 1px solid var(--zyn-rule, #121211); } .ds-wedge i { border-right: 1px solid var(--zyn-rule-soft, #D1D0C9); background: var(--zyn-sheet, #FBFAF7) var(--zyn-hatch, repeating-linear-gradient(135deg, rgba(18,18,17,.34) 0 1px, transparent 1px 6px)); } .ds-wedge i:last-child { border-right: 0; } .ds-wedge i.on { background-image: none; box-shadow: inset 0 0 0 1px var(--zyn-ink, #121211); } .ds-wedge i.on:nth-child(1) { background-color: var(--zyn-z9, #E6E4DE); } .ds-wedge i.on:nth-child(2) { background-color: var(--zyn-z8, #D1D0C9); } .ds-wedge i.on:nth-child(3) { background-color: var(--zyn-z7, #B4B3AC); } .ds-wedge i.on:nth-child(4) { background-color: var(--zyn-z6, #97968F); }"
+    },
+    {
+      "name": "Message",
+      "kind": "custom",
+      "refersTo": "msg",
+      "description": "A ruled note whose square mark says the kind and whose legend says who said it.",
+      "html": "<div class=\"ds-msg bad\"><span class=\"ds-msg-mark\"></span><div><span class=\"ds-who\">Code check</span>Value not found in the source.</div></div><div class=\"ds-msg warn\"><span class=\"ds-msg-mark\"></span><div><span class=\"ds-who\">AI reviewer (advice)</span>No threshold for what counts as too high.</div></div>",
+      "css": ".ds-msg { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 8px; padding: 8px 12px; font-size: 13.5px; line-height: 1.5; border: 1px solid var(--zyn-rule, #121211); background: var(--zyn-sheet, #FBFAF7); color: var(--zyn-ink, #121211); font-family: var(--zyn-font-body, Bahnschrift, 'Segoe UI', system-ui, sans-serif); } .ds-msg.bad { border-width: 1.5px; } .ds-msg-mark { width: 18px; height: 18px; flex: none; margin-top: 1px; border: 1px solid var(--zyn-rule, #121211); } .ds-msg.bad .ds-msg-mark { background-image: var(--zyn-crosshatch, repeating-linear-gradient(135deg, rgba(18,18,17,.34) 0 1px, transparent 1px 6px), repeating-linear-gradient(45deg, rgba(18,18,17,.34) 0 1px, transparent 1px 6px)); } .ds-msg.warn .ds-msg-mark { background-image: var(--zyn-hatch, repeating-linear-gradient(135deg, rgba(18,18,17,.34) 0 1px, transparent 1px 6px)); } .ds-who { display: block; margin-bottom: 2px; font-size: 11px; color: var(--zyn-ink-3, #63635E); font-family: var(--zyn-font-display, Bahnschrift, 'Arial Narrow', sans-serif); font-stretch: 75%; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: .09em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Exposure Record",
+    "overview": "Review as a darkroom printer's record. Each item is a ruled record sheet lying on a warm light table. What needs a person is hatched over the exact words it concerns; where code and the AI reviewer disagree the hatches cross. The reviewer reads the current sheet top to bottom, decides with one key, and the next sheet lifts into place. Nothing is erased: undo is a new record.\n\nThe world is near-monochrome ink and paper on an eleven-zone grey ramp, with one blue (the record's filtration colour) reserved for the primary key cell, the focus ring, the current tab and a switch that is on. Line work carries meaning that colour elsewhere would carry: rules, hatching, dotted outlines and solid ink. Density is that of a working record, not a spreadsheet: sheets collapse to their head line except the current one, which opens wide.\n\nLight (a daylit light table) is the default for a bright room; the dark theme (the darkroom) inverts the roles on the same structure. Everything runs offline: the faces are Bahnschrift and Cascadia Mono, both installed with Windows.",
+    "keyCharacteristics": [
+      "Square corners everywhere; ink rules at 1.5px around boxes, 1px soft rules inside them.",
+      "Tall condensed DIN capitals for titles and every legend; Bahnschrift for reading; tabular mono for IDs and figures.",
+      "Hatching as the only warning language; status colour only on small square marks.",
+      "One lifted sheet at a time, with the sheet beneath showing at its edge.",
+      "Damped, short motion with no bounce; reduced motion respected everywhere."
+    ],
+    "rules": [
+      {
+        "name": "The One Filtration Rule",
+        "body": "Blue marks only the primary key cell, focus, the current tab and a switch that is on. If a second blue thing appears on a screen, it is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mark Not Fill Rule",
+        "body": "Status colour lives on a small square mark and is always paired with a written legend. A coloured background, banner or tinted chip is not part of this world.",
+        "section": "colors"
+      },
+      {
+        "name": "The Legend Voice Rule",
+        "body": "Every label is the condensed display face, uppercase by style and tracked .09em. Copy is written in sentence case in the source; capitals are never typed.",
+        "section": "typography"
+      },
+      {
+        "name": "The Item Is Largest Rule",
+        "body": "On a sheet, the item text outranks its ID, legends and messages. Nothing on the sheet is set larger.",
+        "section": "typography"
+      },
+      {
+        "name": "The Shared Edge Rule",
+        "body": "Related cells sit inside one ruled box and share their rules. Separate floating boxes with gaps between them are not used for counts, provenance or tabs.",
+        "section": "layout"
+      },
+      {
+        "name": "The One Lift Rule",
+        "body": "Only one sheet is lifted at a time, and it is the one the keys act on. Hover never lifts; it steps the background one zone (z9).",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Corner Rule",
+        "body": "No radius anywhere, including library components restyled into the world.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Hatch Grammar Rule",
+        "body": "Single hatch: needs a person. Cross-hatch: broken, or code and AI in conflict. Dotted outline: open, or advice. Solid ink: decided or passed. The meaning is always also written in words. Hatching is never decoration and never a hover state.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do take every colour, font and duration from `tokens.css` by `var(--zyn-...)`; app.css and components hold no literal colour values.",
+      "Do draw status as a square mark plus words, and warnings as hatching over the exact words concerned.",
+      "Do keep one primary per sheet or tab, with its key letter in the blue cell, and keep `data-card` on sheets and `data-key` on the buttons the keys press.",
+      "Do set legends in the condensed display face, uppercase by style, tracked .09em, from sentence-case source text.",
+      "Do put related cells in one ruled box with shared soft rules.",
+      "Do use hover as one ramp step (z9 light, #2A2A27 dark) and keep a disabled control visible with its reason.",
+      "Do check light and dark, desktop and phone width, with motion settled, before calling a screen done."
+    ],
+    "donts": [
+      "Don't use rounded corners, pills, floating rounded cards or stat tiles.",
+      "Don't use colour as a fill, banner or tinted block for status; status colour stays on marks.",
+      "Don't use the blue for anything beyond the key cell, focus, the current tab and a switch that is on.",
+      "Don't use hatching as hover or decoration; it always means a person is needed or something is broken.",
+      "Don't put a label above the page title; the tool name is the first cell of the provenance row.",
+      "Don't set animation timings outside `motion.ts`, use `transition: all`, or loop anything except loaders.",
+      "Don't write em dashes, \"please\" or exclamation marks in copy."
+    ]
+  }
+}

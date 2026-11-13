@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checks": [
+    "29 icons and 5 marks",
+    "Local fonts loaded",
+    "Local SVG sheet previews loaded",
+    "Dark, monochrome and grid controls",
+    "Search and search reset",
+    "16 px inspection",
+    "390 px viewport without horizontal overflow",
+    "No browser errors"
+  ],
+  "route_measurements": [
+    {
+      "length": 61.45584487915039,
+      "gap": "26.97792206135785 7.5 1000 1000"
+    },
+    {
+      "length": 85.45584869384766,
+      "gap": "49.220562748477136 7.5 1000 1000"
+    },
+    {
+      "length": 74.48528289794922,
+      "gap": "66.98528137423858 7.5 1000 1000"
+    },
+    {
+      "length": 78,
+      "gap": "65.25 7.5 1000 1000"
+    },
+    {
+      "length": 84,
+      "gap": "23.25 7.5 1000 1000"
+    }
+  ]
+}

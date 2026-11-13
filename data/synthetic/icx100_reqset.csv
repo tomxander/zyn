@@ -1,0 +1,47 @@
+ID,Section,Requirement
+G01,3,The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.
+G02,3,"When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s."
+G03,3,"After displaying the goodbye screen, the cluster shall enter the SLEEP state."
+G04,3,"In the SLEEP state, the cluster shall draw no more than 0.1 mA from the battery supply."
+G05,3,The cluster should wake up quickly when a door is opened.
+G06,4,"The cluster shall display vehicle speed received in the VehicleSpeed signal, in km/h or mph according to the unit setting."
+G07,4,The displayed speed shall never be lower than the actual vehicle speed.
+G08,4,The displayed speed shall not exceed the actual vehicle speed by more than 10 percent plus 4 km/h.
+G09,4,The displayed speed value shall be updated at least every 100 ms.
+G10,5,The cluster shall display engine speed from the EngineSpeed signal as a needle on a scale from 0 to 8000 rpm.
+G11,5,The red zone of the tachometer scale shall start at the value given by the configuration parameter RedlineRpm.
+G12,6,The cluster shall display the fuel level as a bar graph with eight segments.
+G13,6,The fuel level display shall be filtered so that it does not fluctuate when the vehicle is driving on an incline.
+G14,6,"When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+G15,7,"When BrakeWarn = 1, the cluster shall show the red brake system warning telltale steady on."
+G16,7,"When BeltUnfastened = 1 and vehicle speed is above 20 km/h, the cluster shall flash the red seat belt reminder telltale at 1 Hz."
+G17,7,"When FuelLow = 1, the cluster shall show the amber low fuel telltale steady on."
+G18,7,"When MIL = 1, the cluster shall show the amber engine malfunction telltale steady on."
+G19,7,"At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+G20,7,Red telltales shall have priority over amber telltales.
+G21,7,A telltale whose input signal has not been received for more than 500 ms shall be lit.
+G22,7,"When a telltale input signal has not been received for more than 500 ms, a DTC shall be stored."
+G23,8,The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.
+G24,8,The chime volume should be adequate for all driving conditions.
+G25,8,"If two chimes are requested at the same time, the cluster shall play the chime with the higher priority as defined in the chime priority list."
+G26,9,The driver shall be able to scroll through the trip computer pages using the up and down buttons on the left steering wheel switch.
+G27,9,A long press of the OK button for more than 2 s shall reset the selected trip counter.
+G28,9,The cluster may offer a menu to change the display theme.
+G29,10,The cluster shall communicate on the powertrain CAN bus at a bit rate of 500 kbit/s.
+G30,10,"If a CAN signal is not received within three times its cycle time, the cluster shall treat the signal as invalid."
+G31,10,The cluster shall transmit the ClusterStatus message every 100 ms.
+G32,10,"After a bus-off event, the cluster shall attempt recovery as specified in the network management document."
+G33,11,The cluster shall store a DTC when the display backlight driver reports a fault.
+G34,11,Stored DTCs shall be readable by a diagnostic tester.
+G35,11,The cluster shall perform a display self-test at startup.
+G36,11,The cluster shall report the result of the display self-test.
+G37,12,The cluster software shall be updatable through the diagnostic connector.
+G38,12,A software update shall be accepted only if its digital signature is valid.
+G39,12,"If an update fails, the cluster shall return to the previously installed software version."
+G40,13,Diagnostic services that write memory shall require successful security access authentication.
+G41,13,The cluster shall protect cryptographic keys appropriately.
+G42,14,The cluster shall detect a mismatch between the displayed and requested state of the brake system warning telltale within 200 ms.
+G43,14,"If a brake system warning telltale mismatch is detected, the cluster shall display a text warning."
+G44,15,The cluster shall display the first frame within 2 s of power-up.
+G45,15,The graphics shall run smoothly at all times.
+G46,15,CPU load shall not exceed 70 percent averaged over any 1 s window.

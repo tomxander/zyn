@@ -1,0 +1,333 @@
+{
+  "benchmark": "S1 planted mistakes",
+  "at": "2026-11-14T00:58:05",
+  "requirements": {
+    "icx": {
+      "label": "ICX-100 requirement set (synthetic, 46)",
+      "clean_items": 46,
+      "false_alarms": 0,
+      "false_alarm_categories": {},
+      "kinds": {
+        "changed_number": {
+          "what": "A number in the requirement changed (10 becomes 20)",
+          "expected_check": "invented_value",
+          "planted": 20,
+          "caught": 19,
+          "flagged_any": 19,
+          "example": {
+            "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+            "after": "The cluster shall enter the ACTIVE state within 3 s of IGN changing from OFF to ON.",
+            "flagged": [
+              "invented_value"
+            ]
+          }
+        },
+        "added_number": {
+          "what": "A timing value added that the source never gives",
+          "expected_check": "invented_value",
+          "planted": 46,
+          "caught": 44,
+          "flagged_any": 46,
+          "example": {
+            "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+            "after": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON within 250 ms.",
+            "flagged": [
+              "invented_value"
+            ]
+          }
+        },
+        "weakened_modal": {
+          "what": "'shall' weakened to 'should'",
+          "expected_check": "modal_changed",
+          "planted": 43,
+          "caught": 39,
+          "flagged_any": 39,
+          "example": {
+            "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+            "after": "The cluster should enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+            "flagged": [
+              "modal_changed"
+            ]
+          }
+        },
+        "fabricated": {
+          "what": "A requirement the source does not contain",
+          "expected_check": "ungrounded",
+          "planted": 4,
+          "caught": 4,
+          "flagged_any": 4,
+          "example": {
+            "before": null,
+            "after": "The cluster shall support wireless phone charging at 15 W.",
+            "flagged": [
+              "ungrounded"
+            ]
+          }
+        },
+        "swapped_term": {
+          "what": "A signal or status name swapped for another one from the same document",
+          "expected_check": null,
+          "planted": 12,
+          "caught": 1,
+          "flagged_any": 1,
+          "example": {
+            "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+            "after": "The cluster shall enter the BeltUnfastened state within 1.5 s of IGN changing from OFF to ON.",
+            "flagged": []
+          }
+        }
+      }
+    },
+    "rtems": {
+      "label": "RTEMS behaviour statements (public, 110)",
+      "clean_items": 110,
+      "false_alarms": 0,
+      "false_alarm_categories": {},
+      "kinds": {
+        "changed_number": {
+          "what": "A number in the requirement changed (10 becomes 20)",
+          "expected_check": "invented_value",
+          "planted": 2,
+          "caught": 2,
+          "flagged_any": 2,
+          "example": {
+            "before": "The value of the object referenced by the count parameter shall be set to 0 after the return of the rtems_message_queue_broadcast call.",
+            "after": "The value of the object referenced by the count parameter shall be set to 7 after the return of the rtems_message_queue_broadcast call.",
+            "flagged": [
+              "invented_value"
+            ]
+          }
+        },
+        "added_number": {
+          "what": "A timing value added that the source never gives",
+          "expected_check": "invented_value",
+          "planted": 110,
+          "caught": 106,
+          "flagged_any": 110,
+          "example": {
+            "before": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL.",
+            "after": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL within 250 ms.",
+            "flagged": [
+              "invented_value"
+            ]
+          }
+        },
+        "weakened_modal": {
+          "what": "'shall' weakened to 'should'",
+          "expected_check": "modal_changed",
+          "planted": 110,
+          "caught": 107,
+          "flagged_any": 107,
+          "example": {
+            "before": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL.",
+            "after": "The return status of rtems_barrier_create should be RTEMS_SUCCESSFUL.",
+            "flagged": [
+              "modal_changed"
+            ]
+          }
+        },
+        "fabricated": {
+          "what": "A requirement the source does not contain",
+          "expected_check": "ungrounded",
+          "planted": 4,
+          "caught": 4,
+          "flagged_any": 4,
+          "example": {
+            "before": null,
+            "after": "The directive shall write an entry to the persistent audit journal.",
+            "flagged": [
+              "ungrounded"
+            ]
+          }
+        },
+        "swapped_term": {
+          "what": "A signal or status name swapped for another one from the same document",
+          "expected_check": null,
+          "planted": 40,
+          "caught": 0,
+          "flagged_any": 0,
+          "example": {
+            "before": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL.",
+            "after": "The return status of rtems_barrier_create shall be FIFO.",
+            "flagged": []
+          }
+        }
+      }
+    }
+  },
+  "tests": {
+    "label": "ICX-100 tests from Zyn's template path (synthetic, 43 automated tests)",
+    "clean_items": 43,
+    "false_alarms": 3,
+    "false_alarm_categories": {
+      "value_not_traced": 3
+    },
+    "kinds": {
+      "signal_typo": {
+        "what": "A signal name misspelt (FuelLevel becomes FuelLevl)",
+        "expected_check": "unknown_signal",
+        "planted": 28,
+        "caught": 28,
+        "flagged_any": 28,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+        }
+      },
+      "out_of_range": {
+        "what": "An input value outside the signal's DBC range",
+        "expected_check": "out_of_range",
+        "planted": 40,
+        "caught": 40,
+        "flagged_any": 40,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+        }
+      },
+      "unknown_requirement": {
+        "what": "The test cites a requirement ID that does not exist",
+        "expected_check": "unknown_requirement",
+        "planted": 43,
+        "caught": 43,
+        "flagged_any": 43,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-XYZ-999-01: FuelLevel one step below 10.\n    Oracle (REQ-XYZ-999): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one input "
+        }
+      },
+      "no_requirement": {
+        "what": "Every requirement ID removed from the test",
+        "expected_check": "no_requirement",
+        "planted": 43,
+        "caught": 43,
+        "flagged_any": 43,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC--01: FuelLevel one step below 10.\n    Oracle  \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)\n    \"\"\"\n    bench."
+        }
+      },
+      "no_check": {
+        "what": "The test's checks deleted, so it can never fail",
+        "expected_check": "no_check",
+        "planted": 40,
+        "caught": 40,
+        "flagged_any": 40,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+        }
+      },
+      "duplicate_test": {
+        "what": "A copy of an existing test under a new name",
+        "expected_check": "duplicate_test",
+        "planted": 42,
+        "caught": 41,
+        "flagged_any": 41,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01_copy(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus o"
+        }
+      },
+      "exact_scaled": {
+        "what": "An exact equality on a scaled signal with no tolerance",
+        "expected_check": "no_tolerance",
+        "planted": 43,
+        "caught": 43,
+        "flagged_any": 43,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+        }
+      },
+      "flipped_expectation": {
+        "what": "The expected on/off value flipped (1 becomes 0)",
+        "expected_check": null,
+        "planted": 15,
+        "caught": 0,
+        "flagged_any": 0,
+        "example": {
+          "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+          "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+        }
+      }
+    }
+  },
+  "dbc": {
+    "label": "ICX-100 CAN database (synthetic, 1 file, 10 single faults)",
+    "clean_items": 1,
+    "false_alarms": 0,
+    "kinds": {
+      "duplicate_frame_id": {
+        "what": "Two messages given the same frame ID",
+        "expected_check": "duplicate_frame_id",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "signal_overlap": {
+        "what": "A signal moved onto bits another signal uses",
+        "expected_check": "signal_overlap",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "outside_frame": {
+        "what": "A message shortened so its signals no longer fit",
+        "expected_check": "outside_frame",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "range_inverted": {
+        "what": "A signal's minimum and maximum swapped",
+        "expected_check": "range_inverted",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "range_unreachable": {
+        "what": "A maximum the signal's bits cannot carry",
+        "expected_check": "range_unreachable",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "range_missing": {
+        "what": "A signal's range removed ([0|0])",
+        "expected_check": "range_missing",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "unknown_node": {
+        "what": "A receiver that is not a declared node",
+        "expected_check": "unknown_node",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "bad_encoding": {
+        "what": "An invalid byte-order code the parser silently accepts",
+        "expected_check": "bad_encoding",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "invalid_length": {
+        "what": "A message length CAN does not allow",
+        "expected_check": "invalid_length",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      },
+      "mux_undefined": {
+        "what": "A multiplexed signal with no multiplexer",
+        "expected_check": "mux_undefined",
+        "planted": 1,
+        "caught": 1,
+        "refused": null
+      }
+    }
+  }
+}

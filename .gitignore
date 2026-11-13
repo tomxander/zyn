@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+runs/
+data/public/
+*.egg-info/
+knowledge.md
+# zyn-identity: vendored build library and the packaged archive are rebuilt by tools/build.py
+zyn-identity/tools/python-libs/
+zyn-identity/zyn-identity.zip
+.impeccable/questions/

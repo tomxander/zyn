@@ -1,0 +1,1215 @@
+{
+  "benchmark": "S2 free-written vs template tests",
+  "at": "2026-11-14T01:02:27",
+  "requirements": 15,
+  "faults": 67,
+  "template": {
+    "cases": 43,
+    "caught": 66,
+    "faults": 67,
+    "reference_passes": true,
+    "per_requirement": {
+      "REQ-GAUGE-010": {
+        "cases": 4,
+        "reference_passes": true,
+        "caught": 7,
+        "faults": 7
+      },
+      "REQ-PWR-001": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-PWR-002": {
+        "cases": 3,
+        "reference_passes": true,
+        "caught": 5,
+        "faults": 5
+      },
+      "REQ-PWR-003": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-PWR-005": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-TT-001": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-TT-002": {
+        "cases": 4,
+        "reference_passes": true,
+        "caught": 7,
+        "faults": 7
+      },
+      "REQ-TT-003": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-TT-004": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-TT-005": {
+        "cases": 3,
+        "reference_passes": true,
+        "caught": 5,
+        "faults": 5
+      },
+      "REQ-TT-007": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-AUD-001": {
+        "cases": 2,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-GAUGE-005": {
+        "cases": 1,
+        "reference_passes": true,
+        "caught": 3,
+        "faults": 3
+      },
+      "REQ-GAUGE-003": {
+        "cases": 6,
+        "reference_passes": true,
+        "caught": 4,
+        "faults": 4
+      },
+      "REQ-GAUGE-004": {
+        "cases": 6,
+        "reference_passes": true,
+        "caught": 3,
+        "faults": 4
+      }
+    }
+  },
+  "models": {
+    "claude-haiku": [
+      {
+        "run_id": "20261114-001343-15270d",
+        "per_requirement": {
+          "REQ-GAUGE-010": {
+            "template": "threshold",
+            "tests": 9,
+            "load": 0,
+            "pass_reference": 0,
+            "faults": 7,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": [
+              "does not load: IndentationError: unexpected indent (REQ-GAUGE-010_0, line 2)",
+              "does not load: IndentationError: unexpected indent (REQ-GAUGE-010_1, line 2)",
+              "does not load: IndentationError: unexpected indent (REQ-GAUGE-010_2, line 2)"
+            ]
+          },
+          "REQ-PWR-001": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-002": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 1,
+            "faults": 5,
+            "caught": 1,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-003": {
+            "template": "event_response",
+            "tests": 11,
+            "load": 11,
+            "pass_reference": 2,
+            "faults": 4,
+            "caught": 2,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-005": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-001": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 3,
+            "errors": []
+          },
+          "REQ-TT-002": {
+            "template": "threshold",
+            "tests": 10,
+            "load": 10,
+            "pass_reference": 3,
+            "faults": 7,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-003": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 2,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 38,
+            "errors": []
+          },
+          "REQ-TT-004": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 33,
+            "errors": []
+          },
+          "REQ-TT-005": {
+            "template": "event_response",
+            "tests": 4,
+            "load": 4,
+            "pass_reference": 4,
+            "faults": 5,
+            "caught": 4,
+            "unjudged_checks": 60,
+            "errors": []
+          },
+          "REQ-TT-007": {
+            "template": "timeout",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 7,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 48,
+            "errors": []
+          },
+          "REQ-AUD-001": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 2,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 16,
+            "errors": []
+          },
+          "REQ-GAUGE-005": {
+            "template": "periodic_tx",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 6,
+            "faults": 3,
+            "caught": 2,
+            "unjudged_checks": 104,
+            "errors": [
+              "error: TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'"
+            ]
+          },
+          "REQ-GAUGE-003": {
+            "template": "tracking",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-GAUGE-004": {
+            "template": "tracking",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 8,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 0,
+            "errors": []
+          }
+        },
+        "tests": 114,
+        "load": 105,
+        "pass_reference": 54,
+        "caught": 39,
+        "faults": 67,
+        "unjudged_checks": 302,
+        "zyn_findings": {
+          "value_not_traced": 23,
+          "out_of_range": 6
+        },
+        "tests_with_findings": 24,
+        "cost_usd": 0.0418
+      },
+      {
+        "run_id": "20261114-001924-b632af",
+        "per_requirement": {
+          "REQ-GAUGE-010": {
+            "template": "threshold",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 9,
+            "faults": 7,
+            "caught": 6,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-001": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-002": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 4,
+            "faults": 5,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-003": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-005": {
+            "template": "event_response",
+            "tests": 4,
+            "load": 4,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-001": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-002": {
+            "template": "threshold",
+            "tests": 10,
+            "load": 10,
+            "pass_reference": 5,
+            "faults": 7,
+            "caught": 7,
+            "unjudged_checks": 80,
+            "errors": []
+          },
+          "REQ-TT-003": {
+            "template": "event_response",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-004": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-005": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 0,
+            "pass_reference": 0,
+            "faults": 5,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": [
+              "does not load: NameError: name 'bench' is not defined"
+            ]
+          },
+          "REQ-TT-007": {
+            "template": "timeout",
+            "tests": 15,
+            "load": 15,
+            "pass_reference": 11,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 68,
+            "errors": []
+          },
+          "REQ-AUD-001": {
+            "template": "event_response",
+            "tests": 4,
+            "load": 4,
+            "pass_reference": 2,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 11,
+            "errors": []
+          },
+          "REQ-GAUGE-005": {
+            "template": "periodic_tx",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 8,
+            "faults": 3,
+            "caught": 2,
+            "unjudged_checks": 60,
+            "errors": [
+              "error: TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'",
+              "error: ValueError: max() arg is an empty sequence"
+            ]
+          },
+          "REQ-GAUGE-003": {
+            "template": "tracking",
+            "tests": 8,
+            "load": 0,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": [
+              "does not load: NameError: name 'bench' is not defined"
+            ]
+          },
+          "REQ-GAUGE-004": {
+            "template": "tracking",
+            "tests": 9,
+            "load": 0,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": [
+              "does not load: NameError: name 'bench' is not defined"
+            ]
+          }
+        },
+        "tests": 121,
+        "load": 98,
+        "pass_reference": 53,
+        "caught": 38,
+        "faults": 67,
+        "unjudged_checks": 219,
+        "zyn_findings": {
+          "value_not_traced": 20
+        },
+        "tests_with_findings": 20,
+        "cost_usd": 0.0415
+      }
+    ],
+    "claude-opus": [
+      {
+        "run_id": "20261114-003531-9104a9",
+        "per_requirement": {
+          "REQ-GAUGE-010": {
+            "template": "threshold",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 9,
+            "faults": 7,
+            "caught": 6,
+            "unjudged_checks": 72,
+            "errors": [
+              "error: ValueError: unsupported format character 'b' (0x62) at index 31"
+            ]
+          },
+          "REQ-PWR-001": {
+            "template": "event_response",
+            "tests": 5,
+            "load": 5,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-002": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 0,
+            "faults": 5,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-003": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-005": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-001": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 35,
+            "errors": []
+          },
+          "REQ-TT-002": {
+            "template": "threshold",
+            "tests": 10,
+            "load": 10,
+            "pass_reference": 2,
+            "faults": 7,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-003": {
+            "template": "event_response",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 45,
+            "errors": []
+          },
+          "REQ-TT-004": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 35,
+            "errors": []
+          },
+          "REQ-TT-005": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 2,
+            "faults": 5,
+            "caught": 3,
+            "unjudged_checks": 187,
+            "errors": []
+          },
+          "REQ-TT-007": {
+            "template": "timeout",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 101,
+            "errors": []
+          },
+          "REQ-AUD-001": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 68,
+            "errors": []
+          },
+          "REQ-GAUGE-005": {
+            "template": "periodic_tx",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 2,
+            "faults": 3,
+            "caught": 2,
+            "unjudged_checks": 24,
+            "errors": [
+              "error: TypeError: '<' not supported between instances of 'NoneType' and 'NoneType'",
+              "error: TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'",
+              "error: TypeError: must be real number, not NoneType"
+            ]
+          },
+          "REQ-GAUGE-003": {
+            "template": "tracking",
+            "tests": 9,
+            "load": 9,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 45,
+            "errors": []
+          },
+          "REQ-GAUGE-004": {
+            "template": "tracking",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 30,
+            "errors": []
+          }
+        },
+        "tests": 111,
+        "load": 111,
+        "pass_reference": 52,
+        "caught": 37,
+        "faults": 67,
+        "unjudged_checks": 642,
+        "zyn_findings": {
+          "value_not_traced": 14
+        },
+        "tests_with_findings": 14,
+        "cost_usd": 1.5807
+      },
+      {
+        "run_id": "20261114-004616-b0013a",
+        "per_requirement": {
+          "REQ-GAUGE-010": {
+            "template": "threshold",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 8,
+            "faults": 7,
+            "caught": 6,
+            "unjudged_checks": 64,
+            "errors": []
+          },
+          "REQ-PWR-001": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-002": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 0,
+            "faults": 5,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-003": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-005": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-001": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 40,
+            "errors": []
+          },
+          "REQ-TT-002": {
+            "template": "threshold",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 3,
+            "faults": 7,
+            "caught": 5,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-003": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 30,
+            "errors": []
+          },
+          "REQ-TT-004": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 43,
+            "errors": []
+          },
+          "REQ-TT-005": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 5,
+            "caught": 0,
+            "unjudged_checks": 148,
+            "errors": []
+          },
+          "REQ-TT-007": {
+            "template": "timeout",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 55,
+            "errors": []
+          },
+          "REQ-AUD-001": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 1,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 5,
+            "errors": []
+          },
+          "REQ-GAUGE-005": {
+            "template": "periodic_tx",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 2,
+            "faults": 3,
+            "caught": 2,
+            "unjudged_checks": 28,
+            "errors": [
+              "error: TypeError: '<' not supported between instances of 'NoneType' and 'NoneType'",
+              "error: TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'"
+            ]
+          },
+          "REQ-GAUGE-003": {
+            "template": "tracking",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 7,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 35,
+            "errors": []
+          },
+          "REQ-GAUGE-004": {
+            "template": "tracking",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 8,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 0,
+            "errors": []
+          }
+        },
+        "tests": 106,
+        "load": 106,
+        "pass_reference": 49,
+        "caught": 31,
+        "faults": 67,
+        "unjudged_checks": 448,
+        "zyn_findings": {
+          "value_not_traced": 13
+        },
+        "tests_with_findings": 13,
+        "cost_usd": 1.4943
+      }
+    ],
+    "claude-sonnet": [
+      {
+        "run_id": "20261114-002455-ab731f",
+        "per_requirement": {
+          "REQ-GAUGE-010": {
+            "template": "threshold",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 6,
+            "faults": 7,
+            "caught": 6,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-001": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-002": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 5,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-003": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-005": {
+            "template": "event_response",
+            "tests": 5,
+            "load": 5,
+            "pass_reference": 0,
+            "faults": 4,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-001": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 3,
+            "errors": []
+          },
+          "REQ-TT-002": {
+            "template": "threshold",
+            "tests": 10,
+            "load": 10,
+            "pass_reference": 4,
+            "faults": 7,
+            "caught": 5,
+            "unjudged_checks": 80,
+            "errors": []
+          },
+          "REQ-TT-003": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 33,
+            "errors": []
+          },
+          "REQ-TT-004": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 56,
+            "errors": []
+          },
+          "REQ-TT-005": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 4,
+            "faults": 5,
+            "caught": 2,
+            "unjudged_checks": 157,
+            "errors": []
+          },
+          "REQ-TT-007": {
+            "template": "timeout",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 7,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 81,
+            "errors": []
+          },
+          "REQ-AUD-001": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 2,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 43,
+            "errors": []
+          },
+          "REQ-GAUGE-005": {
+            "template": "periodic_tx",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 2,
+            "faults": 3,
+            "caught": 0,
+            "unjudged_checks": 44,
+            "errors": [
+              "error: TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'"
+            ]
+          },
+          "REQ-GAUGE-003": {
+            "template": "tracking",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 7,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 35,
+            "errors": []
+          },
+          "REQ-GAUGE-004": {
+            "template": "tracking",
+            "tests": 5,
+            "load": 5,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 25,
+            "errors": []
+          }
+        },
+        "tests": 103,
+        "load": 103,
+        "pass_reference": 53,
+        "caught": 36,
+        "faults": 67,
+        "unjudged_checks": 557,
+        "zyn_findings": {
+          "value_not_traced": 7,
+          "out_of_range": 1
+        },
+        "tests_with_findings": 8,
+        "cost_usd": 0.5334
+      },
+      {
+        "run_id": "20261114-003020-5d92a5",
+        "per_requirement": {
+          "REQ-GAUGE-010": {
+            "template": "threshold",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 6,
+            "faults": 7,
+            "caught": 7,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-001": {
+            "template": "event_response",
+            "tests": 5,
+            "load": 5,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-002": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 0,
+            "faults": 5,
+            "caught": 0,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-003": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 1,
+            "faults": 4,
+            "caught": 2,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-PWR-005": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 1,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-TT-001": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 41,
+            "errors": []
+          },
+          "REQ-TT-002": {
+            "template": "threshold",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 3,
+            "faults": 7,
+            "caught": 5,
+            "unjudged_checks": 64,
+            "errors": [
+              "error: ValueError: unsupported format character ':' (0x3a) at index 27"
+            ]
+          },
+          "REQ-TT-003": {
+            "template": "event_response",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 44,
+            "errors": []
+          },
+          "REQ-TT-004": {
+            "template": "event_response",
+            "tests": 8,
+            "load": 8,
+            "pass_reference": 4,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 49,
+            "errors": []
+          },
+          "REQ-TT-005": {
+            "template": "event_response",
+            "tests": 5,
+            "load": 5,
+            "pass_reference": 1,
+            "faults": 5,
+            "caught": 1,
+            "unjudged_checks": 75,
+            "errors": []
+          },
+          "REQ-TT-007": {
+            "template": "timeout",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 5,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 116,
+            "errors": []
+          },
+          "REQ-AUD-001": {
+            "template": "event_response",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 3,
+            "faults": 4,
+            "caught": 3,
+            "unjudged_checks": 156,
+            "errors": []
+          },
+          "REQ-GAUGE-005": {
+            "template": "periodic_tx",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 6,
+            "faults": 3,
+            "caught": 0,
+            "unjudged_checks": 124,
+            "errors": []
+          },
+          "REQ-GAUGE-003": {
+            "template": "tracking",
+            "tests": 7,
+            "load": 7,
+            "pass_reference": 7,
+            "faults": 4,
+            "caught": 4,
+            "unjudged_checks": 0,
+            "errors": []
+          },
+          "REQ-GAUGE-004": {
+            "template": "tracking",
+            "tests": 6,
+            "load": 6,
+            "pass_reference": 6,
+            "faults": 4,
+            "caught": 1,
+            "unjudged_checks": 30,
+            "errors": []
+          }
+        },
+        "tests": 99,
+        "load": 99,
+        "pass_reference": 55,
+        "caught": 44,
+        "faults": 67,
+        "unjudged_checks": 699,
+        "zyn_findings": {
+          "value_not_traced": 19,
+          "unknown_signal": 1
+        },
+        "tests_with_findings": 17,
+        "cost_usd": 0.5215
+      }
+    ]
+  },
+  "fully_modelled": {
+    "requirements": [
+      "REQ-GAUGE-010",
+      "REQ-TT-001",
+      "REQ-TT-003",
+      "REQ-TT-004",
+      "REQ-TT-007",
+      "REQ-GAUGE-003",
+      "REQ-GAUGE-004"
+    ],
+    "template": {
+      "caught": 30,
+      "faults": 31
+    },
+    "models": {
+      "claude-haiku": [
+        {
+          "run_id": "20261114-001343-15270d",
+          "tests": 55,
+          "pass_reference": 30,
+          "caught": 22,
+          "faults": 31,
+          "requirements_with_no_valid_test": [
+            "REQ-GAUGE-010"
+          ]
+        },
+        {
+          "run_id": "20261114-001924-b632af",
+          "tests": 66,
+          "pass_reference": 30,
+          "caught": 21,
+          "faults": 31,
+          "requirements_with_no_valid_test": [
+            "REQ-GAUGE-003",
+            "REQ-GAUGE-004"
+          ]
+        }
+      ],
+      "claude-opus": [
+        {
+          "run_id": "20261114-003531-9104a9",
+          "tests": 54,
+          "pass_reference": 43,
+          "caught": 25,
+          "faults": 31,
+          "requirements_with_no_valid_test": []
+        },
+        {
+          "run_id": "20261114-004616-b0013a",
+          "tests": 52,
+          "pass_reference": 43,
+          "caught": 23,
+          "faults": 31,
+          "requirements_with_no_valid_test": []
+        }
+      ],
+      "claude-sonnet": [
+        {
+          "run_id": "20261114-002455-ab731f",
+          "tests": 48,
+          "pass_reference": 36,
+          "caught": 25,
+          "faults": 31,
+          "requirements_with_no_valid_test": []
+        },
+        {
+          "run_id": "20261114-003020-5d92a5",
+          "tests": 48,
+          "pass_reference": 36,
+          "caught": 26,
+          "faults": 31,
+          "requirements_with_no_valid_test": []
+        }
+      ]
+    }
+  }
+}

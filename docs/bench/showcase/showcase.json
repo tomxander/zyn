@@ -1,0 +1,1911 @@
+{
+  "generated": "2026-11-14T01:04:00",
+  "label": "Zyn prototype. Scores describe the named datasets, not general quality.",
+  "s1_planted": {
+    "benchmark": "S1 planted mistakes",
+    "at": "2026-11-14T00:58:05",
+    "requirements": {
+      "icx": {
+        "label": "ICX-100 requirement set (synthetic, 46)",
+        "clean_items": 46,
+        "false_alarms": 0,
+        "false_alarm_categories": {},
+        "kinds": {
+          "changed_number": {
+            "what": "A number in the requirement changed (10 becomes 20)",
+            "expected_check": "invented_value",
+            "planted": 20,
+            "caught": 19,
+            "flagged_any": 19,
+            "example": {
+              "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+              "after": "The cluster shall enter the ACTIVE state within 3 s of IGN changing from OFF to ON.",
+              "flagged": [
+                "invented_value"
+              ]
+            }
+          },
+          "added_number": {
+            "what": "A timing value added that the source never gives",
+            "expected_check": "invented_value",
+            "planted": 46,
+            "caught": 44,
+            "flagged_any": 46,
+            "example": {
+              "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+              "after": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON within 250 ms.",
+              "flagged": [
+                "invented_value"
+              ]
+            }
+          },
+          "weakened_modal": {
+            "what": "'shall' weakened to 'should'",
+            "expected_check": "modal_changed",
+            "planted": 43,
+            "caught": 39,
+            "flagged_any": 39,
+            "example": {
+              "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+              "after": "The cluster should enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+              "flagged": [
+                "modal_changed"
+              ]
+            }
+          },
+          "fabricated": {
+            "what": "A requirement the source does not contain",
+            "expected_check": "ungrounded",
+            "planted": 4,
+            "caught": 4,
+            "flagged_any": 4,
+            "example": {
+              "before": null,
+              "after": "The cluster shall support wireless phone charging at 15 W.",
+              "flagged": [
+                "ungrounded"
+              ]
+            }
+          },
+          "swapped_term": {
+            "what": "A signal or status name swapped for another one from the same document",
+            "expected_check": null,
+            "planted": 12,
+            "caught": 1,
+            "flagged_any": 1,
+            "example": {
+              "before": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+              "after": "The cluster shall enter the BeltUnfastened state within 1.5 s of IGN changing from OFF to ON.",
+              "flagged": []
+            }
+          }
+        }
+      },
+      "rtems": {
+        "label": "RTEMS behaviour statements (public, 110)",
+        "clean_items": 110,
+        "false_alarms": 0,
+        "false_alarm_categories": {},
+        "kinds": {
+          "changed_number": {
+            "what": "A number in the requirement changed (10 becomes 20)",
+            "expected_check": "invented_value",
+            "planted": 2,
+            "caught": 2,
+            "flagged_any": 2,
+            "example": {
+              "before": "The value of the object referenced by the count parameter shall be set to 0 after the return of the rtems_message_queue_broadcast call.",
+              "after": "The value of the object referenced by the count parameter shall be set to 7 after the return of the rtems_message_queue_broadcast call.",
+              "flagged": [
+                "invented_value"
+              ]
+            }
+          },
+          "added_number": {
+            "what": "A timing value added that the source never gives",
+            "expected_check": "invented_value",
+            "planted": 110,
+            "caught": 106,
+            "flagged_any": 110,
+            "example": {
+              "before": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL.",
+              "after": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL within 250 ms.",
+              "flagged": [
+                "invented_value"
+              ]
+            }
+          },
+          "weakened_modal": {
+            "what": "'shall' weakened to 'should'",
+            "expected_check": "modal_changed",
+            "planted": 110,
+            "caught": 107,
+            "flagged_any": 107,
+            "example": {
+              "before": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL.",
+              "after": "The return status of rtems_barrier_create should be RTEMS_SUCCESSFUL.",
+              "flagged": [
+                "modal_changed"
+              ]
+            }
+          },
+          "fabricated": {
+            "what": "A requirement the source does not contain",
+            "expected_check": "ungrounded",
+            "planted": 4,
+            "caught": 4,
+            "flagged_any": 4,
+            "example": {
+              "before": null,
+              "after": "The directive shall write an entry to the persistent audit journal.",
+              "flagged": [
+                "ungrounded"
+              ]
+            }
+          },
+          "swapped_term": {
+            "what": "A signal or status name swapped for another one from the same document",
+            "expected_check": null,
+            "planted": 40,
+            "caught": 0,
+            "flagged_any": 0,
+            "example": {
+              "before": "The return status of rtems_barrier_create shall be RTEMS_SUCCESSFUL.",
+              "after": "The return status of rtems_barrier_create shall be FIFO.",
+              "flagged": []
+            }
+          }
+        }
+      }
+    },
+    "tests": {
+      "label": "ICX-100 tests from Zyn's template path (synthetic, 43 automated tests)",
+      "clean_items": 43,
+      "false_alarms": 3,
+      "false_alarm_categories": {
+        "value_not_traced": 3
+      },
+      "kinds": {
+        "signal_typo": {
+          "what": "A signal name misspelt (FuelLevel becomes FuelLevl)",
+          "expected_check": "unknown_signal",
+          "planted": 28,
+          "caught": 28,
+          "flagged_any": 28,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+          }
+        },
+        "out_of_range": {
+          "what": "An input value outside the signal's DBC range",
+          "expected_check": "out_of_range",
+          "planted": 40,
+          "caught": 40,
+          "flagged_any": 40,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+          }
+        },
+        "unknown_requirement": {
+          "what": "The test cites a requirement ID that does not exist",
+          "expected_check": "unknown_requirement",
+          "planted": 43,
+          "caught": 43,
+          "flagged_any": 43,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-XYZ-999-01: FuelLevel one step below 10.\n    Oracle (REQ-XYZ-999): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one input "
+          }
+        },
+        "no_requirement": {
+          "what": "Every requirement ID removed from the test",
+          "expected_check": "no_requirement",
+          "planted": 43,
+          "caught": 43,
+          "flagged_any": 43,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC--01: FuelLevel one step below 10.\n    Oracle  \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)\n    \"\"\"\n    bench."
+          }
+        },
+        "no_check": {
+          "what": "The test's checks deleted, so it can never fail",
+          "expected_check": "no_check",
+          "planted": 40,
+          "caught": 40,
+          "flagged_any": 40,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+          }
+        },
+        "duplicate_test": {
+          "what": "A copy of an existing test under a new name",
+          "expected_check": "duplicate_test",
+          "planted": 42,
+          "caught": 41,
+          "flagged_any": 41,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01_copy(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus o"
+          }
+        },
+        "exact_scaled": {
+          "what": "An exact equality on a scaled signal with no tolerance",
+          "expected_check": "no_tolerance",
+          "planted": 43,
+          "caught": 43,
+          "flagged_any": 43,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+          }
+        },
+        "flipped_expectation": {
+          "what": "The expected on/off value flipped (1 becomes 0)",
+          "expected_check": null,
+          "planted": 15,
+          "caught": 0,
+          "flagged_any": 0,
+          "example": {
+            "before": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in",
+            "after": "def test_tc_req_gauge_010_01(bench):\n    \"\"\"TC-REQ-GAUGE-010-01: FuelLevel one step below 10.\n    Oracle (REQ-GAUGE-010): \"When the fuel level is below 10 percent, the low-fuel telltale shall be lit.\"\n    Expected: TT_LowFuel = 1 within 300 ms.\n    Why these values: Smallest step (0.5 %) past the threshold.\n    Open value: reaction time not stated; cases allow 300 ms (two status cycles plus one in"
+          }
+        }
+      }
+    },
+    "dbc": {
+      "label": "ICX-100 CAN database (synthetic, 1 file, 10 single faults)",
+      "clean_items": 1,
+      "false_alarms": 0,
+      "kinds": {
+        "duplicate_frame_id": {
+          "what": "Two messages given the same frame ID",
+          "expected_check": "duplicate_frame_id",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "signal_overlap": {
+          "what": "A signal moved onto bits another signal uses",
+          "expected_check": "signal_overlap",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "outside_frame": {
+          "what": "A message shortened so its signals no longer fit",
+          "expected_check": "outside_frame",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "range_inverted": {
+          "what": "A signal's minimum and maximum swapped",
+          "expected_check": "range_inverted",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "range_unreachable": {
+          "what": "A maximum the signal's bits cannot carry",
+          "expected_check": "range_unreachable",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "range_missing": {
+          "what": "A signal's range removed ([0|0])",
+          "expected_check": "range_missing",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "unknown_node": {
+          "what": "A receiver that is not a declared node",
+          "expected_check": "unknown_node",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "bad_encoding": {
+          "what": "An invalid byte-order code the parser silently accepts",
+          "expected_check": "bad_encoding",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "invalid_length": {
+          "what": "A message length CAN does not allow",
+          "expected_check": "invalid_length",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        },
+        "mux_undefined": {
+          "what": "A multiplexed signal with no multiplexer",
+          "expected_check": "mux_undefined",
+          "planted": 1,
+          "caught": 1,
+          "refused": null
+        }
+      }
+    }
+  },
+  "s2_freetests": {
+    "benchmark": "S2 free-written vs template tests",
+    "at": "2026-11-14T01:02:27",
+    "requirements": 15,
+    "faults": 67,
+    "template": {
+      "cases": 43,
+      "caught": 66,
+      "faults": 67,
+      "reference_passes": true,
+      "per_requirement": {
+        "REQ-GAUGE-010": {
+          "cases": 4,
+          "reference_passes": true,
+          "caught": 7,
+          "faults": 7
+        },
+        "REQ-PWR-001": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-PWR-002": {
+          "cases": 3,
+          "reference_passes": true,
+          "caught": 5,
+          "faults": 5
+        },
+        "REQ-PWR-003": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-PWR-005": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-TT-001": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-TT-002": {
+          "cases": 4,
+          "reference_passes": true,
+          "caught": 7,
+          "faults": 7
+        },
+        "REQ-TT-003": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-TT-004": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-TT-005": {
+          "cases": 3,
+          "reference_passes": true,
+          "caught": 5,
+          "faults": 5
+        },
+        "REQ-TT-007": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-AUD-001": {
+          "cases": 2,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-GAUGE-005": {
+          "cases": 1,
+          "reference_passes": true,
+          "caught": 3,
+          "faults": 3
+        },
+        "REQ-GAUGE-003": {
+          "cases": 6,
+          "reference_passes": true,
+          "caught": 4,
+          "faults": 4
+        },
+        "REQ-GAUGE-004": {
+          "cases": 6,
+          "reference_passes": true,
+          "caught": 3,
+          "faults": 4
+        }
+      }
+    },
+    "models": {
+      "claude-haiku": [
+        {
+          "run_id": "20261114-001343-15270d",
+          "per_requirement": {
+            "REQ-GAUGE-010": {
+              "template": "threshold",
+              "tests": 9,
+              "load": 0,
+              "pass_reference": 0,
+              "faults": 7,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": [
+                "does not load: IndentationError: unexpected indent (REQ-GAUGE-010_0, line 2)",
+                "does not load: IndentationError: unexpected indent (REQ-GAUGE-010_1, line 2)",
+                "does not load: IndentationError: unexpected indent (REQ-GAUGE-010_2, line 2)"
+              ]
+            },
+            "REQ-PWR-001": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-002": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 1,
+              "faults": 5,
+              "caught": 1,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-003": {
+              "template": "event_response",
+              "tests": 11,
+              "load": 11,
+              "pass_reference": 2,
+              "faults": 4,
+              "caught": 2,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-005": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-001": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 3,
+              "errors": []
+            },
+            "REQ-TT-002": {
+              "template": "threshold",
+              "tests": 10,
+              "load": 10,
+              "pass_reference": 3,
+              "faults": 7,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-003": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 2,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 38,
+              "errors": []
+            },
+            "REQ-TT-004": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 33,
+              "errors": []
+            },
+            "REQ-TT-005": {
+              "template": "event_response",
+              "tests": 4,
+              "load": 4,
+              "pass_reference": 4,
+              "faults": 5,
+              "caught": 4,
+              "unjudged_checks": 60,
+              "errors": []
+            },
+            "REQ-TT-007": {
+              "template": "timeout",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 7,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 48,
+              "errors": []
+            },
+            "REQ-AUD-001": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 2,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 16,
+              "errors": []
+            },
+            "REQ-GAUGE-005": {
+              "template": "periodic_tx",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 6,
+              "faults": 3,
+              "caught": 2,
+              "unjudged_checks": 104,
+              "errors": [
+                "error: TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'"
+              ]
+            },
+            "REQ-GAUGE-003": {
+              "template": "tracking",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-GAUGE-004": {
+              "template": "tracking",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 8,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 0,
+              "errors": []
+            }
+          },
+          "tests": 114,
+          "load": 105,
+          "pass_reference": 54,
+          "caught": 39,
+          "faults": 67,
+          "unjudged_checks": 302,
+          "zyn_findings": {
+            "value_not_traced": 23,
+            "out_of_range": 6
+          },
+          "tests_with_findings": 24,
+          "cost_usd": 0.0418
+        },
+        {
+          "run_id": "20261114-001924-b632af",
+          "per_requirement": {
+            "REQ-GAUGE-010": {
+              "template": "threshold",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 9,
+              "faults": 7,
+              "caught": 6,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-001": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-002": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 4,
+              "faults": 5,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-003": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-005": {
+              "template": "event_response",
+              "tests": 4,
+              "load": 4,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-001": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-002": {
+              "template": "threshold",
+              "tests": 10,
+              "load": 10,
+              "pass_reference": 5,
+              "faults": 7,
+              "caught": 7,
+              "unjudged_checks": 80,
+              "errors": []
+            },
+            "REQ-TT-003": {
+              "template": "event_response",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-004": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-005": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 0,
+              "pass_reference": 0,
+              "faults": 5,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": [
+                "does not load: NameError: name 'bench' is not defined"
+              ]
+            },
+            "REQ-TT-007": {
+              "template": "timeout",
+              "tests": 15,
+              "load": 15,
+              "pass_reference": 11,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 68,
+              "errors": []
+            },
+            "REQ-AUD-001": {
+              "template": "event_response",
+              "tests": 4,
+              "load": 4,
+              "pass_reference": 2,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 11,
+              "errors": []
+            },
+            "REQ-GAUGE-005": {
+              "template": "periodic_tx",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 8,
+              "faults": 3,
+              "caught": 2,
+              "unjudged_checks": 60,
+              "errors": [
+                "error: TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'",
+                "error: ValueError: max() arg is an empty sequence"
+              ]
+            },
+            "REQ-GAUGE-003": {
+              "template": "tracking",
+              "tests": 8,
+              "load": 0,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": [
+                "does not load: NameError: name 'bench' is not defined"
+              ]
+            },
+            "REQ-GAUGE-004": {
+              "template": "tracking",
+              "tests": 9,
+              "load": 0,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": [
+                "does not load: NameError: name 'bench' is not defined"
+              ]
+            }
+          },
+          "tests": 121,
+          "load": 98,
+          "pass_reference": 53,
+          "caught": 38,
+          "faults": 67,
+          "unjudged_checks": 219,
+          "zyn_findings": {
+            "value_not_traced": 20
+          },
+          "tests_with_findings": 20,
+          "cost_usd": 0.0415
+        }
+      ],
+      "claude-opus": [
+        {
+          "run_id": "20261114-003531-9104a9",
+          "per_requirement": {
+            "REQ-GAUGE-010": {
+              "template": "threshold",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 9,
+              "faults": 7,
+              "caught": 6,
+              "unjudged_checks": 72,
+              "errors": [
+                "error: ValueError: unsupported format character 'b' (0x62) at index 31"
+              ]
+            },
+            "REQ-PWR-001": {
+              "template": "event_response",
+              "tests": 5,
+              "load": 5,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-002": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 0,
+              "faults": 5,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-003": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-005": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-001": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 35,
+              "errors": []
+            },
+            "REQ-TT-002": {
+              "template": "threshold",
+              "tests": 10,
+              "load": 10,
+              "pass_reference": 2,
+              "faults": 7,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-003": {
+              "template": "event_response",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 45,
+              "errors": []
+            },
+            "REQ-TT-004": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 35,
+              "errors": []
+            },
+            "REQ-TT-005": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 2,
+              "faults": 5,
+              "caught": 3,
+              "unjudged_checks": 187,
+              "errors": []
+            },
+            "REQ-TT-007": {
+              "template": "timeout",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 101,
+              "errors": []
+            },
+            "REQ-AUD-001": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 68,
+              "errors": []
+            },
+            "REQ-GAUGE-005": {
+              "template": "periodic_tx",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 2,
+              "faults": 3,
+              "caught": 2,
+              "unjudged_checks": 24,
+              "errors": [
+                "error: TypeError: '<' not supported between instances of 'NoneType' and 'NoneType'",
+                "error: TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'",
+                "error: TypeError: must be real number, not NoneType"
+              ]
+            },
+            "REQ-GAUGE-003": {
+              "template": "tracking",
+              "tests": 9,
+              "load": 9,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 45,
+              "errors": []
+            },
+            "REQ-GAUGE-004": {
+              "template": "tracking",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 30,
+              "errors": []
+            }
+          },
+          "tests": 111,
+          "load": 111,
+          "pass_reference": 52,
+          "caught": 37,
+          "faults": 67,
+          "unjudged_checks": 642,
+          "zyn_findings": {
+            "value_not_traced": 14
+          },
+          "tests_with_findings": 14,
+          "cost_usd": 1.5807
+        },
+        {
+          "run_id": "20261114-004616-b0013a",
+          "per_requirement": {
+            "REQ-GAUGE-010": {
+              "template": "threshold",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 8,
+              "faults": 7,
+              "caught": 6,
+              "unjudged_checks": 64,
+              "errors": []
+            },
+            "REQ-PWR-001": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-002": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 0,
+              "faults": 5,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-003": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-005": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-001": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 40,
+              "errors": []
+            },
+            "REQ-TT-002": {
+              "template": "threshold",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 3,
+              "faults": 7,
+              "caught": 5,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-003": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 30,
+              "errors": []
+            },
+            "REQ-TT-004": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 43,
+              "errors": []
+            },
+            "REQ-TT-005": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 5,
+              "caught": 0,
+              "unjudged_checks": 148,
+              "errors": []
+            },
+            "REQ-TT-007": {
+              "template": "timeout",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 55,
+              "errors": []
+            },
+            "REQ-AUD-001": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 1,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 5,
+              "errors": []
+            },
+            "REQ-GAUGE-005": {
+              "template": "periodic_tx",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 2,
+              "faults": 3,
+              "caught": 2,
+              "unjudged_checks": 28,
+              "errors": [
+                "error: TypeError: '<' not supported between instances of 'NoneType' and 'NoneType'",
+                "error: TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'"
+              ]
+            },
+            "REQ-GAUGE-003": {
+              "template": "tracking",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 7,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 35,
+              "errors": []
+            },
+            "REQ-GAUGE-004": {
+              "template": "tracking",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 8,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 0,
+              "errors": []
+            }
+          },
+          "tests": 106,
+          "load": 106,
+          "pass_reference": 49,
+          "caught": 31,
+          "faults": 67,
+          "unjudged_checks": 448,
+          "zyn_findings": {
+            "value_not_traced": 13
+          },
+          "tests_with_findings": 13,
+          "cost_usd": 1.4943
+        }
+      ],
+      "claude-sonnet": [
+        {
+          "run_id": "20261114-002455-ab731f",
+          "per_requirement": {
+            "REQ-GAUGE-010": {
+              "template": "threshold",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 6,
+              "faults": 7,
+              "caught": 6,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-001": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-002": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 5,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-003": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-005": {
+              "template": "event_response",
+              "tests": 5,
+              "load": 5,
+              "pass_reference": 0,
+              "faults": 4,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-001": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 3,
+              "errors": []
+            },
+            "REQ-TT-002": {
+              "template": "threshold",
+              "tests": 10,
+              "load": 10,
+              "pass_reference": 4,
+              "faults": 7,
+              "caught": 5,
+              "unjudged_checks": 80,
+              "errors": []
+            },
+            "REQ-TT-003": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 33,
+              "errors": []
+            },
+            "REQ-TT-004": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 56,
+              "errors": []
+            },
+            "REQ-TT-005": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 4,
+              "faults": 5,
+              "caught": 2,
+              "unjudged_checks": 157,
+              "errors": []
+            },
+            "REQ-TT-007": {
+              "template": "timeout",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 7,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 81,
+              "errors": []
+            },
+            "REQ-AUD-001": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 2,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 43,
+              "errors": []
+            },
+            "REQ-GAUGE-005": {
+              "template": "periodic_tx",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 2,
+              "faults": 3,
+              "caught": 0,
+              "unjudged_checks": 44,
+              "errors": [
+                "error: TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'"
+              ]
+            },
+            "REQ-GAUGE-003": {
+              "template": "tracking",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 7,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 35,
+              "errors": []
+            },
+            "REQ-GAUGE-004": {
+              "template": "tracking",
+              "tests": 5,
+              "load": 5,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 25,
+              "errors": []
+            }
+          },
+          "tests": 103,
+          "load": 103,
+          "pass_reference": 53,
+          "caught": 36,
+          "faults": 67,
+          "unjudged_checks": 557,
+          "zyn_findings": {
+            "value_not_traced": 7,
+            "out_of_range": 1
+          },
+          "tests_with_findings": 8,
+          "cost_usd": 0.5334
+        },
+        {
+          "run_id": "20261114-003020-5d92a5",
+          "per_requirement": {
+            "REQ-GAUGE-010": {
+              "template": "threshold",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 6,
+              "faults": 7,
+              "caught": 7,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-001": {
+              "template": "event_response",
+              "tests": 5,
+              "load": 5,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-002": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 0,
+              "faults": 5,
+              "caught": 0,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-003": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 1,
+              "faults": 4,
+              "caught": 2,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-PWR-005": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 1,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-TT-001": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 41,
+              "errors": []
+            },
+            "REQ-TT-002": {
+              "template": "threshold",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 3,
+              "faults": 7,
+              "caught": 5,
+              "unjudged_checks": 64,
+              "errors": [
+                "error: ValueError: unsupported format character ':' (0x3a) at index 27"
+              ]
+            },
+            "REQ-TT-003": {
+              "template": "event_response",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 44,
+              "errors": []
+            },
+            "REQ-TT-004": {
+              "template": "event_response",
+              "tests": 8,
+              "load": 8,
+              "pass_reference": 4,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 49,
+              "errors": []
+            },
+            "REQ-TT-005": {
+              "template": "event_response",
+              "tests": 5,
+              "load": 5,
+              "pass_reference": 1,
+              "faults": 5,
+              "caught": 1,
+              "unjudged_checks": 75,
+              "errors": []
+            },
+            "REQ-TT-007": {
+              "template": "timeout",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 5,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 116,
+              "errors": []
+            },
+            "REQ-AUD-001": {
+              "template": "event_response",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 3,
+              "faults": 4,
+              "caught": 3,
+              "unjudged_checks": 156,
+              "errors": []
+            },
+            "REQ-GAUGE-005": {
+              "template": "periodic_tx",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 6,
+              "faults": 3,
+              "caught": 0,
+              "unjudged_checks": 124,
+              "errors": []
+            },
+            "REQ-GAUGE-003": {
+              "template": "tracking",
+              "tests": 7,
+              "load": 7,
+              "pass_reference": 7,
+              "faults": 4,
+              "caught": 4,
+              "unjudged_checks": 0,
+              "errors": []
+            },
+            "REQ-GAUGE-004": {
+              "template": "tracking",
+              "tests": 6,
+              "load": 6,
+              "pass_reference": 6,
+              "faults": 4,
+              "caught": 1,
+              "unjudged_checks": 30,
+              "errors": []
+            }
+          },
+          "tests": 99,
+          "load": 99,
+          "pass_reference": 55,
+          "caught": 44,
+          "faults": 67,
+          "unjudged_checks": 699,
+          "zyn_findings": {
+            "value_not_traced": 19,
+            "unknown_signal": 1
+          },
+          "tests_with_findings": 17,
+          "cost_usd": 0.5215
+        }
+      ]
+    },
+    "fully_modelled": {
+      "requirements": [
+        "REQ-GAUGE-010",
+        "REQ-TT-001",
+        "REQ-TT-003",
+        "REQ-TT-004",
+        "REQ-TT-007",
+        "REQ-GAUGE-003",
+        "REQ-GAUGE-004"
+      ],
+      "template": {
+        "caught": 30,
+        "faults": 31
+      },
+      "models": {
+        "claude-haiku": [
+          {
+            "run_id": "20261114-001343-15270d",
+            "tests": 55,
+            "pass_reference": 30,
+            "caught": 22,
+            "faults": 31,
+            "requirements_with_no_valid_test": [
+              "REQ-GAUGE-010"
+            ]
+          },
+          {
+            "run_id": "20261114-001924-b632af",
+            "tests": 66,
+            "pass_reference": 30,
+            "caught": 21,
+            "faults": 31,
+            "requirements_with_no_valid_test": [
+              "REQ-GAUGE-003",
+              "REQ-GAUGE-004"
+            ]
+          }
+        ],
+        "claude-opus": [
+          {
+            "run_id": "20261114-003531-9104a9",
+            "tests": 54,
+            "pass_reference": 43,
+            "caught": 25,
+            "faults": 31,
+            "requirements_with_no_valid_test": []
+          },
+          {
+            "run_id": "20261114-004616-b0013a",
+            "tests": 52,
+            "pass_reference": 43,
+            "caught": 23,
+            "faults": 31,
+            "requirements_with_no_valid_test": []
+          }
+        ],
+        "claude-sonnet": [
+          {
+            "run_id": "20261114-002455-ab731f",
+            "tests": 48,
+            "pass_reference": 36,
+            "caught": 25,
+            "faults": 31,
+            "requirements_with_no_valid_test": []
+          },
+          {
+            "run_id": "20261114-003020-5d92a5",
+            "tests": 48,
+            "pass_reference": 36,
+            "caught": 26,
+            "faults": 31,
+            "requirements_with_no_valid_test": []
+          }
+        ]
+      }
+    }
+  },
+  "s3_models": {
+    "pack": "zyn-bench-1.1",
+    "runs": {
+      "1.0 (Sonnet, Haiku)": "20261113-221630",
+      "1.1 (Opus)": "20261113-232031",
+      "1.1 whole RTEMS (Sonnet, Haiku)": "20261113-233035"
+    },
+    "tasks": {
+      "icx-map": {
+        "title": "ICX-100 section mapping",
+        "score": "accuracy: sections mapped to an accepted subsystem / sections",
+        "data_note": "Author-made, AI-reviewed, not engineer-reviewed."
+      },
+      "icx-review": {
+        "title": "ICX-100 requirement review",
+        "score": "recall: expected flags found / expected flags; flags not in the key reported",
+        "data_note": "Author-made, AI-reviewed, not engineer-reviewed."
+      },
+      "qure-flags": {
+        "title": "QuRE defect flags",
+        "score": "F1 on defect-labelled weak words",
+        "data_note": "QuRE 1.0.1 (Zenodo 16049822, CC BY 4.0); human labels."
+      },
+      "promise-type": {
+        "title": "PROMISE requirement type",
+        "score": "binary accuracy (functional vs non-functional)",
+        "data_note": "PROMISE NFR dataset; human labels."
+      },
+      "rtems-extract": {
+        "title": "RTEMS requirement extraction",
+        "score": "recall: gold statements matched / gold statements",
+        "data_note": "Rendered from RTEMS rtems-central spec files (BSD-2-Clause / CC BY-SA)."
+      },
+      "rtems-whole": {
+        "title": "RTEMS extraction, whole components",
+        "score": "F1: matched gold statements against everything extracted (recall and precision)",
+        "data_note": "Rendered from RTEMS rtems-central spec files (BSD-2-Clause / CC BY-SA)."
+      }
+    },
+    "results": {
+      "claude-sonnet": {
+        "icx-map": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 1.0,
+          "score_min": 1.0,
+          "score_max": 1.0,
+          "score_spread": 0.0,
+          "cost_usd": 0.0513,
+          "cost_per_correct_usd": 0.00107,
+          "item_agreement": 1.0
+        },
+        "icx-review": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.647,
+          "score_min": 0.647,
+          "score_max": 0.647,
+          "score_spread": 0.0,
+          "cost_usd": 0.2403,
+          "cost_per_correct_usd": 0.00728,
+          "item_agreement": 0.6
+        },
+        "qure-flags": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.547,
+          "score_min": 0.54,
+          "score_max": 0.553,
+          "score_spread": 0.013,
+          "cost_usd": 1.3958,
+          "cost_per_correct_usd": 0.00691
+        },
+        "promise-type": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.886,
+          "score_min": 0.885,
+          "score_max": 0.888,
+          "score_spread": 0.003,
+          "cost_usd": 0.559,
+          "cost_per_correct_usd": 0.00034
+        },
+        "rtems-extract": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 1.0,
+          "score_min": 1.0,
+          "score_max": 1.0,
+          "score_spread": 0.0,
+          "cost_usd": 0.5896,
+          "cost_per_correct_usd": 0.00179
+        },
+        "rtems-whole": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.988,
+          "score_min": 0.978,
+          "score_max": 1.0,
+          "score_spread": 0.022,
+          "cost_usd": 0.6925,
+          "cost_per_correct_usd": 0.0021
+        }
+      },
+      "claude-haiku": {
+        "icx-map": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 1.0,
+          "score_min": 1.0,
+          "score_max": 1.0,
+          "score_spread": 0.0,
+          "cost_usd": 0.0031,
+          "cost_per_correct_usd": 6e-05,
+          "item_agreement": 1.0
+        },
+        "icx-review": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.49,
+          "score_min": 0.412,
+          "score_max": 0.588,
+          "score_spread": 0.176,
+          "cost_usd": 0.0158,
+          "cost_per_correct_usd": 0.00063,
+          "item_agreement": 0.44
+        },
+        "qure-flags": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.557,
+          "score_min": 0.542,
+          "score_max": 0.571,
+          "score_spread": 0.029,
+          "cost_usd": 0.0757,
+          "cost_per_correct_usd": 0.00044
+        },
+        "promise-type": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.881,
+          "score_min": 0.878,
+          "score_max": 0.883,
+          "score_spread": 0.005,
+          "cost_usd": 0.0417,
+          "cost_per_correct_usd": 3e-05
+        },
+        "rtems-extract": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 1.0,
+          "score_min": 1.0,
+          "score_max": 1.0,
+          "score_spread": 0.0,
+          "cost_usd": 0.0407,
+          "cost_per_correct_usd": 0.00012
+        },
+        "rtems-whole": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.985,
+          "score_min": 0.978,
+          "score_max": 0.995,
+          "score_spread": 0.017,
+          "cost_usd": 0.0442,
+          "cost_per_correct_usd": 0.00013
+        }
+      },
+      "claude-opus": {
+        "icx-map": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 1.0,
+          "score_min": 1.0,
+          "score_max": 1.0,
+          "score_spread": 0.0,
+          "cost_usd": 0.0995,
+          "cost_per_correct_usd": 0.00207,
+          "item_agreement": 1.0
+        },
+        "icx-review": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.608,
+          "score_min": 0.529,
+          "score_max": 0.706,
+          "score_spread": 0.176,
+          "cost_usd": 0.5168,
+          "cost_per_correct_usd": 0.01667,
+          "item_agreement": 0.6
+        },
+        "qure-flags": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.543,
+          "score_min": 0.533,
+          "score_max": 0.55,
+          "score_spread": 0.017,
+          "cost_usd": 3.436,
+          "cost_per_correct_usd": 0.01744
+        },
+        "promise-type": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.914,
+          "score_min": 0.91,
+          "score_max": 0.918,
+          "score_spread": 0.008,
+          "cost_usd": 1.4064,
+          "cost_per_correct_usd": 0.00082
+        },
+        "rtems-extract": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 1.0,
+          "score_min": 1.0,
+          "score_max": 1.0,
+          "score_spread": 0.0,
+          "cost_usd": 1.3314,
+          "cost_per_correct_usd": 0.00403
+        },
+        "rtems-whole": {
+          "repeats": 3,
+          "errors": 0,
+          "score_mean": 0.994,
+          "score_min": 0.991,
+          "score_max": 0.995,
+          "score_spread": 0.004,
+          "cost_usd": 1.4412,
+          "cost_per_correct_usd": 0.00437
+        }
+      }
+    }
+  },
+  "s4_real_dbc": {
+    "commit": "27fa1c5d8eed3238a0a78c52ff5abb6cdc807bd2",
+    "files": 58,
+    "read": 50,
+    "unreadable": {
+      "chrysler_cusw.dbc": "chrysler_cusw.dbc could not be read as a CAN database: DBC: \"Standard frame id 0x62cc033 is more than 11 bits in message BSM_LEFT.\"",
+      "fca_giorgio.dbc": "fca_giorgio.dbc could not be read as a CAN database: DBC: \"Standard frame id 0x1e36001e is more than 11 bits in message CAM_UNKNOWN_6.\"",
+      "gm_global_a_lowspeed.dbc": "gm_global_a_lowspeed.dbc could not be read as a CAN database: DBC: \"Standard frame id 0x10630000 is more than 11 bits in message DriverDoorStatus.\"",
+      "mazda_2017.dbc": "mazda_2017.dbc could not be read as a CAN database: DBC: \"Invalid syntax at line 273, column 10: \"BO_ 1275 >>!<<2017_5: 8 XXX\"\"",
+      "psa_aee2010_r3.dbc": "psa_aee2010_r3.dbc could not be read as a CAN database: DBC: \"Invalid syntax at line 165, column 6: \" SG_ >>!<<0_COUNTER : 35|4@0+ (1,0) [0|255] \"\" XXX\"\"",
+      "toyota_2017_ref_pt.dbc": "toyota_2017_ref_pt.dbc could not be read as a CAN database: DBC: \"Standard frame id 0x40140639 is more than 11 bits in message BDB1F01_14.\"",
+      "toyota_radar_dsu_tssp.dbc": "toyota_radar_dsu_tssp.dbc could not be read as a CAN database: DBC: \"Invalid syntax at line 139, column 1: \">>!<<BO_ 1664 CLUSTER_F: 8 RADAR\"\"",
+      "vw_mqbevo.dbc": "vw_mqbevo.dbc could not be read as a CAN database: DBC: \"Standard frame id 0x12dd54a7 is more than 11 bits in message CAMERA_NEW_6.\""
+    },
+    "signals": 22909,
+    "findings_by_kind": {
+      "range_unreachable": 545,
+      "unknown_node": 85,
+      "range_missing": 27,
+      "signal_overlap": 191,
+      "outside_frame": 19,
+      "range_inverted": 3,
+      "mux_undefined": 4
+    },
+    "files_with_findings": 49
+  },
+  "s5_qure": {
+    "eval": "E1 QuRE quality flags",
+    "attribution": "QuRE 1.0.1, Femmer, Houdek, Unterbusch et al., Zenodo record 16049822, CC BY 4.0. Used unmodified; sampled for evaluation.",
+    "source_sha256": "c6a0c872873ba54028b97361c4cf1d5ad488bdea622a922cbee33265814925d6",
+    "sample": "200 unique requirements, seed 42",
+    "labelled_weak_words": 209,
+    "defects": 72,
+    "started": "2026-11-13T19:33:00",
+    "profiles": {
+      "claude-opus": {
+        "run_id": "20261113-193300-374147",
+        "failed": {},
+        "cost_usd": 1.1515,
+        "calls": 14,
+        "scores": {
+          "code": {
+            "tp": 25,
+            "fp": 55,
+            "fn": 47,
+            "tn": 82,
+            "precision": 0.312,
+            "recall": 0.347,
+            "f1": 0.329
+          },
+          "ai": {
+            "tp": 63,
+            "fp": 81,
+            "fn": 9,
+            "tn": 56,
+            "precision": 0.438,
+            "recall": 0.875,
+            "f1": 0.583
+          },
+          "code+ai": {
+            "tp": 65,
+            "fp": 103,
+            "fn": 7,
+            "tn": 34,
+            "precision": 0.387,
+            "recall": 0.903,
+            "f1": 0.542
+          },
+          "flag every weak word": {
+            "tp": 72,
+            "fp": 137,
+            "fn": 0,
+            "tn": 0,
+            "precision": 0.344,
+            "recall": 1.0,
+            "f1": 0.512
+          }
+        }
+      },
+      "claude-sonnet": {
+        "run_id": "20261113-193519-cc8ddc",
+        "failed": {},
+        "cost_usd": 0.464,
+        "calls": 14,
+        "scores": {
+          "code": {
+            "tp": 25,
+            "fp": 55,
+            "fn": 47,
+            "tn": 82,
+            "precision": 0.312,
+            "recall": 0.347,
+            "f1": 0.329
+          },
+          "ai": {
+            "tp": 63,
+            "fp": 85,
+            "fn": 9,
+            "tn": 52,
+            "precision": 0.426,
+            "recall": 0.875,
+            "f1": 0.573
+          },
+          "code+ai": {
+            "tp": 66,
+            "fp": 105,
+            "fn": 6,
+            "tn": 32,
+            "precision": 0.386,
+            "recall": 0.917,
+            "f1": 0.543
+          },
+          "flag every weak word": {
+            "tp": 72,
+            "fp": 137,
+            "fn": 0,
+            "tn": 0,
+            "precision": 0.344,
+            "recall": 1.0,
+            "f1": 0.512
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+VERSION "ICX100 synthetic 1"
+
+NS_ :
+
+BS_:
+
+BU_: ICX100 VCU BCM ECM
+
+BO_ 256 VehicleSpeed: 2 VCU
+ SG_ VehicleSpeed : 0|16@1+ (0.01,0) [0|300] "km/h" ICX100
+
+BO_ 257 EngineSpeed: 2 ECM
+ SG_ EngineSpeed : 0|16@1+ (0.25,0) [0|8000] "rpm" ICX100
+
+BO_ 300 Fuel: 2 BCM
+ SG_ FuelLevel : 0|8@1+ (0.5,0) [0|100] "%" ICX100
+ SG_ FuelLow : 8|1@1+ (1,0) [0|1] "" ICX100
+
+BO_ 301 Warnings: 1 VCU
+ SG_ BrakeWarn : 0|1@1+ (1,0) [0|1] "" ICX100
+ SG_ MIL : 1|1@1+ (1,0) [0|1] "" ICX100
+
+BO_ 302 Body: 1 BCM
+ SG_ BeltUnfastened : 0|1@1+ (1,0) [0|1] "" ICX100
+ SG_ DoorOpen : 1|1@1+ (1,0) [0|1] "" ICX100
+ SG_ IGN : 2|1@1+ (1,0) [0|1] "" ICX100
+
+BO_ 303 Ambient: 1 BCM
+ SG_ AmbientLight : 0|8@1+ (1,0) [0|255] "lux_idx" ICX100
+
+BO_ 400 ClusterStatus: 4 ICX100
+ SG_ ClusterState : 0|2@1+ (1,0) [0|3] "" VCU
+ SG_ TT_Brake : 2|1@1+ (1,0) [0|1] "" VCU
+ SG_ TT_Belt : 3|1@1+ (1,0) [0|1] "" VCU
+ SG_ TT_LowFuel : 4|1@1+ (1,0) [0|1] "" VCU
+ SG_ TT_MIL : 5|1@1+ (1,0) [0|1] "" VCU
+ SG_ ChimeActive : 6|1@1+ (1,0) [0|1] "" VCU
+ SG_ DisplayedSpeed : 8|16@1+ (0.01,0) [0|330] "km/h" VCU
+ SG_ FuelBarSegments : 24|4@1+ (1,0) [0|8] "" VCU
+
+CM_ "Synthetic CAN database for the fictional ICX-100 cluster, written for the Zyn prototype. Not related to any real vehicle. ClusterStatus reports what the cluster displays so tests can observe it on the bus.";
+CM_ SG_ 400 ClusterState "0 SLEEP, 1 ACTIVE, 2 GOODBYE";
+
+BA_DEF_ BO_ "GenMsgCycleTime" INT 0 10000;
+BA_DEF_DEF_ "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 256 20;
+BA_ "GenMsgCycleTime" BO_ 257 20;
+BA_ "GenMsgCycleTime" BO_ 300 100;
+BA_ "GenMsgCycleTime" BO_ 301 100;
+BA_ "GenMsgCycleTime" BO_ 302 100;
+BA_ "GenMsgCycleTime" BO_ 303 200;
+BA_ "GenMsgCycleTime" BO_ 400 100;
+
+VAL_ 400 ClusterState 0 "SLEEP" 1 "ACTIVE" 2 "GOODBYE" ;

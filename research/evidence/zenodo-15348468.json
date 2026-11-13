@@ -1,0 +1,137 @@
+{
+  "created": "2025-05-06T17:30:28.889039+05:30",
+  "modified": "2025-07-23T16:10:51.394515+05:30",
+  "id": 15348468,
+  "conceptrecid": "14229936",
+  "doi": "10.5281/zenodo.15348468",
+  "conceptdoi": "10.5281/zenodo.14229936",
+  "doi_url": "https://doi.org/10.5281/zenodo.15348468",
+  "metadata": {
+    "title": "Eclipse issue report dataset",
+    "doi": "10.5281/zenodo.15348468",
+    "publication_date": "2024-11-27",
+    "description": "<div>\n<div>This dataset contains bug reports for key Eclipse projects. It has been updated to reflect the latest available data and is suitable for: software engineering research, applying mining software repositories techniques, bug prediction, classification, triage, and related studies on highly configurable systems.</div>\n<div>&nbsp;</div>\n<div>\n<div>\n<h3>Projects Covered</h3>\n</div>\n</div>\n</div>\n<table>\n<tbody>\n<tr>\n<th>Project</th>\n<th>Number of issues</th>\n</tr>\n</tbody>\n<tbody>\n<tr>\n<td>Platform</td>\n<td>122.497</td>\n</tr>\n<tr>\n<td>JDT</td>\n<td>63.266</td>\n</tr>\n<tr>\n<td>CDT</td>\n<td>23.371</td>\n</tr>\n<tr>\n<td>BIRT</td>\n<td>23.308</td>\n</tr>\n<tr>\n<td>PDE</td>\n<td>17.639</td>\n</tr>\n<tr>\n<td>Equinox</td>\n<td>14.559</td>\n</tr>\n<tr>\n<td>Mylyn</td>\n<td>13.906</td>\n</tr>\n<tr>\n<td>TPTP</td>\n<td>10.579</td>\n</tr>\n<tr>\n<td>Papyrus</td>\n<td>13.253</td>\n</tr>\n</tbody>\n</table>\n<p><br>Contains the next attributes: Issue URL,ID,Alias,Classification,Component,Product,Version,Platform,Op sys,Status,Resolution,Depends on,Dupe of,Blocks,Groups,Flags,Severity,Priority,Deadline,Target Milestone,Creator,Creator Detail,Creation time,Assigned to,Assigned to detail,CC,CC detail,Is CC accessible,Is confirmed,Is open,Is creator accessible,Summary,Description,URL,Whiteboard,Keywords,See also,Last change time,QA contact,History/Activity Log,Comments,Attachments.</p>\n<div>\n<div>All the information about these attributes can be found at&nbsp;<a href=\"https://bugzilla.readthedocs.io/en/5.2/api/\" target=\"_blank\" rel=\"noopener\">Bugzilla's API documentation</a></div>\n<div>&nbsp;</div>\n<div>This dataset was obtained using the Issuex tool, available at Github:<a href=\"https://github.com/diverso-lab/Issuex\"> https://github.com/diverso-lab/Issuex</a></div>\n</div>",
+    "access_right": "open",
+    "creators": [
+      {
+        "name": "López Durán, Noelia",
+        "affiliation": "Universidad de Sevilla"
+      }
+    ],
+    "keywords": [
+      "Bugzilla",
+      "Eclipse Project",
+      "Eclipse",
+      "Dataset"
+    ],
+    "version": "v1.0.1",
+    "resource_type": {
+      "title": "Dataset",
+      "type": "dataset"
+    },
+    "license": {
+      "id": "cc-by-sa-4.0"
+    },
+    "communities": [
+      {
+        "id": "msr"
+      }
+    ],
+    "relations": {
+      "version": [
+        {
+          "index": 1,
+          "is_last": true,
+          "parent": {
+            "pid_type": "recid",
+            "pid_value": "14229936"
+          }
+        }
+      ]
+    }
+  },
+  "title": "Eclipse issue report dataset",
+  "links": {
+    "self": "https://zenodo.org/api/records/15348468",
+    "self_html": "https://zenodo.org/records/15348468",
+    "preview_html": "https://zenodo.org/records/15348468?preview=1",
+    "doi": "https://doi.org/10.5281/zenodo.15348468",
+    "self_doi": "https://doi.org/10.5281/zenodo.15348468",
+    "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.15348468",
+    "reserve_doi": "https://zenodo.org/api/records/15348468/draft/pids/doi",
+    "parent": "https://zenodo.org/api/records/14229936",
+    "parent_html": "https://zenodo.org/records/14229936",
+    "parent_doi": "https://doi.org/10.5281/zenodo.14229936",
+    "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.14229936",
+    "self_iiif_manifest": "https://zenodo.org/api/iiif/record:15348468/manifest",
+    "self_iiif_sequence": "https://zenodo.org/api/iiif/record:15348468/sequence/default",
+    "files": "https://zenodo.org/api/records/15348468/files",
+    "media_files": "https://zenodo.org/api/records/15348468/media-files",
+    "latest": "https://zenodo.org/api/records/15348468/versions/latest",
+    "latest_html": "https://zenodo.org/records/15348468/latest",
+    "versions": "https://zenodo.org/api/records/15348468/versions",
+    "draft": "https://zenodo.org/api/records/15348468/draft",
+    "access_links": "https://zenodo.org/api/records/15348468/access/links",
+    "access_grants": "https://zenodo.org/api/records/15348468/access/grants",
+    "access_users": "https://zenodo.org/api/records/15348468/access/users",
+    "access_request": "https://zenodo.org/api/records/15348468/access/request",
+    "access": "https://zenodo.org/api/records/15348468/access",
+    "communities": "https://zenodo.org/api/records/15348468/communities",
+    "communities-suggestions": "https://zenodo.org/api/records/15348468/communities-suggestions",
+    "request_deletion": "https://zenodo.org/api/records/15348468/request-deletion",
+    "file_modification": "https://zenodo.org/api/records/15348468/file-modification",
+    "quota_increase": "https://zenodo.org/api/records/15348468/quota-increase",
+    "requests": "https://zenodo.org/api/records/15348468/requests"
+  },
+  "updated": "2025-07-23T16:10:51.394515+05:30",
+  "recid": "15348468",
+  "revision": 8,
+  "files": [
+    {
+      "id": "3f3f5daf-b760-48aa-90ad-c612cc7f8486",
+      "key": "sample_data.csv",
+      "size": 2879417,
+      "checksum": "md5:d6ec742ed9e97a9e63acffbb54257d5c",
+      "links": {
+        "self": "https://zenodo.org/api/records/15348468/files/sample_data.csv/content"
+      }
+    },
+    {
+      "id": "be7e462e-b01e-4818-b41d-8dd807e2be6b",
+      "key": "Eclipse_dataset.zip",
+      "size": 17158276253,
+      "checksum": "md5:19494c20f33d5b4d4de2cc98d79fe84d",
+      "links": {
+        "self": "https://zenodo.org/api/records/15348468/files/Eclipse_dataset.zip/content"
+      }
+    },
+    {
+      "id": "7421e65a-c335-4171-a291-ee2eee36fd08",
+      "key": "README.md",
+      "size": 2614,
+      "checksum": "md5:91348fc06575d922844b61c3eda35fe4",
+      "links": {
+        "self": "https://zenodo.org/api/records/15348468/files/README.md/content"
+      }
+    }
+  ],
+  "swh": {},
+  "owners": [
+    {
+      "id": "1149709"
+    }
+  ],
+  "status": "published",
+  "stats": {
+    "downloads": 2075,
+    "unique_downloads": 1223,
+    "views": 2201,
+    "unique_views": 1961,
+    "version_downloads": 1780,
+    "version_unique_downloads": 1116,
+    "version_unique_views": 1602,
+    "version_views": 1811
+  },
+  "state": "done",
+  "submitted": true
+}

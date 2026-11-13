@@ -1,0 +1,243 @@
+{
+  "checked_on": "2026-11-13",
+  "method": "Repository pages opened through web reader; repository files, default-branch commits and licences inspected through GitHub connector. Zenodo/GitLab public API metadata retrieved directly; no benchmark programs executed.",
+  "github": [
+    {
+      "repository": "AleksandarMitrevski/se-requirements-classification",
+      "commit_sha": "1f5dc4501a1956f21011083594d925bac49f198c",
+      "committer_date": "2021-05-31T17:41:10Z",
+      "commit_url": "https://github.com/AleksandarMitrevski/se-requirements-classification/commit/1f5dc4501a1956f21011083594d925bac49f198c",
+      "api": "https://api.github.com/repos/AleksandarMitrevski/se-requirements-classification/commits?per_page=1"
+    },
+    {
+      "repository": "frieden84/nlp4re-reqeval",
+      "commit_sha": "05f42f83cca53c1d46e433e54b21e7f852cef7a5",
+      "committer_date": "2022-12-29T10:19:55Z",
+      "commit_url": "https://github.com/frieden84/nlp4re-reqeval/commit/05f42f83cca53c1d46e433e54b21e7f852cef7a5",
+      "api": "https://api.github.com/repos/frieden84/nlp4re-reqeval/commits?per_page=1"
+    },
+    {
+      "repository": "strictdoc-project/reqif",
+      "commit_sha": "6021dda83805c83e770efc464c35edd3a687e569",
+      "committer_date": "2026-11-12T22:31:19Z",
+      "commit_url": "https://github.com/strictdoc-project/reqif/commit/6021dda83805c83e770efc464c35edd3a687e569",
+      "api": "https://api.github.com/repos/strictdoc-project/reqif/commits?per_page=1"
+    },
+    {
+      "repository": "toppers/asp3_core",
+      "commit_sha": "bcf9a04ff9d1970b1f25967c8caf4e7388f18aad",
+      "committer_date": "2026-09-01T13:35:39Z",
+      "commit_url": "https://github.com/toppers/asp3_core/commit/bcf9a04ff9d1970b1f25967c8caf4e7388f18aad",
+      "api": "https://api.github.com/repos/toppers/asp3_core/commits?per_page=1"
+    },
+    {
+      "repository": "RTEMS/rtems-central",
+      "commit_sha": "82230386f0691791cbf0ea1ffac69337190d3ff5",
+      "committer_date": "2023-12-19T07:56:39Z",
+      "commit_url": "https://github.com/RTEMS/rtems-central/commit/82230386f0691791cbf0ea1ffac69337190d3ff5",
+      "api": "https://api.github.com/repos/RTEMS/rtems-central/commits?per_page=1"
+    },
+    {
+      "repository": "strictdoc-project/strictdoc",
+      "commit_sha": "1c9bacc03e2e10e6df6d8be9de45b42cde214791",
+      "committer_date": "2026-11-12T22:58:22Z",
+      "commit_url": "https://github.com/strictdoc-project/strictdoc/commit/1c9bacc03e2e10e6df6d8be9de45b42cde214791",
+      "api": "https://api.github.com/repos/strictdoc-project/strictdoc/commits?per_page=1"
+    },
+    {
+      "repository": "CoEST/TraceLab",
+      "commit_sha": "a9c74bd4dadbc091c8f5e5efd9f6fd5d96d5b5f1",
+      "committer_date": "2016-10-17T23:15:30Z",
+      "commit_url": "https://github.com/CoEST/TraceLab/commit/a9c74bd4dadbc091c8f5e5efd9f6fd5d96d5b5f1",
+      "api": "https://api.github.com/repos/CoEST/TraceLab/commits?per_page=1"
+    },
+    {
+      "repository": "commaai/opendbc",
+      "commit_sha": "27fa1c5d8eed3238a0a78c52ff5abb6cdc807bd2",
+      "committer_date": "2026-11-08T00:12:00Z",
+      "commit_url": "https://github.com/commaai/opendbc/commit/27fa1c5d8eed3238a0a78c52ff5abb6cdc807bd2",
+      "api": "https://api.github.com/repos/commaai/opendbc/commits?per_page=1"
+    },
+    {
+      "repository": "cantools/cantools",
+      "commit_sha": "2e4bbb8dc4cdc1fbe244f1eb3262a7ad317830e8",
+      "committer_date": "2026-11-10T16:36:40Z",
+      "commit_url": "https://github.com/cantools/cantools/commit/2e4bbb8dc4cdc1fbe244f1eb3262a7ad317830e8",
+      "api": "https://api.github.com/repos/cantools/cantools/commits?per_page=1"
+    },
+    {
+      "repository": "hardbyte/python-can",
+      "commit_sha": "86e85794f6c3505c988a4acd5d34f5b08f508b17",
+      "committer_date": "2026-11-11T13:25:54Z",
+      "commit_url": "https://github.com/hardbyte/python-can/commit/86e85794f6c3505c988a4acd5d34f5b08f508b17",
+      "api": "https://api.github.com/repos/hardbyte/python-can/commits?per_page=1"
+    },
+    {
+      "repository": "zombieCraig/ICSim",
+      "commit_sha": "2b3333ef866987d8adc9c15ff15b9b9189edf85b",
+      "committer_date": "2025-09-18T17:19:35Z",
+      "commit_url": "https://github.com/zombieCraig/ICSim/commit/2b3333ef866987d8adc9c15ff15b9b9189edf85b",
+      "api": "https://api.github.com/repos/zombieCraig/ICSim/commits?per_page=1"
+    },
+    {
+      "repository": "FreeRTOS/FreeRTOS-Kernel",
+      "commit_sha": "ca759444e9ca59cfa3a9faa6cb8b49e0772ca520",
+      "committer_date": "2026-10-29T16:53:06Z",
+      "commit_url": "https://github.com/FreeRTOS/FreeRTOS-Kernel/commit/ca759444e9ca59cfa3a9faa6cb8b49e0772ca520",
+      "api": "https://api.github.com/repos/FreeRTOS/FreeRTOS-Kernel/commits?per_page=1"
+    },
+    {
+      "repository": "zephyrproject-rtos/zephyr",
+      "commit_sha": "f8da8ea370508f274685a25ff19dbe5a9ff54790",
+      "committer_date": "2026-11-12T19:13:43Z",
+      "commit_url": "https://github.com/zephyrproject-rtos/zephyr/commit/f8da8ea370508f274685a25ff19dbe5a9ff54790",
+      "api": "https://api.github.com/repos/zephyrproject-rtos/zephyr/commits?per_page=1"
+    },
+    {
+      "repository": "openAUTOSAR/classic-platform",
+      "commit_sha": "09433770bebb8f27a7b480d7c96d814c68ffed3e",
+      "committer_date": "2020-04-02T19:15:01Z",
+      "commit_url": "https://github.com/openAUTOSAR/classic-platform/commit/09433770bebb8f27a7b480d7c96d814c68ffed3e",
+      "api": "https://api.github.com/repos/openAUTOSAR/classic-platform/commits?per_page=1"
+    },
+    {
+      "repository": "cppcheck-opensource/cppcheck",
+      "commit_sha": "6943b20272bb1c48030379bebb0221d20fbd4a8b",
+      "committer_date": "2026-11-13T07:57:48Z",
+      "commit_url": "https://github.com/cppcheck-opensource/cppcheck/commit/6943b20272bb1c48030379bebb0221d20fbd4a8b",
+      "api": "https://api.github.com/repos/cppcheck-opensource/cppcheck/commits?per_page=1"
+    },
+    {
+      "repository": "steflokos/openasc-catalogs",
+      "commit_sha": "9e1ed7db20ccf813966e48190e0fc2dd5fb2dd9a",
+      "committer_date": "2026-11-01T19:38:08Z",
+      "commit_url": "https://github.com/steflokos/openasc-catalogs/commit/9e1ed7db20ccf813966e48190e0fc2dd5fb2dd9a",
+      "api": "https://api.github.com/repos/steflokos/openasc-catalogs/commits?per_page=1"
+    },
+    {
+      "repository": "bhamsec/v2x-pki-formal-verification",
+      "commit_sha": "ef038b135ed91d66ca9402ac7324a73c2b35bb17",
+      "committer_date": "2026-04-21T16:29:59Z",
+      "commit_url": "https://github.com/bhamsec/v2x-pki-formal-verification/commit/ef038b135ed91d66ca9402ac7324a73c2b35bb17",
+      "api": "https://api.github.com/repos/bhamsec/v2x-pki-formal-verification/commits?per_page=1"
+    },
+    {
+      "repository": "spdx/spdx-examples",
+      "commit_sha": "08a3552c7a5348f79ae996196a5c4f99e068607e",
+      "committer_date": "2026-09-29T16:07:47Z",
+      "commit_url": "https://github.com/spdx/spdx-examples/commit/08a3552c7a5348f79ae996196a5c4f99e068607e",
+      "api": "https://api.github.com/repos/spdx/spdx-examples/commits?per_page=1"
+    },
+    {
+      "repository": "CycloneDX/bom-examples",
+      "commit_sha": "7d9172d00c88c05a8f1ccb90589d111870fc9d86",
+      "committer_date": "2025-10-21T15:13:32Z",
+      "commit_url": "https://github.com/CycloneDX/bom-examples/commit/7d9172d00c88c05a8f1ccb90589d111870fc9d86",
+      "api": "https://api.github.com/repos/CycloneDX/bom-examples/commits?per_page=1"
+    },
+    {
+      "repository": "openvex/vexctl",
+      "commit_sha": "d6574cfb82973faa47e9cebb659a77b185bdf2c2",
+      "committer_date": "2026-11-12T22:44:40Z",
+      "commit_url": "https://github.com/openvex/vexctl/commit/d6574cfb82973faa47e9cebb659a77b185bdf2c2",
+      "api": "https://api.github.com/repos/openvex/vexctl/commits?per_page=1"
+    },
+    {
+      "repository": "google/osv.dev",
+      "commit_sha": "e15de6dfb89d532a870731e9e78ca6b2db19a4ed",
+      "committer_date": "2026-11-13T06:02:33Z",
+      "commit_url": "https://github.com/google/osv.dev/commit/e15de6dfb89d532a870731e9e78ca6b2db19a4ed",
+      "api": "https://api.github.com/repos/google/osv.dev/commits?per_page=1"
+    },
+    {
+      "repository": "aboutcode-org/scancode-toolkit",
+      "commit_sha": "e423b48a1fdbff26219fbeafe7e9bdef293b91fc",
+      "committer_date": "2026-11-02T22:19:51Z",
+      "commit_url": "https://github.com/aboutcode-org/scancode-toolkit/commit/e423b48a1fdbff26219fbeafe7e9bdef293b91fc",
+      "api": "https://api.github.com/repos/aboutcode-org/scancode-toolkit/commits?per_page=1"
+    },
+    {
+      "repository": "COVESA/dlt-daemon",
+      "commit_sha": "144703c39f2031e8e38ee32fc3a9d2e3cb097b28",
+      "committer_date": "2026-11-05T19:33:40Z",
+      "commit_url": "https://github.com/COVESA/dlt-daemon/commit/144703c39f2031e8e38ee32fc3a9d2e3cb097b28",
+      "api": "https://api.github.com/repos/COVESA/dlt-daemon/commits?per_page=1"
+    },
+    {
+      "repository": "bmwcarit/python-dlt",
+      "commit_sha": "323a8f252488c82ece6191909aa697cfff948e4e",
+      "committer_date": "2026-09-07T14:37:06Z",
+      "commit_url": "https://github.com/bmwcarit/python-dlt/commit/323a8f252488c82ece6191909aa697cfff948e4e",
+      "api": "https://api.github.com/repos/bmwcarit/python-dlt/commits?per_page=1"
+    },
+    {
+      "repository": "av9ash/gitbugs",
+      "commit_sha": "eadf2d6794990a1aaa26d0ae15391f29f8969301",
+      "committer_date": "2026-04-30T23:49:24Z",
+      "commit_url": "https://github.com/av9ash/gitbugs/commit/eadf2d6794990a1aaa26d0ae15391f29f8969301",
+      "api": "https://api.github.com/repos/av9ash/gitbugs/commits?per_page=1"
+    },
+    {
+      "repository": "logpai/loghub",
+      "commit_sha": "dd61d0952749ee7963bde24220d1be5ede023033",
+      "committer_date": "2025-06-13T23:52:05Z",
+      "commit_url": "https://github.com/logpai/loghub/commit/dd61d0952749ee7963bde24220d1be5ede023033",
+      "api": "https://api.github.com/repos/logpai/loghub/commits?per_page=1"
+    },
+    {
+      "repository": "NASA-SW-VnV/fret",
+      "commit_sha": "cf0f913cc15c41705e803593297e89cd6056b839",
+      "committer_date": "2026-04-10T15:04:01Z",
+      "commit_url": "https://github.com/NASA-SW-VnV/fret/commit/cf0f913cc15c41705e803593297e89cd6056b839",
+      "api": "https://api.github.com/repos/NASA-SW-VnV/fret/commits?per_page=1"
+    },
+    {
+      "repository": "Noufst/TraceLLM",
+      "commit_sha": "411269e2bd8e9e0666486315eee501e6eb9be28a",
+      "committer_date": "2024-11-06T09:41:32Z",
+      "commit_url": "https://github.com/Noufst/TraceLLM/commit/411269e2bd8e9e0666486315eee501e6eb9be28a",
+      "api": "https://api.github.com/repos/Noufst/TraceLLM/commits?per_page=1"
+    },
+    {
+      "repository": "qodo-ai/qodo-cover",
+      "commit_sha": "adcf55baba40e8fbf8a84e68b70d08bef1e2b9c9",
+      "committer_date": "2025-06-24T03:26:40Z",
+      "commit_url": "https://github.com/qodo-ai/qodo-cover/commit/adcf55baba40e8fbf8a84e68b70d08bef1e2b9c9",
+      "api": "https://api.github.com/repos/qodo-ai/qodo-cover/commits?per_page=1"
+    },
+    {
+      "repository": "SWE-bench/SWE-bench",
+      "commit_sha": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "committer_date": "2026-09-02T01:50:34Z",
+      "commit_url": "https://github.com/SWE-bench/SWE-bench/commit/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "api": "https://api.github.com/repos/SWE-bench/SWE-bench/commits?per_page=1"
+    },
+    {
+      "repository": "google/osv-scanner",
+      "commit_sha": "80fe50567a5d6e0ec408353e2ceacca1561b91be",
+      "committer_date": "2026-11-12T02:18:58Z",
+      "commit_url": "https://github.com/google/osv-scanner/commit/80fe50567a5d6e0ec408353e2ceacca1561b91be",
+      "api": "https://api.github.com/repos/google/osv-scanner/commits?per_page=1"
+    }
+  ],
+  "rtems_submodule": [
+    {
+      "path": "modules/rsb",
+      "sha": "889cf95db0122bd1a6b21598569620c40ff2069d"
+    },
+    {
+      "path": "modules/rtems",
+      "sha": "824c485a9b970c847ab3bb4608106fdc7b0a7f45"
+    },
+    {
+      "path": "modules/rtems-docs",
+      "sha": "ddf2b038382df028973a40c18cc030021a03b578"
+    }
+  ],
+  "notes": [
+    "GitLab RTEMS generator project API description: Moved to Unmaintained 2026-06-12 / Pre-qualification Central - Requirements, Testing, Verification Artifact Generation.",
+    "COMET GitLab project 19822550: initial public commit 98aaf5440396d33cb8f40151e9721d3239bfbed4; 2020-07-08.",
+    "NVD selected 2026 year feed lastModifiedDate 2026-11-13T03:00:26-05:00; uncompressed size 549473026; gzip size 46206180; SHA256 74B9BBEAB11E6EEC9743E9F6183B836844854523BE1E4E7D9B336BD4F3B4B9A3.",
+    "HF SWE-bench Verified lastModified 2026-08-16T04:23:43Z; API cardData.license null."
+  ]
+}

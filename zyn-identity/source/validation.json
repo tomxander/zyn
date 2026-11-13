@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "logo_count": 6,
+  "icon_count": 44,
+  "grid": "16 points, 6 px pitch",
+  "stroke": "1.5 px / square / miter",
+  "gap_convention": "1u visible clearance; cut lengths compensate square caps",
+  "visible_gaps_measured_at_512": {
+    "zyn": [
+      5.964
+    ],
+    "sift": [
+      6.0
+    ],
+    "anvil": [
+      6.0
+    ],
+    "scribe": [
+      6.0
+    ],
+    "source": [
+      6.0
+    ],
+    "assay": [
+      5.973
+    ]
+  },
+  "approved_exception": "Z diagonal cut ends between grid points; paint cuts are not route vertices",
+  "checks": "Route vertices; arc angles; dot count and location; one path; one M; currentColor; no fills on strokes; compensated cut interval; optical gap width; export completeness; valid XML.",
+  "errors": []
+}

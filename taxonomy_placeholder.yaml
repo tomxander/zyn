@@ -1,0 +1,46 @@
+# PLACEHOLDER TAXONOMY. Authored for this prototype.
+# Scoped to an instrument cluster and adjacent domains.
+# Each entry: id (used in requirement IDs), name, scope (what belongs here).
+
+label: "PLACEHOLDER taxonomy v1 (Zyn prototype)"
+version: 1
+subsystems:
+  - id: PWR
+    name: Power modes and lifecycle
+    scope: Ignition and power states, startup, shutdown, sleep and wake, welcome and goodbye sequences.
+  - id: DISP
+    name: Display and graphics
+    scope: Screen layout, rendering, brightness, day/night modes, display content not tied to one gauge.
+  - id: GAUGE
+    name: Gauges and driver information
+    scope: Speedometer, tachometer, fuel, temperature, odometer, trip computer and their values.
+  - id: TT
+    name: Telltales and warnings
+    scope: Warning and indicator lamps, their activation, priority, colour and bulb-check behaviour.
+  - id: AUD
+    name: Chimes and audio warnings
+    scope: Warning chimes, tones, their priority, timing and volume.
+  - id: INP
+    name: Driver inputs
+    scope: Steering wheel buttons, menu navigation, settings changed by the driver.
+  - id: COM
+    name: Vehicle network communication
+    scope: CAN/LIN/Ethernet messages, signal reception and transmission, timeouts, bus-off handling.
+  - id: DIAG
+    name: Diagnostics
+    scope: Diagnostic trouble codes, fault memory, diagnostic services, self-tests.
+  - id: UPD
+    name: Software update and configuration
+    scope: Flashing, over-the-air or workshop update, variant coding, configuration parameters.
+  - id: SEC
+    name: Cybersecurity
+    scope: Authentication, secure boot, access control, protection of keys and diagnostic access.
+  - id: SAFE
+    name: Functional safety mechanisms
+    scope: Safety goals, monitoring of safety-relevant indications, safe states, plausibility checks.
+  - id: GEN
+    name: General and non-functional
+    scope: Performance, timing budgets, environmental, resource limits, general constraints.
+  - id: NONE
+    name: No requirements
+    scope: Introductions, glossaries, document history, notes that state no system behaviour.

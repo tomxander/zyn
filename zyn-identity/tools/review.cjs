@@ -1,0 +1,41 @@
+/* Browser review: local assets, theme controls, filtering and 16 px inspection. */
+const fs=require('node:fs');
+const path=require('node:path');
+const {pathToFileURL}=require('node:url');
+const {createRequire}=require('node:module');
+const req=process.env.ZYN_NODE_MODULES?createRequire(path.join(process.env.ZYN_NODE_MODULES,'_zyn.cjs')):require;
+const {chromium}=req('playwright');
+const root=path.resolve(__dirname,'..');
+(async()=>{
+  const browser=await chromium.launch({executablePath:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',headless:true});
+  const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text())});
+  await page.goto(pathToFileURL(path.join(root,'index.html')).href);
+  await page.evaluate(()=>document.fonts.ready);
+  const assert=(v,msg)=>{if(!v)throw Error(msg)};
+  assert(await page.locator('.glyph').count()===29,'29 glyphs');
+  assert(await page.locator('.tool').count()===5,'5 marks');
+  assert(await page.evaluate(()=>document.fonts.check('16px Space')&&document.fonts.check('12px Plex')),'Fonts loaded');
+  assert(await page.evaluate(()=>[...document.querySelectorAll('img')].every(i=>!i.complete||i.naturalWidth>0)),'Sheet images');
+  await page.screenshot({path:path.join(root,'source','review-desktop.png'),fullPage:true});
+  await page.locator('#theme').click();await page.locator('#mono').click();await page.locator('#grid').click();
+  assert(await page.locator('body').getAttribute('class')==='dark mono showgrid','Review controls');
+  await page.screenshot({path:path.join(root,'source','review-dark-mono.png'),fullPage:true});
+  await page.locator('#search').fill('review');
+  assert(await page.locator('.glyph:visible').count()===2,'Actor and status review search');
+  await page.locator('#size').click();
+  assert(await page.locator('.glyph:visible .glyph-picture svg').first().getAttribute('width')==='16','16px inspector');
+  await page.locator('#search').fill('');
+  assert(await page.locator('.glyph:visible').count()===29,'Search reset');
+  await page.locator('#grid').click();await page.locator('#mono').click();await page.locator('#theme').click();
+  await page.setViewportSize({width:390,height:844});
+  await page.evaluate(()=>window.scrollTo(0,0));
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile fits viewport');
+  await page.screenshot({path:path.join(root,'source','review-mobile.png'),fullPage:true});
+  assert(errors.length===0,'No browser errors: '+errors.join('; '));
+  // Browser-based route measurements are independent of the generator math.
+  const measurements=await page.evaluate(()=>[...document.querySelectorAll('.tool .large svg path')].map(p=>({length:p.getTotalLength(),gap:p.getAttribute('stroke-dasharray')})));
+  const report={result:'PASS',checks:['29 icons and 5 marks','Local fonts loaded','Local SVG sheet previews loaded','Dark, monochrome and grid controls','Search and search reset','16 px inspection','390 px viewport without horizontal overflow','No browser errors'],route_measurements:measurements};
+  fs.writeFileSync(path.join(root,'source','browser-review.json'),JSON.stringify(report,null,2));
+  console.log(JSON.stringify(report));await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

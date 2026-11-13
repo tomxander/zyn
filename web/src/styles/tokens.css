@@ -1,0 +1,130 @@
+/* Zyn design tokens: the exposure-record world. The only file allowed to hold literal
+   colours, fonts and durations (tests/test_design_system.py checks this). Everything else
+   uses var(--zyn-...). Light (a daylit light table) is the default; [data-theme="dark"]
+   on <html> switches to the darkroom. */
+
+/* Bahnschrift is a variable font installed with Windows. Declared through local() so the
+   browser exposes its width axis; the condensed display voice is the same face at 75%. */
+@font-face {
+  font-family: "Zyn DIN";
+  src: local("Bahnschrift");
+  font-stretch: 75% 100%;
+  font-weight: 300 700;
+}
+
+:root {
+  color-scheme: light;
+
+  /* The zone ramp: eleven steps, zone 0 (ink) to zone 10 (paper). The only greys. */
+  --zyn-z0: #121211; --zyn-z1: #222220; --zyn-z2: #363633; --zyn-z3: #4C4C48;
+  --zyn-z4: #63635E; --zyn-z5: #7C7C76; --zyn-z6: #97968F; --zyn-z7: #B4B3AC;
+  --zyn-z8: #D1D0C9; --zyn-z9: #E6E4DE; --zyn-z10: #F7F6F2;
+
+  /* roles */
+  --zyn-bg: #ECEAE4;              /* the light table */
+  --zyn-sheet: #FBFAF7;           /* a record sheet */
+  --zyn-sheet-under: var(--zyn-z9); /* the sheet beneath, its edge showing */
+  --zyn-tracing: rgba(251,250,247,.78); /* tracing-paper overlay */
+  --zyn-ink: var(--zyn-z0);
+  --zyn-ink-2: var(--zyn-z3);     /* secondary text */
+  --zyn-ink-3: var(--zyn-z4);     /* legends */
+  --zyn-rule: var(--zyn-z0);      /* ruled boxes */
+  --zyn-rule-soft: var(--zyn-z8); /* inner ruling */
+  --zyn-overlay: rgba(18,18,17,.32);
+  --zyn-hover: var(--zyn-z9);     /* hover and highlight: one ramp step, never a hatch */
+  /* on solid ink (the open run, the Tool cell, the primary button): text and its hover */
+  --zyn-on-ink: var(--zyn-sheet);
+  --zyn-on-ink-2: var(--zyn-z8);  /* secondary text on ink */
+  --zyn-ink-hover: var(--zyn-z2); /* a solid-ink control under the pointer */
+  /* the exact words a finding is about: a faint tint and a hatched band under them, never over */
+  --zyn-mark-tint: rgba(18,18,17,.06);
+
+  /* the one accent (the record's filtration colour): primary key cell, focus, current */
+  --zyn-accent: #1F5FCC;
+  --zyn-on-accent: #FFFFFF;
+  --zyn-ring: #1F5FCC;
+
+  /* status marks: small squares only, never fills or banners */
+  --zyn-ok: #157A4B; --zyn-warn: #A0520A; --zyn-info: #1868BA; --zyn-bad: #B3261E;
+  --zyn-muted: var(--zyn-z5);
+
+  /* line work: hatching is the warning language */
+  --zyn-hatch-ink: rgba(18,18,17,.34);
+  --zyn-hatch: repeating-linear-gradient(135deg, var(--zyn-hatch-ink) 0 1px, transparent 1px 6px);
+  --zyn-hatch-dense: repeating-linear-gradient(135deg, var(--zyn-hatch-ink) 0 1px, transparent 1px 3.5px);
+  --zyn-crosshatch: repeating-linear-gradient(135deg, var(--zyn-hatch-ink) 0 1px, transparent 1px 6px),
+                    repeating-linear-gradient(45deg, var(--zyn-hatch-ink) 0 1px, transparent 1px 6px);
+  /* One 1px rule at the foot of each tile. Use with .ruled (app.css), which sizes the tile
+     to the line height, rounded to whole pixels so each rule lands on one pixel row. */
+  --zyn-tracing-lines: linear-gradient(180deg, transparent calc(100% - 1px), var(--zyn-z8) calc(100% - 1px));
+  --zyn-shadow-lift: 0 10px 28px -12px rgba(18,18,17,.30), 0 2px 4px rgba(18,18,17,.06);
+  --zyn-shadow-float: 0 18px 48px -16px rgba(18,18,17,.38), 0 2px 6px rgba(18,18,17,.08);
+
+  /* type: DIN lineage. Bahnschrift and Cascadia ship with Windows, so this works offline. */
+  --zyn-font-display: "Zyn DIN", "DIN Condensed", "Arial Narrow", sans-serif;
+  --zyn-condensed: "wdth" 75;     /* Bahnschrift's condensed width, set on its variable axis */
+  --zyn-font-body: "Bahnschrift", "DIN Alternate", "Segoe UI", system-ui, sans-serif;
+  --zyn-font-mono: "Cascadia Mono", Consolas, ui-monospace, monospace;
+  --zyn-text-xs: 11px;
+  --zyn-text-sm: 12px;
+  --zyn-text-md: 13.5px;
+  --zyn-text-base: 16px;
+  --zyn-text-lg: 22px;
+  --zyn-text-xl: 34px;
+  --zyn-weight-body: 400; --zyn-weight-label: 500; --zyn-weight-strong: 700;
+  --zyn-leading: 1.55; --zyn-leading-tight: 1.05;
+  --zyn-track: .09em;
+  --zyn-measure: 78ch;
+
+  /* space: one 4px rhythm */
+  --zyn-s1: 2px; --zyn-s2: 4px; --zyn-s3: 6px; --zyn-s4: 8px; --zyn-s5: 12px;
+  --zyn-s6: 16px; --zyn-s7: 24px; --zyn-s8: 32px; --zyn-s9: 48px;
+
+  /* rules; corners are square, the record has no radius */
+  --zyn-line: 1px;
+  --zyn-line-strong: 1.5px;
+  --zyn-line-heavy: 2px;
+
+  /* controls */
+  --zyn-control: 34px;
+  --zyn-control-sm: 28px;
+
+  /* motion: damped, short, never bouncing */
+  --zyn-fast: 120ms; --zyn-base: 180ms; --zyn-slow: 260ms; --zyn-loop: 1600ms;
+  --zyn-instant: .01ms; /* reduced motion */
+  --zyn-ease: cubic-bezier(.2, 0, 0, 1);
+  --zyn-press: .98;
+  --zyn-disabled: .42;
+
+  /* layout */
+  --zyn-page-width: 1080px;
+  --zyn-sidebar-width: 288px;
+  --zyn-drawer-width: 540px;
+  --zyn-z-sticky: 200; --zyn-z-overlay: 400; --zyn-z-toast: 500;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* the darkroom: same ramp, inverted roles */
+  --zyn-bg: #141413;
+  --zyn-sheet: #1C1C1A;
+  --zyn-sheet-under: #232321;
+  --zyn-tracing: rgba(36,36,33,.84);
+  --zyn-ink: var(--zyn-z10);
+  --zyn-ink-2: var(--zyn-z8);
+  --zyn-ink-3: var(--zyn-z7);
+  --zyn-rule: var(--zyn-z7);
+  --zyn-rule-soft: var(--zyn-z2);
+  --zyn-overlay: rgba(0,0,0,.6);
+  --zyn-hover: #2A2A27;
+  --zyn-on-ink-2: var(--zyn-z3);
+  --zyn-ink-hover: var(--zyn-z8);
+  --zyn-mark-tint: rgba(247,246,242,.09);
+  --zyn-accent: #5C9DFF;
+  --zyn-on-accent: #07111F;
+  --zyn-ring: #5C9DFF;
+  --zyn-ok: #3DD68C; --zyn-warn: #F5A04D; --zyn-info: #5CB1FF; --zyn-bad: #FF7A70;
+  --zyn-hatch-ink: rgba(247,246,242,.55);
+  --zyn-shadow-lift: 0 12px 32px -12px rgba(0,0,0,.7), 0 2px 4px rgba(0,0,0,.4);
+  --zyn-shadow-float: 0 20px 52px -16px rgba(0,0,0,.8);
+}

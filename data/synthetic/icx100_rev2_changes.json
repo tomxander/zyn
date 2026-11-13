@@ -1,0 +1,50 @@
+{
+  "document": "icx100_srs_rev2.md compared with icx100_srs.md",
+  "status": "Synthetic, authored by Claude for the Zyn prototype. Not reviewed by an engineer.",
+  "changes": [
+    {
+      "kind": "changed",
+      "old": "goodbye screen for 3 s",
+      "new": "goodbye screen for 5 s",
+      "what": "value 3 s -> 5 s"
+    },
+    {
+      "kind": "changed",
+      "old": "should wake up quickly",
+      "new": "shall wake up within 300 ms",
+      "what": "should -> shall, vague word replaced by a value"
+    },
+    {
+      "kind": "changed",
+      "old": "above 20 km/h",
+      "new": "above 25 km/h",
+      "what": "table value 20 -> 25 km/h"
+    },
+    {
+      "kind": "changed",
+      "old": "three times its cycle time",
+      "new": "more than 500 ms",
+      "what": "signal-loss timeout aligned with 7.4"
+    },
+    {
+      "kind": "removed",
+      "old": "menu to change the display theme",
+      "what": "9.3 deleted"
+    },
+    {
+      "kind": "moved",
+      "old": "write memory shall require successful security access",
+      "what": "13.1 moved to 11.4"
+    },
+    {
+      "kind": "new_text",
+      "new": "estimated remaining range",
+      "what": "6.4 added"
+    },
+    {
+      "kind": "new_text",
+      "new": "AmbientLight",
+      "what": "section 16 added"
+    }
+  ]
+}

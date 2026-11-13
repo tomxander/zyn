@@ -1,0 +1,99 @@
+{
+  "eval": "E1 QuRE quality flags",
+  "attribution": "QuRE 1.0.1, Femmer, Houdek, Unterbusch et al., Zenodo record 16049822, CC BY 4.0. Used unmodified; sampled for evaluation.",
+  "source_sha256": "c6a0c872873ba54028b97361c4cf1d5ad488bdea622a922cbee33265814925d6",
+  "sample": "200 unique requirements, seed 42",
+  "labelled_weak_words": 209,
+  "defects": 72,
+  "started": "2026-11-13T19:33:00",
+  "profiles": {
+    "claude-opus": {
+      "run_id": "20261113-193300-374147",
+      "failed": {},
+      "cost_usd": 1.1515,
+      "calls": 14,
+      "scores": {
+        "code": {
+          "tp": 25,
+          "fp": 55,
+          "fn": 47,
+          "tn": 82,
+          "precision": 0.312,
+          "recall": 0.347,
+          "f1": 0.329
+        },
+        "ai": {
+          "tp": 63,
+          "fp": 81,
+          "fn": 9,
+          "tn": 56,
+          "precision": 0.438,
+          "recall": 0.875,
+          "f1": 0.583
+        },
+        "code+ai": {
+          "tp": 65,
+          "fp": 103,
+          "fn": 7,
+          "tn": 34,
+          "precision": 0.387,
+          "recall": 0.903,
+          "f1": 0.542
+        },
+        "flag every weak word": {
+          "tp": 72,
+          "fp": 137,
+          "fn": 0,
+          "tn": 0,
+          "precision": 0.344,
+          "recall": 1.0,
+          "f1": 0.512
+        }
+      }
+    },
+    "claude-sonnet": {
+      "run_id": "20261113-193519-cc8ddc",
+      "failed": {},
+      "cost_usd": 0.464,
+      "calls": 14,
+      "scores": {
+        "code": {
+          "tp": 25,
+          "fp": 55,
+          "fn": 47,
+          "tn": 82,
+          "precision": 0.312,
+          "recall": 0.347,
+          "f1": 0.329
+        },
+        "ai": {
+          "tp": 63,
+          "fp": 85,
+          "fn": 9,
+          "tn": 52,
+          "precision": 0.426,
+          "recall": 0.875,
+          "f1": 0.573
+        },
+        "code+ai": {
+          "tp": 66,
+          "fp": 105,
+          "fn": 6,
+          "tn": 32,
+          "precision": 0.386,
+          "recall": 0.917,
+          "f1": 0.543
+        },
+        "flag every weak word": {
+          "tp": 72,
+          "fp": 137,
+          "fn": 0,
+          "tn": 0,
+          "precision": 0.344,
+          "recall": 1.0,
+          "f1": 0.512
+        }
+      }
+    }
+  }
+}

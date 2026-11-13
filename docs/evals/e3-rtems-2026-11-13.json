@@ -1,0 +1,46 @@
+{
+  "eval": "E3 RTEMS extraction and grounding",
+  "attribution": "RTEMS rtems-central at commit 82230386, spec/rtems/*/req, files offered as CC-BY-SA-4.0 OR BSD-2-Clause, used under BSD-2-Clause; copyright embedded brains GmbH & Co. KG and others as stated per file. Rendered into a document by Zyn's eval script (our construction).",
+  "files": [
+    "spec__rtems__barrier__req__create.yml",
+    "spec__rtems__event__req__send-receive.yml",
+    "spec__rtems__message__req__broadcast.yml",
+    "spec__rtems__part__req__create.yml",
+    "spec__rtems__ratemon__req__cancel.yml",
+    "spec__rtems__sem__req__create.yml",
+    "spec__rtems__signal__req__catch.yml",
+    "spec__rtems__timer__req__cancel.yml"
+  ],
+  "rendered_sha256": "805b5799a8aac5ed5df28433e403d3e11df89fa71608e3a214d86249efaf2f4c",
+  "gold_statements": 110,
+  "sections": 8,
+  "started": "2026-11-13T19:46:16",
+  "profiles": {
+    "claude-opus": {
+      "run_id": "20261113-194616-77f153",
+      "failed_sections": 0,
+      "cost_usd": 0.4473,
+      "calls": 8,
+      "extracted": 110,
+      "recall": 1.0,
+      "matched": 110,
+      "extra": 0,
+      "quotes_verbatim": 1.0,
+      "modal_kept": 1.0,
+      "missed": []
+    },
+    "claude-sonnet": {
+      "run_id": "20261113-194842-b9241d",
+      "failed_sections": 0,
+      "cost_usd": 0.1881,
+      "calls": 8,
+      "extracted": 110,
+      "recall": 1.0,
+      "matched": 110,
+      "extra": 0,
+      "quotes_verbatim": 1.0,
+      "modal_kept": 1.0,
+      "missed": []
+    }
+  }
+}

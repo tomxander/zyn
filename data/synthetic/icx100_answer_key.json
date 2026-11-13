@@ -1,0 +1,107 @@
+{
+  "document": "icx100_srs.md",
+  "status": "AUTHOR-MADE (Claude). Reviewed by an independent AI agent, not by a domain engineer.",
+  "taxonomy": "PLACEHOLDER taxonomy v1",
+  "scoring_notes": "flags: required, scored by recall. acceptable_flags: neither required nor penalised. Any other flag counts as a false positive. types: any listed type is correct. Quotes compared after normalising whitespace, case and table pipes.",
+  "sections": {"1": ["NONE"], "2": ["NONE"], "3": ["PWR"], "4": ["GAUGE"], "5": ["GAUGE"], "6": ["GAUGE"], "7": ["TT"], "8": ["AUD"], "9": ["INP"], "10": ["COM"], "11": ["DIAG"], "12": ["UPD"], "13": ["SEC"], "14": ["SAFE"], "15": ["GEN", "DISP"], "_title": ["NONE"]},
+  "requirements": [
+    {"gold_id": "G01", "section": "3", "quote": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.", "text": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.", "modal": "shall", "types": ["performance", "functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G02", "section": "3", "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s and then enter the SLEEP state.", "text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G03", "section": "3", "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s and then enter the SLEEP state.", "text": "After displaying the goodbye screen, the cluster shall enter the SLEEP state.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G04", "section": "3", "quote": "In the SLEEP state, the cluster shall draw no more than 0.1 mA from the battery supply.", "text": "In the SLEEP state, the cluster shall draw no more than 0.1 mA from the battery supply.", "modal": "shall", "types": ["constraint", "performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G05", "section": "3", "quote": "The cluster should wake up quickly when a door is opened.", "text": "The cluster should wake up quickly when a door is opened.", "modal": "should", "types": ["performance", "functional"], "flags": ["weak_word", "not_testable", "missing_value"], "acceptable_flags": []},
+    {"gold_id": "G06", "section": "4", "quote": "The cluster shall display vehicle speed received in the VehicleSpeed signal, in km/h or mph according to the unit setting.", "text": "The cluster shall display vehicle speed received in the VehicleSpeed signal, in km/h or mph according to the unit setting.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G07", "section": "4", "quote": "The displayed speed shall never be lower than the actual vehicle speed and shall not exceed it by more than 10 percent plus 4 km/h.", "text": "The displayed speed shall never be lower than the actual vehicle speed.", "modal": "shall", "types": ["functional", "safety", "performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G08", "section": "4", "quote": "The displayed speed shall never be lower than the actual vehicle speed and shall not exceed it by more than 10 percent plus 4 km/h.", "text": "The displayed speed shall not exceed the actual vehicle speed by more than 10 percent plus 4 km/h.", "modal": "shall", "types": ["functional", "safety", "performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G09", "section": "4", "quote": "The speed value shall be updated at least every 100 ms.", "text": "The displayed speed value shall be updated at least every 100 ms.", "modal": "shall", "types": ["performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G10", "section": "5", "quote": "The cluster shall display engine speed from the EngineSpeed signal as a needle on a scale from 0 to 8000 rpm.", "text": "The cluster shall display engine speed from the EngineSpeed signal as a needle on a scale from 0 to 8000 rpm.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G11", "section": "5", "quote": "The red zone of the scale shall start at the value given by the configuration parameter RedlineRpm.", "text": "The red zone of the tachometer scale shall start at the value given by the configuration parameter RedlineRpm.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": ["unclear_reference"]},
+    {"gold_id": "G12", "section": "6", "quote": "The cluster shall display the fuel level as a bar graph with eight segments.", "text": "The cluster shall display the fuel level as a bar graph with eight segments.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G13", "section": "6", "quote": "The fuel level display shall be filtered so that it does not fluctuate when the vehicle is driving on an incline.", "text": "The fuel level display shall be filtered so that it does not fluctuate when the vehicle is driving on an incline.", "modal": "shall", "types": ["functional"], "flags": ["missing_value", "not_testable"], "acceptable_flags": ["weak_word", "ambiguous"]},
+    {"gold_id": "G14", "section": "6", "quote": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit.", "text": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": ["ambiguous"]},
+    {"gold_id": "G15", "section": "7", "quote": "| Brake system warning | BrakeWarn = 1 | Red | Steady on |", "text": "When BrakeWarn = 1, the cluster shall show the red brake system warning telltale steady on.", "modal": "shall", "types": ["functional", "safety"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G16", "section": "7", "quote": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 20 km/h | Red | Flashing at 1 Hz |", "text": "When BeltUnfastened = 1 and vehicle speed is above 20 km/h, the cluster shall flash the red seat belt reminder telltale at 1 Hz.", "modal": "shall", "types": ["functional", "safety"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G17", "section": "7", "quote": "| Low fuel | FuelLow = 1 | Amber | Steady on |", "text": "When FuelLow = 1, the cluster shall show the amber low fuel telltale steady on.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": ["ambiguous"]},
+    {"gold_id": "G18", "section": "7", "quote": "| Engine malfunction | MIL = 1 | Amber | Steady on |", "text": "When MIL = 1, the cluster shall show the amber engine malfunction telltale steady on.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G19", "section": "7", "quote": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check.", "text": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G20", "section": "7", "quote": "Red telltales shall have priority over amber telltales.", "text": "Red telltales shall have priority over amber telltales.", "modal": "shall", "types": ["functional"], "flags": ["ambiguous"], "acceptable_flags": ["not_testable"]},
+    {"gold_id": "G21", "section": "7", "quote": "A telltale whose input signal has not been received for more than 500 ms shall be lit and a DTC shall be stored.", "text": "A telltale whose input signal has not been received for more than 500 ms shall be lit.", "modal": "shall", "types": ["functional", "safety", "reliability"], "flags": [], "acceptable_flags": ["ambiguous"]},
+    {"gold_id": "G22", "section": "7", "quote": "A telltale whose input signal has not been received for more than 500 ms shall be lit and a DTC shall be stored.", "text": "When a telltale input signal has not been received for more than 500 ms, a DTC shall be stored.", "modal": "shall", "types": ["functional", "reliability"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G23", "section": "8", "quote": "The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.", "text": "The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.", "modal": "shall", "types": ["functional", "safety"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G24", "section": "8", "quote": "The chime volume should be adequate for all driving conditions.", "text": "The chime volume should be adequate for all driving conditions.", "modal": "should", "types": ["usability", "performance"], "flags": ["weak_word", "not_testable", "missing_value"], "acceptable_flags": []},
+    {"gold_id": "G25", "section": "8", "quote": "If two chimes are requested at the same time, the cluster shall play the chime with the higher priority as defined in the chime priority list.", "text": "If two chimes are requested at the same time, the cluster shall play the chime with the higher priority as defined in the chime priority list.", "modal": "shall", "types": ["functional"], "flags": ["unclear_reference"], "acceptable_flags": []},
+    {"gold_id": "G26", "section": "9", "quote": "The driver shall be able to scroll through the trip computer pages using the up and down buttons on the left steering wheel switch.", "text": "The driver shall be able to scroll through the trip computer pages using the up and down buttons on the left steering wheel switch.", "modal": "shall", "types": ["functional", "usability"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G27", "section": "9", "quote": "A long press of the OK button for more than 2 s shall reset the selected trip counter.", "text": "A long press of the OK button for more than 2 s shall reset the selected trip counter.", "modal": "shall", "types": ["functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G28", "section": "9", "quote": "The cluster may offer a menu to change the display theme.", "text": "The cluster may offer a menu to change the display theme.", "modal": "may", "types": ["functional", "usability"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G29", "section": "10", "quote": "The cluster shall communicate on the powertrain CAN bus at a bit rate of 500 kbit/s.", "text": "The cluster shall communicate on the powertrain CAN bus at a bit rate of 500 kbit/s.", "modal": "shall", "types": ["interface", "constraint"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G30", "section": "10", "quote": "If a CAN signal is not received within three times its cycle time, the cluster shall treat the signal as invalid.", "text": "If a CAN signal is not received within three times its cycle time, the cluster shall treat the signal as invalid.", "modal": "shall", "types": ["interface", "functional", "reliability"], "flags": [], "acceptable_flags": ["unclear_reference", "ambiguous"]},
+    {"gold_id": "G31", "section": "10", "quote": "The cluster shall transmit the ClusterStatus message every 100 ms.", "text": "The cluster shall transmit the ClusterStatus message every 100 ms.", "modal": "shall", "types": ["interface", "performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G32", "section": "10", "quote": "After a bus-off event, the cluster shall attempt recovery as specified in the network management document.", "text": "After a bus-off event, the cluster shall attempt recovery as specified in the network management document.", "modal": "shall", "types": ["interface", "reliability", "functional"], "flags": ["unclear_reference"], "acceptable_flags": []},
+    {"gold_id": "G33", "section": "11", "quote": "The cluster shall store a DTC when the display backlight driver reports a fault.", "text": "The cluster shall store a DTC when the display backlight driver reports a fault.", "modal": "shall", "types": ["functional", "reliability"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G34", "section": "11", "quote": "Stored DTCs shall be readable by a diagnostic tester.", "text": "Stored DTCs shall be readable by a diagnostic tester.", "modal": "shall", "types": ["functional", "interface"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G35", "section": "11", "quote": "The cluster shall perform a display self-test at startup and report the result.", "text": "The cluster shall perform a display self-test at startup.", "modal": "shall", "types": ["functional", "reliability"], "flags": [], "acceptable_flags": ["ambiguous"]},
+    {"gold_id": "G36", "section": "11", "quote": "The cluster shall perform a display self-test at startup and report the result.", "text": "The cluster shall report the result of the display self-test.", "modal": "shall", "types": ["functional"], "flags": ["ambiguous"], "acceptable_flags": []},
+    {"gold_id": "G37", "section": "12", "quote": "The cluster software shall be updatable through the diagnostic connector.", "text": "The cluster software shall be updatable through the diagnostic connector.", "modal": "shall", "types": ["functional", "interface"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G38", "section": "12", "quote": "A software update shall be accepted only if its digital signature is valid.", "text": "A software update shall be accepted only if its digital signature is valid.", "modal": "shall", "types": ["security"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G39", "section": "12", "quote": "If an update fails, the cluster shall return to the previously installed software version.", "text": "If an update fails, the cluster shall return to the previously installed software version.", "modal": "shall", "types": ["reliability", "functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G40", "section": "13", "quote": "Diagnostic services that write memory shall require successful security access authentication.", "text": "Diagnostic services that write memory shall require successful security access authentication.", "modal": "shall", "types": ["security"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G41", "section": "13", "quote": "The cluster shall protect cryptographic keys appropriately.", "text": "The cluster shall protect cryptographic keys appropriately.", "modal": "shall", "types": ["security"], "flags": ["weak_word", "not_testable"], "acceptable_flags": ["missing_value"]},
+    {"gold_id": "G42", "section": "14", "quote": "The cluster shall monitor the displayed state of the brake system warning telltale and detect a mismatch with the requested state within 200 ms.", "text": "The cluster shall detect a mismatch between the displayed and requested state of the brake system warning telltale within 200 ms.", "modal": "shall", "types": ["safety", "functional", "performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G43", "section": "14", "quote": "If a mismatch is detected, the cluster shall display a text warning.", "text": "If a brake system warning telltale mismatch is detected, the cluster shall display a text warning.", "modal": "shall", "types": ["safety", "functional"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G44", "section": "15", "quote": "The cluster shall display the first frame within 2 s of power-up.", "text": "The cluster shall display the first frame within 2 s of power-up.", "modal": "shall", "types": ["performance"], "flags": [], "acceptable_flags": []},
+    {"gold_id": "G45", "section": "15", "quote": "The graphics shall run smoothly at all times.", "text": "The graphics shall run smoothly at all times.", "modal": "shall", "types": ["performance"], "flags": ["weak_word", "not_testable", "missing_value"], "acceptable_flags": []},
+    {"gold_id": "G46", "section": "15", "quote": "CPU load shall not exceed 70 percent averaged over any 1 s window.", "text": "CPU load shall not exceed 70 percent averaged over any 1 s window.", "modal": "shall", "types": ["performance", "constraint"], "flags": [], "acceptable_flags": []}
+  ],
+  "optional": [
+      {
+          "section": "7",
+          "quote": "The cluster shall control the telltales listed in Table 1 according to the stated input signal and colour.",
+          "why": "Umbrella statement over Table 1. Extracting it or not is acceptable."
+      },
+      {
+          "section": "14",
+          "quote": "The cluster shall monitor the displayed state of the brake system warning telltale",
+          "why": "Monitoring may reasonably be extracted separately from detection."
+      }
+  ],
+  "not_requirements": [
+      {
+          "section": "_title",
+          "quote": "Synthetic document written for the Zyn prototype harness."
+      },
+      {
+          "section": "1",
+          "quote": "This document specifies the software behaviour of the ICX-100"
+      },
+      {
+          "section": "1",
+          "quote": "It is intended for software developers and test engineers."
+      },
+      {
+          "section": "2",
+          "quote": "| DTC | Diagnostic trouble code |"
+      },
+      {
+          "section": "2",
+          "quote": "| ECU | Electronic control unit |"
+      },
+      {
+          "section": "2",
+          "quote": "| IGN | Ignition |"
+      },
+      {
+          "section": "4",
+          "quote": "Note: Over-reading is permitted so that the driver is never shown a speed lower than the true speed."
+      }
+  ],
+  "known_spec_issues": [
+      "Low fuel is triggered two ways: 6.3 'below 10 percent' and Table 1 'FuelLow = 1' (G14, G17). Merging or flagging ambiguous is acceptable.",
+      "Two signal-loss rules: 7.4 'more than 500 ms' and 10.2 'three times its cycle time' can conflict.",
+      "Startup timing: 3.1 ACTIVE within 1.5 s of IGN ON vs 15.1 first frame within 2 s of undefined 'power-up'.",
+      "DTC storage appears in 7.4 (TT section) and 11.1 (DIAG section); G22 sits under TT by section mapping."
+  ],
+  "review_history": [
+      "2026-11-13 authored by Claude.",
+      "2026-11-13 reviewed by an independent AI agent (fresh context). Must-fix items applied; considered items applied as acceptable_flags or extra types. Gold total confirmed at 46."
+  ]
+}

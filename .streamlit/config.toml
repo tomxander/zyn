@@ -1,0 +1,63 @@
+# Zyn review screen theme. Ink-and-paper base, one accent (Signal Blue), green for
+# passed checks, amber for anything that needs a person. Follows the OS light/dark setting.
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+runOnSave = true
+
+[theme]
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap, sans-serif"
+headingFont = "Space Grotesk:https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap, sans-serif"
+codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap, monospace"
+baseFontSize = 15
+baseFontWeight = 400
+codeFontSize = "0.82rem"
+headingFontWeights = [600, 600, 600, 600, 500, 500]
+headingFontSizes = ["2rem", "1.5rem", "1.25rem", "1.05rem", "0.95rem", "0.85rem"]
+metricValueFontSize = "1.75rem"
+metricValueFontWeight = 500
+baseRadius = "8px"
+buttonRadius = "6px"
+showWidgetBorder = true
+showSidebarBorder = true
+linkUnderline = false
+
+[theme.light]
+primaryColor = "#1F7FE0"
+backgroundColor = "#FBFBFA"
+secondaryBackgroundColor = "#F2F2F0"
+textColor = "#17181A"
+borderColor = "#E3E3E0"
+dataframeBorderColor = "#E3E3E0"
+linkColor = "#1F7FE0"
+codeBackgroundColor = "#F2F2F0"
+codeTextColor = "#17181A"
+greenColor = "#1E9E63"
+orangeColor = "#C4650F"
+blueColor = "#1F7FE0"
+redColor = "#D14343"
+
+[theme.light.sidebar]
+backgroundColor = "#F4F4F2"
+secondaryBackgroundColor = "#EAEAE7"
+
+[theme.dark]
+primaryColor = "#2E9BFF"
+backgroundColor = "#0E0F11"
+secondaryBackgroundColor = "#17191C"
+textColor = "#E8E8E6"
+borderColor = "#26292E"
+dataframeBorderColor = "#26292E"
+linkColor = "#5CB1FF"
+codeBackgroundColor = "#1B1E22"
+codeTextColor = "#E8E8E6"
+greenColor = "#3DD68C"
+orangeColor = "#F08A24"
+blueColor = "#2E9BFF"
+redColor = "#F06363"
+
+[theme.dark.sidebar]
+backgroundColor = "#121316"
+secondaryBackgroundColor = "#1A1C20"

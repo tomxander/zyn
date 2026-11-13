@@ -1,0 +1,6 @@
+description: Built-in checks plus the EARS sentence-pattern check
+checks: [weak_word, placeholder, no_modal, not_atomic, not_ears, duplicate_id, duplicate_text,
+         ungrounded, invented_value, modal_changed]
+weak_words_add: []
+weak_words_allow: []
+custom_checks: []

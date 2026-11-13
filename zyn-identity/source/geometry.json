@@ -1,0 +1,2304 @@
+{
+  "grid": {
+    "canvas": 24,
+    "points": [
+      3,
+      9,
+      15,
+      21
+    ],
+    "unit": 6,
+    "stroke": 1.5,
+    "dot": 2,
+    "gap": 6,
+    "gap_measure": "visible clearance; square-cap compensation"
+  },
+  "logos": {
+    "zyn": {
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "gap": 4.621320343559642,
+      "dot": [
+        3,
+        3
+      ],
+      "rationale": [
+        "A Z follows one traceable route from input to output.",
+        "The diagonal pause makes review part of the route."
+      ],
+      "cut": [
+        26.97792206135785,
+        7.5
+      ],
+      "visible_gap": 6
+    },
+    "sift": {
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          2,
+          1
+        ]
+      ],
+      "gap": 8.32842712474619,
+      "dot": [
+        1,
+        0
+      ],
+      "rationale": [
+        "An open lattice sorts the source into usable requirements.",
+        "A retained dot sits above the mesh; an opening lets material through."
+      ],
+      "cut": [
+        49.220562748477136,
+        7.5
+      ],
+      "visible_gap": 6
+    },
+    "anvil": {
+      "commands": [
+        [
+          "M",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          2,
+          2
+        ]
+      ],
+      "gap": 11.414213562373096,
+      "dot": [
+        0,
+        1
+      ],
+      "rationale": [
+        "A short striker meets a broad, grounded working surface.",
+        "The pause is at impact; the single dot is the spark of a checked test."
+      ],
+      "cut": [
+        66.98528137423858,
+        7.5
+      ],
+      "visible_gap": 6
+    },
+    "scribe": {
+      "commands": [
+        [
+          "M",
+          3,
+          0
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "gap": 11,
+      "dot": [
+        3,
+        3
+      ],
+      "rationale": [
+        "A written line returns, advances and keeps its place.",
+        "The square terminal is a cursor, ready for the next approved line."
+      ],
+      "cut": [
+        65.25,
+        7.5
+      ],
+      "visible_gap": 6
+    },
+    "source": {
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ]
+      ],
+      "gap": 4,
+      "dot": [
+        2,
+        2
+      ],
+      "rationale": [
+        "Supply enters from outside and winds inward to one accountable point.",
+        "The opening on the way in is where every input is checked."
+      ],
+      "cut": [
+        23.25,
+        7.5
+      ],
+      "visible_gap": 6
+    },
+    "assay": {
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ]
+      ],
+      "gap": 4.6,
+      "dot": [
+        2,
+        2
+      ],
+      "rationale": [
+        "A hallmark: the stamp an assay office strikes once metal is tested against its standard.",
+        "The bar inside is the standard; the dot below it is the measured result."
+      ],
+      "cut": [
+        26.849999999999998,
+        7.5
+      ],
+      "visible_gap": 6
+    }
+  },
+  "icons": {
+    "sift": {
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          2,
+          1
+        ]
+      ],
+      "gap": 8.32842712474619,
+      "dot": [
+        1,
+        0
+      ],
+      "rationale": [
+        "An open lattice sorts the source into usable requirements.",
+        "A retained dot sits above the mesh; an opening lets material through."
+      ],
+      "cut": [
+        49.220562748477136,
+        7.5
+      ],
+      "visible_gap": 6,
+      "label": "Sift",
+      "group": "Navigation",
+      "meaning": "Tool identity, preserved at navigation size."
+    },
+    "anvil": {
+      "commands": [
+        [
+          "M",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          2,
+          2
+        ]
+      ],
+      "gap": 11.414213562373096,
+      "dot": [
+        0,
+        1
+      ],
+      "rationale": [
+        "A short striker meets a broad, grounded working surface.",
+        "The pause is at impact; the single dot is the spark of a checked test."
+      ],
+      "cut": [
+        66.98528137423858,
+        7.5
+      ],
+      "visible_gap": 6,
+      "label": "Anvil",
+      "group": "Navigation",
+      "meaning": "Tool identity, preserved at navigation size."
+    },
+    "scribe": {
+      "commands": [
+        [
+          "M",
+          3,
+          0
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "gap": 11,
+      "dot": [
+        3,
+        3
+      ],
+      "rationale": [
+        "A written line returns, advances and keeps its place.",
+        "The square terminal is a cursor, ready for the next approved line."
+      ],
+      "cut": [
+        65.25,
+        7.5
+      ],
+      "visible_gap": 6,
+      "label": "Scribe",
+      "group": "Navigation",
+      "meaning": "Tool identity, preserved at navigation size."
+    },
+    "source": {
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ]
+      ],
+      "gap": 4,
+      "dot": [
+        2,
+        2
+      ],
+      "rationale": [
+        "Supply enters from outside and winds inward to one accountable point.",
+        "The opening on the way in is where every input is checked."
+      ],
+      "cut": [
+        23.25,
+        7.5
+      ],
+      "visible_gap": 6,
+      "label": "Source",
+      "group": "Navigation",
+      "meaning": "Tool identity, preserved at navigation size."
+    },
+    "assay": {
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ]
+      ],
+      "gap": 4.6,
+      "dot": [
+        2,
+        2
+      ],
+      "rationale": [
+        "A hallmark: the stamp an assay office strikes once metal is tested against its standard.",
+        "The bar inside is the standard; the dot below it is the measured result."
+      ],
+      "cut": [
+        26.849999999999998,
+        7.5
+      ],
+      "visible_gap": 6,
+      "label": "Assay",
+      "group": "Navigation",
+      "meaning": "Tool identity, preserved at navigation size."
+    },
+    "audit-log": {
+      "label": "Audit log",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A ruled ledger: every entry kept in order."
+    },
+    "rule-profiles": {
+      "label": "Rule profiles",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Stepped thresholds, from permissive to strict."
+    },
+    "settings": {
+      "label": "Settings",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A single adjustable slider; no gear."
+    },
+    "new-run": {
+      "label": "New run",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "An addition sign, traced through its junction."
+    },
+    "run-again": {
+      "label": "Run again",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          3,
+          2
+        ],
+        [
+          "A",
+          1,
+          1,
+          2,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Returning arrow: compute a fresh answer."
+    },
+    "replay": {
+      "label": "Replay · reused",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Playback triangle with a return enclosure: reuse an existing answer."
+    },
+    "approve": {
+      "label": "Approve",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          3,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "An affirmative check."
+    },
+    "reject": {
+      "label": "Reject",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A ruled-out result, enclosed and struck through."
+    },
+    "send-back": {
+      "label": "Send back",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Leftward return arrow with an open tail."
+    },
+    "export": {
+      "label": "Export",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A route leaving its tray."
+    },
+    "evidence-report": {
+      "label": "Evidence report",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          3,
+          0
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A document perimeter ending in a check."
+    },
+    "compare": {
+      "label": "Compare",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          1,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Two overlapping squares: what two results share and where they differ."
+    },
+    "filter": {
+      "label": "Filter",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          0,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A funnel reduces a wide input."
+    },
+    "search": {
+      "label": "Search",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          3,
+          3
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "A",
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          "A",
+          1,
+          1,
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A quarter-arc lens and a diagonal handle."
+    },
+    "code-check": {
+      "label": "Code check",
+      "group": "Who said it",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Angle brackets and a slash identify deterministic code."
+    },
+    "ai-reviewer": {
+      "label": "AI reviewer",
+      "group": "Who said it",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ]
+      ],
+      "dot": [
+        2,
+        1
+      ],
+      "gap": null,
+      "meaning": "An open eye with its pupil forward identifies an independent reading."
+    },
+    "person": {
+      "label": "Person",
+      "group": "Who said it",
+      "commands": [
+        [
+          "M",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "A",
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ]
+      ],
+      "dot": [
+        1,
+        0
+      ],
+      "gap": null,
+      "meaning": "A head and shoulder arch identify a human decision."
+    },
+    "passed": {
+      "label": "Passed",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          3,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Check. Shares the affirmative action vocabulary."
+    },
+    "failed": {
+      "label": "Failed",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Struck-through square. Shares the rejection action vocabulary."
+    },
+    "needs-review": {
+      "label": "Needs review",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          "A",
+          1,
+          1,
+          2,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          1,
+          2
+        ]
+      ],
+      "dot": [
+        1,
+        3
+      ],
+      "gap": null,
+      "meaning": "A question mark: a judgement is still required."
+    },
+    "warning": {
+      "label": "Warning",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          1,
+          0
+        ]
+      ],
+      "dot": [
+        1,
+        3
+      ],
+      "gap": null,
+      "meaning": "An exclamation: a tapering wedge over its point. Sits with the question mark and the i."
+    },
+    "info": {
+      "label": "Info",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          1,
+          1
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          2,
+          3
+        ]
+      ],
+      "dot": [
+        1,
+        0
+      ],
+      "gap": null,
+      "meaning": "A lowercase information stem with its point."
+    },
+    "blocked": {
+      "label": "Blocked",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A stop-sign octagon: progression is prevented."
+    },
+    "running": {
+      "label": "Running",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          3,
+          1
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "A",
+          1,
+          1,
+          2,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "A",
+          1,
+          1,
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "An incomplete rounded perimeter; recognisable even without motion."
+    },
+    "empty": {
+      "label": "Empty",
+      "group": "Status",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "An open tray with nothing inside."
+    },
+    "edit": {
+      "label": "Edit",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          0,
+          2
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A pencil body and its ferrule line: change the wording, as a new version."
+    },
+    "propose": {
+      "label": "Propose",
+      "group": "Who said it",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          0
+        ]
+      ],
+      "dot": [
+        2,
+        2
+      ],
+      "gap": null,
+      "meaning": "A spark with its point set apart: a model proposal, advice until a person decides."
+    },
+    "apply": {
+      "label": "Apply suggestion",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          3
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          2,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A wand ending in a square head: take the suggested wording in one step."
+    },
+    "approve-all": {
+      "label": "Approve all",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          3,
+          0
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A check resting in its tray: approve every item a stated rule cleared."
+    },
+    "next": {
+      "label": "Next",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          2,
+          0
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          0,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "Rightward arrow, the mirror of Send back: move on to the next step."
+    },
+    "theme-system": {
+      "label": "System theme",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          1,
+          3
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A screen on two legs: follow the computer."
+    },
+    "theme-light": {
+      "label": "Light theme",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          3,
+          2
+        ],
+        [
+          "L",
+          0,
+          2
+        ],
+        [
+          "A",
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          "A",
+          1,
+          1,
+          2,
+          2
+        ]
+      ],
+      "dot": [
+        1,
+        0
+      ],
+      "gap": null,
+      "meaning": "A sun above the horizon, with its point: the daylit light table."
+    },
+    "theme-dark": {
+      "label": "Dark theme",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          3,
+          1
+        ],
+        [
+          "L",
+          0,
+          1
+        ],
+        [
+          "A",
+          1,
+          0,
+          1,
+          2
+        ],
+        [
+          "A",
+          1,
+          0,
+          2,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "The same sun set below the horizon: the darkroom."
+    },
+    "key": {
+      "label": "Key",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          3,
+          0
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          0,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A keycap and its bevel: a keyboard shortcut."
+    },
+    "chevron-right": {
+      "label": "Open",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          1,
+          0
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          3
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A flat-nosed chevron, symmetric on the grid: open in place."
+    },
+    "chevron-down": {
+      "label": "Expand",
+      "group": "Navigation",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          3,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "The same chevron turned down: a list of choices."
+    },
+    "save": {
+      "label": "Save",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          2
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          2
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          1,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          2,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A route arriving in its tray, the mirror of Export."
+    },
+    "score": {
+      "label": "Score",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          0,
+          1
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          1,
+          2
+        ],
+        [
+          "L",
+          1,
+          3
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          2,
+          2
+        ],
+        [
+          "L",
+          2,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          1
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A measuring scale: findings counted against an answer key."
+    },
+    "open-file": {
+      "label": "Choose file",
+      "group": "Actions",
+      "commands": [
+        [
+          "M",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          1
+        ],
+        [
+          "L",
+          2,
+          0
+        ],
+        [
+          "L",
+          0,
+          0
+        ],
+        [
+          "L",
+          0,
+          3
+        ],
+        [
+          "L",
+          3,
+          3
+        ],
+        [
+          "L",
+          3,
+          1
+        ],
+        [
+          "L",
+          2,
+          0
+        ]
+      ],
+      "dot": null,
+      "gap": null,
+      "meaning": "A sheet with its corner turned: pick a document to bring in."
+    }
+  }
+}

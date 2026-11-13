@@ -1,0 +1,748 @@
+{
+  "research_date": "2026-11-13",
+  "window_start": "2024-11-13",
+  "method": "Qualitative purposive public-source review. One eligible thread/article per theme; no vote/comment counts; vendor promotional statements excluded; inferred product implications identified. No verified identities collected.",
+  "sources": [
+    {
+      "id": "P01",
+      "title": "Embedded/Automotive testers — how manual is your test case generation process today?",
+      "url": "https://www.reddit.com/r/embedded/comments/1t9plap/embeddedautomotive_testers_how_manual_is_your/",
+      "platform": "Reddit / r/embedded",
+      "date": "2026-05-11",
+      "scope": "Automotive; former hands-on tester, current testing work unclear; mixed commercial replies",
+      "evidence": "A practitioner preferred validating a Python/DBC generator or template to reviewing hundreds of newly generated cases. A separate HIL-tool promoter's reply is excluded from counts.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P02",
+      "title": "AI and productivity",
+      "url": "https://www.reddit.com/r/embedded/comments/1n5y1yu/ai_and_productivity/",
+      "platform": "Reddit / r/embedded",
+      "date": "2025-09-01",
+      "scope": "Embedded / industrial automation; anonymous firsthand account",
+      "evidence": "An engineer reports seven hours on factory automation scripts versus an estimated three manually, after outdated syntax and repeated correction. Replies report useful scaffolding and supplementary review.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P03",
+      "title": "Do you actually use AI for embedded development? What's your experience?",
+      "url": "https://www.reddit.com/r/embedded/comments/1odxmka/do_you_actually_use_ai_for_embedded_development/",
+      "platform": "Reddit / r/embedded",
+      "date": "2025-10-23; replies include 2025-10-25–27",
+      "scope": "Embedded, with one explicitly automotive respondent",
+      "evidence": "Uses include Gemini snippet review, Claude Code build debugging and Copilot unit tests. Failures include wrong registers and fabricated datasheet references. One automotive respondent prototypes then rewrites product code.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P04",
+      "title": "AI can generate requirements. Can it make them decision-ready?",
+      "url": "https://www.reddit.com/r/systems_engineering/comments/1tdqn6p/ai_can_generate_requirements_can_it_make_them/",
+      "platform": "Reddit / r/systems_engineering",
+      "date": "2026-05-15",
+      "scope": "Systems engineering; mixed practitioner, researcher and builder replies",
+      "evidence": "A work user still builds the functional model and manually checks traces, but finds cross-topic consistency checking useful. Builder promotions and a researcher's repeated-generation experiment are excluded from practitioner counts.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P05",
+      "title": "Anyone else experimenting with LLMs for requirements derivation? Curious how you're handling traceability.",
+      "url": "https://www.reddit.com/r/systems_engineering/comments/1uvpqq5/anyone_else_experimenting_with_llms_for/",
+      "platform": "Reddit / r/systems_engineering",
+      "date": "Exact day unavailable; rendered 4 months old at access",
+      "scope": "Systems engineering; builder opener, independent user replies",
+      "evidence": "Replies support note-to-requirement formatting and report Cameo/MCP/Claude state-machine-to-EARS work. Others reject outsourcing derivation and question nondeterminism. The builder's proposed features are not counted as demand.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P06",
+      "title": "AI Enhanced Requirements Management Tool",
+      "url": "https://www.reddit.com/r/systems_engineering/comments/1igdo0x/ai_enhanced_requirements_management_tool/",
+      "platform": "Reddit / r/systems_engineering",
+      "date": "Exact day unavailable; search indexes about 1.8 years old; page rounds to 2 years",
+      "scope": "Systems engineering; builder opener and independent replies",
+      "evidence": "A respondent wants clarity/verifiability checking but rejects export-first workflows and AI budget allocation. Replies distinguish semantic discovery from link checks already possible with a filter. The proposed $30–50 price is not willingness-to-pay evidence.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P07",
+      "title": "Test management tools in the modern era",
+      "url": "https://www.reddit.com/r/softwaretesting/comments/1tsuwhl/test_management_tools_in_the_modern_era/",
+      "platform": "Reddit / r/softwaretesting",
+      "date": "2026-05-31; later replies separately undated",
+      "scope": "General software; opener specifies web and API",
+      "evidence": "A tester finds ticket-based generated cases unusable without application context. Replies report better results with narrow component context, test maintenance and coverage-gap suggestions. Product recommendations are treated cautiously.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P08",
+      "title": "Have You Used AI-Generated Test Cases? How Was Your Experience?",
+      "url": "https://www.reddit.com/r/QualityAssurance/comments/1jil8pw/have_you_used_aigenerated_test_cases_how_was_your/",
+      "platform": "Reddit / r/QualityAssurance",
+      "date": "2025-03-24; some later replies in 2025–26",
+      "scope": "General QA; anonymous hands-on users; promotional replies excluded",
+      "evidence": "Users report draft generation, reusable prompts and occasional missed-scenario discovery. Other accounts describe poor documentation, brittle cases or bug reports being mistaken for intended behavior. Results vary within the thread.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P09",
+      "title": "AI for Test Case creation",
+      "url": "https://www.reddit.com/r/QualityAssurance/comments/1o65t38/ai_for_test_case_creation/",
+      "platform": "Reddit / r/QualityAssurance",
+      "date": "2025-10-14",
+      "scope": "General QA; anonymous practitioner accounts",
+      "evidence": "A lone tester wants editable assistance. Gemini CLI users describe useful output alongside weak assertions, missing boundaries and deleted tests; another reports excessive assumed or redundant BrowserStack cases.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P10",
+      "title": "What tasks are software testers successfully using AI for?",
+      "url": "https://www.reddit.com/r/softwaretesting/comments/1uw31ve/what_tasks_are_software_testers_successfully/",
+      "platform": "Reddit / r/softwaretesting",
+      "date": "2026-07-14",
+      "scope": "General QA / web; practitioner and builder replies",
+      "evidence": "Users describe reviewed test plans and draft PRs, script boilerplate, documentation, broken-pipeline analysis and Playwright assistance. The extension creator's pitch is excluded.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P11",
+      "title": "DOORS is making my team miserable, what did you migrate to and do you regret it",
+      "url": "https://www.reddit.com/r/embedded/comments/1szvgk3/doors_is_making_my_team_miserable_what_did_you/",
+      "platform": "Reddit / r/embedded",
+      "date": "2026-04-30",
+      "scope": "Regulated embedded; automotive, defense, medical and aerospace-adjacent replies",
+      "evidence": "Practitioners describe click-heavy reviews, difficult V&V navigation, custom configuration and migration effort. One aerospace-adjacent migration took roughly five months versus three planned. An automotive reply describes a docs/code correlation workflow; vendors are excluded.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P12",
+      "title": "DOORS alternatives that don't feel ancient?",
+      "url": "https://www.reddit.com/r/embedded/comments/1s48jja/doors_alternatives_that_dont_feel_ancient/",
+      "platform": "Reddit / r/embedded",
+      "date": "Exact day unavailable; rendered 7 months old at access",
+      "scope": "Regulated embedded; explicit automotive respondent; promotional replies excluded",
+      "evidence": "An automotive user says a DOORS-to-Codebeamer move preserved the process. Other users report Jama pricing/workflow friction and small-project TRLC/Git usage with Polarion for larger projects. These are user reports, not verified current product comparisons.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P13",
+      "title": "our requirements process is just vibes at this point, what are you actually using",
+      "url": "https://www.reddit.com/r/systems_engineering/comments/1t68sro/our_requirements_process_is_just_vibes_at_this/",
+      "platform": "Reddit / r/systems_engineering",
+      "date": "2026-05-07",
+      "scope": "Safety-adjacent team; automotive/defense R&D and aerospace replies",
+      "evidence": "The opener reports about three days tracing stakeholder changes through fragmented documents. Replies emphasize configuration control and ownership; an automotive/defense user objects to paying extra for ReqIF functionality.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P14",
+      "title": "Launch HN: Embedder — Claude code for embedded software",
+      "url": "https://news.ycombinator.com/item?id=44915206",
+      "platform": "Hacker News",
+      "date": "2025-08-15–16",
+      "scope": "Embedded practitioners responding to a vendor launch",
+      "evidence": "Independent commenters reject sending NDA-protected schematics/source to outside services, question hallucination-removal claims, and suggest structured register descriptions. Founder promises and results are marketing and excluded from counts.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P15",
+      "title": "AI for software development team in enterprise",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1qj4m3p/ai_for_software_development_team_in_enterprise/",
+      "platform": "Reddit / r/LocalLLaMA",
+      "date": "2026-01-21",
+      "scope": "General enterprise tooling; requester represents about 300 developers; exact role unverified",
+      "evidence": "The requester wants self-hosted tools across IntelliJ, VS Code and Eclipse, plus CLI support. Infrastructure, serving capacity and pricing arise in discussion; suggested vendor privacy guarantees are not verified.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P16",
+      "title": "How are you triaging an AI-sized vulnerability backlog?",
+      "url": "https://www.reddit.com/r/cybersecurity/comments/1xsgfpx/how_are_you_triaging_an_aisized_vulnerability/",
+      "platform": "Reddit / r/cybersecurity",
+      "date": "Indexed absolute date 2026-11-10; rendered relative age inconsistent",
+      "scope": "General enterprise security; anonymous firsthand account; date discrepancy",
+      "evidence": "A security team reports more than 4,000 findings, repetitive reopened tickets and an approval bottleneck. Suggestions favor reachability, grouping and remembered dispositions. Its sample of 100 is an anecdote, not a false-positive-rate estimate.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P17",
+      "title": "Purposely limiting AI usage",
+      "url": "https://www.reddit.com/r/ExperiencedDevs/comments/1rnie42/purposely_limiting_ai_usage/",
+      "platform": "Reddit / r/ExperiencedDevs",
+      "date": "2026-03-07",
+      "scope": "General software; practitioners and one self-described leader",
+      "evidence": "Users describe stress, skill atrophy and higher output expectations. A leader reports benefits partly consumed by review and conflicting agents. This community cannot establish automotive workforce sentiment.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P18",
+      "title": "AI hallucinations in embedded",
+      "url": "https://www.reddit.com/r/embedded/comments/1qhyyom/ai_hallucinations_in_embedded/",
+      "platform": "Reddit / r/embedded",
+      "date": "Exact day unavailable; search says 9 months old, page 10 months",
+      "scope": "Industrial automation engineer; firsthand account",
+      "evidence": "An automation engineer using Claude Sonnet 4.5 reports invented calibration values and incorrect sensor-identification logic, leading to line-by-line checking. The report's register claims are the engineer's account, not an independently reproduced hardware test.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P19",
+      "title": "AI in low level embedded systems",
+      "url": "https://www.eevblog.com/forum/chatgptai/ai-in-low-level-embedded-systems/",
+      "platform": "EEVblog",
+      "date": "2025-05-18; reviewed replies dated 2025-05-29",
+      "scope": "Electronics practitioners/hobbyists; course promoter distinguished",
+      "evidence": "The opener questions convincing but wrong low-level code; one reply shows successive incorrect pin-routing constants before correction. A course-promoting reply also reports a successful bug find; its commercial affiliation is explicit.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P20",
+      "title": "Claude Code meets AVR assembler: from chip to browser with one prompt",
+      "url": "https://www.mikrocontroller.net/news/claude-code-trifft-avr-assembler-vom-chip-in-den-browser-mit-einem-prompt",
+      "platform": "Mikrocontroller.net, German",
+      "date": "Reviewed comments 2026-08-20–23; article edited 2026-10-26",
+      "scope": "Mixed hobby/embedded; industry employment not verified",
+      "evidence": "A commenter reports Claude-assisted ESP-IDF work and uses Wireshark exports while independently checking interfaces. Other comments debate lost knowledge and correction limits. This is German-language evidence, not a German OEM sample.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P21",
+      "title": "Using ChatGPT to create C++ MPC code for the Autonomous Driving AI Challenge 2025",
+      "url": "https://qiita.com/Massy0127/items/57bde16c9c02929a17bf",
+      "platform": "Qiita, Japanese",
+      "date": "2025-08-30",
+      "scope": "Author reports automotive experience; competition experiment, not production",
+      "evidence": "Initial generated MPC code failed to build or follow curves. Constraining a port of existing Python code helped, but vehicle behavior still disappointed and the author switched back to a different control approach.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P22",
+      "title": "Copilot is absolutely horrid and actually wastes much more time than it helps",
+      "url": "https://www.mathworks.com/matlabcentral/discussions/ai/891041-copilot-is-absolutely-horrid-and-actually-wastes-much-more-time-than-it-helps",
+      "platform": "MathWorks MATLAB Central",
+      "date": "2026-10-27; relevant reply 2026-10-29",
+      "scope": "Simulink user, role/employer unverified; independent community posts",
+      "evidence": "The opener reports incorrect block-configuration advice and switches to ChatGPT. A reply reports mainland China availability limitations and asks for configurable LLM backends. The exact assistant used by the opener is ambiguous.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P23",
+      "title": "Are you satisfied with LLMs code quality in embedded software domain?",
+      "url": "https://www.reddit.com/r/embedded/comments/1w7frel/are_you_satisfied_with_llms_code_quality_in/",
+      "platform": "Reddit / r/embedded",
+      "date": "2026-09, approximate; exact opener day unavailable; dated reply 2026-09-05",
+      "scope": "Embedded practitioners; opener says not senior; anonymous",
+      "evidence": "The opener reports hours checking each feature despite an agent workflow. Replies describe successful atomic changes and logic-analyzer feedback; another reports a stack-usage regression. Product-code bans are reported without enough detail to identify their cause.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P24",
+      "title": "AI in Safety-Critical application",
+      "url": "https://www.reddit.com/r/embedded/comments/1x3wek3/ai_in_safetycritical_application/",
+      "platform": "Reddit / r/embedded",
+      "date": "Date unresolved: index says last month; rendered page says 9 hours old",
+      "scope": "Adjacent rail SIL4; conflicting practitioner views; supplementary only",
+      "evidence": "A rail engineer doubts large generated code reviews; replies support human-owned commits and supplementary checks, while some refuse generated product code. Forum statements about legal liability, EASA and DO-330 are not treated as authoritative.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P25",
+      "title": "Embedded in the Age of AI",
+      "url": "https://www.reddit.com/r/embedded/comments/1skjuze/embedded_in_the_age_of_ai/",
+      "platform": "Reddit / r/embedded",
+      "date": "2026-04-13",
+      "scope": "Embedded practitioners and hobbyists; some employer-funded use",
+      "evidence": "Users report small helper scripts, first-pass log analysis, better Jira tickets and build-output summaries. They keep core engineering responsibility and note undocumented constraints. Employer-paid Gemini, Copilot and Claude Code are mentioned.",
+      "eligible": true,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P26",
+      "title": "PR review backlog: data, examples, and proposed mechanisms — issue 109444",
+      "url": "https://github.com/zephyrproject-rtos/zephyr/issues/109444",
+      "platform": "GitHub / Zephyr",
+      "date": "Created 2026-05-19; updated 2026-06-16",
+      "scope": "Embedded open-source maintainers; supplementary only",
+      "evidence": "The issue documents reviewer scarcity; comments debate AI review. A posted Gemini-assisted meeting summary says automatic merging after inactivity was rejected. That summary is not independently verified meeting minutes; no automotive adoption inference is made.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "P27",
+      "title": "Codebeamer AI 1.0 release — local-model request",
+      "url": "https://community.ptc.com/codebeamer-445/codebeamer-ai-1-0-has-released-171154?fid=445&tid=171154",
+      "platform": "PTC Community",
+      "date": "Vendor announcement 2025-12-19; user question 2026-01-19",
+      "scope": "Vendor marketing opener; unaffiliated user role unverified; supplementary only",
+      "evidence": "A community user asks for locally hosted LLM configuration/API support. Only this request is treated as user feedback; all performance and capability claims in the announcement are marketing.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R01",
+      "title": "2025 Stack Overflow Developer Survey — AI",
+      "url": "https://survey.stackoverflow.co/2025/ai",
+      "scope": "Stack Overflow survey; platform-published, self-selected general developer sample",
+      "date": "2025; exact page publication day unavailable",
+      "evidence": "46% distrust accuracy versus 33% trust; 84% use or plan to use. This is general software sentiment, not an automotive adoption estimate.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R02",
+      "title": "State of Developer Ecosystem 2025",
+      "url": "https://blog.jetbrains.com/research/2025/10/state-of-developer-ecosystem-2025/",
+      "scope": "JetBrains; tool-vendor survey/marketing",
+      "date": "2025-10; exact day unavailable",
+      "evidence": "24,534 respondents in 194 countries; reports 85% regular AI use and preference for delegating repetitive tasks. Self-reported gains and the vendor's framing require caution.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R03",
+      "title": "Survey: The AI wave continues to grow on software development teams",
+      "url": "https://github.blog/news-insights/research/survey-ai-wave-grows/?trk=public_post_comment-text",
+      "scope": "GitHub; tool-vendor sponsored survey/marketing",
+      "date": "2024-08-20; updated 2025-04-15; underlying fieldwork 2024-02-26–03-18 — OLDER",
+      "evidence": "2,000 enterprise non-manager respondents in four countries. Reported organizational permission/encouragement differs between US and Germany. Historical regional context only; not automotive or a measured shadow-use rate.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R04",
+      "title": "Perforce's 2025 State of Automotive Software report announcement",
+      "url": "https://www.perforce.com/press-releases/perforces-2025-state-automotive-software-report",
+      "scope": "Perforce; automotive tool-vendor survey/marketing",
+      "date": "2025-03-11",
+      "evidence": "53% report static analysis use and 86% use at least one coding standard. Much AI coverage concerns AI inside vehicles, so it must not be read as adoption of LLM engineering assistants. Only the announcement was inspected.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R05",
+      "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
+      "url": "https://arxiv.org/abs/2507.09089",
+      "scope": "METR; independent randomized study, general open-source software",
+      "date": "Study blog 2025-07-10; opened arXiv version dated 2025-07-12",
+      "evidence": "16 developers, 246 tasks, experienced in their repositories; early-2025 tools increased completion time 19%. Participants perceived a gain. A narrow historical result, not a current embedded benchmark.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R06",
+      "title": "We are Changing our Developer Productivity Experiment Design",
+      "url": "https://metr.org/blog/2026-02-24-uplift-update/",
+      "scope": "METR; independent follow-up and methodological limitations",
+      "date": "2026-02-24",
+      "evidence": "Later observations suggest improvement, but participant/task selection and concurrent-agent time measurement undermine a reliable current effect estimate. This prevents treating the 2025 slowdown as timeless.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R07",
+      "title": "AI for Requirements Engineering: Industry Adoption and Practitioner Perspectives",
+      "url": "https://research.chalmers.se/publication/551468",
+      "scope": "Academic practitioner survey; general RE, not established automotive subsample",
+      "date": "2025 proceedings; repository updated 2026-04-13",
+      "evidence": "55 practitioners; 58.2% report AI use in RE; human-AI collaboration accounts for 54.4% of mapped RE techniques, full automation 5.4%. These denominators are not all developers or automotive teams.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R08",
+      "title": "Cybersecurity requirements identification using LLMs — A design science study",
+      "url": "https://odr.chalmers.se/items/dae0ade7-85c2-4f86-b243-b9cd235f1918",
+      "scope": "Academic master's thesis with automotive expert evaluation; prototype, not deployment",
+      "date": "2024; exact month/day unavailable — potentially outside 24 months; historical only",
+      "evidence": "Grounding in CVE and Automotive-ISAC material produced useful initial security requirements; attack-path outputs were less consistent. It does not establish production TARA acceptance or reduced review effort.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R09",
+      "title": "Elevating TARA: A Maturity Model for Automotive Threat Analysis and Risk Assessment",
+      "url": "https://epub.uni-regensburg.de/58666/6/Vielberth_D2TARA_TrustBus2024.pdf",
+      "scope": "Academic industrial interviews; five cybersecurity managers and two senior consultants; not a hands-on AI adoption survey",
+      "date": "2024-07-30 — OLDER",
+      "evidence": "Seven experts valued maintained source pools, current information and integration with TARA platforms. Rating mappings needed explicit treatment. The authors say the model had not yet been used in real projects.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R10",
+      "title": "Is Tool Qualification Required When Creating FMEA or Test Cases with Generative AI?",
+      "url": "https://note.com/sakuraiautosafe/n/n4fc46e751469?hl=en",
+      "scope": "Commercial safety-assurance provider/consultant commentary; machine-translated page; not a standard or acceptance record",
+      "date": "2026-09-14",
+      "evidence": "Frames qualification around intended tool use and how errors are detected, rather than a universal AI certificate. Used only as professional interpretation; it is not proof of assessor approval.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R11",
+      "title": "ChatGPT for Embedded Systems Development — Share your Stories Here!",
+      "url": "https://www.embeddedrelated.com/thread/16049/chatgpt-for-embedded-systems-development-share-your-stories-here",
+      "scope": "EmbeddedRelated forum; mixed hobby/practitioner/editor roles",
+      "date": "Reviewed replies 2023-03-02 — OLDER",
+      "evidence": "Reports include plausible but broken LED and circuit examples and fixes that introduced other faults. Historical context only; no current-model frequency counts.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R12",
+      "title": "ELIV 2025 congress programme",
+      "url": "https://www.vdi-wissensforum.de/fileadmin/VDI_Wissensforum/Veranstaltungen/Highlights/ELIV/Programm/ELIV_2025.pdf",
+      "scope": "Conference organizer programme; corporate presentations; not practitioner feedback",
+      "date": "Event 2025-10-15–16; publication day unavailable",
+      "evidence": "Lists sovereign generative AI for requirements-to-tests and agentic engineering sessions. An agenda proves topic interest, not delivered outcomes, audience reactions or adoption.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R13",
+      "title": "Looking for someone to talk to about the RFQ process",
+      "url": "https://www.reddit.com/r/AutomotiveEngineering/comments/1n5jr3p/looking_for_someone_to_talk_to_about_the_rfq/",
+      "scope": "Reddit; former supplier/product-research opener and one role-unverified process reply; supplementary",
+      "date": "2025-09-01",
+      "evidence": "The reply describes iterative requirements–RFI–RFQ–negotiation loops and supplier feedback. It provides no firsthand AI tool evaluation, task timing or willingness to pay.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    },
+    {
+      "id": "R14",
+      "title": "Try it yourself: Requirements AI assistant for DOORS Next",
+      "url": "https://community.ibm.com/community/user/blogs/daniel-moul/2025/02/13/requirements-ai-assistant-for-doors-next?hlmlt=QT",
+      "scope": "IBM staff demonstration; tool-vendor marketing",
+      "date": "2025-02-13",
+      "evidence": "An in-module demonstrator sends module text to cloud services; it is explicitly not a product and omits some attribute data. No adoption or productivity inference is drawn.",
+      "eligible": false,
+      "accessed": "2026-11-13"
+    }
+  ],
+  "wanted": [
+    {
+      "id": "W1",
+      "capability": "Supplementary review and gap suggestions",
+      "sources": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P06",
+        "P07",
+        "P08",
+        "P10",
+        "P23",
+        "P25"
+      ],
+      "count": 10,
+      "confidence": "High for bounded assistance; medium for automotive demand",
+      "basis": "Explicit requests and reported use; includes dissent about analytical traceability."
+    },
+    {
+      "id": "W2",
+      "capability": "Small editable script, test and documentation drafts",
+      "sources": [
+        "P01",
+        "P02",
+        "P03",
+        "P08",
+        "P09",
+        "P10",
+        "P21",
+        "P23",
+        "P25"
+      ],
+      "count": 9,
+      "confidence": "High in mixed embedded/QA; medium automotive",
+      "basis": "Reported use and requests; successful use is not universal."
+    },
+    {
+      "id": "W3",
+      "capability": "Grounded document/code discovery and accurate context",
+      "sources": [
+        "P03",
+        "P06",
+        "P07",
+        "P14",
+        "P18",
+        "P19",
+        "P25"
+      ],
+      "count": 7,
+      "confidence": "High as a need; medium for a specific retrieval design",
+      "basis": "Explicit requests plus inferred requirement from documented context failures."
+    },
+    {
+      "id": "W4",
+      "capability": "Build, failure, log and debugging assistance",
+      "sources": [
+        "P03",
+        "P07",
+        "P08",
+        "P10",
+        "P20",
+        "P23",
+        "P25"
+      ],
+      "count": 7,
+      "confidence": "Medium; automotive-specific evidence low",
+      "basis": "Reported use; general QA failure analysis and embedded logs are different tasks."
+    },
+    {
+      "id": "W5",
+      "capability": "Work inside current ALM/model/IDE/CLI workflows",
+      "sources": [
+        "P05",
+        "P06",
+        "P11",
+        "P12",
+        "P13",
+        "P15"
+      ],
+      "count": 6,
+      "confidence": "High workflow constraint; medium AI placement preference",
+      "basis": "Mix of explicit rejection, existing integrations and underlying process demand."
+    },
+    {
+      "id": "W6",
+      "capability": "Change-impact and traceability maintenance",
+      "sources": [
+        "P04",
+        "P05",
+        "P11",
+        "P13"
+      ],
+      "count": 4,
+      "confidence": "Medium for pain; low–medium for AI benefit",
+      "basis": "Two AI/model experiences plus two underlying workflow problems; not four proven AI wins."
+    },
+    {
+      "id": "W7",
+      "capability": "Requirement formatting, wording and model-consistency assistance",
+      "sources": [
+        "P04",
+        "P05",
+        "P06"
+      ],
+      "count": 3,
+      "confidence": "Medium",
+      "basis": "Specific systems-engineering feedback; mathematical derivation remains disputed."
+    },
+    {
+      "id": "W8",
+      "capability": "Private deployment / control of data egress",
+      "sources": [
+        "P14",
+        "P15"
+      ],
+      "count": 2,
+      "confidence": "High as a veto for affected teams; unknown prevalence",
+      "basis": "Explicit NDA objections and enterprise self-hosting request; P27 adds uncounted corroboration."
+    },
+    {
+      "id": "W9",
+      "capability": "Repeatable generation through validated templates",
+      "sources": [
+        "P01"
+      ],
+      "count": 1,
+      "confidence": "Medium for that account; low market breadth",
+      "basis": "One automotive testing account; high product relevance despite low frequency."
+    }
+  ],
+  "rejections": [
+    {
+      "id": "J1",
+      "rejection": "Unreviewed artifacts or loss of engineering control",
+      "sources": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P21",
+        "P23"
+      ],
+      "count": 12,
+      "confidence": "High",
+      "basis": "Mostly objections and desired boundaries; not twelve blanket AI refusals."
+    },
+    {
+      "id": "J2",
+      "rejection": "Plausible false facts, requirements or logic",
+      "sources": [
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P18",
+        "P19",
+        "P21"
+      ],
+      "count": 9,
+      "confidence": "High",
+      "basis": "Includes false precision and missing constraints; not all reports were reproduced."
+    },
+    {
+      "id": "J3",
+      "rejection": "Correction/review costs consume the saving",
+      "sources": [
+        "P01",
+        "P02",
+        "P03",
+        "P06",
+        "P08",
+        "P18",
+        "P21",
+        "P23"
+      ],
+      "count": 8,
+      "confidence": "High for occurrence; unknown frequency in industry",
+      "basis": "Measured anecdotes are self-reports; manual counterfactuals usually estimates."
+    },
+    {
+      "id": "J4",
+      "rejection": "Missing application, hardware or architectural context",
+      "sources": [
+        "P03",
+        "P04",
+        "P05",
+        "P07",
+        "P18",
+        "P21",
+        "P23"
+      ],
+      "count": 7,
+      "confidence": "High",
+      "basis": "Reported limitation across embedded and RE; no universal model-quality claim."
+    },
+    {
+      "id": "J5",
+      "rejection": "Bloated, brittle or weak tests/code",
+      "sources": [
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P23"
+      ],
+      "count": 5,
+      "confidence": "High in these accounts; medium automotive transfer",
+      "basis": "General QA dominates the test evidence."
+    },
+    {
+      "id": "J6",
+      "rejection": "Autonomous analytical derivation or architecture decisions",
+      "sources": [
+        "P04",
+        "P05",
+        "P06",
+        "P23"
+      ],
+      "count": 4,
+      "confidence": "Medium",
+      "basis": "Practitioners retain control; some actively use constrained agents."
+    },
+    {
+      "id": "J7",
+      "rejection": "Forced adoption, skill loss and job-pressure effects",
+      "sources": [
+        "P02",
+        "P17",
+        "P23",
+        "P25"
+      ],
+      "count": 4,
+      "confidence": "Medium overall; low automotive prevalence",
+      "basis": "Mixed developer sentiment; not evidence all engineers reject automation."
+    },
+    {
+      "id": "J8",
+      "rejection": "Export friction or a tool that imposes the wrong process",
+      "sources": [
+        "P06",
+        "P11",
+        "P12",
+        "P13"
+      ],
+      "count": 4,
+      "confidence": "High process concern; medium AI-specific",
+      "basis": "Several are ALM complaints independent of AI."
+    },
+    {
+      "id": "J9",
+      "rejection": "Unpredictable cost, licensing or lock-in",
+      "sources": [
+        "P05",
+        "P12",
+        "P15",
+        "P17"
+      ],
+      "count": 4,
+      "confidence": "Medium; low automotive AI willingness-to-pay evidence",
+      "basis": "Mix of token concerns, ALM pricing and enterprise deployment cost questions."
+    },
+    {
+      "id": "J10",
+      "rejection": "Sensitive IP sent outside approved boundaries",
+      "sources": [
+        "P14",
+        "P15"
+      ],
+      "count": 2,
+      "confidence": "High veto severity; low–medium prevalence confidence",
+      "basis": "Only two eligible discussions; vendor claims do not count as successful mitigation."
+    },
+    {
+      "id": "J11",
+      "rejection": "Different generated artifacts on repeated runs",
+      "sources": [
+        "P01",
+        "P05"
+      ],
+      "count": 2,
+      "confidence": "Medium",
+      "basis": "Explicit repeatability objection; output replay is a proposed mitigation."
+    },
+    {
+      "id": "J12",
+      "rejection": "Unavailable regional service / no backend choice",
+      "sources": [
+        "P22"
+      ],
+      "count": 1,
+      "confidence": "Low breadth, direct user request",
+      "basis": "One mainland-China availability complaint, not a regional adoption rate."
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "created": "2023-06-05T21:33:03.096475+05:30",
+  "modified": "2025-04-24T13:08:47.330992+05:30",
+  "id": 7867846,
+  "conceptrecid": "7867845",
+  "doi": "10.5281/zenodo.7867846",
+  "conceptdoi": "10.5281/zenodo.7867845",
+  "doi_url": "https://doi.org/10.5281/zenodo.7867846",
+  "metadata": {
+    "title": "Dataset for Requirements Classification in Traceability Link Recovery Datasets",
+    "doi": "10.5281/zenodo.7867846",
+    "publication_date": "2023-04-26",
+    "description": "<p>The dataset contains a gold standard for classifying parts of requirements in&nbsp;five traceability link recovery benchmark datasets.</p>\n\n<p><strong>Classification</strong></p>\n\n<ul>\n\t<li>For aspect classification:\n\t<ul>\n\t\t<li>functional aspects (<strong>F</strong>)</li>\n\t\t<li>quality aspects (<strong>Q</strong>)</li>\n\t</ul>\n\t</li>\n\t<li>For concerns in functional requirements (c.f. <a href=\"https://doi.org/10.1109/RE48521.2020.00028\">NoRBERT publication</a>):\n\t<ul>\n\t\t<li><strong>Function</strong>:&nbsp;A function that a system shall perform</li>\n\t\t<li><strong>Behavior</strong>:&nbsp;Behavior, the system displays or reactions that are&nbsp;triggered by one or more stimuli</li>\n\t\t<li><strong>Data</strong>:&nbsp;A data item or data structure that shall be part of a system&#39;s state</li>\n\t\t<li><strong>UserRelated</strong>:&nbsp;Behavior of the user or functionality of the system attributable to the user</li>\n\t</ul>\n\t</li>\n</ul>\n\n<p><strong>Datasets</strong></p>\n\n<p>The dataset comprises preprocessed requirements of the eTour, iTrust, SMOS, eAnci and LibEST datasets. As SMOS and eAnci&#39;s original requirements were written in Italian, the dataset comprises automatically translated versions of the requirements to English. The datasets were retrieved from the <a href=\"http://coest.org/\">website</a> of the&nbsp;Center of Excellence for Software &amp; Systems Traceability (CoEST). Attribution for the datasets:</p>\n\n<p>The original eTour dataset was provided for the TEFSE challenge at 6th International Workshop on Traceability in Emerging Forms of Software Engineering (TEFSE), 2011 and was retrieved from&nbsp;<a href=\"http://coest.org/\">http://coest.org/</a></p>\n\n<p>The iTrust dataset&nbsp;was retrieved from&nbsp;<a href=\"http://coest.org/\">http://coest.org/</a></p>\n\n<p>The original SMOS and eAnci datasets can be attributed to Gethers et al., On integrating orthogonal information retrieval methods to improve traceability recovery. In 2011 27th IEEE International Conference on Software Maintenance (ICSM), Sep. 2011&nbsp;and were&nbsp;retrieved from&nbsp;<a href=\"http://coest.org/\">http://coest.org/</a>&nbsp;</p>\n\n<p>The LibEST dataset can be attributed to Moran et al.,&nbsp;Improving the Effectiveness of Traceability Link Recovery using Hierarchical Bayesian Networks. In 2020 IEEE/ACM 42nd International Conference on Software Engineering (ICSE), May 2020 and was retrieved from&nbsp;<a href=\"https://gitlab.com/SEMERU-Code-Public/Data/icse20-comet-data-replication-package\">https://gitlab.com/SEMERU-Code-Public/Data/icse20-comet-data-replication-package</a></p>\n\n<p>&nbsp;</p>",
+    "access_right": "open",
+    "creators": [
+      {
+        "name": "Hey, Tobias",
+        "affiliation": "Karlsruhe Institute of Technology (KIT)",
+        "orcid": "0000-0003-0381-1020"
+      }
+    ],
+    "contributors": [
+      {
+        "name": "Tichy, Walter F.",
+        "affiliation": "Karlsruhe Institute of Technology (KIT)",
+        "type": "Supervisor",
+        "orcid": "0000-0002-1288-454X"
+      }
+    ],
+    "keywords": [
+      "requirements classification",
+      "traceability link recovery",
+      "requirement concerns"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "10.5281/zenodo.5119858",
+        "relation": "isDerivedFrom",
+        "resource_type": "dataset",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1109/ICSME52107.2021.00008",
+        "relation": "isDerivedFrom",
+        "resource_type": "publication-conferencepaper",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1109/RE48521.2020.00028",
+        "relation": "continues",
+        "resource_type": "publication-conferencepaper",
+        "scheme": "doi"
+      }
+    ],
+    "language": "eng",
+    "resource_type": {
+      "title": "Dataset",
+      "type": "dataset"
+    },
+    "thesis": {
+      "university": "Karlsruhe Institute of Technology (KIT)"
+    },
+    "license": {
+      "id": "cc-by-4.0"
+    },
+    "relations": {
+      "version": [
+        {
+          "index": 0,
+          "is_last": true,
+          "parent": {
+            "pid_type": "recid",
+            "pid_value": "7867845"
+          }
+        }
+      ]
+    }
+  },
+  "title": "Dataset for Requirements Classification in Traceability Link Recovery Datasets",
+  "links": {
+    "self": "https://zenodo.org/api/records/7867846",
+    "self_html": "https://zenodo.org/records/7867846",
+    "preview_html": "https://zenodo.org/records/7867846?preview=1",
+    "doi": "https://doi.org/10.5281/zenodo.7867846",
+    "self_doi": "https://doi.org/10.5281/zenodo.7867846",
+    "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.7867846",
+    "reserve_doi": "https://zenodo.org/api/records/7867846/draft/pids/doi",
+    "parent": "https://zenodo.org/api/records/7867845",
+    "parent_html": "https://zenodo.org/records/7867845",
+    "parent_doi": "https://doi.org/10.5281/zenodo.7867845",
+    "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.7867845",
+    "self_iiif_manifest": "https://zenodo.org/api/iiif/record:7867846/manifest",
+    "self_iiif_sequence": "https://zenodo.org/api/iiif/record:7867846/sequence/default",
+    "files": "https://zenodo.org/api/records/7867846/files",
+    "media_files": "https://zenodo.org/api/records/7867846/media-files",
+    "latest": "https://zenodo.org/api/records/7867846/versions/latest",
+    "latest_html": "https://zenodo.org/records/7867846/latest",
+    "versions": "https://zenodo.org/api/records/7867846/versions",
+    "draft": "https://zenodo.org/api/records/7867846/draft",
+    "access_links": "https://zenodo.org/api/records/7867846/access/links",
+    "access_grants": "https://zenodo.org/api/records/7867846/access/grants",
+    "access_users": "https://zenodo.org/api/records/7867846/access/users",
+    "access_request": "https://zenodo.org/api/records/7867846/access/request",
+    "access": "https://zenodo.org/api/records/7867846/access",
+    "communities": "https://zenodo.org/api/records/7867846/communities",
+    "communities-suggestions": "https://zenodo.org/api/records/7867846/communities-suggestions",
+    "request_deletion": "https://zenodo.org/api/records/7867846/request-deletion",
+    "file_modification": "https://zenodo.org/api/records/7867846/file-modification",
+    "quota_increase": "https://zenodo.org/api/records/7867846/quota-increase",
+    "requests": "https://zenodo.org/api/records/7867846/requests"
+  },
+  "updated": "2025-04-24T13:08:47.330992+05:30",
+  "recid": "7867846",
+  "revision": 6,
+  "files": [
+    {
+      "id": "0a7b7fb8-72d5-4eb2-b387-19b5049eaa60",
+      "key": "dataset.zip",
+      "size": 80843,
+      "checksum": "md5:44be17683bf380ab9f123993cc5484b3",
+      "links": {
+        "self": "https://zenodo.org/api/records/7867846/files/dataset.zip/content"
+      }
+    }
+  ],
+  "swh": {},
+  "owners": [
+    {
+      "id": "102600"
+    }
+  ],
+  "status": "published",
+  "stats": {
+    "downloads": 457,
+    "unique_downloads": 430,
+    "views": 2198,
+    "unique_views": 1966,
+    "version_downloads": 455,
+    "version_unique_downloads": 428,
+    "version_unique_views": 1960,
+    "version_views": 2190
+  },
+  "state": "done",
+  "submitted": true
+}

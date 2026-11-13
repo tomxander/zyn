@@ -1,0 +1,35 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "zyn",
+      "runtimeExecutable": "E:\\Claude\\Zyn\\.venv\\Scripts\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "harness",
+        "serve",
+        "--no-browser",
+        "--port",
+        "8600"
+      ],
+      "port": 8600
+    },
+    {
+      "name": "review-classic",
+      "runtimeExecutable": "E:\\Claude\\Zyn\\.venv\\Scripts\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "streamlit",
+        "run",
+        "harness/review/app.py",
+        "--server.headless",
+        "true",
+        "--server.port",
+        "8501",
+        "--browser.gatherUsageStats",
+        "false"
+      ],
+      "port": 8501
+    }
+  ]
+}

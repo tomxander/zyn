@@ -1,0 +1,58 @@
+# Model switch. Change a role to point at a different profile to swap models.
+# Every workflow reads models through these roles, never directly.
+
+db_path: runs/audit.sqlite
+max_attempts: 3          # schema-validation retries before a call is recorded as failed
+offline: false           # true: refuse cloud models (also: set ZYN_OFFLINE=1)
+replay: true             # reuse a stored answer when the same model saw the same prompt and input
+knowledge_file: knowledge.md  # house rules, terms, units added to every model call; see knowledge.example.md
+
+roles:
+  generator: claude-opus      # produces requirements, tests, mappings
+  reviewer: claude-opus       # independent AI reviewer; set to a different profile for a second opinion
+
+profiles:
+  # Cloud tier (Anthropic API). Key goes in .env as ANTHROPIC_API_KEY.
+  # price_in / price_out: USD per million tokens, used only to estimate cost in reports.
+  claude-opus:
+    provider: anthropic
+    model: claude-opus-5-5
+    price_in: 4.00           # USD per million tokens (first-party API, Nov 2026)
+    price_out: 20.00
+    effort: high              # low | medium | high | xhigh | max
+    max_tokens: 16000
+    refusal_fallback: true    # server-side fallback on a safety refusal; the served model is logged
+  claude-sonnet:
+    provider: anthropic
+    model: claude-sonnet-5-5
+    price_in: 2.00           # USD per million tokens (first-party API, Nov 2026)
+    price_out: 10.00
+    effort: high
+    max_tokens: 16000
+    refusal_fallback: true
+  claude-haiku:
+    provider: anthropic
+    model: claude-haiku-5-5
+    price_in: 0.10           # USD per million tokens (first-party API, Nov 2026)
+    price_out: 0.50
+    effort: medium
+    max_tokens: 16000
+    refusal_fallback: false   # no server-side fallback exists for Haiku
+
+  # On-premise tier (Ollama on this PC). Pull models first: ollama pull qwen3:14b
+  # No per-token price; cost is the machine's electricity and time.
+  local-qwen3-14b:
+    provider: ollama
+    model: qwen3:14b
+    host: http://localhost:11434
+    temperature: 0
+  local-gpt-oss-20b:
+    provider: ollama
+    model: gpt-oss:20b
+    host: http://localhost:11434
+    temperature: 0
+  local-mistral-small:
+    provider: ollama
+    model: mistral-small3.2
+    host: http://localhost:11434
+    temperature: 0

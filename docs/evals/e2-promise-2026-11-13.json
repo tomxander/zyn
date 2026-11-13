@@ -1,0 +1,174 @@
+{
+  "eval": "E2 PROMISE type classification",
+  "attribution": "PROMISE NFR (original 625), (c) 2007 Jane Cleland-Huang, tera-PROMISE repository, CC BY-SA 3.0. Used unmodified for evaluation, not redistributed.",
+  "source_sha256": "3d93f83641b76553ddce828c3f80e8c2b70269e51044046ec08b931383dc6c15",
+  "requirements": 625,
+  "labels": {
+    "PE": 54,
+    "LF": 38,
+    "US": 67,
+    "A": 21,
+    "SE": 66,
+    "F": 255,
+    "FT": 10,
+    "SC": 21,
+    "PO": 1,
+    "O": 62,
+    "L": 13,
+    "MN": 17
+  },
+  "started": "2026-11-13T19:36:55",
+  "profiles": {
+    "claude-opus": {
+      "run_id": "20261113-193655-d64e84",
+      "failed_batches": 0,
+      "cost_usd": 0.4577,
+      "calls": 25,
+      "scores": {
+        "answered": 625,
+        "of": 625,
+        "binary": {
+          "accuracy": 0.914,
+          "nfr_precision": 0.951,
+          "nfr_recall": 0.9,
+          "nfr_f1": 0.925
+        },
+        "coarse_macro_f1": 0.857,
+        "coarse_per_class": {
+          "functional": {
+            "precision": 0.865,
+            "recall": 0.933,
+            "f1": 0.898
+          },
+          "other": {
+            "precision": 0.791,
+            "recall": 0.731,
+            "f1": 0.76
+          },
+          "performance": {
+            "precision": 0.983,
+            "recall": 0.773,
+            "f1": 0.866
+          },
+          "reliability": {
+            "precision": 0.893,
+            "recall": 0.806,
+            "f1": 0.847
+          },
+          "security": {
+            "precision": 0.831,
+            "recall": 0.97,
+            "f1": 0.895
+          },
+          "usability": {
+            "precision": 0.9,
+            "recall": 0.857,
+            "f1": 0.878
+          }
+        },
+        "confusion": {
+          "functional -> functional": 238,
+          "functional -> other": 1,
+          "functional -> performance": 1,
+          "functional -> security": 9,
+          "functional -> usability": 6,
+          "other -> functional": 19,
+          "other -> other": 68,
+          "other -> reliability": 3,
+          "other -> security": 2,
+          "other -> usability": 1,
+          "performance -> functional": 10,
+          "performance -> other": 3,
+          "performance -> performance": 58,
+          "performance -> security": 1,
+          "performance -> usability": 3,
+          "reliability -> functional": 2,
+          "reliability -> other": 3,
+          "reliability -> reliability": 25,
+          "reliability -> security": 1,
+          "security -> other": 2,
+          "security -> security": 64,
+          "usability -> functional": 6,
+          "usability -> other": 9,
+          "usability -> usability": 90
+        }
+      }
+    },
+    "claude-sonnet": {
+      "run_id": "20261113-193949-5b9ee3",
+      "failed_batches": 0,
+      "cost_usd": 0.1863,
+      "calls": 25,
+      "scores": {
+        "answered": 625,
+        "of": 625,
+        "binary": {
+          "accuracy": 0.886,
+          "nfr_precision": 0.946,
+          "nfr_recall": 0.857,
+          "nfr_f1": 0.899
+        },
+        "coarse_macro_f1": 0.838,
+        "coarse_per_class": {
+          "functional": {
+            "precision": 0.817,
+            "recall": 0.929,
+            "f1": 0.87
+          },
+          "other": {
+            "precision": 0.792,
+            "recall": 0.613,
+            "f1": 0.691
+          },
+          "performance": {
+            "precision": 0.982,
+            "recall": 0.747,
+            "f1": 0.848
+          },
+          "reliability": {
+            "precision": 0.867,
+            "recall": 0.839,
+            "f1": 0.852
+          },
+          "security": {
+            "precision": 0.842,
+            "recall": 0.97,
+            "f1": 0.901
+          },
+          "usability": {
+            "precision": 0.89,
+            "recall": 0.848,
+            "f1": 0.868
+          }
+        },
+        "confusion": {
+          "functional -> functional": 237,
+          "functional -> other": 2,
+          "functional -> security": 9,
+          "functional -> usability": 7,
+          "other -> functional": 28,
+          "other -> other": 57,
+          "other -> performance": 1,
+          "other -> reliability": 3,
+          "other -> security": 2,
+          "other -> usability": 2,
+          "performance -> functional": 14,
+          "performance -> other": 1,
+          "performance -> performance": 56,
+          "performance -> reliability": 1,
+          "performance -> security": 1,
+          "performance -> usability": 2,
+          "reliability -> functional": 3,
+          "reliability -> other": 2,
+          "reliability -> reliability": 26,
+          "security -> functional": 1,
+          "security -> other": 1,
+          "security -> security": 64,
+          "usability -> functional": 7,
+          "usability -> other": 9,
+          "usability -> usability": 89
+        }
+      }
+    }
+  }
+}
