@@ -54,7 +54,7 @@ export function Nav({ theme, onTheme, onPalette }: { theme: Theme; onTheme: (t: 
           <span className="brand__slip">prototype</span>
         </a>
         <nav className="nav__links" aria-label="Sections">
-          {SECTIONS.slice(0, 5).map((s) => (
+          {SECTIONS.filter((s) => s.id !== "contribute").map((s) => (
             <a key={s.id} href={`${docHref("")}#${s.id}`} onClick={(e) => (e.preventDefault(), go(s.id))}>
               {s.label}
             </a>
@@ -242,7 +242,7 @@ export function Footer() {
 const FOOTER = {
   Tools: ["sift", "sift-review", "sift-delta", "anvil", "anvil-review", "assay"],
   Evidence: ["benchmarks", "checks-reference", "research-basis", "how-zyn-decides"],
-  Build: ["getting-started", "integrations", "architecture", "roadmap"],
+  Build: ["getting-started", "team-server", "integrations", "architecture", "roadmap"],
 };
 
 function FooterCol({

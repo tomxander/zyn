@@ -10,9 +10,11 @@ import { Problem } from "./sections/Problem";
 import { Proof } from "./sections/Proof";
 import { Contribute } from "./sections/Start";
 import { Tools } from "./sections/Tools";
-import { Why } from "./sections/Why";
+import { Work } from "./sections/Why";
+import { Teams } from "./sections/Teams";
+import { Roadmap } from "./sections/Roadmap";
 import { DocPage } from "./docs/DocPage";
-import { bySlug } from "./docs/docs";
+import { bySlug, HOME } from "./docs/docs";
 import { scrollToHash, usePage } from "./router";
 
 export default function App() {
@@ -23,7 +25,7 @@ export default function App() {
 
   // New page: start at the top, or at the #section it asks for. Refresh scroll-driven animations.
   useLayoutEffect(() => {
-    if (!doc) document.title = page === "" ? "Zyn: the checker for AI-made engineering work" : "Page not found: Zyn";
+    if (!doc) document.title = page === "" ? "Zyn: checks AI engineering work before you sign" : "Page not found: Zyn";
   }, [page, doc]);
   // When the old page has faded out, place the new one: at its #section, or at the top.
   const place = () => {
@@ -56,7 +58,9 @@ export default function App() {
               <How />
               <Proof />
               <Tools />
-              <Why />
+              <Teams />
+              <Work />
+              <Roadmap />
               <Contribute />
             </>
           ) : (
@@ -82,7 +86,7 @@ function NotFound() {
           <span className="headline__plain">There is no page here.</span>
         </h1>
         <p className="body">
-          The address may be old. <a className="link" href={import.meta.env.BASE_URL}>Go to the Zyn home page</a> or{" "}
+          The address may be old. <a className="link" href={HOME}>Go to the Zyn home page</a> or{" "}
           <a className="link" href={`${import.meta.env.BASE_URL}docs`}>open the docs</a>.
         </p>
       </div>

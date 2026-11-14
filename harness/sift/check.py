@@ -611,7 +611,12 @@ def score(audit: AuditStore, run_id: str, key_path: Path | str,
         extras += [f"{gid}:{c}" for c in sorted(got - ok)]
         fp += len(got - ok)
     flagged = sum(1 for gid in gold if found.get(gid))
-    return {"run_id": run_id, "sources": list(sources), "required_flags": need, "found": hit,
+    # Report only the sources that actually ran, so a code-only run never reads as AI-reviewed.
+    ai_ran = bool(ai_done(audit, run_id))
+    ran = [s for s in sources if s != "ai" or ai_ran]
+    return {"run_id": run_id, "sources": ran,
+            "ai_review": "run" if ai_ran else "not run",
+            "required_flags": need, "found": hit,
             "recall": round(hit / need, 3) if need else None, "flags_not_in_key": fp,
             "requirements_with_findings": flagged, "requirements": len(gold),
             "missed": misses, "not_in_key": extras, "other_categories": other}

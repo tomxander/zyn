@@ -51,7 +51,7 @@ export function How() {
         <div className="split__text">
           <Headline id="how-title" plain="Three layers," inked="in order of trust." />
           <p className="body">
-            Code decides what it can prove. The AI reviewer only advises, and only with quotes. A person makes every final
+            Code flags what it can find against the source. The AI reviewer only advises, and only with quotes. A person makes every final
             call, and the log remembers who and when.
           </p>
           <div className="vtabs" role="tablist" aria-orientation="vertical" ref={list} onKeyDown={onKey}>

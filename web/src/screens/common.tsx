@@ -49,8 +49,9 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
       </div>
       {ev.data && (
         <motion.div className="stack" variants={enter} initial="hidden" animate="show">
-          <Msg tone="ok">Evidence for <b>{ev.data.count}</b> items: {(["pass", "fail", "warn", "skipped", "broken"] as const)
-            .map((k) => `${ev.data.counts[k]} ${k}`).join(", ")}. Audit chain head <code>{String(ev.data.chain_head).slice(0, 16)}</code>.</Msg>
+          <Msg tone="ok">Evidence for <b>{ev.data.count}</b> items: {([["accepted", "accepted"], ["no_findings", "no findings"], ["fail", "fail"], ["warn", "warn"],
+            ["skipped", "skipped"], ["broken", "broken"]] as const)
+            .map(([k, label]) => `${ev.data.counts[k] ?? 0} ${label}`).join(", ")}. Audit chain head <code>{String(ev.data.chain_head).slice(0, 16)}</code>.</Msg>
           <div className="row">
             {Object.entries(ev.data.files as Record<string, string>).map(([kind, path]) => (
               <a key={kind} className="btn" href={downloadUrl(path)} download><Download aria-hidden />{kind.toUpperCase()}</a>

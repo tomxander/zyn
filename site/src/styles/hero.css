@@ -86,7 +86,7 @@
   border: var(--line) solid color-mix(in srgb, var(--ink) 50%, transparent);
   transition: background-color 90ms var(--ease-sharp), color 90ms var(--ease-sharp), border-color 90ms var(--ease-sharp);
 }
-.rec__status { width: 6.4ch; min-width: 0; }
+.rec__status { width: 8.4ch; min-width: 0; }
 .rec__name { font-weight: 600; }
 .rec__text { flex: none; white-space: pre; overflow: hidden; }
 .rec__dot { transition: opacity 90ms var(--ease-sharp); }

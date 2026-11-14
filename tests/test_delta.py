@@ -93,7 +93,10 @@ def test_set_delta_by_id(cfg, audit, tmp_path):
     got = {e["payload"]["requirement_id"]: e["payload"] for e in audit.list_items(d, "delta_entry")}
     assert got["R2"]["kind"] == "changed" and got["R2"]["facts"]["modal_changed"]
     assert got["R3"]["kind"] == "removed" and got["R4"]["kind"] == "added"
-    assert "R1" not in got and audit.get_item(f"DELTA-{d}")["payload"]["unchanged"] == 1
+    meta = audit.get_item(f"DELTA-{d}")["payload"]
+    assert "R1" not in got and meta["unchanged"] == 1
+    # a set export carries no approvals, so Delta must not call its requirements approved
+    assert meta["base_requirements"] == 3 and "approved_requirements" not in meta
 
 
 def test_icx100_rev2_key_is_consistent_with_the_documents():

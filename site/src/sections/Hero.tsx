@@ -43,7 +43,7 @@ export function Hero() {
   return (
     <section className="hero field field--hero" aria-labelledby="hero-title">
       <h1 id="hero-title" className="sr-only">
-        AI writes the work. Zyn proves it: which parts you can trust.
+        AI writes the work. Zyn checks it before you sign.
       </h1>
       <div className="wrap hero__head" aria-hidden={false}>
         <span className="hero__word" aria-hidden>
@@ -51,14 +51,14 @@ export function Hero() {
         </span>
         <Rule className="rule--a" car={40} />
         <p className="hero__desc">
-          The checker for AI-made automotive engineering work. Requirements, tests and CAN databases, from Zyn or any other
-          tool, checked by code, reviewed by a second AI, decided by a named person.
+          Requirements, tests and CAN databases, checked against their source before you sign. Code checks need no model.
+          An AI reviewer advises with quotes. A named person decides. On your desk, or inside your company's walls.
         </p>
         <Rule className="rule--b" car={28} />
         <span className="hero__break" />
         <Rule className="rule--c" car={20} />
         <span className="hero__ink" aria-hidden>
-          Zyn proves it.
+          Zyn checks it.
           <i className="hero__ink-corner" />
         </span>
         <Rule className="rule--d" car={32} />
@@ -75,7 +75,7 @@ export function Hero() {
             </a>
           </div>
           <p className="hero__aside">
-            Open to engineers, testers, tool builders and designers who want AI work they can check.
+            Built for requirement and test engineers. Open to anyone who wants AI work they can check.
           </p>
         </div>
         <Rule className="rule--e" car={20} />

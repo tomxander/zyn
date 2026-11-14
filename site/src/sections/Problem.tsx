@@ -28,7 +28,7 @@ export function Problem() {
           <Headline id="problem-title" plain="Writing is fast now." inked="Checking still takes days." />
           <p className="body">
             AI can write a requirement set or a test suite in minutes. Checking it is where teams give up. In a public study of
-            23 practitioner discussions, <mark className="hl">14 of 23</mark> named inspecting and correcting AI output as the
+            23 discussions among embedded, test and automotive practitioners, <mark className="hl">14 of 23</mark> named inspecting and correcting AI output as the
             biggest cost.
           </p>
           <p className="body body--strong">

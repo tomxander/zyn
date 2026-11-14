@@ -7,7 +7,7 @@ export const PILLARS = [
   { icon: "code-check", title: "Caught by code.", text: "Changed numbers, invented values, weakened wording, tests that can never fail. Same input, same result, every run." },
   { icon: "ai-reviewer", title: "Advice with quotes.", text: "Every AI finding must quote the words it rests on. Code confirms the quote is there before you see it." },
   { icon: "person", title: "A named person decides.", text: "Nothing is approved until a person approves it. The AI reviewer can never approve." },
-  { icon: "audit-log", title: "A record that holds.", text: "Every proposal, check and decision lands in an append-only audit log you can export." },
+  { icon: "audit-log", title: "A record that holds.", text: "Every proposal, check and decision lands in an append-only log, on one computer or shared by a team." },
 ];
 
 export const STUDY = [
@@ -30,7 +30,7 @@ export const LAYERS: Layer[] = [
     id: "code",
     icon: "code-check",
     title: "Code checks",
-    short: "Decide what they can prove",
+    short: "Flag what they can find",
     text: "Deterministic checks run first. No model, no key, no cost. A number that changed or a signal that does not exist fails here, the same way every time.",
     record: [
       { k: "check", v: "number_changed" },
@@ -119,12 +119,12 @@ export type Tool = {
 };
 
 export const TOOLS: Tool[] = [
-  { id: "sift", name: "Sift", mark: "sift", text: "Turns a specification into requirements, each tied to the source words it came from.", inputs: ["PDF", "DOCX", "Markdown"], outputs: ["ReqIF", "Excel"] },
   { id: "sift-review", name: "Sift Review", mark: "sift", text: "Reviews a requirement set you already have against its source.", inputs: ["ReqIF", "Excel", "CSV"], outputs: ["ReqIF", "Evidence report"] },
-  { id: "sift-delta", name: "Sift Delta", mark: "sift", text: "Shows what changed between two revisions, and which approved requirements it touches.", inputs: ["PDF", "DOCX"], outputs: ["ReqIF", "Excel"] },
-  { id: "anvil", name: "Anvil", mark: "anvil", text: "Builds test cases by code from checked templates, then scores them against injected faults.", inputs: ["ReqIF", "DBC"], outputs: ["pytest", "Robot", "CAPL"] },
   { id: "anvil-review", name: "Anvil Review", mark: "anvil", text: "Checks tests from any tool against a CAN database and the requirements they claim to cover.", inputs: ["DBC", "CSV"], outputs: ["Evidence report", "Excel"] },
-  { id: "assay", name: "Assay", mark: "assay", text: "Benchmarks any model on public answer keys: accuracy, repeatability and cost per correct answer.", inputs: ["Answer keys"], outputs: ["Excel"] },
+  { id: "sift-delta", name: "Sift Delta", mark: "sift", text: "Shows what changed between two revisions, and which approved requirements it touches.", inputs: ["PDF", "DOCX"], outputs: ["ReqIF", "Excel"] },
+  { id: "sift", name: "Sift", mark: "sift", text: "Turns a specification into requirements, each tied to the source words it came from.", inputs: ["PDF", "DOCX", "Markdown"], outputs: ["ReqIF", "Excel"] },
+  { id: "anvil", name: "Anvil", mark: "anvil", text: "Builds test cases by code from checked templates, then scores them against injected faults.", inputs: ["ReqIF", "DBC"], outputs: ["pytest", "Robot", "CAPL"] },
+  { id: "assay", name: "Assay", mark: "assay", text: "Benchmarks Claude or local Ollama models on public answer keys: accuracy, repeatability and cost per correct answer.", inputs: ["Answer keys"], outputs: ["Excel"] },
   { id: "scribe", name: "Scribe", mark: "scribe", text: "Documents. Planned.", inputs: [], outputs: [], planned: true },
   { id: "source", name: "Source", mark: "source", text: "Procurement. Planned.", inputs: [], outputs: [], planned: true },
 ];
@@ -135,14 +135,82 @@ export const HUB_OUT = ["ReqIF", "Excel", "pytest", "Robot", "CAPL", "Evidence r
 
 export const WHY = [
   { title: "Works on anyone's output", text: "Requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn." },
-  { title: "Quotes verified by code", text: "An AI finding without a quote that code can locate is never shown." },
+  { title: "Quotes located by code", text: "An AI finding without a quote that code can locate in the source is never shown." },
+  { title: "No confidence scores", text: "You see which checks passed or failed, not a model's opinion of itself." },
   { title: "No silent pass", text: "Empty or junk input is refused or reported as skipped. It is never passed." },
   { title: "Decisions persist", text: "Dismiss a finding once. It stays dismissed on later runs of the same text." },
-  { title: "Four eyes by default", text: "In a team, nobody approves their own work. Every decision records who made it and which rule applied." },
-  { title: "Your servers, your sign-in", text: "Run it for a team in your own network or cloud, with company sign-in, roles per programme and a shared append-only log." },
-  { title: "Fits your toolchain", text: "ReqIF round-trip to DOORS Next, Polarion and Codebeamer. Tests out to pytest, Robot Framework and CAPL. Evidence reports for assessors." },
-  { title: "Runs inside an agent", text: "The same checks are an MCP server, so an agent can check its own work before it hands it over." },
-  { title: "Your models, your walls", text: "One setting refuses every cloud call. IT lists the models a team may use. Zyn sends nothing home." },
+  { title: "Runs inside an agent", text: "The same checks are an MCP server, so an AI agent can check its own work before it hands it over." },
+];
+
+// "Use it when": the daily situations Zyn is for, from the README.
+export const WHEN = [
+  { who: "A supplier or a colleague hands you AI-written requirements", then: "See what was changed, invented or weakened before you sign." },
+  { who: "You have a test suite from an AI assistant", then: "See which tests name signals that don't exist, or can never fail." },
+  { who: "A specification got a new revision", then: "Get the list of approved requirements it affects." },
+  { who: "You inherited a CAN database", then: "List its overlaps, impossible ranges and undeclared nodes before you build on it." },
+  { who: "You are choosing a model", then: "Compare accuracy, repeatability and cost per correct answer on public data, not a vendor's slide." },
+];
+
+export const FITS = [
+  { use: "DOORS Next, Polarion, Codebeamer", gets: "ReqIF files in and out, with review state and findings as attributes. Import into DOORS Next and Polarion not yet tested" },
+  { use: "pytest, Robot Framework, CANoe", gets: "Test stubs in each format to map in your tool, plus a flat step table" },
+  { use: "CI and test benches", gets: "zyn remote with an access token, against a team server" },
+  { use: "An AI coding agent", gets: "An MCP server: the agent calls Zyn's checks inside its own loop" },
+  { use: "Assessors", gets: "An evidence report and an ISO/IEC 33020 style checklist per run" },
+];
+
+// Personal mode and team mode: the same install, the same checks. From the README table.
+export const MODES = [
+  { id: "desk", label: "On your desk", cmd: "zyn serve", note: "Personal mode" },
+  { id: "team", label: "For your team", cmd: "zyn serve --team", note: "Team mode" },
+] as const;
+
+export const MODE_ROWS: { k: string; desk: string; team: string }[] = [
+  { k: "runs on", desk: "your own computer", team: "your network or cloud account" },
+  { k: "you are", desk: "a name you type", team: "your company sign-in" },
+  { k: "audit log", desk: "one SQLite file", team: "shared PostgreSQL, append-only" },
+  { k: "roles", desk: "you", team: "viewer, engineer, approver" },
+  { k: "programmes", desk: "one", team: "walled off by sign-in group" },
+  { k: "approvals", desk: "yours", team: "four eyes: never your own work" },
+  { k: "scripts", desk: "the command line", team: "access tokens, never approve" },
+  { k: "models", desk: "Claude or local Ollama", team: "only those IT allows" },
+];
+
+export type RoadItem = { title: string; text: string };
+export const ROAD: { status: "Built" | "Next" | "Later"; items: RoadItem[] }[] = [
+  {
+    status: "Built",
+    items: [
+      { title: "Team server", text: "Built, not yet proven. Company sign-in, roles and walls per project, four eyes, a shared append-only PostgreSQL log, access tokens for CI and test benches, and a container package. Tested with a stand-in sign-in; the container has not yet been run end to end." },
+      { title: "Light install", text: "One wheel, the zyn command and zyn demo. No Node.js needed." },
+    ],
+  },
+  {
+    status: "Next",
+    items: [
+      { title: "Model connectors", text: "An admin points Zyn at AWS Bedrock, Google Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else." },
+      { title: "Daily-workflow fit", text: "A requirement set and its review state go round trip with a requirement tool. Test reviews cover CANoe CAPL and vTESTstudio. J1939 checks for commercial vehicles join here." },
+      { title: "Trust pack", text: "An engineer-reviewed answer key, a tool-qualification kit, and a security pack with architecture, data flows and a software bill of materials." },
+      { title: "Swapped terms", text: "A signal or status swapped for another valid one passes every code check today. A term-level comparison against the source sentence is the next check to try." },
+      { title: "Diagnostics", text: "A UDS and DTC catalogue checked against its ODX or CDD description." },
+    ],
+  },
+  {
+    status: "Later",
+    items: [
+      { title: "ALM connectors", text: "DOORS Next, Polarion, Codebeamer or Jama, chosen by actual use." },
+      { title: "Coverage on real code", text: "Measuring what the tests reach, not only what they claim." },
+      { title: "Scribe", text: "Documents." },
+    ],
+  },
+];
+
+export const NOT_BUILDING = [
+  "Autonomous TARA or safety analysis",
+  "MISRA compliance verdicts from a model",
+  "Automatic baselining or approval of safety requirements",
+  "RFQ-to-quotation automation",
+  "Productivity percentages",
 ];
 
 export const LIMITS = [
@@ -150,14 +218,16 @@ export const LIMITS = [
   "Public and synthetic data only. No company or customer documents.",
   "The ICX-100 answer key was written by Claude and checked by an AI reviewer, not an engineer.",
   "No productivity claims. No benchmark here measures time saved.",
-  "Team mode is new. The container and real company sign-in have not yet been tried end to end.",
-  "Not a qualified tool under ISO 26262. A draft tool confidence argument exists; a safety engineer has not reviewed it.",
+  "Team mode is built but not proven. The container and real company sign-in have not yet been tried end to end.",
+  "An advisory pre-review, not a qualified tool under ISO 26262. A draft tool confidence argument exists; a safety engineer has not reviewed it.",
 ];
 
 export const FAQ = [
   { q: "Do I have to generate with Zyn to use it?", a: "No. Sift Review and Anvil Review check work from any tool or person. That is the main use." },
-  { q: "Does my data leave my machine?", a: "Only if you let it. The code checks never call a model. Set offline mode and every cloud call is refused; local models run through Ollama. Zyn sends nothing to its makers." },
+  { q: "Does my data leave my machine?", a: "Only if you let it. The code checks never call a model. Once you set an Anthropic key, the AI reviewer sends requirement text to Anthropic's API; run local models through Ollama instead, or set offline mode and every cloud call is refused. Zyn sends nothing to its makers." },
+  { q: "What does a clean result mean?", a: "That Zyn's code checks found nothing, not that the work is right. They miss a signal name swapped for another valid one (1 of 52 caught) and a flipped expected value (0 of 15). A person still reviews every item." },
   { q: "Can a whole team use it?", a: "Yes. Team mode runs on a server in your network or cloud account, with company sign-in, roles per programme, a shared PostgreSQL audit log and four eyes on by default." },
+  { q: "Can the AI approve anything?", a: "No. The audit store refuses an approval from anything that is not a named person. Access tokens and service accounts can't approve either." },
   { q: "Why no confidence score?", a: "A model's rating of itself has not been shown to predict correctness. Zyn shows checks that passed or failed, and quotes you can read." },
   { q: "The AI reviewer gives different answers each run. How is that handled?", a: "Zyn measures it instead of hiding it. Run several passes and see how many reported each finding. Your decisions carry over between runs." },
   { q: "Will it save my team time?", a: "We don't claim a number. That needs a pilot with real engineers on real work. What Zyn measures is what it catches and what it misses." },
@@ -193,10 +263,11 @@ export const LANES: LaneItem[][] = [
 ];
 
 export const SECTIONS = [
-  { id: "problem", label: "The problem" },
   { id: "how", label: "How it works" },
-  { id: "proof", label: "The proof" },
-  { id: "tools", label: "The tools" },
-  { id: "why", label: "Why Zyn" },
+  { id: "proof", label: "Proof" },
+  { id: "tools", label: "Tools" },
+  { id: "teams", label: "Teams" },
+  { id: "work", label: "Daily work" },
+  { id: "roadmap", label: "Roadmap" },
   { id: "contribute", label: "Contribute" },
 ];

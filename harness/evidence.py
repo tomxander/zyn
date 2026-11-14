@@ -1,7 +1,10 @@
 """Evidence report for any run: one verdict per item, the evidence behind it, who decided.
 
-Five verdicts, so a model or infrastructure problem never looks like a finding:
-- pass:    checked and fine (all code checks passed and a person approved, or nothing found)
+Six verdicts, so a model or infrastructure problem never looks like a finding, and nothing
+reads as "right" unless a named person said so:
+- accepted:    a named person approved it, dismissed its findings or marked no action
+- no_findings: the checks that ran found nothing and no person has decided; this does not
+               mean the item is right (code checks miss, for example, a swapped name)
 - fail:    a real problem (a confirmed finding, a rejected item, a test that fails on the
            correct simulation)
 - warn:    needs a person (undecided, approved over a failed check, faults no case detects)
@@ -10,7 +13,8 @@ Five verdicts, so a model or infrastructure problem never looks like a finding:
 
 Outputs, written next to the run's other exports:
 - evidence.html       readable report, prints to PDF from any browser
-- evidence.junit.xml  for CI dashboards (warn is a passing test with a verdict property)
+- evidence.junit.xml  for CI dashboards (accepted, no_findings and warn are passing tests;
+                      the verdict property says which)
 - audit_chain.json    every event of the run, each hashed together with the previous one,
                       so a later change to any event breaks the chain (verify_chain)
 
@@ -31,7 +35,10 @@ from harness import PROTOTYPE_LABEL
 from harness.audit.store import AuditStore
 from harness.config import PROJECT_ROOT, HarnessConfig
 
-VERDICTS = ("pass", "fail", "warn", "skipped", "broken")
+VERDICTS = ("accepted", "no_findings", "fail", "warn", "skipped", "broken")
+# How each verdict reads to a person (report, screen, exports).
+LABELS = {"accepted": "accepted", "no_findings": "no findings", "fail": "fail", "warn": "warn",
+          "skipped": "skipped", "broken": "broken"}
 
 PROCESSES = {
     "sift": [("SYS.2 / SWE.1 requirements analysis",
@@ -97,7 +104,7 @@ def _sift_rows(audit: AuditStore, run_id: str) -> list[dict]:
         if st == "rejected":
             v, why = "fail", "Rejected by a person"
         elif st == "approved" and not failed:
-            v, why = "pass", "Approved; every check passed"
+            v, why = "accepted", "Approved by a person; no check failed"
         elif st == "approved":
             v, why = "warn", "Approved over: " + "; ".join(failed)
         else:
@@ -147,13 +154,13 @@ def _check_rows(audit: AuditStore, run_id: str) -> list[dict]:
         elif ai_ran and batch_of.get(r["item_id"]) not in done:
             v, why = "broken", "The AI review of its batch did not finish"
         elif dism:
-            v, why = "pass", f"All {len(dism)} finding(s) dismissed by a person"
+            v, why = "accepted", f"All {len(dism)} finding(s) dismissed by a person"
         elif p["ext_id"] in unchecked:
             v, why = "skipped", ("Nothing to check: the test names no signal from "
                                  f"{meta.get('dbc') or 'the CAN database'}")
         else:
-            v, why = "pass", ("No findings" if ai_ran
-                              else "No findings from code checks; AI review not run")
+            v, why = "no_findings", ("No findings from code checks or the AI reviewer" if ai_ran
+                                     else "No findings from code checks; AI review not run")
         decided = [_decision(audit, f["item_id"]) for f in conf + dism]
         last = max((d for d in decided if d), key=lambda d: d["at"], default=None)
         rows.append(_row(r["item_id"], p["text"], v, why, "", lines, None, last,
@@ -171,7 +178,7 @@ def _delta_rows(audit: AuditStore, run_id: str) -> list[dict]:
         if st == "approved":
             v, why = "warn", "Marked needs action"
         elif st == "rejected":
-            v, why = "pass", "Marked no action"
+            v, why = "accepted", "Marked no action by a person"
         else:
             v, why = "warn", "Not decided yet"
         rows.append(_row(e["item_id"], sd.summary(p), v, why,
@@ -211,7 +218,7 @@ def _forge_rows(audit: AuditStore, run_id: str) -> list[dict]:
         elif fc["detected"] < fc["total"]:
             v, why = "warn", f"Cases detect {fc['detected']} of {fc['total']} injected faults"
         else:
-            v, why = "pass", (f"{cases.get(s['item_id'], 0)} cases; detect all "
+            v, why = "accepted", (f"{cases.get(s['item_id'], 0)} cases; detect all "
                               f"{fc['total']} injected faults")
         rows.append(_row(s["item_id"], p.get("requirement_text", ""), v, why,
                          p.get("requirement_quote", ""), lines, f"template {p['template']} "
@@ -330,10 +337,11 @@ def html_report(v: dict, meta: dict) -> str:
              f"<h1>Evidence report: {_h(meta['tool'])}</h1>",
              (f"<p class='m'>Run {_h(v['run_id'])} · generated {_h(meta['generated'])} by "
              f"{_h(meta['actor'])} · audit chain head {_h(meta['chain_head'][:16])}…</p>"),
-             "<h2>Verdicts</h2><p>" + " · ".join(f"{_h(k)} {c[k]}" for k in VERDICTS) + "</p>",
-             ("<p class='quiet'>pass: checked and fine · fail: a real problem · warn: needs a "
-             "person · skipped: deliberately not checked · broken: could not be checked "
-             "(model or infrastructure)</p>"),
+             "<h2>Verdicts</h2><p>" + " · ".join(f"{_h(LABELS[k])} {c[k]}" for k in VERDICTS) + "</p>",
+             ("<p class='quiet'>accepted: a named person accepted it · no findings: the checks "
+             "that ran found nothing, which does not mean it is right · fail: a real problem · "
+             "warn: needs a person · skipped: deliberately not checked · broken: could not be "
+             "checked (model or infrastructure)</p>"),
              "<h2>Inputs and settings</h2><ul>"]
     for k, val in meta["inputs"].items():
         parts.append(f"<li>{_h(k)}: <span class='m'>{_h(val)}</span></li>")
@@ -347,7 +355,7 @@ def html_report(v: dict, meta: dict) -> str:
         dec += "</span>" if not d else ""
         ai = f"<br><span class='quiet'>AI: {_h(r['ai'])}</span>" if r["ai"] else ""
         parts.append(
-            f"<tr><td class='m'>{_h(r['id'])}</td><td><span class='v'>{_h(r['verdict'])}"
+            f"<tr><td class='m'>{_h(r['id'])}</td><td><span class='v'>{_h(LABELS[r['verdict']])}"
             f"</span><br>{_h(r['reason'])}</td><td>{_h(r['title'])}"
             + (f"<br><span class='q'>“{_h(r['evidence'])}”</span>" if r["evidence"]
                else "") + ai + "</td><td><ul>"

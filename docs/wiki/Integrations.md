@@ -6,7 +6,7 @@ Zyn fits around existing tools rather than replacing them.
 
 A Sift Review export writes `reviewed.reqif`. If the set came in as ReqIF and the original file is unchanged, the export is that file with two attributes added to each requirement:
 
-- **Zyn review**: pass, fail, warn or broken
+- **Zyn review**: accepted, no findings, fail, warn, skipped or broken
 - **Zyn findings**: each finding, its state and who decided
 
 Identifiers, types, hierarchy and other attributes are kept, so DOORS Next, Polarion or Codebeamer can import it as an update. Reviewing a reviewed file replaces the two attributes instead of adding more. Every export is read back to confirm no requirement or text was lost.

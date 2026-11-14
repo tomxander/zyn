@@ -198,7 +198,8 @@ def set_delta(cfg: HarnessConfig, audit: AuditStore, old_path: Path | str,
                         "diff": word_diff(old_t, new_t), "facts": change_facts(old_t, new_t)})
     meta = {"mode": "set", "base_file": old.filename, "new_file": new.filename,
             "base_sha256": old.sha256, "new_sha256": new.sha256, "unchanged": unchanged,
-            "approved_requirements": len(old.requirements), "counts": _counts(entries)}
+            # A set export carries no approvals: count what the old file holds, not "approved".
+            "base_requirements": len(old.requirements), "counts": _counts(entries)}
     audit.add_item(run_id, "delta", meta, created_by=CODE_ACTOR, item_id=f"DELTA-{run_id}")
     audit.log_event(CODE_ACTOR, "ingested", run_id=run_id, object_type="delta",
                     input_sha256=new.sha256, detail=meta)

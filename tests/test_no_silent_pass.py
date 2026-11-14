@@ -3,7 +3,7 @@ nothing. It never comes back looking clean.
 
 A public skill pack showed why this matters: its traceability reviewer rated an empty
 matrix as broadly compliant. Each case here feeds a Zyn check something with nothing in it
-and requires an error, a finding, or a "skipped" verdict, and no "pass".
+and requires an error, a finding, or a "skipped" verdict, and never "accepted" or "no_findings".
 """
 
 from __future__ import annotations
@@ -65,7 +65,7 @@ def test_junk_tests_are_skipped_not_passed(audit, tmp_path):
     junk = _write(tmp_path, "notes.txt", "Lorem ipsum dolor sit amet.\nNothing to see here.")
     run = start_tests(audit, [junk], DBC)
     v = evidence.verdicts(audit, run)
-    assert v["counts"]["pass"] == 0 and v["counts"]["skipped"] == 1
+    assert v["counts"]["accepted"] == v["counts"]["no_findings"] == 0 and v["counts"]["skipped"] == 1
     assert "Nothing to check" in v["rows"][0]["reason"]
     meta = audit.get_item(f"SET-{run}")["payload"]
     assert meta["coverage"]["no_signal"] == ["notes"]
@@ -76,7 +76,8 @@ def test_junk_tests_against_requirements_are_findings(audit, tmp_path):
     run = start_tests(audit, [junk], DBC, SET)
     cats = {f["payload"]["category"] for f in audit.list_items(run, "finding")}
     assert "no_requirement" in cats
-    assert evidence.verdicts(audit, run)["counts"]["pass"] == 0
+    c = evidence.verdicts(audit, run)["counts"]
+    assert c["accepted"] == c["no_findings"] == 0
 
 
 def test_requirements_against_an_empty_source_are_all_ungrounded(cfg, audit, tmp_path):

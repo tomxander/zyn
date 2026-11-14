@@ -5,6 +5,7 @@ import "./styles/tokens.css";
 import "./styles/site.css";
 import "./styles/hero.css";
 import "./styles/sections.css";
+import "./styles/teams.css";
 import "./styles/docs.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -34,13 +34,14 @@ Zyn never shows a model's confidence score. Cards show concrete support states:
 - the AI reviewer's verdict, labelled as advice
 - the decision record: "People confirmed 3 of 14 earlier findings of this kind from the AI reviewer (21%)", or "too few to judge" under five
 
-## Five verdicts
+## Six verdicts
 
-Each item in the evidence report gets one verdict, so a model or infrastructure problem never looks like a finding:
+Each item in the evidence report gets one verdict, so a model or infrastructure problem never looks like a finding, and nothing reads as right unless a named person said so:
 
 | Verdict | Meaning |
 |---|---|
-| pass | Checked and fine |
+| accepted | A named person approved it, dismissed its findings or marked no action |
+| no findings | The checks that ran found nothing and no person has decided. This does not mean the item is right: code checks miss, for example, a signal name swapped for another valid one |
 | fail | A real problem, confirmed by a person |
 | warn | Needs a person: undecided, or approved over a failed check |
 | skipped | Not checked, with the reason (not automatable, nothing checkable) |

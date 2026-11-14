@@ -127,6 +127,14 @@ def test_score_against_answer_key(cfg, audit, tmp_path):
     assert s["required_flags"] == sum(len(g["flags"]) for g in key["requirements"])
 
 
+def test_score_lists_only_sources_that_ran(cfg, audit, tmp_path):
+    key = json.loads(KEY.read_text(encoding="utf-8"))
+    lines = ["ID,Requirement"] + [f'{g["gold_id"]},"{g["text"]}"' for g in key["requirements"]]
+    run = check.start(cfg, audit, _csv(tmp_path, "\n".join(lines) + "\n", "icx.csv")).run_id
+    s = check.score(audit, run, KEY)  # asks for code and ai; no AI review ran
+    assert s["sources"] == ["code"] and s["ai_review"] == "not run"
+
+
 def test_stability_passes_match_findings_and_filter_score(cfg, audit, tmp_path):
     cfg = cfg.model_copy(update={"replay": True})  # stability passes must ask again anyway
     run = check.start(cfg, audit, _csv(tmp_path)).run_id

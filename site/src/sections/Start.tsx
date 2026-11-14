@@ -201,7 +201,15 @@ function Logo() {
   );
 }
 
-const AREAS = ["Checks and rules", "Tools: Sift and Anvil", "Benchmarks and datasets", "Review screen and design", "Something else"];
+const AREAS = [
+  "Run a pilot on my team's work",
+  "Try it early as an engineer",
+  "Review the answer key",
+  "Checks and rules",
+  "Model connectors",
+  "Requirement tools and test benches",
+  "Something else",
+];
 const ENDPOINT = "/api/zyn-contribute";
 
 type Status = { kind: "idle" | "sending" | "sent" | "error"; note?: string };
@@ -287,8 +295,10 @@ export function Contribute() {
           <div className="start__copy">
             <Headline id="contribute-title" plain="Zyn is coming soon." inked="Help build it." />
             <p className="body">
-              Zyn is an open, independent project. If you write checks, build test tooling, know requirements and CAN, run
-              models, or design review screens, there is work here with your name on it.
+              Requirement or test engineer? Try it early on sample data and tell us what would make it daily work. Know
+              requirements, CAN or test benches well? Review the answer key, so every score stops saying "AI-reviewed". Build
+              checks, model connectors or tool round trips? The roadmap is open. Leading a team? Ask for a pilot: we measure
+              reviewer minutes with and without Zyn on your own work, and the report says so if there is no gain.
             </p>
             <ContributeForm />
           </div>

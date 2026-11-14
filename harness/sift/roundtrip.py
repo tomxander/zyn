@@ -34,12 +34,12 @@ def _q(tag: str) -> str:
 
 
 def review_rows(audit: AuditStore, run_id: str) -> list[dict]:
-    from harness.evidence import _check_rows
+    from harness.evidence import LABELS, _check_rows
 
     rows = []
     for r in _check_rows(audit, run_id):
         d = r["decision"]
-        rows.append({"id": r["id"], "text": r["title"], "verdict": r["verdict"],
+        rows.append({"id": r["id"], "text": r["title"], "verdict": LABELS[r["verdict"]],
                      "findings": "; ".join(r["checks"]) or "none",
                      "decided": f"{d['decision']} by {d['by']}" if d else ""})
     return rows

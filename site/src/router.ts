@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { BASE } from "./docs/docs";
+import { BASE, HOME } from "./docs/docs";
 
 // A tiny router. Pages are "" (home) or a docs slug. Each docs page also exists as its own
 // folder with an index.html at build time (scripts/pages.mjs), so a direct visit or a refresh works.
 
 export const pageOf = (pathname: string) => {
+  if (pathname === HOME) return ""; // "/zyn" without the slash is the home page too
   const rest = pathname.startsWith(BASE) ? pathname.slice(BASE.length) : pathname.replace(/^\//, "");
   return rest.replace(/\/+$/, "").replace(/\.html$/, "").replace(/\/index$/, "");
 };
@@ -40,7 +41,7 @@ export function usePage() {
       const a = (e.target as Element).closest?.("a");
       if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
       const url = new URL(a.href, window.location.href);
-      if (url.origin !== window.location.origin || !url.pathname.startsWith(BASE)) return;
+      if (url.origin !== window.location.origin || !(url.pathname === HOME || url.pathname.startsWith(BASE))) return;
       e.preventDefault();
       navigate(url.href);
     };
@@ -56,9 +57,9 @@ export function usePage() {
 /** Go to a home-page section from anywhere. */
 export function goSection(id: string) {
   if (pageOf(window.location.pathname) === "") {
-    history.replaceState(null, "", `${BASE}#${id}`);
+    history.replaceState(null, "", `${HOME}#${id}`);
     scrollToHash(`#${id}`);
   } else {
-    navigate(`${BASE}#${id}`);
+    navigate(`${HOME}#${id}`);
   }
 }

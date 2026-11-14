@@ -33,7 +33,7 @@ def test_review_goes_back_into_the_original_reqif(cfg, audit, tmp_path):
     back = {r.ext_id: r for r in load_requirement_set(out).requirements}
     assert set(back) == {"DNG-101", "DNG-102"}
     assert back["DNG-101"].attrs[REVIEW] == "fail" and "quickly" in back["DNG-101"].attrs[FINDINGS]
-    assert back["DNG-102"].attrs[REVIEW] == "pass"
+    assert back["DNG-102"].attrs[REVIEW] == "no findings"
     assert back["DNG-101"].attrs["Owner"] == "Ana"  # untouched attributes survive
     orig = {o.get("IDENTIFIER") for o in ET.parse(src).getroot().iter(f"{{{NS}}}SPEC-OBJECT")}
     new = {o.get("IDENTIFIER") for o in ET.parse(out).getroot().iter(f"{{{NS}}}SPEC-OBJECT")}

@@ -87,13 +87,13 @@ pipx inject zyn-harness docling
 
 1. Install [Ollama](https://ollama.com) (Windows: `winget install Ollama.Ollama`)
 2. Pull a model (about 9 GB): `ollama pull qwen3:14b`
-3. Generate locally and review with Claude: `zyn smoke --generator local-qwen3-14b --reviewer claude-opus`
+3. Generate locally and review with Claude: `zyn smoke --generator local-qwen3-14b --reviewer claude-sonnet`
 
 Set `offline: true` in `config.yaml` (or `ZYN_OFFLINE=1`) to make every cloud call fail before it is sent. Stored answers can still be replayed offline, because nothing leaves the machine.
 
 ## Configuration
 
-`config.yaml` in your Zyn folder holds the model switch. Two roles, `generator` and `reviewer`, point at profiles. Change a role to swap models everywhere. Each profile records its price per million tokens, used only to estimate cost in reports.
+`config.yaml` in your Zyn folder holds the model switch. Two roles, `generator` and `reviewer`, point at profiles; both start on `claude-sonnet`, which matched Opus on review at under half the cost per correct finding ([Benchmarks](Benchmarks.md)). Change a role to swap models everywhere. Each profile records its price per million tokens, used only to estimate cost in reports.
 
 | Setting | What it does |
 |---|---|

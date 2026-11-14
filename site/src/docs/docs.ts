@@ -54,7 +54,10 @@ export function splitDoc(file: string) {
 
 export const BASE = import.meta.env.BASE_URL; // "/" or "/zyn/"
 
-export const docHref = (slug: string, hash = "") => `${BASE}${slug}${hash}`;
+// The host drops trailing slashes, so the home page lives at "/zyn" (or "/"), not "/zyn/".
+export const HOME = BASE === "/" ? "/" : BASE.replace(/\/$/, "");
+
+export const docHref = (slug: string, hash = "") => (slug ? `${BASE}${slug}${hash}` : `${HOME}${hash}`);
 
 /** Rewrite a wiki link. Wiki pages become site pages; files in the (private) repository become plain text. */
 export function rewriteLink(href: string): { kind: "doc" | "external" | "repo" | "anchor"; href: string } {

@@ -16,7 +16,7 @@ Zyn runs as a containerized web service backed by PostgreSQL and your enterprise
 - **Hardware resources:**
   - Minimum: 2 vCPU, 4 GB RAM, 20 GB disk (for temporary uploads and logs).
   - Recommended: 4 vCPU, 8 GB RAM, 50 GB disk.
-- **Network egress:** HTTPS (port 443) to your allowed model inference endpoints (Anthropic, Azure OpenAI, or internal Ollama/vLLM endpoints). No telemetry or tracking traffic leaves the host.
+- **Network egress:** HTTPS (port 443) to your allowed model endpoints: the Anthropic API, or an internal Ollama server. Other providers (Bedrock, Vertex, Azure, OpenAI-style endpoints such as vLLM) are planned, not built ([Roadmap](Roadmap.md)). No telemetry or tracking traffic leaves the host.
 
 ---
 
@@ -169,7 +169,7 @@ Zyn is engineered for regulated automotive safety (ISO 26262, ASPICE).
 
 - **Zero phone home:** Zyn contains no vendor telemetry, license verification calls, or analytics beacons.
 - **The data rule:** Model calls are restricted exclusively to rule profiles declared in `team.allowed_models`. Any stage requesting an unauthorized profile is blocked and rejected with an audit log event.
-- **On-premise model option:** For air-gapped environments, configure an internal Ollama or vLLM server; no data ever leaves the customer VPC or private network.
+- **On-premise model option:** For air-gapped environments, configure an internal Ollama server and set the allowed-model list to it alone; model calls then stay inside the customer VPC or private network. vLLM and other OpenAI-style servers are planned, not built.
 
 ---
 

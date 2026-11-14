@@ -46,6 +46,8 @@ The motion follows a measured study of the reference site (its scripts and style
 | How it works | `sections/How.tsx` | Layers auto-advance every 8 s (visible time); card swaps with a staged reveal and a `- \ \| /` spinner |
 | The proof | `sections/Proof.tsx` | Tabs auto-advance every 5 s with a 2 px progress line; ledger slides with direction, rows stagger, bars draw |
 | The tools | `sections/Tools.tsx` | Wires draw out at 900 px/s, packets shuttle, tiles invert when hit, pixel bursts at impact |
+| For teams | `sections/Teams.tsx` | Desk and team modes auto-switch every 6 s until someone picks one; both values share one cell so nothing resizes; the walls diagram's packets run at constant speed and pause off screen |
+| Daily work, roadmap | `sections/Why.tsx`, `sections/Roadmap.tsx` | Still: tables and lists, no motion |
 | Contribute | `sections/Start.tsx` | Scripted terminal loop (an illustration, no real commands): rows decode behind a scramble front, shimmer, hard-blink cursor; beside it the invitation and the form |
 | Footer | `components/Wordmark.tsx`, `bands.tsx` | Slider rules; a lens over the wordmark shows its outline alternate and, on exit, ricochets forever |
 
@@ -77,3 +79,5 @@ Zyn is not released, so the page links to nothing outside itself: no GitHub, no 
 ## Publishing to thomasalex.in/zyn
 
 `npm run build:thomasalex`, then copy `dist/` over `zyn/` in the thomasalex.in repository (delete its old `zyn/assets/` first: names are hashed) and push. No page links to GitHub.
+
+The host (thomasalex.in) drops trailing slashes, so a refresh turns `/zyn/` into `/zyn`. The router treats `/zyn` as the home page and home links point there (`HOME` in `src/docs/docs.ts`); docs pages keep `/zyn/<slug>`.

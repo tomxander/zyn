@@ -383,7 +383,7 @@ function Record({ live, eng }: { live: Live; eng: Engine }) {
 
   const showBad = (isErrored || working) && !success;
   const text = useScramble(showBad ? live.bad : live.good);
-  const status = useScramble(showBad ? "flag" : repaired || success ? "fixed" : "pass");
+  const status = useScramble(showBad ? "flag" : repaired || success ? "fixed" : "no flag");
 
   return (
     <span className="rec-slot" data-live={live.id}>

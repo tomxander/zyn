@@ -21,7 +21,7 @@ def test_smoke_run_verdicts_follow_checks_and_decisions(env):  # noqa: F811
     audit.decide("REQ-SMOKE-001", "approved", "Tom")
     audit.decide("REQ-SMOKE-002", "rejected", "Tom", comment="not in the spec")
     by = {r["id"]: r for r in evidence.verdicts(audit, run)["rows"]}
-    assert by["REQ-SMOKE-001"]["verdict"] in ("pass", "warn")
+    assert by["REQ-SMOKE-001"]["verdict"] in ("accepted", "warn")
     assert by["REQ-SMOKE-002"]["verdict"] == "fail"
     assert by["REQ-SMOKE-002"]["decision"]["comment"] == "not in the spec"
 
@@ -31,7 +31,7 @@ def test_check_run_separates_findings_from_broken_batches(cfg, audit, tmp_path):
     run = check.start(cfg, audit, _csv(tmp_path, CSV + extra)).run_id
     rows = {r["id"]: r for r in evidence.verdicts(audit, run)["rows"]}
     assert rows["R1"]["verdict"] == "warn"   # code found 'quickly', undecided
-    assert rows["R5"]["verdict"] == "pass" and "AI review not run" in rows["R5"]["reason"]
+    assert rows["R5"]["verdict"] == "no_findings" and "AI review not run" in rows["R5"]["reason"]
     fid = next(f["item_id"] for f in audit.list_items(run, "finding")
                if f["payload"]["req_id"] == "R1")
     audit.decide(fid, "approved", "Tom")

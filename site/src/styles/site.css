@@ -450,8 +450,6 @@ a.hub__core:hover .hub__core-planned { color: var(--paper); text-decoration: und
   .toollist__text { grid-column: 2; }
   .footer__cols { grid-template-columns: 1fr; }
   .footer__base { flex-direction: column; }
-  .seg { display: grid; width: 100%; }
-  .seg__item + .seg__item { border-left: 0; border-top: var(--line) solid var(--rule); }
   .cmdbar__pick { padding: 0 var(--s3); }
 }
 

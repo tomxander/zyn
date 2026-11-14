@@ -8,8 +8,10 @@ replay: true             # reuse a stored answer when the same model saw the sam
 knowledge_file: knowledge.md  # house rules, terms, units added to every model call; see knowledge.example.md
 
 roles:
-  generator: claude-opus      # produces requirements, tests, mappings
-  reviewer: claude-opus       # independent AI reviewer; set to a different profile for a second opinion
+  # Default: Sonnet. On Zyn's benchmark it matched Opus on review at under half the cost per
+  # correct finding (docs/wiki/Benchmarks.md). Switch a role to claude-opus or a local profile here.
+  generator: claude-sonnet    # produces requirements, tests, mappings
+  reviewer: claude-sonnet     # independent AI reviewer; set to a different profile for a second opinion
 
 profiles:
   # Cloud tier (Anthropic API). Key goes in .env as ANTHROPIC_API_KEY.
