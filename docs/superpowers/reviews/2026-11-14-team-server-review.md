@@ -15,7 +15,7 @@ Date: 2026-11-14. Reviewer: Claude (Claude Code), with three independent review 
 5. **Import is not atomic.** A failure part-way leaves committed runs that a retry then skips forever (importlog.py:32-113). One transaction for the whole import. Proved.
 6. **Import shifts ids when nothing collides, and drops run-less events.** Keep ids when there is no overlap (offset 0); import events with `run_id NULL` too (plan Task 6). `import-log` must require `--admin-url` in team mode. Proved.
 7. **One connection per store call on PostgreSQL.** `list_items` calls `status()` per row: hundreds of connections per screen load. Use a pool (`psycopg_pool`) or a per-request connection. Inferred.
-8. **The PostgreSQL tests never ran.** PostgreSQL 18 runs on Tom's PC. Parametrise the store tests over both back ends (plan Task 5), add `test_app_user_cannot_update_or_delete` and `test_server_refuses_old_schema`, and make `test_store_pg_basic` independent of test order. Tom will set `ZYN_TEST_PG_URL`; none of this counts as done until those tests pass with no PostgreSQL skips.
+8. **The PostgreSQL tests never ran.** PostgreSQL 18 is available on the development machine. Parametrise the store tests over both back ends (plan Task 5), add `test_app_user_cannot_update_or_delete` and `test_server_refuses_old_schema`, and make `test_store_pg_basic` independent of test order. Tom will set `ZYN_TEST_PG_URL`; none of this counts as done until those tests pass with no PostgreSQL skips.
 
 ## Batch B: access control holes
 
