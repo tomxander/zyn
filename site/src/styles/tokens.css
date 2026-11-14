@@ -1,0 +1,140 @@
+/* Zyn website tokens. The only file in site/ that holds literal colours, fonts and durations.
+   Same world as the review screen (ink on paper, square corners, hatch = needs a person,
+   one blue accent), opened up for a public page: three colour fields carry the sections,
+   the way a print shop uses coloured stock. Light is the default; [data-theme="dark"] is the darkroom. */
+
+@font-face {
+  font-family: "Zyn Grotesk";
+  src: url("/fonts/SpaceGrotesk.ttf") format("truetype");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zyn Mono";
+  src: url("/fonts/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* ink and paper, from the review screen's zone ramp */
+  --ink: #121211;
+  --ink-2: #4C4C48;
+  --ink-3: #63635E;
+  --paper: #FBFAF7;
+  --table: #ECEAE4;          /* the light table: page ground between fields */
+  --rule: #121211;
+  --rule-soft: #D1D0C9;
+  --on-ink: #FBFAF7;
+  --on-ink-2: #B4B3AC;
+  --hover: #E6E4DE;
+
+  /* the one accent: the dot in every Zyn mark, focus, the caret */
+  --accent: #1F5FCC;
+  --on-accent: #FFFFFF;
+
+  /* Zyn's fields: the light table and the sheets of the zone ramp. The one colour is Zyn blue. */
+  --field-hero: #ECEAE4;          /* the light table: hero, nav, footer */
+  --field-hero-line: rgba(18, 18, 17, .34);
+  --field-a: #E6E4DE;             /* zone 9: the sheet beneath */
+  --field-a-line: rgba(18, 18, 17, .36);
+  --field-b: #D1D0C9;             /* zone 8 */
+  --field-b-line: rgba(18, 18, 17, .42);
+  --hi-on-ink: #5C9DFF;           /* Zyn blue, readable on ink */
+
+  /* the terminal is always a dark sheet, in both themes; code tones are for text on ink */
+  --term-bg: #121211; --term-ink: #F7F6F2; --term-dim: #97968F; --term-muted: #B4B3AC;
+  --term-rule: #363633; --term-rule-2: #4C4C48; --term-accent: #5C9DFF;
+  --code-bad: #FF8F86; --code-ok: #5FD99A; --code-warn: #F5B26B;
+  --overlay: rgba(18, 18, 17, .4);
+
+  /* status, small marks only */
+  --ok: #157A4B;
+  --bad: #B3261E;
+  --warn: #A0520A;
+
+  /* line work */
+  --hatch-ink: rgba(18, 18, 17, .38);
+  --hatch: repeating-linear-gradient(135deg, var(--hatch-ink) 0 1px, transparent 1px 6px);
+  --hatch-dense: repeating-linear-gradient(135deg, var(--hatch-ink) 0 1px, transparent 1px 3.5px);
+  --crosshatch: repeating-linear-gradient(135deg, var(--hatch-ink) 0 1px, transparent 1px 6px),
+                repeating-linear-gradient(45deg, var(--hatch-ink) 0 1px, transparent 1px 6px);
+  --line: 1px;
+  --line-strong: 1.5px;
+  --line-heavy: 2px;
+  --shadow-float: 0 22px 50px -24px rgba(18, 18, 17, .45), 0 2px 6px rgba(18, 18, 17, .08);
+
+  /* type */
+  --font: "Zyn Grotesk", "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  --mono: "Zyn Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+  --t-display: clamp(40px, 5.3vw, 76px);
+  --t-h2: clamp(32px, 4.2vw, 52px);
+  --t-h3: 22px;
+  --t-lead: 18px;
+  --t-body: 16px;
+  --t-small: 14px;
+  --t-mono: 13px;
+  --t-tiny: 12px;
+  --lead-display: 1.02;
+  --lead-h: 1.08;
+  --lead: 1.55;
+  --track-display: -.035em;
+  --track-h: -.025em;
+  --measure: 62ch;
+
+  /* space: a 4px rhythm */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --s7: 48px; --s8: 72px; --s9: 112px;
+
+  /* layout */
+  --page: 1240px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --nav-h: 64px;
+
+  /* motion: short, damped, no bounce */
+  --fast: 120ms;
+  --base: 220ms;
+  --slow: 420ms;
+  --ease: cubic-bezier(.2, 0, 0, 1);
+  --ease-out: cubic-bezier(.165, .84, .44, 1);
+  --ease-sharp: cubic-bezier(.9, 0, .1, 1);   /* colour and state flips: almost a cut */
+  --ease-house: cubic-bezier(.6, .6, 0, 1);
+  --press: .97;
+
+  --z-nav: 50;
+  --z-overlay: 80;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #F7F6F2;
+  --ink-2: #D1D0C9;
+  --ink-3: #B4B3AC;
+  --paper: #1C1C1A;
+  --table: #141413;
+  --rule: #B4B3AC;
+  --rule-soft: #363633;
+  --on-ink: #121211;
+  --on-ink-2: #4C4C48;
+  --hover: #2A2A27;
+  --accent: #5C9DFF;
+  --on-accent: #07111F;
+  --field-hero: #141413;
+  --field-hero-line: rgba(247, 246, 242, .26);
+  --field-a: #232321;
+  --field-a-line: rgba(247, 246, 242, .28);
+  --field-b: #2A2A27;
+  --field-b-line: rgba(247, 246, 242, .32);
+  --hi-on-ink: #1F5FCC;           /* ink is light in the darkroom */
+  --ok: #3DD68C;
+  --bad: #FF7A70;
+  --warn: #F5A04D;
+  --hatch-ink: rgba(247, 246, 242, .5);
+  --shadow-float: 0 22px 50px -24px rgba(0, 0, 0, .8);
+}
+
+/* per-section fields: alternate the two sheets */
+[data-sa="0"], [data-sa="2"], [data-sa="4"] { --sa: var(--field-a); --sa-line: var(--field-a-line); }
+[data-sa="1"], [data-sa="3"] { --sa: var(--field-b); --sa-line: var(--field-b-line); }

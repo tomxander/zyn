@@ -22,6 +22,13 @@ from harness.config import PROJECT_ROOT, load_config
 from harness.models.runner import StructuredOutputFailure
 
 
+def _screen_hint() -> str:
+    """How to open the review screen: the Windows launcher in a source folder, else zyn serve."""
+    if os.name == "nt" and (PROJECT_ROOT / "review.ps1").is_file():
+        return ".\\review.ps1"
+    return "zyn serve"
+
+
 def _ollama_models(host: str) -> list[str] | None:
     try:
         import ollama
@@ -69,7 +76,7 @@ def cmd_smoke(cfg, args) -> int:
         return 1
     print(json.dumps(summary, indent=2))
     print("\nNext: open the review screen and approve or reject each item:")
-    print("  .\\review.ps1")
+    print(f"  {_screen_hint()}")
     return 0
 
 
@@ -96,7 +103,7 @@ def cmd_sift(cfg, args) -> int:
         print(f"FAILED: {e}")
         return 1
     print(json.dumps(rep.as_dict(), indent=2))
-    print("\nNext: review in the browser:  .\\review.ps1")
+    print(f"\nNext: review in the browser:  {_screen_hint()}")
     return 0 if not rep.failed else 1
 
 
@@ -128,7 +135,7 @@ def cmd_check(cfg, args) -> int:
         print(f"FAILED: {e}")
         return 1
     print(json.dumps(rep.as_dict(), indent=2))
-    print("\nNext: review the findings in the browser:  .\\review.ps1")
+    print(f"\nNext: review the findings in the browser:  {_screen_hint()}")
     return 0 if not rep.failed else 1
 
 
@@ -263,17 +270,79 @@ def cmd_serve(cfg, args) -> int:
 
     from harness.api.server import create_app
 
-    url = f"http://127.0.0.1:{args.port}"
+    fake_sign_in = None
+    if getattr(args, "fake_sign_in", None):
+        if os.environ.get("ZYN_DEV") != "1":
+            print("serve --fake-sign-in requires ZYN_DEV=1 in environment.", file=sys.stderr)
+            return 2
+        is_team = getattr(args, "team", False) or cfg.is_team()
+        if not is_team:
+            print("serve --fake-sign-in requires --team mode.", file=sys.stderr)
+            return 2
+        parts = [p.strip() for p in args.fake_sign_in.split(",") if p.strip()]
+        if not parts:
+            print("serve --fake-sign-in requires NAME,GROUPS.", file=sys.stderr)
+            return 2
+        name = parts[0]
+        groups = parts[1:]
+        fake_sign_in = (name, groups)
+
+    if getattr(args, "team", False) and not cfg.is_team():
+        print("serve --team needs a team section in config.yaml.", file=sys.stderr)
+        return 2
+
+    host = getattr(args, "host", "127.0.0.1")
+    is_team = getattr(args, "team", False) or cfg.is_team()
+    if not is_team and host in ("0.0.0.0", "::"):
+        print("Personal mode only listens on this machine.", file=sys.stderr)
+        return 2
+
+    url = f"http://{host}:{args.port}"
     print(f"{PROTOTYPE_LABEL} Review screen at {url}  (Ctrl+C to stop)")
-    if not args.no_browser:
+    if not args.no_browser and host == "127.0.0.1":
         threading.Timer(1.2, lambda: webbrowser.open(url)).start()
-    uvicorn.run(create_app(cfg), host="127.0.0.1", port=args.port, log_level="warning")
+    uvicorn.run(create_app(cfg, fake_sign_in=fake_sign_in), host=host, port=args.port, log_level="warning")
     return 0
+
+
+DEMO_SET = PROJECT_ROOT / "data" / "synthetic" / "icx100_reqset.csv"
+DEMO_SOURCE = PROJECT_ROOT / "data" / "synthetic" / "icx100_srs.md"
+DEMO_MARKER = PROJECT_ROOT / "runs" / "demo_run.txt"
+
+
+def demo_run(cfg) -> tuple[str, bool]:
+    """The sample requirement set checked against its specification by code alone: no
+    model, no key. Reuses the earlier demo run if it is still in the audit log.
+    Returns (run_id, created)."""
+    from harness.sift import check
+
+    audit = AuditStore(cfg.resolved_db_path())
+    if DEMO_MARKER.is_file():
+        rid = DEMO_MARKER.read_text(encoding="utf-8").strip()
+        if any(r["run_id"] == rid for r in audit.list_runs()):
+            return rid, False
+    rep = check.start(cfg, audit, DEMO_SET, source=DEMO_SOURCE)
+    DEMO_MARKER.parent.mkdir(parents=True, exist_ok=True)
+    DEMO_MARKER.write_text(rep.run_id, encoding="utf-8")
+    return rep.run_id, True
+
+
+def cmd_demo(cfg, args) -> int:
+    if not DEMO_SET.is_file():
+        print(f"Sample data not found in {DEMO_SET.parent}.")
+        return 1
+    run_id, created = demo_run(cfg)
+    findings = len(AuditStore(cfg.resolved_db_path()).list_items(run_id, "finding"))
+    word = "Checked" if created else "Already checked"
+    print(f"{word} the sample requirement set against its specification, by code alone "
+          f"(no model, no key): {findings} findings in run {run_id}.")
+    print(f"Your Zyn folder: {PROJECT_ROOT}")
+    return cmd_serve(cfg, args)
 
 
 def main(argv: list[str] | None = None) -> int:
     load_dotenv(PROJECT_ROOT / ".env")
-    parser = argparse.ArgumentParser(prog="harness", description=PROTOTYPE_LABEL)
+    parser = argparse.ArgumentParser(prog="zyn", description=PROTOTYPE_LABEL)
     parser.add_argument("--config", default=str(PROJECT_ROOT / "config.yaml"))
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("profiles", help="list model profiles and readiness")
@@ -336,8 +405,17 @@ def main(argv: list[str] | None = None) -> int:
     m = sub.add_parser("metrics", help="effort, cost and agreement figures for one run")
     m.add_argument("run_id")
     w = sub.add_parser("serve", help="open the review screen in your browser")
+    w.add_argument("--host", default="127.0.0.1", help="host to listen on (0.0.0.0 only allowed with --team)")
+    w.add_argument("--team", action="store_true", help="run in team mode")
+    w.add_argument("--fake-sign-in", metavar="NAME,GROUPS", help="dev only: pretend sign-in with NAME,GROUPS (requires ZYN_DEV=1)")
     w.add_argument("--port", type=int, default=8600)
     w.add_argument("--no-browser", action="store_true")
+    dm = sub.add_parser("demo", help="check the sample data by code alone (no key) and open "
+                                     "the review screen")
+    dm.add_argument("--port", type=int, default=8600)
+    dm.add_argument("--no-browser", action="store_true")
+    dm.add_argument("--no-serve", action="store_true", help="check only, do not open the screen")
+    sub.add_parser("where", help="show the Zyn folder: config, rules, audit log and exports")
     ru = sub.add_parser("rules", help="rule profiles and custom checks: list | draft \"<rule>\" "
                                       "[--set FILE] | accept NAME --into PROFILE --as NAME")
     ru.add_argument("stage", choices=["list", "draft", "accept", "calibration", "learn",
@@ -360,9 +438,126 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("stage", choices=["report", "verify"])
     ev.add_argument("target", help="run id (report) or audit_chain.json (verify)")
     ev.add_argument("--as", dest="reviewer_name", help="your name, recorded on the report")
+    up = sub.add_parser("upgrade", help="apply database migrations and set up permissions")
+    up.add_argument("--admin-url", default=os.environ.get("ZYN_DATABASE_ADMIN_URL", ""),
+                    help="PostgreSQL URL with admin rights")
+    up.add_argument("--app-user", default="", help="PostgreSQL user name that Zyn runs as")
+    up.add_argument("--app-password", default="",
+                    help="password if app user role needs to be created (prefer ZYN_DATABASE_APP_PASSWORD env var)")
+    imp = sub.add_parser(
+        "import-log", help="import a personal SQLite audit log into a team project"
+    )
+    imp.add_argument("file", help="path to SQLite database file")
+    imp.add_argument("--project", required=True, help="team project to assign imported runs to")
+    imp.add_argument(
+        "--admin-url",
+        default=os.environ.get("ZYN_DATABASE_ADMIN_URL", ""),
+        help="PostgreSQL URL with admin rights",
+    )
+    rev = sub.add_parser("revoke-person", help="revoke a person's sessions")
+    rev.add_argument("person_id", help="principal id to revoke, e.g. oidc:issuer#sub")
+    rev.add_argument("--as", dest="reviewer", required=True, help="admin name for audit log")
+    rem = sub.add_parser("remote", help="interact with a remote Zyn team server")
+    rem.add_argument(
+        "--server",
+        default=os.environ.get("ZYN_SERVER", "http://127.0.0.1:8600"),
+        help="server URL",
+    )
+    rem.add_argument("--project", help="project identifier")
+    rem.add_argument(
+        "--fail-on-findings",
+        action="store_true",
+        help="exit with 1 if check produces open findings",
+    )
+    rem_sub = rem.add_subparsers(dest="remote_cmd", required=True)
+    rem_sub.add_parser("runs", help="list runs on the server")
+    rc = rem_sub.add_parser("check", help="upload and check requirements")
+    rc.add_argument("file", help="requirement file (CSV, XLSX, ReqIF)")
+    rc.add_argument("--source", help="source specification document")
+    rc.add_argument("--rules", help="rule profile")
+    rc.add_argument("--ears", action="store_true", help="check EARS patterns")
+    rtc = rem_sub.add_parser("testcheck", help="upload and check tests against DBC")
+    rtc.add_argument("tests", nargs="+", help="test files")
+    rtc.add_argument("--dbc", required=True, help="DBC signal specification file")
+    rtc.add_argument("--reqs", help="requirement set file")
+    rd = rem_sub.add_parser("delta", help="compare two requirement sets")
+    rd.add_argument("old", help="old requirement set file")
+    rd.add_argument("new", help="new requirement set file")
+    rf = rem_sub.add_parser("findings", help="get findings for a run as JSON")
+    rf.add_argument("run_id", help="run identifier")
+    re = rem_sub.add_parser("export", help="export run results to file")
+    re.add_argument("run_id", help="run identifier")
+    re.add_argument("--as-file", required=True, help="destination file path")
     args = parser.parse_args(argv)
 
     cfg = load_config(args.config)
+    team_allowed = {"serve", "upgrade", "import-log", "revoke-person", "where", "remote"}
+    cmd = args.cmd or "smoke"
+    if cfg.is_team() and cmd not in team_allowed:
+        print("This Zyn folder is a team server. Use zyn remote, or the review screen.")
+        return 2
+
+    if args.cmd == "revoke-person":
+        db_target = (
+            cfg.team.database_url
+            if cfg.is_team() and cfg.team and cfg.team.database_url
+            else cfg.resolved_db_path()
+        )
+        store = AuditStore(db_target)
+        store.log_event(
+            actor=args.reviewer,
+            action="person_revoked",
+            object_id=args.person_id,
+            actor_id=None,
+            detail={"person_id": args.person_id},
+        )
+        print(f"Revoked sessions for {args.person_id}")
+        return 0
+    if args.cmd == "upgrade":
+        from harness.audit.migrations import upgrade
+
+        admin_url = args.admin_url or os.environ.get("ZYN_DATABASE_ADMIN_URL", "")
+        if not admin_url:
+            print(
+                "upgrade needs --admin-url or ZYN_DATABASE_ADMIN_URL in environment",
+                file=sys.stderr,
+            )
+            return 2
+        app_password = os.environ.get("ZYN_DATABASE_APP_PASSWORD", "") or getattr(
+            args, "app_password", ""
+        )
+        applied = upgrade(admin_url, args.app_user, app_password=app_password)
+        if applied:
+            print(f"Applied migrations: {applied}")
+        else:
+            print("Database schema is already up to date.")
+        return 0
+    if args.cmd == "import-log":
+        if cfg.is_team() and not args.admin_url:
+            print("import-log requires --admin-url in team mode", file=sys.stderr)
+            return 2
+        if cfg.is_team() and cfg.team and args.project not in cfg.team.projects:
+            known = ", ".join(sorted(cfg.team.projects))
+            print(
+                f"Unknown project '{args.project}'. Configured projects: {known}",
+                file=sys.stderr,
+            )
+            return 2
+        from harness.team.importlog import import_log
+
+        target_db = args.admin_url or (
+            cfg.team.database_url
+            if cfg.is_team() and cfg.team and cfg.team.database_url
+            else cfg.resolved_db_path()
+        )
+        store = AuditStore(target_db)
+        res = import_log(Path(args.file), store, args.project, team=cfg.team)
+        print(json.dumps(res, indent=2))
+        return 0
+    if args.cmd == "remote":
+        from harness.team.remote import cmd_remote
+
+        return cmd_remote(args)
     if args.cmd == "profiles":
         return cmd_profiles(cfg)
     if args.cmd == "sift":
@@ -381,6 +576,20 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.cmd == "serve":
         return cmd_serve(cfg, args)
+    if args.cmd == "demo":
+        if args.no_serve:
+            run_id, _ = demo_run(cfg)
+            print(json.dumps({"run_id": run_id, "findings": len(AuditStore(
+                cfg.resolved_db_path()).list_items(run_id, "finding"))}, indent=2))
+            return 0
+        return cmd_demo(cfg, args)
+    if args.cmd == "where":
+        print(f"Zyn folder:  {PROJECT_ROOT}")
+        print(f"Config:      {args.config}")
+        print(f"Audit log:   {cfg.resolved_db_path()}")
+        print(f"API key:     {PROJECT_ROOT / '.env'} (copy .env.example; only the AI steps "
+              "need it)")
+        return 0
     if args.cmd == "evidence":
         return cmd_evidence(cfg, args)
     if args.cmd == "rules":
@@ -416,7 +625,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"run_id": run_id, "tests": meta["count"],
                           "findings": len(audit.list_items(run_id, "finding")),
                           "coverage": meta["coverage"]}, indent=2))
-        print("\nNext: review the findings in the browser:  .\\review.ps1")
+        print(f"\nNext: review the findings in the browser:  {_screen_hint()}")
         return 0
     if args.cmd == "metrics":
         from harness.metrics import run_metrics

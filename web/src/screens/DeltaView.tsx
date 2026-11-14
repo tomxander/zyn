@@ -11,7 +11,6 @@ import { Badge, Button, Card, CardHead, Diff, Empty, Field, FilterGroup, ItemTex
 import { AuditTab, ExportTab, JobsStrip } from "./common";
 
 const STATE_TONE: Record<string, Tone> = { open: "warn", "needs action": "info", "no action": "muted" };
-const NO_NAME = "Enter your name as reviewer first";
 
 /** Delta entries carry no decision object; they never need an override reason. */
 const plainDecision = (status: Status): Decision =>
@@ -98,7 +97,7 @@ function DeltaCardInner({ e, index }: { e: any; index: number }) {
 // ---- 2. impact on tests ------------------------------------------------------------------
 
 function Impact({ d }: { d: any }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const stale = useAction(d.run_id);
   const imp = d.impact;
   const m = d.meta;
@@ -111,8 +110,8 @@ function Impact({ d }: { d: any }) {
         cases rest on requirements whose source changed or was removed.</p>
       {n > 0 && (
         <div className="stack">
-          <div><Button variant="primary" icon={TriangleAlert} disabled={!reviewer} busy={stale.isPending}
-            tip={!reviewer ? NO_NAME : "Recorded per case with this Delta as the reason. Stale cases are left out of Anvil exports."}
+          <div><Button variant="primary" icon={TriangleAlert} disabled={!canAct} busy={stale.isPending}
+            tip={!canAct ? noActReason : "Recorded per case with this Delta as the reason. Stale cases are left out of Anvil exports."}
             onClick={() => stale.mutate({ name: "mark_stale" })}>Mark {n} test cases stale</Button></div>
           {stale.data && <Msg tone="ok">{stale.data.count} cases marked stale.</Msg>}
         </div>
@@ -139,7 +138,7 @@ function Impact({ d }: { d: any }) {
 }
 
 function UpdateCard({ u, runId, index }: { u: any; runId: string; index: number }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const save = useAction(runId);
   const [text, setText] = useState<string>(u.proposal ?? u.current_text);
   const unchanged = text.trim() === u.current_text;
@@ -160,8 +159,8 @@ function UpdateCard({ u, runId, index }: { u: any; runId: string; index: number 
           </Field>
           {u.proposal == null && <p className="small quiet">The approved requirement was reworded from its source, so the new wording is yours to write.</p>}
           <div className="card-actions">
-            <Button variant="primary" icon={Save} disabled={!reviewer || unchanged} busy={save.isPending}
-              tip={!reviewer ? NO_NAME : unchanged ? "Change the text first" : undefined}
+            <Button variant="primary" icon={Save} disabled={!canAct || unchanged} busy={save.isPending}
+              tip={!canAct ? noActReason : unchanged ? "Change the text first" : undefined}
               onClick={() => save.mutate({ name: "update_requirement", entry_id: u.entry_id,
                 requirement_item: u.requirement_item, text: text.trim() })}>Save as new requirement version</Button>
           </div>

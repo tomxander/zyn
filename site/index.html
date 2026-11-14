@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zyn: the checker for AI-made engineering work</title>
+    <meta name="description" content="AI writes the work. Zyn proves which parts you can trust. Requirements, tests and CAN databases, checked by code, reviewed by a second AI, decided by a named person." />
+    <script>
+      // Set the theme before first paint so dark mode never flashes light.
+      try {
+        var t = localStorage.getItem("zyn.site.theme") || "system";
+        var dark = t === "dark" || (t === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      } catch (e) { document.documentElement.dataset.theme = "light"; }
+    </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/SpaceGrotesk.ttf" as="font" type="font/ttf" crossorigin />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

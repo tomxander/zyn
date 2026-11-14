@@ -36,6 +36,8 @@ DEFAULTS = {"spec": SYN / "icx100_srs.md", "set": SYN / "icx100_reqset.csv",
 
 def available(cfg: HarnessConfig, name: str) -> tuple[bool, str]:
     p = cfg.profile(name)
+    if not cfg.model_allowed(name):
+        return False, "not allowed by team data rule"
     if cfg.is_offline() and p.provider not in LOCAL_PROVIDERS:
         return False, "offline mode"
     if p.provider == "anthropic":

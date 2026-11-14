@@ -18,9 +18,9 @@ Version `zyn-bench-1.1`. Six tasks, every data file pinned by sha256.
 For each model and task the pack reports, over N repeats, the mean, lowest and highest score, item-level agreement between repeats, and cost per correct item. Every repeat asks the model again with the published prompts; no stored answer is reused.
 
 ```powershell
-.\.venv\Scripts\python -m harness pack run --profiles claude-sonnet,claude-haiku --repeat 3
-.\.venv\Scripts\python -m harness pack manifest
-.\.venv\Scripts\python -m harness pack export
+.\.venv\Scripts\zyn pack run --profiles claude-sonnet,claude-haiku --repeat 3
+.\.venv\Scripts\zyn pack manifest
+.\.venv\Scripts\zyn pack export
 ```
 
 `pack export` writes the tasks as Inspect AI JSONL and promptfoo CSV, so other harnesses can run them. `--knowledge FILE` adds a knowledge file to every call, to measure what it changes.

@@ -42,10 +42,10 @@ Checks an existing requirement set, from Zyn or any other tool, and keeps its ID
 ## Commands
 
 ```powershell
-.\.venv\Scripts\python -m harness check start set.csv --source spec.md --rules default
-.\.venv\Scripts\python -m harness check ai <run>
-.\.venv\Scripts\python -m harness check export <run> --as NAME
-.\.venv\Scripts\python -m harness check score <run>
+.\.venv\Scripts\zyn check start set.csv --source spec.md --rules default
+.\.venv\Scripts\zyn check ai <run>
+.\.venv\Scripts\zyn check export <run> --as NAME
+.\.venv\Scripts\zyn check score <run>
 ```
 
 Code: [harness/sift/check.py](../../harness/sift/check.py), [harness/outside.py](../../harness/outside.py)

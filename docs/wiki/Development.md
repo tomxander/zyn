@@ -20,8 +20,8 @@ The tests run offline with a fake model provider; no key is needed.
 
 ## The review screen
 
-- `npm install` once in `web/`, then `npm run build` (output in `web/dist`, served by `python -m harness serve`).
-- For live editing: `python -m harness serve --no-browser` and `npm run dev` (port 5173, calls the API on 8600).
+- `npm install` once in `web/`, then `npm run build` (output in `web/dist`, served by `zyn serve`).
+- For live editing: `zyn serve --no-browser` and `npm run dev` (port 5173, calls the API on 8600).
 
 ## Design system
 

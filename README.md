@@ -8,24 +8,25 @@
 <h1 align="center">AI writes the work. Zyn proves which parts you can trust.</h1>
 
 <p align="center">
-  The checker for AI-made automotive engineering work.<br>
-  Requirements, tests and CAN databases, from Zyn or from any other tool,<br>
-  checked by code, reviewed by a second AI, decided by a named person.
+  The checker for automotive engineering work made by AI, or by anyone else.<br>
+  Requirements, tests and CAN databases: checked by code, reviewed by a second AI,<br>
+  decided by a named person, recorded in a log nobody can rewrite.
 </p>
 
 <p align="center">
   <a href="#quick-start"><b>Quick start</b></a> ·
   <a href="#the-proof"><b>The proof</b></a> ·
   <a href="#the-tools"><b>The tools</b></a> ·
+  <a href="#one-person-or-a-whole-team"><b>For teams</b></a> ·
   <a href="docs/wiki/Benchmarks.md"><b>Benchmarks</b></a> ·
-  <a href="docs/wiki/Home.md"><b>Wiki</b></a>
+  <a href="docs/wiki/Home.md"><b>Docs</b></a>
 </p>
 
 <p align="center">
   <img alt="Status: prototype" src="https://img.shields.io/badge/status-prototype-121211?style=flat-square">
-  <img alt="Python 3.11" src="https://img.shields.io/badge/python-3.11-1F5FCC?style=flat-square">
-  <img alt="Tests: 206 passing" src="https://img.shields.io/badge/tests-206%20passing-1F5FCC?style=flat-square">
-  <img alt="Benchmarks: 5 published" src="https://img.shields.io/badge/benchmarks-5%20published-1F5FCC?style=flat-square">
+  <img alt="Version 0.2.0" src="https://img.shields.io/badge/version-0.2.0-1F5FCC?style=flat-square">
+  <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-1F5FCC?style=flat-square">
+  <img alt="Tests: 346 passing" src="https://img.shields.io/badge/tests-346%20passing-1F5FCC?style=flat-square">
   <img alt="Runs offline" src="https://img.shields.io/badge/runs-offline-121211?style=flat-square">
   <img alt="Data: public and synthetic only" src="https://img.shields.io/badge/data-public%20%2B%20synthetic-121211?style=flat-square">
 </p>
@@ -33,19 +34,19 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/img/review-dark.png">
-    <img alt="The Zyn review screen: 28 findings on a requirement set, each with the quoted words it rests on, who found it, and Confirm and Dismiss buttons" src="docs/img/review-light.png" width="920">
+    <img alt="The Zyn review screen: findings on a requirement set, each with the quoted words it rests on, who found it, and Confirm and Dismiss buttons" src="docs/img/review-light.png" width="920">
   </picture>
 </p>
 
-<p align="center"><sub>The review screen. Every finding shows the words it rests on, who raised it (code check or AI reviewer), and waits for a person.</sub></p>
+<p align="center"><sub>The review screen. Every finding shows the words it rests on and who raised it, and waits for a person.</sub></p>
 
 ---
 
-## The problem Zyn solves
+## Why Zyn exists
 
-AI can now write a requirement set or a test suite in minutes. Checking it still takes days, and that is where teams give up.
+AI can write a requirement set or a test suite in minutes. Checking it still takes days, and that is where teams give up.
 
-A public study of 23 practitioner discussions ([research/](research/)) says it plainly:
+A public study of 23 practitioner discussions ([research/](research/)) puts it plainly:
 
 | What engineers said | How often |
 |---|---|
@@ -57,51 +58,27 @@ Engineers don't reject AI tools for being slow. They reject them for being wrong
 
 **So Zyn doesn't try to generate more. It makes the output checkable.**
 
-## What you get
-
-<table>
-<tr>
-<td width="33%" valign="top">
-
-### Mistakes caught by code
-
-Changed numbers, invented values, weakened wording, misspelt signals, tests that can never fail. Found by deterministic checks: same input, same result, every run. No model, no key, no cost.
-
-</td>
-<td width="33%" valign="top">
-
-### Evidence you can read
-
-No confidence scores. Every AI finding must quote the words it rests on, and code confirms those words are really there before you ever see it.
-
-</td>
-<td width="33%" valign="top">
-
-### A record that holds up
-
-Nothing is approved until a named person approves it. Every proposal, check and decision lands in an append-only audit log you can export.
-
-</td>
-</tr>
-</table>
-
 ## How it works
 
 ```mermaid
 flowchart LR
-    A["A model or another tool<br/>proposes the work"] --> B["Code checks<br/><sub>same result every time</sub>"]
+    A["A model, a tool or a person<br/>proposes the work"] --> B["Code checks<br/><sub>same result every time</sub>"]
     B --> C["AI reviewer advises<br/><sub>must quote its evidence</sub>"]
     C --> D["A named person decides"]
     D --> E[("Append-only<br/>audit log")]
 ```
 
-Three layers, in order of trust. Code decides what it can prove. The AI reviewer only advises, and only with quotes. A person makes every final call, and the log remembers who and when.
+Three layers, in order of trust.
+
+1. **Code checks decide what they can prove.** Changed numbers, invented values, weakened wording, misspelt signals, tests that can never fail. No model, no key, no cost. Same input, same result, every run.
+2. **The AI reviewer only advises, and only with quotes.** A finding without a quote that code can locate in the source is never shown. There are no confidence scores.
+3. **A named person makes every final call.** The AI can never approve. Every proposal, check and decision is appended to a log the database itself refuses to change.
 
 Read more: [How Zyn decides](docs/wiki/How-Zyn-decides.md).
 
 ## The proof
 
-We planted mistakes one at a time into clean requirements, tests and CAN databases, then let Zyn's code checks look for them. No model involved.
+Mistakes were planted one at a time into clean requirements, tests and CAN databases, then Zyn's code checks looked for them. No model involved.
 
 | Planted mistake | Caught |
 |---|---|
@@ -116,7 +93,7 @@ We planted mistakes one at a time into clean requirements, tests and CAN databas
 
 **False alarms on the clean originals: 0 of 156 requirements. 3 of 43 tests, all for values the test had assumed.**
 
-And where code alone is not enough, Zyn says so:
+Where code alone is not enough, Zyn says so:
 
 | Planted mistake | Caught by code | What catches it instead |
 |---|---|---|
@@ -125,7 +102,7 @@ And where code alone is not enough, Zyn says so:
 
 ### Templates beat free-written tests
 
-Three Claude models wrote tests freely for the same requirements Zyn's template path covers. Every test ran on the same simulated instrument cluster, against the same injected faults (31 faults across the seven requirements the simulation models fully).
+Three Claude models wrote tests freely for the same requirements Zyn's template path covers. Every test ran on the same simulated instrument cluster against the same 31 injected faults.
 
 | Path | Faults caught |
 |---|---|
@@ -179,19 +156,38 @@ Every number has its dataset, method and limits beside it: [Benchmarks](docs/wik
 | <picture><source media="(prefers-color-scheme: dark)" srcset="zyn-identity/logos/dark/32/assay-mark.svg"><img src="zyn-identity/logos/light/32/assay-mark.svg" width="24" alt=""></picture> | [**Assay**](docs/wiki/Assay.md) | Benchmarks any model on public answer keys: accuracy, repeatability and cost per correct answer |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="zyn-identity/logos/dark/32/scribe-mark.svg"><img src="zyn-identity/logos/light/32/scribe-mark.svg" width="24" alt=""></picture> | Scribe, Source | Planned: documents, and procurement |
 
+## One person or a whole team
+
+Zyn runs in two modes from the same install. The checks, tools and screen are the same in both.
+
+| | Personal mode | Team mode |
+|---|---|---|
+| Runs on | Your own computer | A server in your network or your cloud account |
+| Who you are | A name you type | Your company sign-in (OpenID Connect: Entra ID, Okta, Keycloak, Ping) |
+| Audit log | One SQLite file | Shared PostgreSQL, append-only, enforced by the database |
+| Who can do what | You | Viewer, engineer or approver, set per programme from your sign-in groups |
+| Programmes | One | Walled off: nobody sees a programme their groups don't grant |
+| Approvals | Yours | Four-eyes on by default: nobody approves their own work |
+| Scripts and test benches | The command line | Personal access tokens and service accounts, which can never approve |
+| Models | Any you configure | Only those IT allows; anything else is refused before it is sent, and logged |
+
+Team mode ships as a container image and a compose file, and also runs as `zyn serve --team` on an ordinary server. Zyn sends nothing home: no telemetry, no update checks, no licence calls.
+
+IT guide: [Team server](docs/wiki/Team-server.md). The container files have not yet been run end to end, so build and start them on a test host before anyone relies on them.
+
 ## Why Zyn
 
 | | |
 |---|---|
-| **Works on anyone's output** | Point it at requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn. |
+| **Works on anyone's output** | Requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn. |
 | **Quotes verified by code** | An AI finding without a quote that code can locate is never shown. |
-| **No confidence scores** | Cards show which checks passed or failed, not a model's opinion of itself. |
+| **No confidence scores** | You see which checks passed or failed, not a model's opinion of itself. |
 | **No silent pass** | Empty or junk input is refused or reported as skipped. It is never passed. |
 | **Decisions persist** | Dismiss a finding once. It stays dismissed on later runs of the same text. |
-| **Fits your toolchain** | ReqIF round-trip to DOORS Next, Polarion and Codebeamer. Exports to pytest, Robot Framework and CAPL. |
+| **A record that holds up** | Append-only log, hash-chained evidence export, and each decision records who made it and which rule applied. |
+| **Fits your toolchain** | ReqIF round-trip to DOORS Next, Polarion and Codebeamer. Tests out to pytest, Robot Framework and CAPL. |
 | **Runs inside an agent** | The same checks are an MCP server, so an AI agent can check its own work before it hands it over. |
-| **Runs offline** | One setting refuses every cloud call. Local models run through Ollama. |
-| **Assessor-ready exports** | An evidence report and an ISO/IEC 33020 style checklist (fully, largely, partially, not achieved) in Excel. |
+| **Your models, your walls** | Claude, or local models through Ollama. One setting refuses every cloud call. |
 
 ## Use it when
 
@@ -203,24 +199,41 @@ Every number has its dataset, method and limits beside it: [Benchmarks](docs/wik
 
 ## Quick start
 
-Windows, PowerShell, inside the project folder. Full guide: [Getting started](docs/wiki/Getting-started.md).
+Windows, macOS or Linux, with Python 3.11 or later. No API key needed for the code checks or the review screen.
 
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\python -m pip install -r requirements.lock
-.\.venv\Scripts\python -m pip install -e ".[dev]"
-Copy-Item .env.example .env; notepad .env     # paste ANTHROPIC_API_KEY
-.\.venv\Scripts\python -m harness smoke       # two model calls, well under USD 0.50
-.\review.ps1                                  # opens the review screen
+**From a release wheel** (no Node.js, about a minute):
+
+```bash
+pipx install ./zyn_harness-0.2.0-py3-none-any.whl
+zyn demo
 ```
 
-**No key? No problem.** The checkers run on code alone:
+**From source** (needs Node.js 20 or later to build the review screen once):
 
-```powershell
-.\.venv\Scripts\python -m harness testcheck tests.py --dbc data\synthetic\icx100.dbc --reqs data\synthetic\icx100_reqset.csv
+```bash
+git clone https://github.com/tomxander/zyn.git
+cd zyn
+npm --prefix web ci
+npm --prefix web run build
+pipx install .
+zyn demo
 ```
 
-The repository ships with ICX-100, a complete synthetic instrument cluster example (specification, revision, requirement set, CAN database, answer key), so you can try every tool in minutes without your own data.
+`zyn demo` checks the sample requirement set against its specification by code alone and opens the review screen. Your config, rules, sample data and audit log live in a `zyn` folder in your home directory (`zyn where` shows it).
+
+**Then point it at your own work:**
+
+```bash
+zyn check start my_requirements.csv --source my_spec.md
+zyn testcheck my_tests.py --dbc my_network.dbc --reqs my_requirements.csv
+zyn serve
+```
+
+**Add the AI steps** by putting `ANTHROPIC_API_KEY=` in the `.env` file in your Zyn folder, or run models on your own machine with Ollama. **Read PDF and Word specifications** with `pipx inject zyn-harness docling` (a large machine-learning stack, several GB, so the light install leaves it out). **Run it for a team** with `pipx install ".[team]"` and the [Team server](docs/wiki/Team-server.md) guide.
+
+Full guide: [Getting started](docs/wiki/Getting-started.md). Working on Zyn itself: [Development](docs/wiki/Development.md).
+
+The repository ships with ICX-100, a complete synthetic instrument cluster example (specification, revision, requirement set, CAN database, answer key), so you can try every tool without your own data.
 
 ## Fits around your tools
 
@@ -228,8 +241,9 @@ The repository ships with ICX-100, a complete synthetic instrument cluster examp
 |---|---|
 | DOORS Next, Polarion, Codebeamer | ReqIF in and out, with review state and findings as attributes |
 | pytest, Robot Framework, CANoe | Test exports in each format, plus a flat step table for tools that import tabular steps |
+| CI and test benches | `zyn remote` with an access token, against a team server |
 | An AI coding agent | An MCP server: the agent calls Zyn's checks inside its own loop |
-| CI and assessors | An evidence report and a checklist workbook per run |
+| Assessors | An evidence report and an ISO/IEC 33020 style checklist workbook per run |
 
 Details: [Integrations](docs/wiki/Integrations.md).
 
@@ -242,21 +256,21 @@ No. Sift Review and Anvil Review check work from any tool or person. That is the
 </details>
 
 <details>
-<summary><b>Does my data leave my machine?</b></summary>
+<summary><b>Does my data leave my machine or my network?</b></summary>
 <br>
-Only if you let it. The code checks never call a model. Set offline mode and every cloud call is refused; local models run through Ollama.
+Only if you let it. The code checks never call a model. Offline mode refuses every cloud call, and in team mode IT lists the only model endpoints Zyn may call. Zyn itself sends nothing to its makers.
+</details>
+
+<details>
+<summary><b>Can the AI approve anything?</b></summary>
+<br>
+No. The audit store refuses an approval from anything that is not a named person. Tokens and service accounts can't approve either.
 </details>
 
 <details>
 <summary><b>Why no confidence score?</b></summary>
 <br>
 A model's rating of itself has not been shown to predict correctness. Zyn shows checks that passed or failed, and quotes you can read.
-</details>
-
-<details>
-<summary><b>The AI reviewer gives different answers each run. How is that handled?</b></summary>
-<br>
-Zyn measures it instead of hiding it. You can run several passes and see how many reported each finding, and your decisions carry over between runs.
 </details>
 
 <details>
@@ -267,18 +281,15 @@ We don't claim a number. No benchmark here measures time saved; that needs a pil
 
 More: [FAQ](docs/wiki/FAQ.md).
 
-## Documentation
+## What comes next
 
-| | |
+| Next | Done when |
 |---|---|
-| [**Getting started**](docs/wiki/Getting-started.md) | Install, first run, first review |
-| [**How Zyn decides**](docs/wiki/How-Zyn-decides.md) | The trust model, verdicts and audit log |
-| [**Benchmarks**](docs/wiki/Benchmarks.md) | Every result, with its method and limits |
-| [**Checks reference**](docs/wiki/Checks-reference.md) | Every check, what it catches and where it stops |
-| [**Research basis**](docs/wiki/Research-basis.md) | What engineers asked for, and how Zyn answers it |
-| [**Architecture**](docs/wiki/Architecture.md) · [**Integrations**](docs/wiki/Integrations.md) | How it fits together, and around your tools |
-| [**Data and licences**](docs/wiki/Data-and-licences.md) | Every dataset and its licence |
-| [**Development**](docs/wiki/Development.md) · [**Roadmap**](docs/wiki/Roadmap.md) | For contributors, and what comes next |
+| **Model connectors** | An admin points Zyn at Bedrock, Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else |
+| **Daily-workflow fit** | A requirement set and its review state go round trip with a requirement tool, and test reviews cover CANoe CAPL and vTESTstudio |
+| **Trust pack** | An engineer-reviewed answer key, a tool-qualification kit and a security pack |
+
+Full list, including what we deliberately won't build: [Roadmap](docs/wiki/Roadmap.md).
 
 ## Honest limits
 
@@ -288,7 +299,22 @@ A checker that oversells itself is worthless, so here is where Zyn stops.
 - **Public and synthetic data only.** No company or customer documents were used.
 - **The ICX-100 answer key** was written by Claude and checked by an AI reviewer, not an engineer. Every score on it says so.
 - **No productivity claims.** Zyn reports what it measured, on named datasets, with the method beside the number.
+- **Team mode is new.** It is tested against PostgreSQL and a stand-in sign-in provider. The container and real company sign-in have not yet been tried end to end.
 - **Not a qualified tool** under ISO 26262. A [draft tool confidence argument](docs/06-tool-confidence.md) exists; a safety engineer has not reviewed it.
+
+## Documentation
+
+| | |
+|---|---|
+| [**Getting started**](docs/wiki/Getting-started.md) | Install, first run, first review |
+| [**How Zyn decides**](docs/wiki/How-Zyn-decides.md) | The trust model, verdicts and audit log |
+| [**Team server**](docs/wiki/Team-server.md) | Deploying for a team: sign-in, roles, PostgreSQL, operations |
+| [**Benchmarks**](docs/wiki/Benchmarks.md) | Every result, with its method and limits |
+| [**Checks reference**](docs/wiki/Checks-reference.md) | Every check, what it catches and where it stops |
+| [**Research basis**](docs/wiki/Research-basis.md) | What engineers asked for, and how Zyn answers it |
+| [**Architecture**](docs/wiki/Architecture.md) · [**Integrations**](docs/wiki/Integrations.md) | How it fits together, and around your tools |
+| [**Data and licences**](docs/wiki/Data-and-licences.md) | Every dataset and its licence |
+| [**Development**](docs/wiki/Development.md) · [**Roadmap**](docs/wiki/Roadmap.md) | For contributors, and what comes next |
 
 ## Repository
 
@@ -296,14 +322,18 @@ A checker that oversells itself is worthless, so here is where Zyn stops.
 harness/        Python: model runner, checks, audit store, API, MCP server
   sift/           requirements: extraction, review, delta, ReqIF
   anvil/          tests: templates, generation, fault simulation, DBC checks
+  audit/          append-only store on SQLite or PostgreSQL, schema upgrades
+  team/           sign-in, roles, projects, tokens, log import, remote client
 web/            React review screen on the Zyn design system
+deploy/         team config examples and the trial sign-in realm
 evals/          public evaluations and showcase benchmarks
 data/synthetic/ the ICX-100 example: spec, revision, requirements, DBC, answer key
-docs/           direction, evaluations, benchmark reports, wiki
+docs/           design, plans, benchmark reports, wiki
 research/       the practitioner study and the public data survey
 zyn-identity/   marks, icons, wordmarks and their build tools
 rules/          rule profiles for Sift Review
 tests/          pytest suite, offline, no key needed
+site/           the public website
 ```
 
 ---

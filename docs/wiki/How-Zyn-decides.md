@@ -48,4 +48,8 @@ Each item in the evidence report gets one verdict, so a model or infrastructure 
 
 ## The audit log
 
-SQLite, append-only: the database itself refuses updates and deletes. Edits create new versions. Every prompt, input and response is kept, so any answer can be replayed. The evidence export writes the log as a hash chain that `python -m harness evidence verify` checks.
+SQLite on one computer, PostgreSQL for a team. Either way it is append-only: the database itself refuses updates and deletes, and in team mode the server's own database user can only read and add. Edits create new versions. Every prompt, input and response is kept, so any answer can be replayed. The evidence export writes the log as a hash chain that `zyn evidence verify` checks.
+
+## Four eyes
+
+In team mode a person may not approve, reject or confirm an item they created or edited, or a finding on a run they started. The rule is a setting per project, on by default, computed and enforced in Python. The screen shows the blocked action with the reason, and each decision records the setting that applied. Access tokens and service accounts can never decide.

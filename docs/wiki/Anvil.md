@@ -48,11 +48,11 @@ JSON, Excel, a linted pytest module, a Robot Framework suite, a CANoe CAPL test 
 ## Commands
 
 ```powershell
-.\.venv\Scripts\python -m harness anvil start <sift run>
-.\.venv\Scripts\python -m harness anvil generate <run> --as NAME
-.\.venv\Scripts\python -m harness anvil score <run>
-.\.venv\Scripts\python -m harness anvil formal <run>
-.\.venv\Scripts\python -m harness anvil export <run> --as NAME
+.\.venv\Scripts\zyn anvil start <sift run>
+.\.venv\Scripts\zyn anvil generate <run> --as NAME
+.\.venv\Scripts\zyn anvil score <run>
+.\.venv\Scripts\zyn anvil formal <run>
+.\.venv\Scripts\zyn anvil export <run> --as NAME
 ```
 
 `forge` still works as the old command name.

@@ -10,7 +10,80 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, ConfigDict
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+from harness.team.settings import TeamSettings
+
+PACKAGE_DIR = Path(__file__).resolve().parent
+SOURCE_ROOT = PACKAGE_DIR.parent
+# Files a wheel carries for its first run (config, rules, sample data, the built screen).
+# setup.py copies them in at build time; a source folder has none and uses itself.
+BUNDLE = PACKAGE_DIR / "_bundle"
+# What a new Zyn folder starts with. Never overwritten once present.
+SEED_ITEMS = ("config.yaml", ".env.example", "knowledge.example.md",
+              "taxonomy_placeholder.yaml", "rules", "data/synthetic")
+
+
+def _is_source_folder(p: Path) -> bool:
+    return (p / "pyproject.toml").is_file() and (p / "config.yaml").is_file()
+
+
+def resolve_home() -> Path:
+    """The Zyn folder: config, rules, sample data, the audit log and exports.
+
+    ZYN_HOME if set; else the source folder when running from a clone; else a folder
+    called zyn in the user's home directory (an installed copy)."""
+    env = os.environ.get("ZYN_HOME", "").strip()
+    if env:
+        return Path(env).expanduser().resolve()
+    if _is_source_folder(SOURCE_ROOT):
+        return SOURCE_ROOT
+    return Path.home() / "zyn"
+
+
+def seed_source() -> Path | None:
+    """Where a new Zyn folder copies its starting files from."""
+    if BUNDLE.is_dir():
+        return BUNDLE
+    return SOURCE_ROOT if _is_source_folder(SOURCE_ROOT) else None
+
+
+def ensure_home(home: Path) -> list[str]:
+    """Fills a new Zyn folder with the starting files it lacks. Returns what was copied."""
+    import shutil
+
+    src = seed_source()
+    if src is None or src.resolve() == home.resolve():
+        return []
+    copied = []
+    for item in SEED_ITEMS:
+        a, b = src / item, home / item
+        if not a.exists() or b.exists():
+            continue
+        b.parent.mkdir(parents=True, exist_ok=True)
+        if a.is_dir():
+            shutil.copytree(a, b)
+        else:
+            shutil.copy2(a, b)
+        copied.append(item)
+    return copied
+
+
+def web_dist() -> Path:
+    """The built review screen: the source folder's web/dist, else the copy in the wheel."""
+    for p in (PROJECT_ROOT / "web" / "dist", SOURCE_ROOT / "web" / "dist",
+              BUNDLE / "web" / "dist"):
+        if (p / "index.html").is_file():
+            return p
+    return PROJECT_ROOT / "web" / "dist"
+
+
+PROJECT_ROOT = resolve_home()
+if not (PROJECT_ROOT / "config.yaml").is_file():
+    _new = ensure_home(PROJECT_ROOT)
+    if _new:
+        import sys
+
+        # stderr, so the MCP server's stdout stays clean.
+        print(f"Zyn: set up a new Zyn folder at {PROJECT_ROOT}", file=sys.stderr)
 DEFAULT_CONFIG = PROJECT_ROOT / "config.yaml"
 
 
@@ -46,6 +119,16 @@ class HarnessConfig(BaseModel):
     knowledge_file: str | None = None
     roles: dict[str, str]
     profiles: dict[str, Profile]
+    team: TeamSettings | None = None
+
+    def is_team(self) -> bool:
+        return self.team is not None
+
+    def model_allowed(self, profile_name: str) -> bool:
+        if self.is_team():
+            assert self.team is not None
+            return profile_name in self.team.allowed_models
+        return True
 
     def knowledge_path(self) -> Path | None:
         if not self.knowledge_file:
@@ -102,4 +185,6 @@ def load_config(path: Path | str = DEFAULT_CONFIG) -> HarnessConfig:
     for role, target in cfg.roles.items():
         if target not in cfg.profiles:
             raise ValueError(f"Role '{role}' points at missing profile '{target}'")
+    if cfg.is_team():
+        ensure_home(PROJECT_ROOT)
     return cfg

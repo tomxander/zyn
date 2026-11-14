@@ -247,7 +247,7 @@ def verdicts(audit: AuditStore, run_id: str) -> dict:
 
 
 def _canon(e: dict) -> str:
-    return json.dumps({k: v for k, v in e.items() if k != "chain"}, sort_keys=True,
+    return json.dumps({k: v for k, v in e.items() if k != "chain" and not (k == "actor_id" and v is None)}, sort_keys=True,
                       ensure_ascii=False, separators=(",", ":"))
 
 

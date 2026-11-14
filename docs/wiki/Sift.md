@@ -28,9 +28,9 @@ Using a proposal counts as a human edit. Open questions go into the export.
 ## Commands
 
 ```powershell
-.\.venv\Scripts\python -m harness sift start data\synthetic\icx100_srs.md
-.\.venv\Scripts\python -m harness sift clarify <run>
-.\.venv\Scripts\python -m harness sift export <run> --as NAME
+.\.venv\Scripts\zyn sift start data\synthetic\icx100_srs.md
+.\.venv\Scripts\zyn sift clarify <run>
+.\.venv\Scripts\zyn sift export <run> --as NAME
 ```
 
 Or use **Start new run** in the review screen.

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState, type ReactNode } from "react";
 import { useDecide, type Decision } from "../lib/api";
 import { useReviewer } from "../lib/reviewer";
-import { Button, Field, Select } from "./ui";
+import { Button, Field, Msg, Select } from "./ui";
 import { T_BASE } from "./motion";
 
 const OTHER = "Other (type a reason)";
@@ -16,16 +16,19 @@ export function DecisionBar({ itemId, decision, labels = ["Approve", "Reject"], 
   /** A comment sent with the opposite decision (e.g. a dismissal reason). */
   comment?: string;
 }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const decide = useDecide();
   const [pick, setPick] = useState<string>();
   const [other, setOther] = useState("");
   const reason = pick === OTHER ? other.trim() : pick ?? "";
-  const { status, needs_reason, block_approve } = decision;
-  const noName = !reviewer ? "Enter your name as reviewer first" : undefined;
+  const { status, needs_reason, block_approve, block_decide } = decision;
+  const disabledReason = block_decide || (!canAct ? noActReason : undefined);
 
   return (
     <div className="stack">
+      {block_decide && (
+        <Msg tone="warn">{block_decide}</Msg>
+      )}
       <AnimatePresence initial={false}>
         {needs_reason && status !== "approved" && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
@@ -47,13 +50,13 @@ export function DecisionBar({ itemId, decision, labels = ["Approve", "Reject"], 
       </AnimatePresence>
       <div className="card-actions">
         <Button variant="primary" wide icon={Check} data-key="a"
-          disabled={!!noName || !!block_approve || status === "approved" || (needs_reason && !reason)}
-          tip={noName ?? block_approve ?? (needs_reason && !reason ? "Choose a reason first" : undefined)}
+          disabled={!!disabledReason || !!block_approve || status === "approved" || (needs_reason && !reason)}
+          tip={disabledReason ?? block_approve ?? (needs_reason && !reason ? "Choose a reason first" : undefined)}
           onClick={() => decide.mutate({ item_id: itemId, decision: "approved", comment: reason || undefined })}>
           {labels[0]}
         </Button>
         <Button wide icon={X} data-key="r"
-          disabled={!!noName || status === "rejected"} tip={noName}
+          disabled={!!disabledReason || status === "rejected"} tip={disabledReason}
           onClick={() => decide.mutate({ item_id: itemId, decision: "rejected", comment })}>
           {labels[1]}
         </Button>

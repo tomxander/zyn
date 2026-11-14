@@ -6,6 +6,7 @@ displays and sends decisions. Logic moved over from the Streamlit screen unchang
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from typing import Any
 
 from harness.audit.store import AuditStore
@@ -58,19 +59,33 @@ def doc_order(item: dict) -> tuple:
 
 # ---- shared decision state ------------------------------------------------------------
 
-def decision_state(audit: AuditStore, item: dict, scope: str | None = None,
-                   block_approve: str | None = None) -> dict:
+def decision_state(
+    audit: AuditStore,
+    item: dict,
+    scope: str | None = None,
+    block_approve: str | None = None,
+    block_decide: str | None = None,
+) -> dict:
     """What the decision buttons may do for this item, and which reasons to offer."""
     iid = item["item_id"]
     status = audit.status(iid)
-    out: dict[str, Any] = {"status": status, "block_approve": block_approve,
-                           "needs_reason": False, "reasons": [], "earlier": None}
-    if block_approve or status == "approved":
+    out: dict[str, Any] = {
+        "status": status,
+        "block_approve": block_approve,
+        "block_decide": block_decide,
+        "needs_reason": False,
+        "reasons": [],
+        "earlier": None,
+    }
+    if block_decide or block_approve or status == "approved":
         return out
     if audit.needs_override_reason(iid):
         options = REASONS if scope != "text" else REASONS[1:]
-        prior = pipeline.earlier_override(audit, item) if item["item_type"] == "requirement" \
+        prior = (
+            pipeline.earlier_override(audit, item)
+            if item["item_type"] == "requirement"
             else None
+        )
         if prior and prior.get("reason"):
             earlier = f"As before (run {prior['run_id']}): {prior['reason']}"
             options = [earlier, *[o for o in options if o != prior["reason"]]]
@@ -112,7 +127,9 @@ def support_states(audit: AuditStore, item: dict, review: dict | None) -> list[d
 
 # ---- Sift requirement and mapping cards --------------------------------------------------
 
-def requirement_card(audit: AuditStore, item: dict) -> dict:
+def requirement_card(
+    audit: AuditStore, item: dict, rights: Callable[[dict], Any] | None = None
+) -> dict:
     from harness.sift.delta import word_diff
 
     iid, p = item["item_id"], item["payload"]
@@ -133,71 +150,136 @@ def requirement_card(audit: AuditStore, item: dict) -> dict:
         new["req_type"] = d["suggested_req_type"]
     if d and d.get("suggested_flags") is not None:
         new["quality_flags"] = d["suggested_flags"]
-    problems = (checks.suggestion_problems(d["suggested_text"], p.get("source_quote", ""),
-                                           _section_text(audit, item))
-                if d and d.get("suggested_text") and new["text"] != p.get("text") else [])
+    problems = (
+        checks.suggestion_problems(
+            d["suggested_text"], p.get("source_quote", ""), _section_text(audit, item)
+        )
+        if d and d.get("suggested_text") and new["text"] != p.get("text")
+        else []
+    )
     changes = any(new.get(k) != p.get(k) for k in ("text", "req_type", "quality_flags"))
     can_apply = bool(d) and d["verdict"] == "revise" and changes and not problems
     if item["version"] > 1 and p.get("clarification"):
-        own = ([f"changes the modal verb from '{checks.modal_of(p['source_quote'])}'"]
-               if checks.modal_changed(p.get("source_quote", ""), p.get("text", "")) else [])
+        own = (
+            [f"changes the modal verb from '{checks.modal_of(p['source_quote'])}'"]
+            if checks.modal_changed(p.get("source_quote", ""), p.get("text", ""))
+            else []
+        )
     elif item["version"] > 1:
-        own = checks.suggestion_problems(p.get("text", ""), p.get("source_quote", ""),
-                                         _section_text(audit, item))
+        own = checks.suggestion_problems(
+            p.get("text", ""), p.get("source_quote", ""), _section_text(audit, item)
+        )
     else:
         own = []
     states = support_states(audit, item, review)
+    block_decide = None
+    if rights:
+        v = rights(item)
+        if not v:
+            block_decide = v.reason if hasattr(v, "reason") else str(v)
     return {
-        "item_id": iid, "display_id": pipeline.display_id(iid), "version": item["version"],
-        "status": item.get("status") or audit.status(iid), "payload": p, "diff": diff,
+        "item_id": iid,
+        "display_id": pipeline.display_id(iid),
+        "version": item["version"],
+        "status": item.get("status") or audit.status(iid),
+        "payload": p,
+        "diff": diff,
         "checks": states,
         "needs_attention": not all(s["ok"] for s in states),
         "flags": flags,
-        "review": ({"actor": review["actor"], "on_version": review["object_version"], **d}
-                   if d else None),
-        "clarification": ({"actor": clar["actor"], **clar["detail"]} if clar else None),
+        "review": (
+            {"actor": review["actor"], "on_version": review["object_version"], **d}
+            if d
+            else None
+        ),
+        "clarification": {"actor": clar["actor"], **clar["detail"]} if clar else None,
         "open_placeholders": pipeline.open_placeholders(p),
-        "suggestion_problems": problems, "own_problems": own, "can_apply": can_apply,
-        "decision": decision_state(audit, item, scope=(d or {}).get("objection_scope")),
+        "suggestion_problems": problems,
+        "own_problems": own,
+        "can_apply": can_apply,
+        "decision": decision_state(
+            audit,
+            item,
+            scope=(d or {}).get("objection_scope"),
+            block_decide=block_decide,
+        ),
     }
 
 
-def mapping_card(audit: AuditStore, item: dict) -> dict:
-    return {"item_id": item["item_id"], "version": item["version"], "status": item["status"],
-            "payload": item["payload"], "decision": decision_state(audit, item)}
+def mapping_card(
+    audit: AuditStore, item: dict, rights: Callable[[dict], Any] | None = None
+) -> dict:
+    block_decide = None
+    if rights:
+        v = rights(item)
+        if not v:
+            block_decide = v.reason if hasattr(v, "reason") else str(v)
+    return {
+        "item_id": item["item_id"],
+        "version": item["version"],
+        "status": item["status"],
+        "payload": item["payload"],
+        "decision": decision_state(audit, item, block_decide=block_decide),
+    }
 
 
 def counts(items: list[dict]) -> dict[str, int]:
-    return {s: sum(1 for i in items if i["status"] == s)
-            for s in ("proposed", "edited", "approved", "rejected")}
+    return {
+        s: sum(1 for i in items if i["status"] == s)
+        for s in ("proposed", "edited", "approved", "rejected")
+    }
 
 
-def sift_view(audit: AuditStore, run_id: str, events: list[dict]) -> dict:
+def sift_view(
+    audit: AuditStore,
+    run_id: str,
+    events: list[dict],
+    rights: Callable[[dict], Any] | None = None,
+) -> dict:
     tax = load_taxonomy()
     doc = audit.get_item(f"DOC-{run_id}")["payload"]
     maps = sorted(audit.list_items(run_id, "section_mapping"), key=doc_order)
     reqs = sorted(audit.list_items(run_id, "requirement"), key=doc_order)
-    approved_maps = [m for m in maps if m["status"] == "approved"
-                     and m["payload"]["subsystem_id"] != "NONE"]
+    approved_maps = [
+        m
+        for m in maps
+        if m["status"] == "approved" and m["payload"]["subsystem_id"] != "NONE"
+    ]
     extracted = {r["payload"]["section_id"] for r in reqs} | {
-        e["detail"]["section_id"] for e in events
-        if e["action"] == "extracted_none" and e["detail"]}
+        e["detail"]["section_id"]
+        for e in events
+        if e["action"] == "extracted_none" and e["detail"]
+    }
     waiting = [m for m in approved_maps if m["payload"]["section_id"] not in extracted]
-    cards = [requirement_card(audit, r) for r in reqs]
-    clean = [c for c in cards if c["status"] in ("proposed", "edited") and c["review"]
-             and not c["needs_attention"]]
-    missed = [{"section": e["detail"]["section_id"], "text": m}
-              for e in events if e["action"] == "ai_review_missed" for m in e["detail"]["missed"]]
+    cards = [requirement_card(audit, r, rights=rights) for r in reqs]
+    clean = [
+        c
+        for c in cards
+        if c["status"] in ("proposed", "edited") and c["review"] and not c["needs_attention"]
+    ]
+    missed = [
+        {"section": e["detail"]["section_id"], "text": m}
+        for e in events
+        if e["action"] == "ai_review_missed"
+        for m in e["detail"]["missed"]
+    ]
     return {
         "doc": {k: doc.get(k) for k in ("title", "filename", "converter", "sha256")},
-        "taxonomy": {"label": tax.label,
-                     "subsystems": [{"id": s.id, "name": s.name} for s in tax.subsystems]},
-        "mappings": [mapping_card(audit, m) for m in maps],
+        "taxonomy": {
+            "label": tax.label,
+            "subsystems": [{"id": s.id, "name": s.name} for s in tax.subsystems],
+        },
+        "mappings": [mapping_card(audit, m, rights=rights) for m in maps],
         "mapping_counts": counts(maps),
-        "bulk_mappings": [m["item_id"] for m in maps if m["status"] in ("proposed", "edited")
-                          and m["payload"]["confidence"] >= 0.9],
-        "approved_sections": len(approved_maps), "waiting_sections": len(waiting),
-        "requirements": cards, "requirement_counts": counts(reqs),
+        "bulk_mappings": [
+            m["item_id"]
+            for m in maps
+            if m["status"] in ("proposed", "edited") and m["payload"]["confidence"] >= 0.9
+        ],
+        "approved_sections": len(approved_maps),
+        "waiting_sections": len(waiting),
+        "requirements": cards,
+        "requirement_counts": counts(reqs),
         "bulk_requirements": [c["item_id"] for c in cards if c in clean],
         "clarify_candidates": len(pipeline.clarify_candidates(audit, run_id)),
         "missed": missed,
@@ -205,10 +287,14 @@ def sift_view(audit: AuditStore, run_id: str, events: list[dict]) -> dict:
     }
 
 
-def smoke_view(audit: AuditStore, run_id: str) -> dict:
+def smoke_view(
+    audit: AuditStore, run_id: str, rights: Callable[[dict], Any] | None = None
+) -> dict:
     reqs = audit.list_items(run_id, "requirement")
-    return {"requirements": [requirement_card(audit, r) for r in reqs],
-            "requirement_counts": counts(reqs)}
+    return {
+        "requirements": [requirement_card(audit, r, rights=rights) for r in reqs],
+        "requirement_counts": counts(reqs),
+    }
 
 
 # ---- Sift Review -------------------------------------------------------------------------
@@ -217,7 +303,9 @@ FINDING_STATE = {"proposed": "open", "edited": "open", "approved": "confirmed",
                  "rejected": "dismissed"}
 
 
-def check_view(audit: AuditStore, run_id: str) -> dict:
+def check_view(
+    audit: AuditStore, run_id: str, rights: Callable[[dict], Any] | None = None
+) -> dict:
     meta = audit.get_item(f"SET-{run_id}")["payload"]
     reqs_in = sorted(audit.list_items(run_id, "imported_requirement"),
                      key=lambda i: i["payload"]["order"])
@@ -240,8 +328,15 @@ def check_view(audit: AuditStore, run_id: str) -> dict:
         rec = calibration.record_for(recs, p, f["created_by"])
         who = "code check" if p.get("source") == "code" else "AI reviewer"
         k, n = stab.get(f["item_id"], (0, 0))
+        block_decide = None
+        if rights:
+            v = rights(f)
+            if not v:
+                block_decide = v.reason if hasattr(v, "reason") else str(v)
         findings.append({
             "item_id": f["item_id"], "status": f["status"], "state": FINDING_STATE[f["status"]],
+            "block_decide": block_decide,
+            "decision": decision_state(audit, f, block_decide=block_decide),
             "payload": p, "created_by": f["created_by"],
             "stability": {"seen": k, "passes": n} if n > 1 else None,
             "record": {**(rec or {"confirmed": 0, "dismissed": 0, "decided": 0,
@@ -287,7 +382,9 @@ NUM_FIELDS = ["initial_value", "input_value", "threshold", "expected_value",
               "max_latency_ms", "hold_ms", "timeout_ms", "period_ms", *TRACK_FIELDS]
 
 
-def forge_view(audit: AuditStore, run_id: str) -> dict:
+def forge_view(
+    audit: AuditStore, run_id: str, rights: Callable[[dict], Any] | None = None
+) -> dict:
     from harness.anvil import impact as fimpact
     from harness.anvil import pipeline as forge
     from harness.anvil.dbc import load_dbc
@@ -306,6 +403,11 @@ def forge_view(audit: AuditStore, run_id: str) -> dict:
     for s in specs:
         p = s["payload"]
         rstate = fimpact.spec_requirement_state(audit, p)
+        block_decide = None
+        if rights:
+            v = rights(s)
+            if not v:
+                block_decide = v.reason if hasattr(v, "reason") else str(v)
         spec_cards.append({
             "item_id": s["item_id"], "version": s["version"], "status": s["status"],
             "payload": p,
@@ -316,7 +418,7 @@ def forge_view(audit: AuditStore, run_id: str) -> dict:
                                 if rstate != "current" else None),
             "decision": decision_state(audit, s, block_approve=(
                 "Fails the code checks: edit the spec until they pass, or reject it."
-                if p["problems"] else None)),
+                if p["problems"] else None), block_decide=block_decide),
         })
     formal = formal_check(audit, run_id)
     for card in spec_cards:
@@ -368,7 +470,9 @@ DELTA_LABEL = {"changed": "Source changed", "moved": "Moved to another section",
                "added": "Added"}
 
 
-def delta_view(audit: AuditStore, run_id: str) -> dict:
+def delta_view(
+    audit: AuditStore, run_id: str, rights: Callable[[dict], Any] | None = None
+) -> dict:
     from harness.anvil import impact as fimpact
     from harness.sift import delta as sift_delta
 
@@ -388,13 +492,18 @@ def delta_view(audit: AuditStore, run_id: str) -> dict:
                 continue
             req = audit.get_item(ep["requirement_item"])
             from_here = req["payload"].get("delta_run") == run_id
+            block_decide = None
+            if rights and from_here:
+                v = rights(req)
+                if not v:
+                    block_decide = v.reason if hasattr(v, "reason") else str(v)
             updates.append({
                 "entry_id": e["item_id"], "requirement_id": ep["requirement_id"],
                 "requirement_item": req["item_id"], "version": req["version"],
                 "status": audit.status(req["item_id"]), "diff": ep["diff"],
                 "current_text": req["payload"]["text"], "updated_here": from_here,
                 "proposal": None if from_here else fimpact.proposed_requirement_text(ep, req),
-                "decision": decision_state(audit, req) if from_here else None,
+                "decision": decision_state(audit, req, block_decide=block_decide) if from_here else None,
             })
         impact = {"forge_runs": imp["forge_runs"], "rows": [
             {"requirement_id": r["requirement_id"], "kind": r["kind"],
@@ -441,9 +550,25 @@ def audit_view(audit: AuditStore, cfg: HarnessConfig, run_id: str) -> dict:
     from harness.metrics import run_metrics
 
     events = audit.events(run_id=run_id)
-    return {"metrics": run_metrics(audit, run_id, cfg),
-            "knowledge": knowledge_used(events),
-            "events": [{k: e.get(k) for k in AUDIT_COLS} for e in events]}
+    ev_list = []
+    for e in events:
+        row = {k: e.get(k) for k in AUDIT_COLS}
+        if cfg.is_team():
+            actor = row.get("actor") or ""
+            actor_id = e.get("actor_id")
+            if (
+                not actor_id
+                and actor
+                and actor.lower() not in {"model", "ai"}
+                and not actor.startswith("ai-")
+            ):
+                row["actor"] = f"{actor} (name typed, not signed in)"
+        ev_list.append(row)
+    return {
+        "metrics": run_metrics(audit, run_id, cfg),
+        "knowledge": knowledge_used(events),
+        "events": ev_list,
+    }
 
 
 READS = {"list_runs", "list_items", "items_of_type", "events", "status", "get_item",
@@ -475,7 +600,9 @@ class ReadCache:
         return cached
 
 
-def run_view(audit: AuditStore, run_id: str) -> dict:
+def run_view(
+    audit: AuditStore, run_id: str, rights: Callable[[dict], Any] | None = None
+) -> dict:
     audit = ReadCache(audit)  # type: ignore[assignment]
     runs = {r["run_id"]: r for r in audit.list_runs()}
     if run_id not in runs:
@@ -484,11 +611,11 @@ def run_view(audit: AuditStore, run_id: str) -> dict:
     base = {"run_id": run_id, "workflow": wf,
             "tool": tool_name(wf)}
     if wf in (sift_check.WORKFLOW, "test-check"):
-        return {**base, "kind": "check", **check_view(audit, run_id)}
+        return {**base, "kind": "check", **check_view(audit, run_id, rights=rights)}
     if wf == "forge":
-        return {**base, "kind": "forge", **forge_view(audit, run_id)}
+        return {**base, "kind": "forge", **forge_view(audit, run_id, rights=rights)}
     if wf == "sift-delta":
-        return {**base, "kind": "delta", **delta_view(audit, run_id)}
+        return {**base, "kind": "delta", **delta_view(audit, run_id, rights=rights)}
     if wf in SIFT:
-        return {**base, "kind": "sift", **sift_view(audit, run_id, audit.events(run_id=run_id))}
-    return {**base, "kind": "smoke", **smoke_view(audit, run_id)}
+        return {**base, "kind": "sift", **sift_view(audit, run_id, audit.events(run_id=run_id), rights=rights)}
+    return {**base, "kind": "smoke", **smoke_view(audit, run_id, rights=rights)}

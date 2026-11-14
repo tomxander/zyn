@@ -12,3 +12,7 @@ knowledge.md
 zyn-identity/tools/python-libs/
 zyn-identity/zyn-identity.zip
 .impeccable/questions/
+
+# Python package builds (scripts/build-release.ps1)
+/build/
+/dist/

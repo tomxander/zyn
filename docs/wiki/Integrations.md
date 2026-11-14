@@ -24,7 +24,7 @@ Native ecu.test packages are not written: the format is proprietary and could no
 
 ## Agents: MCP server
 
-`python -m harness mcp` serves Zyn's code checks as tools, so an agent that writes requirements or tests can have Zyn check them inside its own loop.
+`zyn mcp` serves Zyn's code checks as tools, so an agent that writes requirements or tests can have Zyn check them inside its own loop.
 
 | Tool | What it checks |
 |---|---|
@@ -38,17 +38,17 @@ Native ecu.test packages are not written: the format is proprietary and could no
 
 Code only: no model calls, no runs started, nothing written to the audit log.
 
-```powershell
-claude mcp add zyn -- <path to Zyn>\.venv\Scripts\python.exe -m harness mcp
+```bash
+claude mcp add zyn -- zyn mcp
 ```
 
 ## CI and assessors: evidence report
 
-`python -m harness evidence report <run> --as NAME` writes:
+`zyn evidence report <run> --as NAME` writes:
 
 - `evidence.html`: one verdict per item with its source quote, checks, AI advice and the decision. Prints to PDF.
 - JUnit XML, for CI dashboards
-- the run's audit log as a hash chain; `python -m harness evidence verify <audit_chain.json>` checks it
+- the run's audit log as a hash chain; `zyn evidence verify <audit_chain.json>` checks it
 
 The report lists the ASPICE processes the record may support, as a pointer for an assessor, not an assessment.
 

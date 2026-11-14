@@ -20,8 +20,8 @@ A named person marks each entry "needs action" or "no action". Export to JSON an
 ## Commands
 
 ```powershell
-.\.venv\Scripts\python -m harness delta spec <sift run> data\synthetic\icx100_srs_rev2.md
-.\.venv\Scripts\python -m harness delta set old.csv new.csv
+.\.venv\Scripts\zyn delta spec <sift run> data\synthetic\icx100_srs_rev2.md
+.\.venv\Scripts\zyn delta set old.csv new.csv
 ```
 
 Code: [harness/sift/delta.py](../../harness/sift/delta.py)

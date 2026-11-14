@@ -3,7 +3,7 @@
 import { Anvil, Sift, Upload, type ZynIconType } from "../components/icons";
 import { useState } from "react";
 import { toast } from "sonner";
-import { api, useConfig, type Job } from "../lib/api";
+import { api, getActiveProject, useConfig, type Job } from "../lib/api";
 import { useAddJob } from "../lib/jobs";
 import { useReviewer } from "../lib/reviewer";
 import { Drawer } from "../components/Drawer";
@@ -33,7 +33,7 @@ function FilePick({ label, accept, file, onFile }: { label: string; accept: stri
 export function NewRun({ open, onOpenChange, onStarted }: {
   open: boolean; onOpenChange: (v: boolean) => void; onStarted: (runId: string | null) => void;
 }) {
-  const { reviewer } = useReviewer();
+  const { reviewer, canAct, noActReason } = useReviewer();
   const cfg = useConfig();
   const addJob = useAddJob();
   const [kind, setKind] = useState<Kind>("sift");
@@ -49,15 +49,18 @@ export function NewRun({ open, onOpenChange, onStarted }: {
     : kind === "forge" ? !!base : mode === "spec" ? !!(base && files.new) : !!(files.old && files.new);
 
   async function submit() {
+    const project = getActiveProject() || cfg.data?.project;
     const fd = new FormData();
     fd.set("reviewer", reviewer);
+    if (project) fd.set("project", project);
     Object.entries(files).forEach(([k, v]) => v && fd.set(k, v));
     if (base) fd.set("base", base);
     fd.set("mode", mode);
     fd.set("rules", rules);
     setBusy(true);
     try {
-      const res = await api<any>(`/api/new/${kind}`, { method: "POST", body: fd });
+      const url = project ? `/api/new/${kind}?project=${encodeURIComponent(project)}` : `/api/new/${kind}`;
+      const res = await api<any>(url, { method: "POST", body: fd });
       if (res.job) {
         addJob("new", res.job as Job);
         toast("Started. Progress shows on the page.");
@@ -80,7 +83,7 @@ export function NewRun({ open, onOpenChange, onStarted }: {
       description="Each run is recorded in the audit log under your name."
       footer={<>
         <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
-        <Button variant="primary" disabled={!ready || !reviewer} busy={busy} onClick={submit}>Start</Button>
+        <Button variant="primary" disabled={!ready || !canAct} tip={!canAct ? noActReason : undefined} busy={busy} onClick={submit}>Start</Button>
       </>}>
       <div className="filter-group" data-marks role="radiogroup" aria-label="Tool">
         {KINDS.map((k) => (

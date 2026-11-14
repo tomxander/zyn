@@ -218,6 +218,12 @@ The signature moment: press a, the sheet takes a solid mark, the wedge steps one
 
 **Rules live in Python.** Reasons, blocks and checks are computed in `harness/api/views.py` and enforced again in `server.py`. Screens only show them.
 
+**Person menu and project switcher.** In team mode, the sidebar shows the person menu with the signed-in person's name, email, role chip on the active project (sentence case, muted tone), the project switcher for switching active projects, access tokens, admin team settings, and sign out. Switching projects drops any open run from the previous project.
+
+**Disabled with reason for roles and four-eyes.** When a person does not have the required role on a project or is blocked by the four-eyes rule (cannot decide on their own changes or findings on runs they started), actions and decision buttons remain visible and disabled with an explanatory tooltip (`aria-disabled="true"`). The reason is computed by the server and displayed inline as a warning note on the card.
+
+**Access tokens and team settings.** Slide-in drawers (`Drawer`) for managing access tokens (creation with secret shown once, copy with clipboard fallback, confirmation on revoke, separate active and revoked lists) and viewing read-only team settings (masked secrets, project roles, service accounts).
+
 **Copy.** Sentence case in the source; legends become capitals by style. Counts in labels. No em dashes, no "please", no exclamation marks.
 
 ## 9. Hard rules (enforced by the test)

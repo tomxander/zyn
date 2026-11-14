@@ -58,7 +58,7 @@ Exporting a run also writes `checklist.xlsx` in the layout of the public Automot
 ## Commands
 
 ```powershell
-.\.venv\Scripts\python -m harness testcheck tests.py --dbc cluster.dbc --reqs requirements.csv
+.\.venv\Scripts\zyn testcheck tests.py --dbc cluster.dbc --reqs requirements.csv
 ```
 
 Code: [harness/outside.py](../../harness/outside.py), [harness/anvil/dbc_check.py](../../harness/anvil/dbc_check.py), [harness/checklist.py](../../harness/checklist.py)

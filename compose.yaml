@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: zyn
+      POSTGRES_USER: zyn_admin
+      POSTGRES_PASSWORD: ${ZYN_DATABASE_ADMIN_PASSWORD:?Set ZYN_DATABASE_ADMIN_PASSWORD in environment or .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zyn_admin -d zyn"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  upgrade:
+    build: .
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ZYN_DATABASE_ADMIN_URL: postgresql://zyn_admin:${ZYN_DATABASE_ADMIN_PASSWORD:?Set ZYN_DATABASE_ADMIN_PASSWORD in environment or .env}@db:5432/zyn
+      ZYN_DATABASE_APP_PASSWORD: ${ZYN_DATABASE_PASSWORD:?Set ZYN_DATABASE_PASSWORD in environment or .env}
+    command: ["zyn", "upgrade", "--admin-url", "postgresql://zyn_admin:${ZYN_DATABASE_ADMIN_PASSWORD:?Set ZYN_DATABASE_ADMIN_PASSWORD in environment or .env}@db:5432/zyn", "--app-user", "zyn"]
+
+  zyn:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      upgrade:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:8600:8600"
+    environment:
+      ZYN_DATABASE_PASSWORD: ${ZYN_DATABASE_PASSWORD:?Set ZYN_DATABASE_PASSWORD in environment or .env}
+      ZYN_SESSION_SECRET: ${ZYN_SESSION_SECRET:?Set ZYN_SESSION_SECRET in environment or .env}
+      ZYN_OIDC_CLIENT_SECRET: ${ZYN_OIDC_CLIENT_SECRET:?Set ZYN_OIDC_CLIENT_SECRET in environment or .env}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - ./deploy/team.yaml:/data/config.yaml:ro
+      - zyn_data:/data
+
+volumes:
+  pgdata:
+  zyn_data:

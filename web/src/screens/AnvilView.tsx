@@ -50,7 +50,7 @@ export function AnvilView({ data }: { data: any }) {
 // ---- 1. test specs -----------------------------------------------------------------------
 
 function Specs({ d }: { d: any }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const start = useStartStage(d.run_id);
   const gen = useAction(d.run_id);
   const specs: any[] = d.specs;
@@ -60,7 +60,7 @@ function Specs({ d }: { d: any }) {
   const shownAll = specs.filter((s) => (pick.has(s.payload.template) || !templates.includes(s.payload.template))
     && (!onlyBad || s.payload.problems.length));
   const { shown, more } = useProgressive(shownAll);
-  const noName = !reviewer ? "Enter your name as reviewer first" : undefined;
+  const noName = !canAct ? noActReason : undefined;
   const missing: string[] = d.missing_specs;
   const res = gen.data;
 
@@ -86,7 +86,7 @@ function Specs({ d }: { d: any }) {
         </Msg>
       )}
       <div className="toolbar">
-        <Button variant={d.ready ? "primary" : "plain"} icon={Cog} disabled={!reviewer || !d.ready}
+        <Button variant={d.ready ? "primary" : "plain"} icon={Cog} disabled={!canAct || !d.ready}
           busy={gen.isPending}
           tip={noName ?? "Code only, no model calls. Each spec's cases are also run against simulated faults."}
           onClick={() => gen.mutate({ name: "forge_generate" })}>
@@ -176,7 +176,7 @@ function EditSpec({ s, options, open, onOpenChange }: {
   s: any; options: any; open: boolean; onOpenChange: (v: boolean) => void;
 }) {
   const p = s.payload;
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const edit = useEdit();
   const nums: string[] = options.numbers;
   const [f, setF] = useState(() => ({
@@ -208,8 +208,8 @@ function EditSpec({ s, options, open, onOpenChange }: {
       description="Saved as a new version and checked again by code. The proposed version stays in the record."
       footer={<>
         <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
-        <Button variant="primary" disabled={!reviewer || bad.length > 0} busy={edit.isPending}
-          tip={!reviewer ? "Enter your name as reviewer first" : bad.length ? "Fix the numbers first" : undefined}
+        <Button variant="primary" disabled={!canAct || bad.length > 0} busy={edit.isPending}
+          tip={!canAct ? noActReason : bad.length ? "Fix the numbers first" : undefined}
           onClick={save}>Save as new version</Button>
       </>}>
       <ItemText>{p.requirement_text}</ItemText>

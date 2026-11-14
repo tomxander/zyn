@@ -21,7 +21,6 @@ const SOURCES: { value: Source; label: string }[] = [
   { value: "code", label: "Code check" }, { value: "ai", label: "AI reviewer" }];
 const NO_REASON = "none";
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
-const NO_NAME = "Enter your name as reviewer first";
 
 export function CheckView({ data }: { data: any }) {
   const [tab, setTab] = useState("findings");
@@ -62,7 +61,7 @@ function useHidden<T extends string>(all: T[]) {
 }
 
 function Findings({ d }: { d: any }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const start = useStartStage(d.run_id);
   const carry = useAction(d.run_id);
   const ai = d.ai;
@@ -108,13 +107,13 @@ function Findings({ d }: { d: any }) {
         <p className="small quiet">Checked against the source {d.meta.source.filename} (sha256 {String(d.meta.source.sha256).slice(0, 12)}): each requirement is matched to a source sentence by code.</p>
       )}
       {d.ai_available !== false && <div className="toolbar">
-        <Button variant={left ? "primary" : "plain"} icon={Sparkles} disabled={!reviewer || !left}
-          tip={!reviewer ? "Enter your name as reviewer first to run the AI review"
+        <Button variant={left ? "primary" : "plain"} icon={Sparkles} disabled={!canAct || !left}
+          tip={!canAct ? noActReason
             : "Each batch checks up to 15 requirements on their own; the conflict pass reads the whole set for contradictions."}
           onClick={() => start("ai_review")}>
           Run AI review ({ai.batches_left} of {ai.batches} batches and {ai.conflicts_left} of {ai.conflicts} set-wide conflict passes left)</Button>
-        {d.carry_over > 0 && <Button icon={Repeat} disabled={!reviewer} busy={carry.isPending}
-          tip={reviewer ? "Findings on unchanged text that a person already confirmed or dismissed in an earlier run." : NO_NAME}
+        {d.carry_over > 0 && <Button icon={Repeat} disabled={!canAct} busy={carry.isPending}
+          tip={canAct ? "Findings on unchanged text that a person already confirmed or dismissed in an earlier run." : noActReason}
           onClick={() => carry.mutate({ name: "carry_over" },
             { onSuccess: (r) => toast.success(`Applied ${r.count} earlier decisions`) })}>
           Apply {d.carry_over} earlier decisions on identical findings</Button>}
@@ -125,8 +124,8 @@ function Findings({ d }: { d: any }) {
             <Select value={want} onChange={setWant} label="AI passes in total"
               options={[2, 3, 4, 5].map((n) => ({ value: String(n), label: String(n) }))} />
           </Field>
-          {more > 0 && <Button icon={Layers} disabled={!reviewer}
-            tip={reviewer ? "Shows which AI findings recur when the same review is repeated. A finding seen once is weaker evidence than one seen every time. Each extra pass costs about the same as the first." : NO_NAME}
+          {more > 0 && <Button icon={Layers} disabled={!canAct}
+            tip={canAct ? "Shows which AI findings recur when the same review is repeated. A finding seen once is weaker evidence than one seen every time. Each extra pass costs about the same as the first." : noActReason}
             onClick={() => start("stability", { passes: Number(want) })}>
             Stability check: run {more} more AI {more === 1 ? "pass" : "passes"}</Button>}
         </div>

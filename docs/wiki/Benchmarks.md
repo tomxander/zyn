@@ -150,7 +150,7 @@ What it shows:
 
 Limits: three repeats; ranges are indicative, not confidence intervals. The ICX-100 key is author-made and AI-reviewed. Local models were not run. Full report: [docs/bench/2026-11-13-pack-zyn-bench-1.1.md](../bench/2026-11-13-pack-zyn-bench-1.1.md).
 
-Run it: `python -m harness pack run --profiles claude-opus,claude-sonnet,claude-haiku --repeat 3`
+Run it: `zyn pack run --profiles claude-opus,claude-sonnet,claude-haiku --repeat 3`
 
 ---
 

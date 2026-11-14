@@ -6,8 +6,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useConfig, useRuns } from "../lib/api";
 import { markFor } from "../components/ui";
 import { useReviewer } from "../lib/reviewer";
-import { Button, Tip } from "../components/ui";
+import { Button, Skeleton, Tip } from "../components/ui";
 import { T_LAYOUT } from "../components/motion";
+import { PersonMenu } from "./PersonMenu";
 
 /** A run's tool mark, from the identity set. */
 function toolMark(tool: string) {
@@ -45,13 +46,15 @@ function KnowledgeLine({ k, replay }: { k: any; replay: boolean }) {
   );
 }
 
-export function Shell({ runId, onRun, onNew, onPalette, children }: {
+export function Shell({ runId, onRun, onNew, onPalette, onOpenTokens, onOpenSettings, children }: {
   runId: string | null; onRun: (id: string) => void; onNew: () => void; onPalette: () => void;
+  onOpenTokens?: () => void; onOpenSettings?: () => void;
   children: ReactNode;
 }) {
-  const { reviewer, setReviewer, theme, setTheme } = useReviewer();
+  const { reviewer, setReviewer, theme, setTheme, canAct, noActReason } = useReviewer();
   const runs = useRuns();
   const cfg = useConfig();
+  const isTeam = cfg.data?.mode === "team";
   const [all, setAll] = useState(false);
   // On a phone the run list folds away so the record itself is in the first screen.
   const [runsOpen, setRunsOpen] = useState(false);
@@ -73,10 +76,34 @@ export function Shell({ runId, onRun, onNew, onPalette, children }: {
           <ZynMark size={22} aria-hidden /><b>ZYN</b><span className="brand-tag">review · prototype</span>
         </div>
 
-        <div className="side-label">Reviewer</div>
-        <input className="input" placeholder="Your name" value={reviewer} aria-label="Reviewer name"
-          onChange={(e) => setReviewer(e.target.value)} />
-        {!reviewer && <p className="side-hint">Required to approve, reject, edit or run a stage.</p>}
+        {cfg.isLoading ? (
+          <div className="side-loading" aria-busy="true">
+            <div className="side-label">Loading</div>
+            <Skeleton height={34} />
+          </div>
+        ) : isTeam && cfg.data?.person ? (
+          <PersonMenu
+            person={cfg.data.person}
+            projects={cfg.data.projects ?? []}
+            currentProject={cfg.data.project}
+            onSelectProject={(pid) => {
+              const u = new URL(location.href);
+              u.searchParams.set("project", pid);
+              u.searchParams.delete("run");
+              location.href = u.toString();
+            }}
+            onOpenTokens={() => onOpenTokens?.()}
+            onOpenSettings={() => onOpenSettings?.()}
+            isAdmin={cfg.data.admin}
+          />
+        ) : (
+          <>
+            <div className="side-label">Reviewer</div>
+            <input className="input" placeholder="Your name" value={reviewer} aria-label="Reviewer name"
+              onChange={(e) => setReviewer(e.target.value)} />
+            {!reviewer && <p className="side-hint">Required to approve, reject, edit or run a stage.</p>}
+          </>
+        )}
 
         <div className="side-label">
           <span>Runs</span>
@@ -103,10 +130,12 @@ export function Shell({ runId, onRun, onNew, onPalette, children }: {
             {all ? "Show recent only" : `Show all ${list.length} runs`}
           </Button>
         )}
-        <Button icon={Plus} onClick={onNew} disabled={!reviewer}
-          tip={!reviewer ? "Enter your name as reviewer first" : undefined}>Start new run</Button>
+        <Button icon={Plus} onClick={onNew} disabled={!canAct}
+          tip={!canAct ? noActReason : undefined}>Start new run</Button>
+        {!canAct && noActReason && <p className="side-hint">{noActReason}</p>}
 
         <div className="side-foot">
+          {cfg.data?.version && <p className="side-hint">Zyn v{cfg.data.version}</p>}
           <dl className="hatch-legend" aria-label="What the marks mean">
             <div><dt className="hl-hatch" /><dd>Needs a person</dd></div>
             <div><dt className="hl-cross" /><dd>Conflict or broken</dd></div>
@@ -141,7 +170,7 @@ export function Shell({ runId, onRun, onNew, onPalette, children }: {
               until a named reviewer approves them.</span>
           </div>
           <AnimatePresence initial={false}>
-            {!reviewer && (
+            {!isTeam && !reviewer && (
               <motion.p className="small quiet readonly-note" initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
                 Read-only until you enter your name under Reviewer.

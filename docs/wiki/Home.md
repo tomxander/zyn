@@ -11,6 +11,7 @@ Zyn does not try to out-generate the many tools that write requirements and test
 | If you want to | Read |
 |---|---|
 | Run Zyn on your machine | [Getting started](Getting-started.md) |
+| Run Zyn for a whole team | [Team server](Team-server.md) |
 | Understand why a finding can be trusted | [How Zyn decides](How-Zyn-decides.md) |
 | See the numbers | [Benchmarks](Benchmarks.md) |
 | Know what each check catches, and what it can't | [Checks reference](Checks-reference.md) |
@@ -31,6 +32,7 @@ Zyn does not try to out-generate the many tools that write requirements and test
 ## Everything else
 
 - [Architecture](Architecture.md): the parts and how a run flows through them
+- [Team server](Team-server.md): company sign-in, roles, projects, PostgreSQL and operations for IT
 - [Integrations](Integrations.md): exports, ReqIF round-trip, MCP server, evidence report
 - [Data and licences](Data-and-licences.md): every dataset, its licence and how it is used
 - [Development](Development.md): tests, lint, the web screen, the identity kit

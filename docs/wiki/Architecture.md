@@ -11,7 +11,7 @@ flowchart TB
     subgraph Harness["Python harness"]
         M["Model runner<br/><sub>schema-validated, replay, offline</sub>"]
         C["Code checks<br/><sub>sift/checks, outside, anvil</sub>"]
-        A[("Audit store<br/><sub>SQLite, append-only</sub>")]
+        A[("Audit store<br/><sub>SQLite or PostgreSQL, append-only</sub>")]
         API["API<br/><sub>views and rules in Python</sub>"]
     end
     subgraph Models
@@ -39,7 +39,8 @@ flowchart TB
 |---|---|---|
 | Model runner | [harness/models/](../../harness/models/) | Calls Claude or Ollama through two thin adapters, validates every reply against a schema, retries with the errors, replays stored answers, refuses cloud calls in offline mode |
 | Prompts | [harness/prompts/](../../harness/prompts/) | Versioned files. A released prompt is never edited; a change is a new `_v2` |
-| Audit store | [harness/audit/store.py](../../harness/audit/store.py) | Append-only SQLite. Items are versioned; decisions are events; only a named person can approve |
+| Audit store | [harness/audit/](../../harness/audit/) | Append-only, on SQLite (one person) or PostgreSQL (a team). Items are versioned; decisions are events; only a named person can approve. Schema upgrades run with a separate database user |
+| Team | [harness/team/](../../harness/team/) | Company sign-in, per-project roles, the four-eyes rule, access tokens, log import and the remote client. Off in personal mode |
 | Code checks | [harness/sift/checks.py](../../harness/sift/checks.py), [harness/outside.py](../../harness/outside.py), [harness/anvil/](../../harness/anvil/) | Deterministic checks for every tool |
 | API | [harness/api/](../../harness/api/) | Builds each screen from the audit store and enforces the rules again. Views are read-only by construction |
 | Review screen | [web/](../../web/) | React app on the Zyn design system. The screen shows rules; it never decides them |

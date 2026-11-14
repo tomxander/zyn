@@ -10,6 +10,7 @@ export type Status = "proposed" | "edited" | "approved" | "rejected";
 export interface Decision {
   status: Status;
   block_approve: string | null;
+  block_decide?: string | null;
   needs_reason: boolean;
   reasons: string[];
   earlier: { by: string; run_id: string } | null;
@@ -28,7 +29,12 @@ export class ApiError extends Error {
 }
 
 export async function api<T = any>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(path, init);
+  const method = (init?.method || "GET").toUpperCase();
+  const headers = new Headers(init?.headers);
+  if (["POST", "PUT", "DELETE", "PATCH"].includes(method)) {
+    headers.set("X-Zyn-Request", "1");
+  }
+  const res = await fetch(path, { ...init, headers });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new ApiError(data.error || res.statusText, res.status);
   return data as T;
@@ -37,17 +43,70 @@ export async function api<T = any>(path: string, init?: RequestInit): Promise<T>
 export const post = <T = any>(path: string, body: unknown) =>
   api<T>(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
 
+export interface TokenSummary {
+  token_id: string;
+  label: string;
+  created_at: string;
+  expires_at: string;
+  revoked: boolean;
+}
+
+export function useTokens() {
+  return useQuery({ queryKey: ["tokens"], queryFn: () => api<TokenSummary[]>("/api/tokens") });
+}
+
+export function useCreateToken() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { label: string; days?: number }) =>
+      post<{ token_id: string; secret: string }>("/api/tokens", body),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tokens"] }),
+    onError: (e: Error) => toast.error(e.message),
+  });
+}
+
+export function useRevokeToken() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (tokenId: string) => post<{ ok: boolean }>(`/api/tokens/${tokenId}/revoke`, {}),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tokens"] }),
+    onError: (e: Error) => toast.error(e.message),
+  });
+}
+
+export function getActiveProject(): string | null {
+  if (typeof window === "undefined") return null;
+  const p = new URLSearchParams(window.location.search).get("project");
+  return p || null;
+}
+
+export function useTeamSettings() {
+  return useQuery({ queryKey: ["team-settings"], queryFn: () => api("/api/team-settings") });
+}
+
 export function useConfig() {
-  return useQuery({ queryKey: ["config"], queryFn: () => api("/api/config"), staleTime: 30_000 });
+  const p = getActiveProject();
+  const url = p ? `/api/config?project=${encodeURIComponent(p)}` : "/api/config";
+  return useQuery({
+    queryKey: p ? ["config", p] : ["config"],
+    queryFn: () => api(url),
+    staleTime: 30_000,
+  });
 }
 
 export function useRuns() {
-  return useQuery({ queryKey: ["runs"], queryFn: () => api<RunSummary[]>("/api/runs") });
+  const p = getActiveProject();
+  const url = p ? `/api/runs?project=${encodeURIComponent(p)}` : "/api/runs";
+  return useQuery({
+    queryKey: p ? ["runs", p] : ["runs"],
+    queryFn: () => api<RunSummary[]>(url),
+  });
 }
 
 export function useRun(runId: string | null) {
+  const p = getActiveProject();
   return useQuery({
-    queryKey: ["run", runId], enabled: !!runId,
+    queryKey: ["run", runId, p], enabled: !!runId,
     queryFn: () => api(`/api/runs/${runId}`), placeholderData: (prev) => prev,
   });
 }
@@ -57,13 +116,14 @@ export function useAudit(runId: string) {
 }
 
 /** Any write. Refreshes the run afterwards; errors become a toast. */
-export function useWrite<V>(fn: (vars: V, reviewer: string) => Promise<any>, opts?: {
+export function useWrite<V>(fn: (vars: V, reviewer: string, project?: string | null) => Promise<any>, opts?: {
   success?: (data: any, vars: V) => string | null | void;
 }) {
   const qc = useQueryClient();
   const { reviewer } = useReviewer();
+  const project = getActiveProject();
   return useMutation({
-    mutationFn: (vars: V) => fn(vars, reviewer),
+    mutationFn: (vars: V) => fn(vars, reviewer, project),
     onSuccess: (data, vars) => {
       const msg = opts?.success?.(data, vars);
       if (msg) toast.success(msg);
@@ -129,8 +189,10 @@ const PAST: Record<string, string> = { approved: "approved", rejected: "rejected
 export function useDecide() {
   const qc = useQueryClient();
   const { reviewer } = useReviewer();
+  const project = getActiveProject();
   const m = useMutation({
-    mutationFn: (v: DecideVars) => post("/api/decide", { ...v, reviewer }),
+    mutationFn: (v: DecideVars) =>
+      post("/api/decide", { ...v, reviewer, ...(project ? { project } : {}) }),
     onMutate: async (v) => {
       await qc.cancelQueries({ queryKey: ["run"] });
       const before = qc.getQueriesData({ queryKey: ["run"] });
@@ -162,13 +224,13 @@ export function useDecide() {
 }
 
 export function useEdit() {
-  return useWrite((v: { item_id: string; kind: string; [k: string]: any }, reviewer) =>
-    post("/api/edit", { ...v, reviewer }), { success: () => "Saved as a new version" });
+  return useWrite((v: { item_id: string; kind: string; [k: string]: any }, reviewer, project) =>
+    post("/api/edit", { ...v, reviewer, ...(project ? { project } : {}) }), { success: () => "Saved as a new version" });
 }
 
 export function useAction(runId: string) {
-  return useWrite((v: { name: string; [k: string]: any }, reviewer) =>
-    post(`/api/runs/${runId}/actions/${v.name}`, { ...v, reviewer }));
+  return useWrite((v: { name: string; [k: string]: any }, reviewer, project) =>
+    post(`/api/runs/${runId}/actions/${v.name}`, { ...v, reviewer, ...(project ? { project } : {}) }));
 }
 
 export const downloadUrl = (path: string) => `/api/download?path=${encodeURIComponent(path)}`;

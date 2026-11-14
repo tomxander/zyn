@@ -14,7 +14,7 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
   /** Default answer key path; omit to hide scoring. */
   scoreKey?: string; after?: (res: any) => ReactNode;
 }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const exp = useAction(runId);
   const score = useAction(runId);
   const ev = useAction(runId);
@@ -24,8 +24,8 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
     <div className="stack-lg">
       <p className="small">{intro}</p>
       <div className="row">
-        <Button variant="primary" icon={FileDown} disabled={!reviewer || disabled} busy={exp.isPending}
-          tip={!reviewer ? "Enter your name as reviewer first" : undefined}
+        <Button variant="primary" icon={FileDown} disabled={!canAct || disabled} busy={exp.isPending}
+          tip={!canAct ? noActReason : undefined}
           onClick={() => exp.mutate({ name: "export" })}>{label}</Button>
       </div>
       <AnimatePresence>
@@ -43,8 +43,8 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
       <Section title="Evidence report"
         hint="One verdict per item (pass, fail, warn, skipped, broken) with the evidence and who decided, as HTML (prints to PDF) and JUnit XML, plus the run's audit log as a hash chain." />
       <div className="row">
-        <Button icon={FileCheck} disabled={!reviewer} busy={ev.isPending}
-          tip={!reviewer ? "Enter your name as reviewer first" : undefined}
+        <Button icon={FileCheck} disabled={!canAct} busy={ev.isPending}
+          tip={!canAct ? noActReason : undefined}
           onClick={() => ev.mutate({ name: "evidence" })}>Write evidence report</Button>
       </div>
       {ev.data && (

@@ -15,6 +15,7 @@
 
 **Reference**
 - [Checks reference](Checks-reference.md)
+- [Team server](Team-server.md)
 - [Integrations](Integrations.md)
 - [Architecture](Architecture.md)
 - [Data and licences](Data-and-licences.md)

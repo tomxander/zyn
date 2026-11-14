@@ -60,7 +60,14 @@ def convert(path: Path) -> tuple[str, str, dict[str, int]]:
         raise ValueError(f"Unsupported file type '{suffix}'. Supported: {sorted(SUPPORTED)}")
     if suffix in {".md", ".markdown", ".txt"}:
         return path.read_text(encoding="utf-8"), "plain", {}
-    from docling.document_converter import DocumentConverter  # heavy import, load on demand
+    try:
+        from docling.document_converter import DocumentConverter  # heavy, load on demand
+    except ImportError:
+        raise ValueError(
+            f"Reading {suffix} files needs the document reader, which the light install "
+            "leaves out. Install it with: pipx inject zyn-harness docling "
+            "(or pip install docling), or give Zyn the text as .md or .txt."
+        ) from None
 
     result = DocumentConverter().convert(str(path))
     return result.document.export_to_markdown(), "docling", heading_pages(result.document)

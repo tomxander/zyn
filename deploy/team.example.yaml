@@ -1,0 +1,47 @@
+db_path: runs/audit.db
+
+roles:
+  generator: claude-sonnet
+  reviewer: claude-sonnet
+
+profiles:
+  claude-sonnet:
+    provider: anthropic
+    model: claude-sonnet-5-5
+  claude-opus:
+    provider: anthropic
+    model: claude-opus-5-5
+
+team:
+  database_url: postgresql://zyn:${ZYN_DATABASE_PASSWORD}@db:5432/zyn
+  public_url: https://zyn.corp.internal
+  session_secret: ${ZYN_SESSION_SECRET}
+  oidc:
+    issuer: https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/v2.0
+    client_id: 11111111-2222-3333-4444-555555555555
+    client_secret: ${ZYN_OIDC_CLIENT_SECRET}
+    scopes: ["openid", "profile", "email", "groups"]
+  admins:
+    - zyn-admins
+  projects:
+    bcm:
+      name: Body Control Module
+      rule_profile: default
+      four_eyes: true
+      roles:
+        viewer: [bcm-viewers, bcm-engineers, bcm-leads]
+        engineer: [bcm-engineers]
+        approver: [bcm-leads]
+    adas:
+      name: ADAS Sensor Cluster
+      rule_profile: ears
+      four_eyes: true
+      roles:
+        viewer: [adas-all]
+        engineer: [adas-devs]
+        approver: [adas-safety-leads]
+  allowed_models:
+    - claude-sonnet
+    - claude-opus
+  max_upload_mb: 25
+  token_days: 90

@@ -52,7 +52,7 @@ function useBulk(runId: string) {
 }
 
 function Mappings({ d }: { d: any }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const bulk = useBulk(d.run_id);
   return (
     <>
@@ -60,7 +60,7 @@ function Mappings({ d }: { d: any }) {
       {d.bulk_mappings.length > 0 && (
         <div className="stack" style={{ marginBottom: "var(--zyn-s6)" }}>
           <p className="small quiet">The rating is the model's own estimate. It has not been shown to predict correctness, so read the section previews before approving in bulk.</p>
-          <div><Button icon={CheckCheck} disabled={!reviewer} busy={bulk.isPending}
+          <div><Button icon={CheckCheck} disabled={!canAct} tip={!canAct ? noActReason : undefined} busy={bulk.isPending}
             onClick={() => bulk.mutate("mappings")}>
             Approve all {d.bulk_mappings.length} pending mappings the model rated 0.90 or above</Button></div>
         </div>
@@ -74,7 +74,7 @@ function Mappings({ d }: { d: any }) {
 
 function MappingCardInner({ m, index, subsystems }: { m: any; index: number; subsystems: { id: string; name: string }[] }) {
   const p = m.payload;
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const edit = useEdit();
   const [open, setOpen] = useState(false);
   const [sub, setSub] = useState(p.subsystem_id);
@@ -91,7 +91,7 @@ function MappingCardInner({ m, index, subsystems }: { m: any; index: number; sub
         description="Saved as a new version of this mapping."
         footer={<>
           <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-          <Button variant="primary" disabled={!reviewer || sub === p.subsystem_id} busy={edit.isPending}
+          <Button variant="primary" disabled={!canAct || sub === p.subsystem_id} tip={!canAct ? noActReason : undefined} busy={edit.isPending}
             onClick={() => edit.mutate({ item_id: m.item_id, kind: "subsystem", subsystem_id: sub }, { onSuccess: () => setOpen(false) })}>Save</Button>
         </>}>
         <Field label="Subsystem">
@@ -104,7 +104,7 @@ function MappingCardInner({ m, index, subsystems }: { m: any; index: number; sub
 }
 
 function Requirements({ d }: { d: any }) {
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const start = useStartStage(d.run_id);
   const bulk = useBulk(d.run_id);
   const reqs: any[] = d.requirements;
@@ -123,11 +123,11 @@ function Requirements({ d }: { d: any }) {
       <p className="small quiet" style={{ marginBottom: "var(--zyn-s4)" }}>
         {d.approved_sections} approved sections with requirements · {d.waiting_sections} waiting for extraction. Only approved mappings are extracted.</p>
       <div className="toolbar">
-        <Button variant={reqs.length ? "plain" : "primary"} icon={ArrowRight} disabled={!reviewer || !d.waiting_sections}
-          tip={!reviewer ? "Enter your name as reviewer first" : undefined}
+        <Button variant={reqs.length ? "plain" : "primary"} icon={ArrowRight} disabled={!canAct || !d.waiting_sections}
+          tip={!canAct ? noActReason : undefined}
           onClick={() => start("extract")}>Extract requirements from {d.waiting_sections} approved sections</Button>
-        {reqs.length > 0 && <Button icon={Sparkles} disabled={!reviewer || !d.clarify_candidates}
-          tip="Asks the generator model how vague source wording could be made testable. Missing values come back as <TBD: ...> placeholders, never invented. Advice only."
+        {reqs.length > 0 && <Button icon={Sparkles} disabled={!canAct || !d.clarify_candidates}
+          tip={!canAct ? noActReason : "Asks the generator model how vague source wording could be made testable. Missing values come back as <TBD: ...> placeholders, never invented. Advice only."}
           onClick={() => start("clarify")}>Propose clarifications for {d.clarify_candidates} flagged requirements</Button>}
       </div>
       {!reqs.length ? (
@@ -150,7 +150,7 @@ function Requirements({ d }: { d: any }) {
                 <p className="small quiet">Concrete checks only: quote located, modal verb kept, values from the source, vague words flagged, no open placeholders, AI accepted. Read them before ticking the box.</p>
                 <ul className="small">{clean.map((r) => <li key={r.item_id}><code>{r.display_id}</code> {r.payload.text}</li>)}</ul>
                 <Checkbox checked={read} onChange={setRead} label={`I have read these ${clean.length} requirements`} />
-                <div><Button variant="primary" icon={Wand2} disabled={!reviewer || !read} busy={bulk.isPending}
+                <div><Button variant="primary" icon={Wand2} disabled={!canAct || !read} tip={!canAct ? noActReason : undefined} busy={bulk.isPending}
                   onClick={() => bulk.mutate("requirements")}>Approve them</Button></div>
               </Disclosure>
             </div>

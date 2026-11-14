@@ -10,7 +10,10 @@ No. The audit store refuses an approval from any actor that is not a named perso
 The research found no evidence that a model's self-reported confidence predicts correctness, and engineers asked for evidence they can check. Zyn shows concrete support states instead: quote located, values from the source only, modal verb kept.
 
 **Does anything leave my machine?**
-Only model calls to a cloud profile. With `offline: true`, every cloud call fails before it is sent and only local models run. The checkers (Anvil Review, the DBC checks, the MCP server) never call a model.
+Only model calls to a cloud profile. With `offline: true`, every cloud call fails before it is sent and only local models run. The checkers (Anvil Review, the DBC checks, the MCP server) never call a model. Zyn sends nothing to its makers: no telemetry, no update checks.
+
+**Can a whole team use it?**
+Yes. Team mode runs on a server in your network or cloud account, with company sign-in, roles per project, a shared PostgreSQL audit log and the four-eyes rule on by default. See [Team server](Team-server.md).
 
 **Will the same input give the same answer?**
 Code checks: always. Models: not always, and Zyn measures it (see item agreement on the [Benchmarks](Benchmarks.md) page). Accepted answers are stored and can be replayed exactly; decisions persist across runs of the same text.

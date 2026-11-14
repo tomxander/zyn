@@ -1,0 +1,95 @@
+{
+  "realm": "zyn-trial",
+  "enabled": true,
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "clients": [
+    {
+      "clientId": "zyn-app",
+      "name": "Zyn Team Server",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "zyn-trial-client-secret",
+      "redirectUris": [
+        "http://localhost:8600/auth/callback",
+        "http://127.0.0.1:8600/auth/callback"
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "roles",
+        "profile",
+        "email"
+      ],
+      "protocolMappers": [
+        {
+          "name": "groups",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "full.path": "false",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "groups",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "bcm-leads" },
+      { "name": "bcm-engineers" },
+      { "name": "zyn-admins" }
+    ]
+  },
+  "groups": [
+    {
+      "name": "bcm-leads",
+      "path": "/bcm-leads"
+    },
+    {
+      "name": "bcm-engineers",
+      "path": "/bcm-engineers"
+    },
+    {
+      "name": "zyn-admins",
+      "path": "/zyn-admins"
+    }
+  ],
+  "users": [
+    {
+      "username": "alice",
+      "enabled": true,
+      "email": "alice@trial.local",
+      "firstName": "Alice",
+      "lastName": "Approver",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "alice123",
+          "temporary": false
+        }
+      ],
+      "groups": ["/bcm-leads"]
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "email": "bob@trial.local",
+      "firstName": "Bob",
+      "lastName": "Engineer",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "bob123",
+          "temporary": false
+        }
+      ],
+      "groups": ["/bcm-engineers"]
+    }
+  ]
+}

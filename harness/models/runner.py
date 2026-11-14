@@ -122,6 +122,12 @@ def structured_call(
     # A replay sends nothing anywhere, so it is allowed in offline mode too.
     if cfg.replay and (hit := _replay(audit, output_model, actor, common, profile.name)):
         return hit
+    if not cfg.model_allowed(profile.name):
+        audit.log_event(actor or f"model:{profile.name}", "model_refused", run_id=run_id,
+                        object_type=task, model_profile=profile.name, provider=profile.provider,
+                        detail={"profile": profile.name, "reason": "model is not in allowed_models"})
+        raise StructuredOutputFailure(
+            f"{task}: profile '{profile.name}' is not in allowed_models")
     if cfg.is_offline() and profile.provider not in LOCAL_PROVIDERS:
         audit.log_event(actor or f"model:{profile.name}", "blocked_offline", run_id=run_id,
                         object_type=task, model_profile=profile.name, provider=profile.provider,

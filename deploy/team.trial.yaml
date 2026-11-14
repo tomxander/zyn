@@ -1,0 +1,39 @@
+db_path: runs/audit.db
+
+roles:
+  generator: claude-sonnet
+  reviewer: claude-sonnet
+
+profiles:
+  claude-sonnet:
+    provider: anthropic
+    model: claude-sonnet-5-5
+
+team:
+  trial: true
+  allow_insecure_http: true
+  public_url: http://localhost:8600
+  database_url: postgresql://zyn:${ZYN_DATABASE_PASSWORD}@db:5432/zyn
+  session_secret: ${ZYN_SESSION_SECRET}
+  oidc:
+    issuer: http://localhost:8080/realms/zyn-trial
+    internal_url: http://keycloak:8080/realms/zyn-trial
+    client_id: zyn-app
+    client_secret: zyn-trial-client-secret
+    groups_claim: groups
+    scopes: ["openid", "profile", "email"]
+  admins:
+    - zyn-admins
+  projects:
+    bcm:
+      name: Body Control Module
+      rule_profile: default
+      four_eyes: true
+      roles:
+        viewer: [bcm-viewers, bcm-engineers, bcm-leads]
+        engineer: [bcm-engineers]
+        approver: [bcm-leads]
+  allowed_models:
+    - claude-sonnet
+  max_upload_mb: 25
+  token_days: 90

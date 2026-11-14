@@ -13,12 +13,11 @@ import { Button, Card, CardHead, Checks, Diff, Field, ItemText, Msg, Quote, Sele
 function RequirementCardInner({ c, index }: { c: any; index: number }) {
   const p = c.payload;
   const r = c.review;
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const edit = useEdit();
   const [open, setOpen] = useState(false);
   const where = [p.page && `page ${p.page}`,
     p.quote_offset && `characters ${p.quote_offset[0]}-${p.quote_offset[1]} of the section`].filter(Boolean).join(" · ");
-  const noName = !reviewer ? "Enter your name as reviewer first" : undefined;
   // "unknown" and "none" say nothing; show the hint only when the model named a level.
   const asil = p.asil_hint && !["unknown", "none", "n/a"].includes(String(p.asil_hint).toLowerCase()) ? p.asil_hint : null;
 
@@ -68,11 +67,11 @@ function RequirementCardInner({ c, index }: { c: any; index: number }) {
       {c.suggestion_problems.length > 0 && <Msg tone="bad">AI suggestion cannot be applied with one click (code check): {c.suggestion_problems.join("; ")}. Use Edit if part of it is right.</Msg>}
 
       <DecisionBar itemId={c.item_id} decision={c.decision} extra={<>
-        {c.can_apply && <Button icon={WandSparkles} disabled={!!noName} tip={noName}
+        {c.can_apply && <Button icon={WandSparkles} disabled={!canAct} tip={!canAct ? noActReason : undefined}
           onClick={() => edit.mutate({ item_id: c.item_id, kind: "apply_suggestion" })}>Apply AI suggestion</Button>}
-        {c.clarification && !c.clarification.problems.length && <Button icon={Sparkles} disabled={!!noName} tip={noName}
+        {c.clarification && !c.clarification.problems.length && <Button icon={Sparkles} disabled={!canAct} tip={!canAct ? noActReason : undefined}
           onClick={() => edit.mutate({ item_id: c.item_id, kind: "use_clarification" })}>Use clarification</Button>}
-        {c.version > 1 && <Button variant="ghost" icon={RotateCcw} disabled={!!noName} tip={noName}
+        {c.version > 1 && <Button variant="ghost" icon={RotateCcw} disabled={!canAct} tip={!canAct ? noActReason : undefined}
           onClick={() => edit.mutate({ item_id: c.item_id, kind: "revert" })}>Revert to original</Button>}
         <Button variant="ghost" icon={Pencil} className="push" data-key="e" onClick={() => setOpen(true)}>Edit</Button>
       </>} />
@@ -84,7 +83,7 @@ function RequirementCardInner({ c, index }: { c: any; index: number }) {
 
 function EditRequirement({ c, open, onOpenChange }: { c: any; open: boolean; onOpenChange: (v: boolean) => void }) {
   const p = c.payload;
-  const { reviewer } = useReviewer();
+  const { canAct, noActReason } = useReviewer();
   const edit = useEdit();
   const [text, setText] = useState(p.text);
   const [type, setType] = useState(p.req_type);
@@ -98,7 +97,7 @@ function EditRequirement({ c, open, onOpenChange }: { c: any; open: boolean; onO
       description="Saved as a new version. The extracted version stays in the record."
       footer={<>
         <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
-        <Button variant="primary" disabled={!reviewer} busy={edit.isPending} onClick={() => edit.mutate(
+        <Button variant="primary" disabled={!canAct} tip={!canAct ? noActReason : undefined} busy={edit.isPending} onClick={() => edit.mutate(
           { item_id: c.item_id, kind: "edit", comment: note, fields: { text, req_type: type, quality_flags: flags, ...(p.modal ? { modal } : {}) } },
           { onSuccess: () => onOpenChange(false) })}>Save as new version</Button>
       </>}>
