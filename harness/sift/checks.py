@@ -32,8 +32,33 @@ def is_grounded(quote: str, source: str) -> bool:
     return bool(q) and q in normalise(source)
 
 
-def weak_words(text: str) -> list[str]:
-    return sorted({m.group(1).lower() for m in _WEAK.finditer(text)})
+def find_weak_word_spans(text: str) -> list[tuple[str, tuple[int, int]]]:
+    """Finds raw matches of configured weak words and their character spans."""
+    out = []
+    for m in _WEAK.finditer(text):
+        out.append((m.group(1).lower(), m.span()))
+    return out
+
+
+def weak_words(text: str, allowed_phrases: list[str] | None = None) -> list[str]:
+    """Finds weak words in text. By default, applies standard technical phrase exceptions."""
+    from harness.sift.rules import DEFAULT_WEAK_PHRASES_ALLOW
+
+    patterns = DEFAULT_WEAK_PHRASES_ALLOW if allowed_phrases is None else allowed_phrases
+    suppressed_spans: list[tuple[int, int]] = []
+    for pat_str in patterns:
+        try:
+            for m in re.finditer(pat_str, text, re.IGNORECASE):
+                suppressed_spans.append(m.span())
+        except re.error:
+            continue
+
+    found: set[str] = set()
+    for w, (start, end) in find_weak_word_spans(text):
+        if any(s <= start and end <= e for s, e in suppressed_spans):
+            continue
+        found.add(w)
+    return sorted(found)
 
 
 def modal_of(text: str) -> str | None:

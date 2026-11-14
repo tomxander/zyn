@@ -202,7 +202,7 @@ export function Tools() {
       <div className="wrap split split--tools">
         <div className="split__text">
           <Headline id="tools-title" plain="One checker," inked="for the work AI writes." />
-          <p className="body">What each tool reads, and what it hands back.</p>
+          <p className="body">Bring the files you already have. Zyn checks them and hands back the formats your tools expect.</p>
           <ul className="toollist" role="list">
             {TOOLS.map((t, i) => (
               <li key={t.id}>

@@ -5,7 +5,7 @@
   </picture>
 </p>
 
-<h1 align="center">AI writes the work. Zyn proves which parts you can trust.</h1>
+<h1 align="center">AI writes the work. Zyn checks it before you sign.</h1>
 
 <p align="center">
   The checker for automotive engineering work made by AI, or by anyone else.<br>
@@ -26,7 +26,7 @@
   <img alt="Status: prototype" src="https://img.shields.io/badge/status-prototype-121211?style=flat-square">
   <img alt="Version 0.2.0" src="https://img.shields.io/badge/version-0.2.0-1F5FCC?style=flat-square">
   <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-1F5FCC?style=flat-square">
-  <img alt="Tests: 346 passing" src="https://img.shields.io/badge/tests-346%20passing-1F5FCC?style=flat-square">
+  <img alt="Tests: 411 passing" src="https://img.shields.io/badge/tests-411%20passing-1F5FCC?style=flat-square">
   <img alt="Runs offline" src="https://img.shields.io/badge/runs-offline-121211?style=flat-square">
   <img alt="Data: public and synthetic only" src="https://img.shields.io/badge/data-public%20%2B%20synthetic-121211?style=flat-square">
 </p>
@@ -70,7 +70,7 @@ flowchart LR
 
 Three layers, in order of trust.
 
-1. **Code checks decide what they can prove.** Changed numbers, invented values, weakened wording, misspelt signals, tests that can never fail. No model, no key, no cost. Same input, same result, every run.
+1. **Code checks decide what code can check.** Changed numbers, invented values, weakened wording, misspelt signals, tests that can never fail. No model, no key, no cost. Same input, same result, every run.
 2. **The AI reviewer only advises, and only with quotes.** A finding without a quote that code can locate in the source is never shown. There are no confidence scores.
 3. **A named person makes every final call.** The AI can never approve. Every proposal, check and decision is appended to a log the database itself refuses to change.
 
@@ -153,7 +153,7 @@ Every number has its dataset, method and limits beside it: [Benchmarks](docs/wik
 | | [**Sift Delta**](docs/wiki/Sift-Delta.md) | Shows what changed between two revisions, and which approved requirements it touches |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="zyn-identity/logos/dark/32/anvil-mark.svg"><img src="zyn-identity/logos/light/32/anvil-mark.svg" width="24" alt=""></picture> | [**Anvil**](docs/wiki/Anvil.md) | Builds test cases by code from checked templates, then scores them against injected faults |
 | | [**Anvil Review**](docs/wiki/Anvil-Review.md) | Checks tests from any tool against a CAN database and the requirements they claim to cover |
-| <picture><source media="(prefers-color-scheme: dark)" srcset="zyn-identity/logos/dark/32/assay-mark.svg"><img src="zyn-identity/logos/light/32/assay-mark.svg" width="24" alt=""></picture> | [**Assay**](docs/wiki/Assay.md) | Benchmarks any model on public answer keys: accuracy, repeatability and cost per correct answer |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="zyn-identity/logos/dark/32/assay-mark.svg"><img src="zyn-identity/logos/light/32/assay-mark.svg" width="24" alt=""></picture> | [**Assay**](docs/wiki/Assay.md) | Benchmarks models on public answer keys: accuracy, repeatability and cost per correct answer |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="zyn-identity/logos/dark/32/scribe-mark.svg"><img src="zyn-identity/logos/light/32/scribe-mark.svg" width="24" alt=""></picture> | Scribe, Source | Planned: documents, and procurement |
 
 ## One person or a whole team
@@ -180,9 +180,9 @@ IT guide: [Team server](docs/wiki/Team-server.md). The container files have not 
 | | |
 |---|---|
 | **Works on anyone's output** | Requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn. |
-| **Quotes verified by code** | An AI finding without a quote that code can locate is never shown. |
-| **No confidence scores** | You see which checks passed or failed, not a model's opinion of itself. |
-| **No silent pass** | Empty or junk input is refused or reported as skipped. It is never passed. |
+| **Quotes located by code** | An AI finding without a quote that code can locate is never shown. |
+| **No confidence scores** | You see which checks flagged and which raised no flag, not a model's opinion of itself. |
+| **No silent pass** | Empty or junk input is refused or reported as skipped. It is never reported as no flag. |
 | **Decisions persist** | Dismiss a finding once. It stays dismissed on later runs of the same text. |
 | **A record that holds up** | Append-only log, hash-chained evidence export, and each decision records who made it and which rule applied. |
 | **Fits your toolchain** | ReqIF round-trip to DOORS Next, Polarion and Codebeamer. Tests out to pytest, Robot Framework and CAPL. |
@@ -270,7 +270,7 @@ No. The audit store refuses an approval from anything that is not a named person
 <details>
 <summary><b>Why no confidence score?</b></summary>
 <br>
-A model's rating of itself has not been shown to predict correctness. Zyn shows checks that passed or failed, and quotes you can read.
+A model's rating of itself has not been shown to predict correctness. Zyn shows checks that flagged or raised no flag, and quotes you can read.
 </details>
 
 <details>
@@ -285,7 +285,7 @@ More: [FAQ](docs/wiki/FAQ.md).
 
 | Next | Done when |
 |---|---|
-| **Model connectors** | An admin points Zyn at Bedrock, Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else |
+| **Model connectors** | Built, not tried against live endpoints. An admin points Zyn at Bedrock, Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else |
 | **Daily-workflow fit** | A requirement set and its review state go round trip with a requirement tool, and test reviews cover CANoe CAPL and vTESTstudio |
 | **Trust pack** | An engineer-reviewed answer key, a tool-qualification kit and a security pack |
 
@@ -295,7 +295,7 @@ Full list, including what we deliberately won't build: [Roadmap](docs/wiki/Roadm
 
 A checker that oversells itself is worthless, so here is where Zyn stops.
 
-- **Prototype.** Every screen and export says so. Nothing is verified until a named person approves it.
+- **Prototype.** Every screen and export says so. Nothing is approved until a named person signs off.
 - **Public and synthetic data only.** No company or customer documents were used.
 - **The ICX-100 answer key** was written by Claude and checked by an AI reviewer, not an engineer. Every score on it says so.
 - **No productivity claims.** Zyn reports what it measured, on named datasets, with the method beside the number.

@@ -22,7 +22,7 @@ Used by Sift Review on any set, configurable per [rule profile](../../rules/).
 
 | Check | Fires when |
 |---|---|
-| `weak_word` | A vague word such as "appropriate", "fast", "user-friendly" |
+| `weak_word` | A vague word such as "appropriate", "fast", "user-friendly", "normal". Technical standards and defined phrases are allowed in context (e.g. "as required by ISO 26262", "Fast Ethernet", "fast charging", "CAN flexible data-rate") while vague phrasing ("as required by the driver", "normal range", "normal voltage") is flagged |
 | `placeholder` | TBD, TBC, TBA, XXX, ?? or an angle-bracket placeholder |
 | `no_modal` | No shall, must, will, should or may |
 | `not_atomic` | More than one modal verb: possibly several obligations in one |
@@ -31,7 +31,7 @@ Used by Sift Review on any set, configurable per [rule profile](../../rules/).
 
 ## Tests
 
-Used by Anvil Review. Steps and checks are read from the test's code, never from its docstring or comments.
+Used by Anvil Review. Steps and checks are read from the test's code, never from its docstring or comments. Compatible with pytest, CANoe CAPL, Robot Framework, and Vector vTESTstudio XML (`.vtt`, `.vts`, `.vxt`).
 
 | Check | Fires when |
 |---|---|
@@ -48,7 +48,7 @@ What no code check catches: a flipped expectation (1 where 0 is right) that stay
 
 ## CAN databases
 
-Run before Anvil Review trusts the file. See [Anvil Review](Anvil-Review.md) for the full table: `duplicate_frame_id`, `signal_overlap`, `outside_frame`, `range_unreachable`, `range_inverted`, `range_missing`, `unknown_node`, `invalid_length`, `bad_encoding`, `mux_undefined`.
+Run before Anvil Review trusts the file. See [Anvil Review](Anvil-Review.md) for the full table: `duplicate_frame_id`, `signal_overlap`, `outside_frame`, `range_unreachable`, `range_inverted`, `range_missing`, `unknown_node`, `invalid_length`, `bad_encoding`, `mux_undefined`, as well as commercial vehicle protocol checks for SAE J1939: `j1939_edp_reserved`, `j1939_global_source`, and `j1939_dlc_exceeded` (lengths between 9 and 1785 bytes are accepted as declared multi-packet Transport Protocol messages because standard DBC files omit single-frame markers).
 
 ## Generated test specs
 

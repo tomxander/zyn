@@ -27,7 +27,7 @@
 .modes__cmd > span, .modes__row dd > span { grid-area: 1 / 1; }
 .modes__rows { padding: var(--s3) var(--s4); font-size: var(--t-mono); }
 .modes__row {
-  display: grid; grid-template-columns: 11ch minmax(0, 1fr); gap: var(--s3); align-items: baseline;
+  display: grid; grid-template-columns: 12.5ch minmax(0, 1fr); gap: var(--s3); align-items: baseline;
   padding: 7px 0; border-bottom: var(--line) solid color-mix(in srgb, var(--paper) 12%, transparent);
 }
 .modes__row:last-child { border-bottom: 0; }

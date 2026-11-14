@@ -196,3 +196,24 @@ def test_items_preserve_write_order_within_same_millisecond(store_backend, monke
     typed_items = store_backend.items_of_type("requirement")
     retrieved_typed_ids = [i["item_id"] for i in typed_items]
     assert retrieved_typed_ids == written_ids
+
+
+def test_sqlite_url_parsing(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    target = tmp_path / "test_store.sqlite"
+    url = f"sqlite:///{target.as_posix()}"
+    store = AuditStore(url)
+    assert store.path == target or store.path.resolve() == target.resolve()
+    assert store.backend.name == "sqlite"
+
+    # Relative URL
+    rel_store = AuditStore("sqlite:///relative_test.sqlite")
+    assert rel_store.path == Path("relative_test.sqlite")
+
+    # Bad schemes and invalid syntax refused with clear error
+    with pytest.raises(ValueError, match="Invalid sqlite database URL"):
+        AuditStore("sqlite://invalid/path")
+
+    with pytest.raises(ValueError, match="Unsupported database URL scheme"):
+        AuditStore("mysql://localhost/zyn")
+

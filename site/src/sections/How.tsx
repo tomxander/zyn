@@ -49,10 +49,10 @@ export function How() {
         </Panel>
 
         <div className="split__text">
-          <Headline id="how-title" plain="Three layers," inked="in order of trust." />
+          <Headline id="how-title" plain="Machines flag it." inked="A person decides." />
           <p className="body">
-            Code flags what it can find against the source. The AI reviewer only advises, and only with quotes. A person makes every final
-            call, and the log remembers who and when.
+            Code compares the work with its source and never guesses. An AI reviewer adds advice, only with a quote you can
+            check. Then an engineer decides, and the record remembers who and when.
           </p>
           <div className="vtabs" role="tablist" aria-orientation="vertical" ref={list} onKeyDown={onKey}>
             {LAYERS.map((l, i) => (

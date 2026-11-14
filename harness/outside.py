@@ -171,18 +171,130 @@ class Unit:
 _PY_TEST = re.compile(r"^(?:async\s+)?def\s+(test\w*)\s*\(", re.MULTILINE)
 _CAPL_TEST = re.compile(r"^\s*testcase\s+(\w+)\s*\(", re.MULTILINE)
 _ROBOT_SECTION = re.compile(r"^\*{3}\s*test cases?\s*\*{3}", re.IGNORECASE | re.MULTILINE)
+_VTEST_CASE = re.compile(
+    r"""<\s*(?:testcase|testtablecase|testcasedefinition)\b[^>]*(?:name|title)\s*=\s*["']([^"']+)["']""",
+    re.IGNORECASE,
+)
+
+
+def _parse_xml_safely(raw_bytes: bytes, filename: str):
+    import xml.etree.ElementTree as ET
+    from xml.parsers import expat
+
+    parser = expat.ParserCreate()
+    tb = ET.TreeBuilder()
+    parser.StartElementHandler = tb.start
+    parser.EndElementHandler = tb.end
+    parser.CharacterDataHandler = tb.data
+
+    def on_doctype(*args):
+        raise ValueError(f"{filename} contains forbidden DOCTYPE declaration.")
+
+    def on_entity(*args):
+        raise ValueError(f"{filename} contains forbidden ENTITY declaration.")
+
+    parser.StartDoctypeDeclHandler = on_doctype
+    parser.EntityDeclHandler = on_entity
+    try:
+        parser.Parse(raw_bytes, True)
+    except expat.ExpatError as e:
+        raise ValueError(f"{filename} is not valid XML: {e}") from e
+    return tb.close()
+
+
+def _local_tag(elem) -> str:
+    if not getattr(elem, "tag", None):
+        return ""
+    tag = elem.tag
+    if "}" in tag:
+        tag = tag.split("}")[-1]
+    if ":" in tag:
+        tag = tag.split(":")[-1]
+    return tag.lower()
+
+
+def _local_attr(elem, key: str) -> str | None:
+    target = key.lower()
+    for k, v in elem.attrib.items():
+        attr_name = k
+        if "}" in attr_name:
+            attr_name = attr_name.split("}")[-1]
+        if ":" in attr_name:
+            attr_name = attr_name.split(":")[-1]
+        if attr_name.lower() == target:
+            return v
+    return None
+
+
+def _find_local_child(elem, tag: str):
+    target = tag.lower()
+    for child in elem:
+        if _local_tag(child) == target:
+            return child
+    return None
 
 
 def split_tests(path: Path, start: int = 0) -> list[Unit]:
     """One unit per test: pytest functions, CAPL testcases, Robot Framework test cases,
-    else rows of a CSV/JSON/text file are kept whole as one unit."""
+    vTESTstudio XML testcases, else rows of a CSV/JSON/text file are kept whole as one unit."""
+    suffix = path.suffix.lower()
+
+    if suffix in (".vtt", ".vts", ".vxt"):
+        import copy
+        import xml.etree.ElementTree as ET
+
+        root = _parse_xml_safely(path.read_bytes(), path.name)
+
+        tc_tags = ("testcase", "testtablecase", "testcasedefinition")
+        tc_elements = [e for e in root.iter() if _local_tag(e) in tc_tags]
+
+        if not tc_elements:
+            raise ValueError(
+                f"{path.name} contains no recognized test cases "
+                "(expected <testcase>, <testtablecase>, or <testcasedefinition>)."
+            )
+
+        units = []
+        for i, elem in enumerate(tc_elements):
+            tc_name = _local_attr(elem, "name")
+            if not tc_name:
+                tc_name = _local_attr(elem, "title")
+            if not tc_name:
+                title_elem = _find_local_child(elem, "title")
+                if title_elem is not None and title_elem.text:
+                    tc_name = title_elem.text.strip()
+            if not tc_name:
+                name_elem = _find_local_child(elem, "name")
+                if name_elem is not None and name_elem.text:
+                    tc_name = name_elem.text.strip()
+            if not tc_name:
+                tc_name = _local_attr(elem, "id")
+            if not tc_name:
+                tc_name = f"test_{i + 1}"
+
+            # Check steps under innermost test case: remove descendant test cases so steps are not checked twice
+            elem_copy = copy.deepcopy(elem)
+            for child in list(elem_copy.iter()):
+                for sub in list(child):
+                    if _local_tag(sub) in tc_tags:
+                        child.remove(sub)
+
+            # Carry namespace declarations from root into fragment so prefixed namespaces are bound (Finding 5)
+            root_xmlns = {k: v for k, v in root.attrib.items() if k.startswith("xmlns")}
+            elem_copy.attrib.update(root_xmlns)
+
+            xml_text = ET.tostring(elem_copy, encoding="unicode")
+            units.append(Unit(tc_name.strip(), path.name, xml_text.strip(), start + i))
+        return units
+
     text = path.read_text(encoding="utf-8", errors="replace")
+
     spans: list[tuple[str, int]] = []
-    if path.suffix == ".py":
+    if suffix == ".py":
         spans = [(m.group(1), m.start()) for m in _PY_TEST.finditer(text)]
-    elif path.suffix in (".can", ".cin"):
+    elif suffix in (".can", ".cin"):
         spans = [(m.group(1), m.start()) for m in _CAPL_TEST.finditer(text)]
-    elif path.suffix == ".robot":
+    elif suffix == ".robot":
         sec = _ROBOT_SECTION.search(text)
         if sec:
             body_start = sec.end()
@@ -312,26 +424,85 @@ def check_tests(units: list[Unit], db: CanDb, reqs: dict[str, str]) -> tuple[
                 _seen.add((cat, key))
                 add(_u, cat, *a)
 
-        idents = set(_IDENT.findall(u.text))
-        for tok in sorted(idents):
-            if tok in names or tok.lower() in lower:
-                continue
-            if not (re.search(r"[A-Z0-9_]", tok[1:]) or tok[0].isupper()):
-                continue  # a plain lowercase word, not an identifier
-            close = difflib.get_close_matches(tok, list(names), n=1, cutoff=0.8)
-            if close and tok.lower() != close[0].lower():
-                once("unknown_signal", tok, tok,
-                     f"'{tok}' is not in the CAN database {db.filename}; the closest "
-                     f"{names[close[0]]} is {close[0]}.", f"Did the test mean {close[0]}?")
-        for line in u.text.splitlines():
-            if not _SIGNAL_CONTEXT.search(line):
-                continue
-            for q in _QUOTED.findall(line):
-                if q not in names and q.lower() not in lower and not q.lower().startswith(
-                        "test") and q[0].isupper():
-                    once("unknown_signal", q, q,
-                         f"'{q}' is used like a signal name but is not in {db.filename}.",
-                         "Which DBC signal is this?")
+        is_xml = Path(u.file).suffix.lower() in (".vtt", ".vts", ".vxt")
+        xml_checked = False
+        if is_xml:
+            # Build checks from parsed XML elements rather than source lines (Finding 9)
+            import xml.etree.ElementTree as ET
+
+            try:
+                xml_root = _parse_xml_safely(code_only(u).encode("utf-8"), u.file)
+            except Exception:  # noqa: BLE001
+                try:
+                    xml_root = ET.fromstring(code_only(u))
+                except Exception:  # noqa: BLE001
+                    xml_root = None
+            if xml_root is not None:
+                xml_signals_found = 0
+                for elem in xml_root.iter():
+                    if _local_tag(elem) in ("testcase", "testtablecase", "testcasedefinition", "testunit"):
+                        continue
+                    raw_sig = None
+                    for attr_key in ("signal", "variable", "target", "sig", "channel", "chan"):
+                        v = _local_attr(elem, attr_key)
+                        if v and v.strip():
+                            raw_sig = v.strip()
+                            break
+                    if not raw_sig:
+                        for child_tag in ("signal", "variable", "target", "sig", "channel", "chan"):
+                            ch = _find_local_child(elem, child_tag)
+                            if ch is not None and ch.text and ch.text.strip():
+                                raw_sig = ch.text.strip()
+                                break
+                    if not raw_sig:
+                        # Check any attribute on a step-like element for candidate signal names or typos
+                        for k, v in elem.attrib.items():
+                            if k.lower() in ("id", "action", "value", "expected", "val", "wait", "delay", "timeout"):
+                                continue
+                            if v and v.strip() and (v.strip() in names or difflib.get_close_matches(v.strip(), list(names), n=1, cutoff=0.8)):
+                                raw_sig = v.strip()
+                                break
+                    if raw_sig:
+                        xml_signals_found += 1
+                        if raw_sig not in names and raw_sig.lower() not in lower:
+                            close = difflib.get_close_matches(raw_sig, list(names), n=1, cutoff=0.8)
+                            if close and raw_sig.lower() != close[0].lower():
+                                once("unknown_signal", raw_sig, raw_sig,
+                                     f"'{raw_sig}' is not in the CAN database {db.filename}; the closest "
+                                     f"{names[close[0]]} is {close[0]}.", f"Did the test mean {close[0]}?")
+                            elif re.search(r"[A-Z0-9_]", raw_sig[1:]) or raw_sig[0].isupper():
+                                once("unknown_signal", raw_sig, raw_sig,
+                                     f"'{raw_sig}' is used like a signal name but is not in {db.filename}.",
+                                     "Which DBC signal is this?")
+                if xml_signals_found > 0:
+                    xml_checked = True
+
+        if not xml_checked:
+            xml_structural = {
+                "testcase", "testunit", "testtablecase", "testcasedefinition",
+                "teststep", "stimulate", "channel", "signal", "value",
+                u.name, u.name.lower(),
+            }
+            idents = {tok for tok in _IDENT.findall(u.text) if tok not in xml_structural and tok.lower() not in xml_structural}
+            for tok in sorted(idents):
+                if tok in names or tok.lower() in lower:
+                    continue
+                if not (re.search(r"[A-Z0-9_]", tok[1:]) or tok[0].isupper()):
+                    continue  # a plain lowercase word, not an identifier
+                close = difflib.get_close_matches(tok, list(names), n=1, cutoff=0.8)
+                if close and tok.lower() != close[0].lower():
+                    once("unknown_signal", tok, tok,
+                         f"'{tok}' is not in the CAN database {db.filename}; the closest "
+                         f"{names[close[0]]} is {close[0]}.", f"Did the test mean {close[0]}?")
+            for line in u.text.splitlines():
+                if not _SIGNAL_CONTEXT.search(line):
+                    continue
+                for q in _QUOTED.findall(line):
+                    if q not in names and q.lower() not in lower and not q.lower().startswith(
+                            "test") and q[0].isupper() and q not in xml_structural:
+                        once("unknown_signal", q, q,
+                             f"'{q}' is used like a signal name but is not in {db.filename}.",
+                             "Which DBC signal is this?")
         refs = set(id_pat.findall(u.text)) if id_pat else set()
         known = {r for r in refs if r in reqs}
         referenced |= known
@@ -383,8 +554,17 @@ def check_tests(units: list[Unit], db: CanDb, reqs: dict[str, str]) -> tuple[
         names_seen.setdefault(u.name, u.file)
         typo = any(c == "unknown_signal" for c, _ in seen_cat)
         code = code_only(u)
-        acts = [ln for ln in code.splitlines() if not _EXPECT.search(ln) and any(
-            re.search(rf"\b{re.escape(n)}\b", ln) for n in names)]
+        if is_xml:
+            acts = [o for o in ops if o[0] == "set"]
+            if not acts:
+                # If XML parser didn't extract a set op (e.g. unknown tags or fallback),
+                # check elements/tags for setup actions so single-line unknown tags don't false-alarm
+                xml_chunks = re.findall(r"<[^>]+>[^<]*", code) or code.splitlines()
+                acts = [ch for ch in xml_chunks if not _EXPECT.search(ch) and any(
+                    re.search(rf"\b{re.escape(n)}\b", ch) for n in names)]
+        else:
+            acts = [ln for ln in code.splitlines() if not _EXPECT.search(ln) and any(
+                re.search(rf"\b{re.escape(n)}\b", ln) for n in names)]
         if expects and not acts and not typo:
             once("no_setup", "-", expects[0][3].strip()[:80],
                  f"The test checks {expects[0][1]} but sets no input signal first, so its "
@@ -438,8 +618,10 @@ def code_only(u: Unit) -> str:
     kept whole: their lines are the steps."""
     suffix = Path(u.file).suffix.lower()
     text = _TRIPLE.sub("", u.text) if suffix == ".py" else u.text
-    if suffix == ".can" or suffix == ".cin":
+    if suffix in (".can", ".cin"):
         text = re.sub(r"/\*[\s\S]*?\*/", "", text)
+    if suffix in (".vtt", ".vts", ".vxt"):
+        text = re.sub(r"<!--[\s\S]*?-->", "", text)
     pat = _LINE_COMMENT.get(suffix)
     return pat.sub("", text) if pat else text
 
@@ -455,6 +637,77 @@ def _ops(u: Unit, db: CanDb) -> list[tuple[str, str, str, str]]:
     """(set | expect, signal, first number after it, line) for each signal use with a value
     in the test's code (docstrings and comments left out). Numbers followed by a time unit
     are skipped."""
+    suffix = Path(u.file).suffix.lower()
+    if suffix in (".vtt", ".vts", ".vxt"):
+        import xml.etree.ElementTree as ET
+
+        try:
+            root = _parse_xml_safely(code_only(u).encode("utf-8"), u.file)
+        except Exception:  # noqa: BLE001
+            try:
+                root = ET.fromstring(code_only(u))
+            except Exception:  # noqa: BLE001
+                root = None
+        if root is not None:
+            xml_ops = []
+            for elem in root.iter():
+                if _local_tag(elem) in ("testcase", "testtablecase", "testcasedefinition", "testunit"):
+                    continue
+                sname = None
+                for attr_key in ("signal", "name", "target", "variable", "sig", "channel", "chan"):
+                    v = _local_attr(elem, attr_key)
+                    if v and v in db.signals:
+                        sname = v
+                        break
+                if not sname:
+                    for child_tag in ("signal", "name", "target", "variable", "sig", "channel", "chan"):
+                        child = _find_local_child(elem, child_tag)
+                        if child is not None and child.text and child.text.strip() in db.signals:
+                            sname = child.text.strip()
+                            break
+                if not sname:
+                    for v in elem.attrib.values():
+                        if v and v.strip() in db.signals:
+                            sname = v.strip()
+                            break
+                if not sname:
+                    continue
+
+                action_str = _local_attr(elem, "action") or ""
+                if not action_str:
+                    action_child = _find_local_child(elem, "action")
+                    if action_child is not None and action_child.text:
+                        action_str = action_child.text.strip()
+                local_tag = _local_tag(elem)
+                combined_act = f"{action_str} {local_tag}".lower()
+                kind = "expect" if any(w in combined_act for w in ("check", "expect", "verify", "assert", "read")) else "set"
+
+                # Look for value (explicitly ignoring wait, delay, timeout, cycle)
+                # Check attributes, child elements, and element text alike (Finding 10)
+                val_raw = None
+                for val_key in ("value", "expected", "val", "targetvalue", "physvalue"):
+                    v = _local_attr(elem, val_key)
+                    if v is not None:
+                        val_raw = v
+                        break
+                if val_raw is None:
+                    for val_child_tag in ("value", "expected", "val", "targetvalue", "physvalue"):
+                        child = _find_local_child(elem, val_child_tag)
+                        if child is not None and child.text:
+                            val_raw = child.text.strip()
+                            break
+                if val_raw is None and elem.text and elem.text.strip():
+                    val_raw = elem.text.strip()
+
+                if val_raw is not None:
+                    num_match = _NUM.search(val_raw)
+                    if num_match:
+                        line_rep = ET.tostring(elem, encoding="unicode").strip()
+                        xml_ops.append((kind, sname, num_match.group(0), line_rep))
+            if xml_ops:
+                return xml_ops
+            # Fall back to line matching when parser finds no steps (Finding 6)
+
     out = []
     for line in code_only(u).splitlines():
         kind = "expect" if _EXPECT.search(line) else "set"

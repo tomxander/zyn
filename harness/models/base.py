@@ -31,19 +31,40 @@ class Provider(Protocol):
     ) -> ProviderResult: ...
 
 
-def get_provider(profile: Profile) -> Provider:
+def get_provider(profile: Profile, *, transport: Any = None) -> Provider:
     """Builds the provider named in the profile. Imports lazily so a missing
     optional backend does not break the others."""
-    if profile.provider == "anthropic":
-        from harness.models.anthropic_provider import AnthropicProvider
+    try:
+        if profile.provider == "anthropic":
+            from harness.models.anthropic_provider import AnthropicProvider
 
-        return AnthropicProvider(profile)
-    if profile.provider == "ollama":
-        from harness.models.ollama_provider import OllamaProvider
+            return AnthropicProvider(profile)
+        if profile.provider == "ollama":
+            from harness.models.ollama_provider import OllamaProvider
 
-        return OllamaProvider(profile)
-    if profile.provider == "fake":
-        from harness.models.fake_provider import FakeProvider
+            return OllamaProvider(profile, transport=transport)
+        if profile.provider == "fake":
+            from harness.models.fake_provider import FakeProvider
 
-        return FakeProvider(profile)
-    raise ValueError(f"Unknown provider '{profile.provider}' in profile '{profile.name}'")
+            return FakeProvider(profile)
+        if profile.provider == "openai":
+            from harness.models.openai_provider import OpenAIProvider
+
+            return OpenAIProvider(profile, transport=transport)
+        if profile.provider == "azure":
+            from harness.models.azure_provider import AzureOpenAIProvider
+
+            return AzureOpenAIProvider(profile, transport=transport)
+        if profile.provider == "bedrock":
+            from harness.models.bedrock_provider import BedrockProvider
+
+            return BedrockProvider(profile)
+        if profile.provider == "vertex":
+            from harness.models.vertex_provider import VertexAIProvider
+
+            return VertexAIProvider(profile, transport=transport)
+        raise ProviderError(f"Unknown provider '{profile.provider}' in profile '{profile.name}'")
+    except ProviderError:
+        raise
+    except Exception as e:
+        raise ProviderError(f"Failed to initialize provider '{profile.provider}': {e}") from e

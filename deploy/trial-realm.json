@@ -11,6 +11,8 @@
       "enabled": true,
       "protocol": "openid-connect",
       "publicClient": false,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
       "secret": "zyn-trial-client-secret",
       "redirectUris": [
         "http://localhost:8600/auth/callback",

@@ -1,5 +1,5 @@
 # Stage 1: Build the review screen web assets
-FROM node:20-slim AS web-builder
+FROM node:22-slim AS web-builder
 WORKDIR /app/web
 COPY web/package*.json ./
 RUN npm ci
@@ -17,8 +17,11 @@ RUN groupadd -r zyn && useradd -r -g zyn -m -d /home/zyn zyn
 ENV ZYN_HOME=/data
 RUN mkdir -p /data && chown -R zyn:zyn /data
 
+RUN mkdir -p /usr/local/share/doc/zyn
+COPY LICENSE THIRD_PARTY_NOTICES.md /usr/local/share/doc/zyn/
+
 WORKDIR /app
-COPY pyproject.toml README.md setup.py config.yaml .env.example knowledge.example.md taxonomy_placeholder.yaml ./
+COPY pyproject.toml README.md setup.py config.yaml .env.example knowledge.example.md taxonomy_placeholder.yaml LICENSE THIRD_PARTY_NOTICES.md ./
 COPY rules/ ./rules/
 COPY data/synthetic/ ./data/synthetic/
 COPY harness/ ./harness/

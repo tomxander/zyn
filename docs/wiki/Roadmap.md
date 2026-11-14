@@ -2,8 +2,8 @@
 
 ## Next
 
-- **Model connectors.** An admin points Zyn at AWS Bedrock, Google Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else.
-- **Daily-workflow fit.** A requirement set and its review state go round trip with a requirement tool; a new spec revision lands in Sift Delta; test reviews cover CANoe CAPL and vTESTstudio. J1939 checks for commercial vehicles join here.
+- **Model connectors.** Built, not tried against live endpoints. An admin points Zyn at AWS Bedrock, Google Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else.
+- **Daily-workflow fit.** A requirement set and its review state go round trip with a requirement tool; a new spec revision lands in Sift Delta; test reviews cover CANoe CAPL and vTESTstudio. J1939 checks for commercial vehicles and vTESTstudio reviews are first checks built, tried on synthetic files only (no public J1939 DBC or real vTESTstudio file was available), not done.
 - **Trust pack.** An engineer-reviewed answer key, a tool-qualification kit (intended use, limits, evidence) and a security pack (architecture, data flows, questionnaire answers, software bill of materials).
 - **Local model comparison.** The research found no published comparison of local and hosted models on automotive tasks. The pack is ready to run on Ollama models; it needs a machine with them installed.
 - **Engineer-reviewed answer key.** Every ICX-100 score carries the "author-made, AI-reviewed" caveat until an engineer reviews the key.

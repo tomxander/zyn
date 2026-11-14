@@ -6,7 +6,7 @@ import os
 import re
 from typing import Any, Literal
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, Field, model_validator
 
 
 def _resolve_env(val: Any) -> Any:
@@ -64,6 +64,7 @@ class TeamSettings(BaseModel):
     admins: list[str]
     projects: dict[str, ProjectSettings]
     allowed_models: list[str]
+    offline_allowed_hosts: list[str] = Field(default_factory=list)
     service_accounts: dict[str, ServiceAccount] = {}
     token_days: int = 90
     max_upload_mb: int = 50

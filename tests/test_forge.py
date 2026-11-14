@@ -238,10 +238,32 @@ def test_exported_tests_run_on_the_simulated_bench(cfg, audit, tmp_path):
     out = tmp_path / "export"
     forge.export(audit, run, "Tom", out_dir=out)
 
+    basetemp = tmp_path / "pt_basetemp"
+    cache_dir = tmp_path / ".cache"
+
     def pytest_run(fault=None):
         env = {**os.environ, "ZYN_SIM_FAULT": fault or ""}
-        return subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
-                               str(out)], capture_output=True, text=True, env=env, check=False)
+        cmd = [
+            sys.executable,
+            "-m",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider",
+            "-o",
+            f"cache_dir={cache_dir}",
+            "--basetemp",
+            str(basetemp),
+            str(out),
+        ]
+        return subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            env=env,
+            cwd=str(tmp_path),
+            check=False,
+        )
 
     ok = pytest_run()
     assert ok.returncode == 0, ok.stdout[-2000:]

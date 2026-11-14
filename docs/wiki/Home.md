@@ -41,7 +41,7 @@ Zyn does not try to out-generate the many tools that write requirements and test
 
 ## Ground rules
 
-- **Prototype.** Every screen and export says "Zyn prototype." Nothing is verified until a named reviewer approves it.
+- **Prototype.** Every screen and export says "Zyn prototype." Nothing is approved until a named reviewer signs off.
 - **Public and synthetic data only.** No company or customer documents.
 - **No productivity claims.** Zyn reports what it measured on named datasets, with the method beside the number.
 - **Honest answer keys.** The synthetic ICX-100 specification and its answer key were written by Claude and checked by an AI reviewer, not by an engineer. Every score on it says so.

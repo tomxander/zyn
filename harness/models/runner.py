@@ -20,7 +20,7 @@ import hashlib
 import json
 import time
 from dataclasses import dataclass
-from typing import Generic, TypeVar
+from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
@@ -28,6 +28,7 @@ from harness.audit.store import AuditStore
 from harness.config import HarnessConfig
 from harness.models.base import ProviderError, ProviderResult, get_provider
 from harness.models.schema_tools import to_strict_schema
+from harness.models.security import build_offline_transport, models_match
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -107,6 +108,7 @@ def structured_call(
     user: str,
     output_model: type[T],
     actor: str | None = None,
+    transport: Any = None,
 ) -> CallResult[T]:
     profile = cfg.profile(role_or_profile)
     system, knowledge = with_knowledge(cfg, system)
@@ -128,14 +130,142 @@ def structured_call(
                         detail={"profile": profile.name, "reason": "model is not in allowed_models"})
         raise StructuredOutputFailure(
             f"{task}: profile '{profile.name}' is not in allowed_models")
-    if cfg.is_offline() and profile.provider not in LOCAL_PROVIDERS:
-        audit.log_event(actor or f"model:{profile.name}", "blocked_offline", run_id=run_id,
-                        object_type=task, model_profile=profile.name, provider=profile.provider,
-                        detail={"reason": "offline mode: only local models may be called"})
-        raise StructuredOutputFailure(
-            f"{task}: offline mode is on, so {profile.name} ({profile.provider}) is not "
-            "allowed. Point the role at a local profile or turn offline mode off.")
-    provider = get_provider(profile)
+    offline_reason = None
+    if cfg.is_offline():
+        allowed_hosts: list[str] = list(getattr(cfg, "offline_allowed_hosts", []) or [])
+        if cfg.team and getattr(cfg.team, "offline_allowed_hosts", None):
+            allowed_hosts.extend(cfg.team.offline_allowed_hosts)
+
+        if profile.provider == "fake":
+            offline_reason = "fake provider"
+        elif profile.provider == "ollama":
+            if profile.model.endswith("-cloud") or ":cloud" in profile.model:
+                audit.log_event(
+                    actor,
+                    "blocked_offline",
+                    run_id=run_id,
+                    object_type=task,
+                    model_profile=profile.name,
+                    provider=profile.provider,
+                    detail={"reason": "offline mode: cloud model disallowed for ollama"},
+                )
+                raise StructuredOutputFailure(
+                    f"{task}: offline mode is on; Ollama cloud model '{profile.model}' is not allowed"
+                )
+            host = profile.setting("host", "http://localhost:11434")
+            verify_opt = profile.setting("ca_bundle") or profile.setting("verify", True)
+            pinned_t, reason = build_offline_transport(
+                host,
+                allowed_hosts,
+                verify=verify_opt,
+                retries=int(profile.setting("retries", 0)),
+                http2=bool(profile.setting("http2", False)),
+            )
+            if pinned_t is None:
+                audit.log_event(
+                    actor,
+                    "blocked_offline",
+                    run_id=run_id,
+                    object_type=task,
+                    model_profile=profile.name,
+                    provider=profile.provider,
+                    detail={"reason": f"offline mode: {reason}"},
+                )
+                raise StructuredOutputFailure(
+                    f"{task}: offline mode is on, so {profile.name} ({profile.provider}) at '{host}' is not "
+                    f"allowed ({reason})."
+                )
+            transport = transport or pinned_t
+            offline_reason = f"ollama ({reason})"
+        elif profile.provider == "openai":
+            local_val = profile.setting("local", False)
+            if not (isinstance(local_val, bool) and local_val is True):
+                audit.log_event(
+                    actor,
+                    "blocked_offline",
+                    run_id=run_id,
+                    object_type=task,
+                    model_profile=profile.name,
+                    provider=profile.provider,
+                    detail={"reason": "offline mode: openai provider without local: true is not allowed"},
+                )
+                raise StructuredOutputFailure(
+                    f"{task}: offline mode is on, so {profile.name} ({profile.provider}) is not allowed "
+                    "without local: true and an internal endpoint."
+                )
+            base_url = profile.setting("base_url")
+            if not base_url:
+                audit.log_event(
+                    actor,
+                    "blocked_offline",
+                    run_id=run_id,
+                    object_type=task,
+                    model_profile=profile.name,
+                    provider=profile.provider,
+                    detail={"reason": "offline mode: local openai provider requires explicit base_url"},
+                )
+                raise StructuredOutputFailure(
+                    f"{task}: offline mode is on; local openai profile '{profile.name}' requires explicit base_url."
+                )
+            verify_opt = profile.setting("ca_bundle") or profile.setting("verify", True)
+            pinned_t, reason = build_offline_transport(
+                base_url,
+                allowed_hosts,
+                verify=verify_opt,
+                retries=int(profile.setting("retries", 0)),
+                http2=bool(profile.setting("http2", False)),
+            )
+            if pinned_t is None:
+                audit.log_event(
+                    actor,
+                    "blocked_offline",
+                    run_id=run_id,
+                    object_type=task,
+                    model_profile=profile.name,
+                    provider=profile.provider,
+                    detail={"reason": f"offline mode: {reason}"},
+                )
+                raise StructuredOutputFailure(
+                    f"{task}: offline mode is on, so {profile.name} at '{base_url}' is not allowed ({reason})."
+                )
+            transport = transport or pinned_t
+            offline_reason = f"local openai ({reason})"
+        else:
+            audit.log_event(
+                actor,
+                "blocked_offline",
+                run_id=run_id,
+                object_type=task,
+                model_profile=profile.name,
+                provider=profile.provider,
+                detail={"reason": f"offline mode: {profile.provider} is a cloud provider"},
+            )
+            raise StructuredOutputFailure(
+                f"{task}: offline mode is on, so {profile.name} ({profile.provider}) is not "
+                "allowed. Point the role at a local profile or turn offline mode off."
+            )
+
+    try:
+        provider = get_provider(profile, transport=transport)
+    except ProviderError as e:
+        audit.log_event(
+            actor,
+            "provider_error",
+            attempt=1,
+            detail={"error": str(e), "phase": "construction"},
+            **common,
+        )
+        raise StructuredOutputFailure(f"{task}: {e}") from e
+    except Exception as e:
+        err_msg = f"Failed to initialize provider: {e}"
+        audit.log_event(
+            actor,
+            "provider_error",
+            attempt=1,
+            detail={"error": err_msg, "phase": "construction"},
+            **common,
+        )
+        raise StructuredOutputFailure(f"{task}: {err_msg}") from e
 
     messages: list[dict[str, str]] = [{"role": "user", "content": user}]
     last_error = ""
@@ -144,12 +274,29 @@ def structured_call(
         try:
             result = provider.generate(system, messages, schema)
         except ProviderError as e:
-            audit.log_event(actor, "provider_error", attempt=attempt, detail={"error": str(e)},
-                            **common)
+            audit.log_event(
+                actor,
+                "provider_error",
+                attempt=attempt,
+                detail={"error": str(e)},
+                **common,
+            )
             raise StructuredOutputFailure(f"{task}: {e}") from e
+        except Exception as e:
+            err_msg = f"Unexpected provider error: {e}"
+            audit.log_event(
+                actor,
+                "provider_error",
+                attempt=attempt,
+                detail={"error": err_msg},
+                **common,
+            )
+            raise StructuredOutputFailure(f"{task}: {err_msg}") from e
+
         latency = int((time.perf_counter() - started) * 1000)
-        usage = {"model_served": result.model_served, "tokens_in": result.tokens_in,
-                     "tokens_out": result.tokens_out, "latency_ms": latency, "attempt": attempt}
+        served_model_name = result.model_served if result.model_served else "not reported"
+        usage = {"model_served": served_model_name, "tokens_in": result.tokens_in,
+                 "tokens_out": result.tokens_out, "latency_ms": latency, "attempt": attempt}
         try:
             parsed = output_model.model_validate_json(result.text)
         except ValidationError as e:
@@ -170,7 +317,9 @@ def structured_call(
                   "system": system, "user": user, "response": result.text}
         if knowledge:
             detail["knowledge"] = knowledge
-        if result.model_served and not result.model_served.startswith(profile.model):
+        if offline_reason:
+            detail["offline_exemption"] = offline_reason
+        if not models_match(profile.model, result.model_served or ""):
             detail["warning"] = "served model differs from requested model"
         event_id = audit.log_event(actor, "generated", detail=detail, **common, **usage)
         return CallResult(parsed, result, attempt, profile.name, event_id)

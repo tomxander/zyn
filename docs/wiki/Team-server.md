@@ -16,7 +16,8 @@ Zyn runs as a containerized web service backed by PostgreSQL and your enterprise
 - **Hardware resources:**
   - Minimum: 2 vCPU, 4 GB RAM, 20 GB disk (for temporary uploads and logs).
   - Recommended: 4 vCPU, 8 GB RAM, 50 GB disk.
-- **Network egress:** HTTPS (port 443) to your allowed model endpoints: the Anthropic API, or an internal Ollama server. Other providers (Bedrock, Vertex, Azure, OpenAI-style endpoints such as vLLM) are planned, not built ([Roadmap](Roadmap.md)). No telemetry or tracking traffic leaves the host.
+- **Network egress:** HTTPS (port 443) to your allowed model endpoints: the Anthropic API, or an internal Ollama server. Connectors for AWS Bedrock, Azure OpenAI, Google Cloud Vertex AI, and OpenAI-compatible endpoints (such as private vLLM) are built, not tried against live endpoints. No telemetry or tracking traffic leaves the host.
+- **Optional dependencies:** The team container image includes the core and team server dependencies. For deployments using AWS Bedrock or Google Vertex AI, install the optional dependencies (`pip install 'zyn-harness[bedrock,vertex]'`) or build a derived container image.
 
 ---
 
@@ -45,6 +46,11 @@ To evaluate the team server without configuring your corporate IdP, use the self
 docker compose -f compose.trial.yaml up -d
 ```
 Access the review screen at `http://localhost:8600`. The trial configuration enables `allow_insecure_http: true` and connects to Keycloak at `http://localhost:8080/realms/zyn-trial`.
+
+To run an automated test of the trial containers, database migrations, and Keycloak realm on a Docker host:
+```bash
+./scripts/verify-trial-docker.sh
+```
 
 ---
 
@@ -155,7 +161,7 @@ In team mode, Zyn outputs structured JSON logs for every request to `stderr` (le
   "project": "bcm"
 }
 ```
-**Security guarantees:**
+**Security properties:**
 - Request bodies, passwords, tokens, and engineering file contents are **never** logged.
 - On unauthenticated requests resulting in status code `401`, `principal_id` is recorded as `null`.
 - On permission violations or four-eyes blocks resulting in status code `403`, the authenticated principal and the resolved project identifier (or `null` if the request was blocked before project resolution) are recorded.
@@ -165,11 +171,12 @@ In team mode, Zyn outputs structured JSON logs for every request to `stderr` (le
 
 ## 7. Data sovereignty and the data rule
 
-Zyn is engineered for regulated automotive safety (ISO 26262, ASPICE).
-
 - **Zero phone home:** Zyn contains no vendor telemetry, license verification calls, or analytics beacons.
 - **The data rule:** Model calls are restricted exclusively to rule profiles declared in `team.allowed_models`. Any stage requesting an unauthorized profile is blocked and rejected with an audit log event.
-- **On-premise model option:** For air-gapped environments, configure an internal Ollama server and set the allowed-model list to it alone; model calls then stay inside the customer VPC or private network. vLLM and other OpenAI-style servers are planned, not built.
+- **On-premise and air-gap option:** For air-gapped environments, set `offline: true`. When offline mode is active, only local models are permitted:
+  - Local Ollama instances running on loopback, private network addresses (RFC 1918, fc00::/7), or non-metadata link-local addresses (`fe80::/10`, `169.254.0.0/16` excluding the cloud metadata address `169.254.169.254`). Ollama cloud models (such as `-cloud` models) are refused.
+  - OpenAI-compatible endpoints (such as self-hosted vLLM) configured with `local: true` whose `base_url` resolves to loopback, private network addresses, non-metadata link-local addresses, or an entry in `offline_allowed_hosts`.
+  - All other cloud providers (Anthropic, AWS Bedrock, Azure OpenAI, Google Vertex AI) are refused before any network call, and the refusal is recorded in the audit log.
 
 ---
 

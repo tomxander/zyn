@@ -8,6 +8,12 @@
       "port": 5180
     },
     {
+      "name": "thomasalex",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "http-server", "E:\\Claude\\tomalexander", "-e", "html", "-p", "5191", "-c-1"],
+      "port": 5191
+    },
+    {
       "name": "zyn",
       "runtimeExecutable": "E:\\Claude\\Zyn\\.venv\\Scripts\\python.exe",
       "runtimeArgs": [

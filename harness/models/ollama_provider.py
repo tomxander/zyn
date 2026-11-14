@@ -9,12 +9,32 @@ from harness.models.base import ProviderError, ProviderResult
 
 
 class OllamaProvider:
-    def __init__(self, profile: Profile):
+    def __init__(self, profile: Profile, *, transport: Any = None):
         import ollama
+
+        from harness.models.security import build_offline_transport
 
         self.profile = profile
         self._ollama = ollama
-        self.client = ollama.Client(host=profile.setting("host", "http://localhost:11434"))
+        host = profile.setting("host", "http://localhost:11434")
+        self._transport = transport
+        if self._transport is None:
+            verify_opt = profile.setting("ca_bundle") or profile.setting("verify", True)
+            pinned_t, _ = build_offline_transport(
+                host,
+                verify=verify_opt,
+                retries=int(profile.setting("retries", 0)),
+                http2=bool(profile.setting("http2", False)),
+            )
+            self._transport = pinned_t
+
+        client_kwargs: dict[str, Any] = {
+            "host": host,
+            "trust_env": False,
+        }
+        if self._transport is not None:
+            client_kwargs["transport"] = self._transport
+        self.client = ollama.Client(**client_kwargs)
 
     def generate(
         self, system: str, messages: list[dict[str, str]], schema: dict[str, Any]

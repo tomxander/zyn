@@ -73,8 +73,9 @@ export function Proof() {
         <div className="proof__head">
           <Headline id="proof-title" plain="We planted mistakes." inked="Here is what code caught." />
           <p className="body">
-            Mistakes were planted one at a time into clean requirements, tests and CAN databases, then Zyn's code checks
-            looked for them. No model involved. Every number has its dataset, method and limits on the{" "}
+            We hid mistakes in clean requirements, tests and CAN databases, one at a time, and let Zyn look. No AI involved,
+            so the result is the same every run. We publish the misses too. Every number has its dataset, method and limits on
+            the{" "}
             <a className="link" href={docHref("benchmarks")}>
               Benchmarks
             </a>{" "}

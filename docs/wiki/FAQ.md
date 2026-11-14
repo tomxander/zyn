@@ -22,7 +22,7 @@ Code checks: always. Models: not always, and Zyn measures it (see item agreement
 They describe named datasets, with the method beside every number. QuRE, PROMISE, RTEMS and opendbc are public. ICX-100 is synthetic with an AI-reviewed answer key. None of it is a productivity measure.
 
 **Which models are supported?**
-Claude through the Anthropic SDK, and any model Ollama serves. Swap them by changing a role in `config.yaml`.
+Claude through the Anthropic SDK, and local models that Ollama serves. Swap them by changing a role in `config.yaml`.
 
 **Is this a qualified tool under ISO 26262?**
 No. [docs/06-tool-confidence.md](../06-tool-confidence.md) is a draft tool confidence argument, not reviewed by a functional safety engineer.

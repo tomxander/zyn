@@ -1,0 +1,47 @@
+Copyright (c) 2026 Tom Alexander and Zyn Contributors. All rights reserved.
+
+ZYN SOFTWARE EVALUATION AND COMMERCIAL PILOT LICENSE
+
+This Software is licensed, not sold. By downloading, installing, copying, or using
+the Software, you agree to be bound by the terms and conditions of this Agreement.
+
+1. EVALUATION AND PILOT LICENSE GRANT
+Subject to the terms of this Agreement, the Licensor grants you a non-exclusive,
+non-transferable, revocable license to install, execute, and use the Software
+solely for internal evaluation, testing, benchmarking, and authorized commercial
+pilot programs within your organization.
+
+2. RESTRICTIONS
+Except as expressly permitted by applicable law or written authorization from the
+Licensor, you shall not:
+(a) Sell, sublicense, rent, lease, or distribute the Software or any portion thereof
+    to any third party;
+(b) Reverse engineer, decompile, disassemble, or attempt to derive the source code
+    of any compiled binary or minified component, except to the extent permitted
+    by law;
+(c) Remove, alter, or obscure any proprietary notices, labels, or marks;
+(d) Use the Software to provide commercial timesharing or service bureau services
+    to external third parties without a commercial agreement.
+
+3. CUSTOMER DATA AND PRIVACY
+The Software does not transmit telemetry, usage analytics, or licensing phone-home
+data to the Licensor. Zyn sends nothing to its makers. Model calls go only to the
+endpoints the customer configures; offline mode refuses cloud calls. All customer
+work products, requirements, test cases, CAN databases, audit logs, and decisions
+remain your exclusive confidential property.
+
+4. DISCLAIMER OF WARRANTIES
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, ACCURACY, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+5. FEEDBACK
+Any feedback, suggestions, or bug reports provided by you regarding the Software
+may be used by the Licensor to improve the Software without obligation or compensation.
+
+6. THIRD-PARTY COMPONENTS
+Third-party components and assets bundled with the Software keep their own respective
+licenses, as detailed in THIRD_PARTY_NOTICES.md.

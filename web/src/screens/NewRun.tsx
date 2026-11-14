@@ -108,7 +108,7 @@ export function NewRun({ open, onOpenChange, onStarted }: {
         <p className="small quiet">With the source, code matches each requirement to a source sentence and flags requirements with no match, invented values and changed modal verbs. Use it for sets another tool or model produced.</p>
       </>}
       {kind === "tests" && <>
-        <FilePick label="Test file (pytest, CAPL, Robot Framework, text)" accept=".py,.can,.cin,.robot,.txt,.md,.csv,.json" file={files.file} onFile={f("file")} />
+        <FilePick label="Test file (pytest, CAPL, Robot Framework, vTESTstudio, text)" accept=".py,.can,.cin,.robot,.vtt,.vts,.vxt,.txt,.md,.csv,.json" file={files.file} onFile={f("file")} />
         <FilePick label="CAN database (DBC, KCD, SYM or ARXML). Leave empty for the synthetic ICX-100 one" accept=".dbc,.kcd,.sym,.arxml" file={files.dbc} onFile={f("dbc")} />
         <FilePick label="Requirement set the tests refer to, optional (ReqIF, Excel, CSV)" accept=".reqif,.xlsx,.csv" file={files.reqs} onFile={f("reqs")} />
         <p className="small quiet">Code only, no model calls. The CAN database is checked first (duplicate frame IDs, overlapping bits, impossible ranges). Then each test: signal names and ranges, requirement references, values not in the requirement, exact comparisons with no tolerance, missing setup and duplicate tests. Coverage: requirements no test covers and signal limits never tested.</p>

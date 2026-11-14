@@ -56,6 +56,27 @@ def _ensure_sqlite_columns(con: Conn) -> None:
         )
 
 
+def _parse_sqlite_url(url: str) -> Path:
+    if not url.startswith("sqlite:///"):
+        raise ValueError(
+            f"Invalid sqlite database URL '{url}'. Expected sqlite:///relative, "
+            "sqlite:////absolute, or sqlite:///C:/..."
+        )
+    raw = url[len("sqlite:///"):]
+    if not raw:
+        raise ValueError(
+            f"Invalid sqlite database URL '{url}': path component is empty. "
+            "Expected sqlite:///relative, sqlite:////absolute, or sqlite:///C:/..."
+        )
+    import re
+
+    if re.match(r"^[a-zA-Z]:[/\\].*", raw):
+        return Path(raw)
+    if url.startswith("sqlite:////"):
+        return Path("/" + raw.lstrip("/"))
+    return Path(raw)
+
+
 class AuditStore:
     def __init__(self, target: Path | str | Backend):
         if isinstance(target, Backend):
@@ -66,6 +87,13 @@ class AuditStore:
             from harness.audit.pg import PostgresBackend
 
             self.backend = PostgresBackend(target)
+        elif isinstance(target, str) and target.startswith("sqlite://"):
+            self.backend = SqliteBackend(_parse_sqlite_url(target))
+        elif isinstance(target, str) and "://" in target:
+            raise ValueError(
+                f"Unsupported database URL scheme in '{target}'. "
+                "Supported: postgresql://, postgres://, sqlite://"
+            )
         else:
             self.backend = SqliteBackend(Path(target))
 

@@ -69,6 +69,7 @@ DBC_CHECKS: list[tuple[str, str, tuple[str, ...]]] = [
     ("TSA-09/10", "Senders and receivers are defined nodes", ("unknown_node",)),
     ("TSA-11/12", "Byte order and sign are valid", ("bad_encoding",)),
     ("TSA-13", "Min and max are sensible", ("range_inverted", "range_unreachable")),
+    ("TSA-J1939", "SAE J1939 protocol limits and definitions", ("j1939_edp_reserved", "j1939_global_source", "j1939_dlc_exceeded")),
 ]
 
 RATINGS = ("FC", "LC", "PC", "NO", "NA")

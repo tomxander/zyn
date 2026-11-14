@@ -36,6 +36,14 @@ CODE_CHECKS = {
 }
 DEFAULT_CHECKS = [c for c in CODE_CHECKS if c != "not_ears"]
 
+DEFAULT_WEAK_PHRASES_ALLOW = [
+    r"\bcan\s+flexible\s+data[-\s]?rate\b",
+    r"\bflexible\s+data[-\s]?rate\b",
+    r"\bfast\s+(?:ethernet|charg\w+)\b",
+    r"\bquick\s+(?:disconnect|release)\b",
+    r"\bas\s+required\s+by\s+(?:iso|iec|sae|un\s+ece|din|ieee)\b\s+(?:[A-Za-z]{1,2}[-\s]?)?\d+[\w.-]*",
+]
+
 
 class RuleProfile(BaseModel):
     name: str
@@ -43,6 +51,7 @@ class RuleProfile(BaseModel):
     checks: list[str] = Field(default_factory=lambda: list(DEFAULT_CHECKS))
     weak_words_add: list[str] = Field(default_factory=list)    # extra vague words to flag
     weak_words_allow: list[str] = Field(default_factory=list)  # list words to stop flagging
+    weak_phrases_allow: list[str] = Field(default_factory=lambda: list(DEFAULT_WEAK_PHRASES_ALLOW))
     custom_checks: list[dict] = Field(default_factory=list)    # accepted house-rule checks
 
     def model_post_init(self, _ctx) -> None:
@@ -60,8 +69,22 @@ class RuleProfile(BaseModel):
         return check in self.checks
 
     def weak_words(self, text: str) -> list[str]:
-        allow = {w.lower() for w in self.weak_words_allow}
-        found = {w for w in checks.weak_words(text) if w not in allow}
+        allow_words = {w.lower() for w in self.weak_words_allow}
+        suppressed_spans: list[tuple[int, int]] = []
+        for pat_str in self.weak_phrases_allow:
+            try:
+                for m in re.finditer(pat_str, text, re.IGNORECASE):
+                    suppressed_spans.append(m.span())
+            except re.error:
+                continue
+
+        found: set[str] = set()
+        for w, span in checks.find_weak_word_spans(text):
+            if any(s <= span[0] and span[1] <= e for s, e in suppressed_spans):
+                continue
+            if w.lower() not in allow_words:
+                found.add(w.lower())
+
         for w in self.weak_words_add:
             if re.search(r"\b" + re.escape(w) + r"\b", text, re.IGNORECASE):
                 found.add(w.lower())

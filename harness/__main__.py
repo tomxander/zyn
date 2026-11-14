@@ -40,26 +40,12 @@ def _ollama_models(host: str) -> list[str] | None:
 
 
 def cmd_profiles(cfg) -> int:
-    has_key = bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
-    cache: dict[str, list[str] | None] = {}
+    from harness.models.readiness import profile_readiness
+
     print(f"{PROTOTYPE_LABEL}\n")
     print("Roles: " + ", ".join(f"{r} -> {p}" for r, p in cfg.roles.items()) + "\n")
     for name, p in cfg.profiles.items():
-        if p.provider == "anthropic":
-            state = "ready (key found)" if has_key else "no ANTHROPIC_API_KEY in .env"
-        elif p.provider == "ollama":
-            host = p.setting("host", "http://localhost:11434")
-            if host not in cache:
-                cache[host] = _ollama_models(host)
-            models = cache[host]
-            if models is None:
-                state = "Ollama not running or not installed"
-            elif any(m == p.model or m.split(":")[0] == p.model for m in models):
-                state = "ready"
-            else:
-                state = f"not pulled (run: ollama pull {p.model})"
-        else:
-            state = "test only"
+        _, state = profile_readiness(cfg, p)
         print(f"  {name:22} {p.provider:9} {p.model:20} {state}")
     return 0
 

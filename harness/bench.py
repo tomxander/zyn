@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import itertools
 import json
-import os
 import statistics
 from datetime import datetime
 from pathlib import Path
@@ -25,7 +24,8 @@ from harness import PROTOTYPE_LABEL
 from harness.audit.store import AuditStore
 from harness.config import PROJECT_ROOT, HarnessConfig
 from harness.metrics import model_calls
-from harness.models.runner import LOCAL_PROVIDERS, StructuredOutputFailure
+from harness.models.readiness import profile_readiness
+from harness.models.runner import StructuredOutputFailure
 from harness.schemas.check import QUALITY_FLAGS
 from harness.sift import check, pipeline
 
@@ -35,26 +35,7 @@ DEFAULTS = {"spec": SYN / "icx100_srs.md", "set": SYN / "icx100_reqset.csv",
 
 
 def available(cfg: HarnessConfig, name: str) -> tuple[bool, str]:
-    p = cfg.profile(name)
-    if not cfg.model_allowed(name):
-        return False, "not allowed by team data rule"
-    if cfg.is_offline() and p.provider not in LOCAL_PROVIDERS:
-        return False, "offline mode"
-    if p.provider == "anthropic":
-        ok = bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
-        return ok, "ready" if ok else "no API key"
-    if p.provider == "ollama":
-        try:
-            import ollama
-
-            names = [m.model for m in ollama.Client(
-                host=p.setting("host", "http://localhost:11434"), timeout=3).list().models]
-        except Exception:  # noqa: BLE001 - any failure means not reachable
-            return False, "Ollama not running or not installed"
-        if any(n == p.model or n.split(":")[0] == p.model for n in names):
-            return True, "ready"
-        return False, f"not pulled (ollama pull {p.model})"
-    return True, "test provider"
+    return profile_readiness(cfg, name)
 
 
 def _jaccard(a: set, b: set) -> float:

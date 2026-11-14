@@ -50,8 +50,8 @@ export function Teams() {
         <div className="split__text">
           <Headline id="teams-title" plain="Try it on your desk." inked="Run it for your team." />
           <p className="body">
-            One install, two modes. The checks, the tools and the screen are the same in both. Team mode runs where you
-            choose, on your servers or in your own cloud account, with your company sign-in and the models your IT allows.
+            Start on your own laptop in minutes, with no account and no key. When your team is ready, IT runs the same Zyn
+            on your own servers or cloud account, behind your company sign-in, with only the models they approve (built, not yet proven until tried on a live host).
           </p>
           <div className="seg" role="tablist" aria-label="Which mode" onKeyDown={onKey}>
             {MODES.map((x, i) => (

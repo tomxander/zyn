@@ -20,7 +20,7 @@ def test_container_and_doc_files_exist():
 
 def test_dockerfile_spec():
     dockerfile = (PROJECT_ROOT / "Dockerfile").read_text(encoding="utf-8")
-    assert "node:20-slim" in dockerfile
+    assert "node:22-slim" in dockerfile
     assert "python:3.11-slim" in dockerfile
     assert "HEALTHCHECK" in dockerfile
     assert "USER zyn" in dockerfile
@@ -188,3 +188,43 @@ def test_serve_refuses_all_interfaces_in_personal_mode(monkeypatch, capsys):
     assert code == 2
     err = capsys.readouterr().err
     assert "Personal mode only listens on this machine" in err
+
+
+def test_batch_l_release_ci_builds_web_before_pytest():
+    """Batch L finding 3: release.yml builds Web UI before running pytest so web/dist is present for tests."""
+    release_yml = (PROJECT_ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
+    web_pos = release_yml.find("- name: Build Web UI")
+    test_pos = release_yml.find("- name: Run linter and tests")
+    assert web_pos != -1, "Build Web UI step missing in release.yml"
+    assert test_pos != -1, "Run linter and tests step missing in release.yml"
+    assert web_pos < test_pos, "Build Web UI must precede Run linter and tests in release.yml"
+
+
+def test_batch_l_verify_trial_docker_cleanup_and_bcm_role():
+    """Batch L finding 4 & Batch M finding 1: verify-trial-docker.sh cleanup trap, cookie cleanup, and list-shaped project role check."""
+    script_text = (PROJECT_ROOT / "scripts" / "verify-trial-docker.sh").read_text(encoding="utf-8")
+    # Only one trap on EXIT (calling cleanup)
+    trap_lines = [line.strip() for line in script_text.splitlines() if line.strip().startswith("trap ") and "EXIT" in line]
+    assert trap_lines == ["trap cleanup EXIT"], f"Expected single trap cleanup EXIT, got: {trap_lines}"
+
+    # Cookie file removed inside cleanup()
+    assert 'rm -f cookies.txt login_page.html "${COOKIE_FILE}"' in script_text
+
+    # Role assertion checks bcm project with approver role in list shape
+    assert "any(p.get('id') == 'bcm' and p.get('role') == 'approver' for p in d.get('projects', []))" in script_text
+    assert '.projects[] | select(.id=="bcm" and .role=="approver")' in script_text
+
+    # Test the behavior against a real /api/config response shape (where projects is a list)
+    sample_config = {
+        "person": {"name": "Alice", "email": "alice@test"},
+        "projects": [
+            {"id": "bcm", "name": "Body Control", "role": "approver", "four_eyes": True},
+            {"id": "brake", "name": "Braking", "role": "viewer", "four_eyes": False},
+        ],
+        "admin": False,
+        "mode": "team",
+    }
+    d = sample_config
+    assert any(p.get("id") == "bcm" and p.get("role") == "approver" for p in d.get("projects", []))
+    assert not any(p.get("id") == "brake" and p.get("role") == "approver" for p in d.get("projects", []))
+    assert not any(p.get("id") == "other" and p.get("role") == "approver" for p in d.get("projects", []))

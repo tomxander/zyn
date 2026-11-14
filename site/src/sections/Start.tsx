@@ -295,10 +295,9 @@ export function Contribute() {
           <div className="start__copy">
             <Headline id="contribute-title" plain="Zyn is coming soon." inked="Help build it." />
             <p className="body">
-              Requirement or test engineer? Try it early on sample data and tell us what would make it daily work. Know
-              requirements, CAN or test benches well? Review the answer key, so every score stops saying "AI-reviewed". Build
-              checks, model connectors or tool round trips? The roadmap is open. Leading a team? Ask for a pilot: we measure
-              reviewer minutes with and without Zyn on your own work, and the report says so if there is no gain.
+              We're building Zyn with the engineers who will use it. Try it early on sample data, help review our answer key,
+              or take on something from the roadmap. Leading a team? Ask for a pilot: we measure review time with and
+              without Zyn on your own work, and tell you straight if it doesn't help.
             </p>
             <ContributeForm />
           </div>

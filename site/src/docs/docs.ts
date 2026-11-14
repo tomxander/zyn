@@ -1,8 +1,6 @@
 // The docs pages are the repository wiki (docs/wiki/*.md), read at build time. Edit the wiki,
 // rebuild the site, and the pages follow. Only the group and the inked line below live here.
 
-const RAW = import.meta.glob("../../../docs/wiki/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
-
 export type DocMeta = { file: string; slug: string; group: string; inked: string };
 
 // Order here is the order of the docs index and of the previous / next links.
@@ -28,10 +26,38 @@ export const DOCS: DocMeta[] = [
   { file: "Home", slug: "docs", group: "Docs", inked: "Checked twice. Decided by a person." },
 ];
 
+// Load only the pages explicitly listed in DOCS so unlisted wiki files
+// are not bundled into the client build.
+const RAW = import.meta.glob(
+  [
+    "../../../docs/wiki/Getting-started.md",
+    "../../../docs/wiki/How-Zyn-decides.md",
+    "../../../docs/wiki/Benchmarks.md",
+    "../../../docs/wiki/Sift.md",
+    "../../../docs/wiki/Sift-Review.md",
+    "../../../docs/wiki/Sift-Delta.md",
+    "../../../docs/wiki/Anvil.md",
+    "../../../docs/wiki/Anvil-Review.md",
+    "../../../docs/wiki/Assay.md",
+    "../../../docs/wiki/Checks-reference.md",
+    "../../../docs/wiki/Research-basis.md",
+    "../../../docs/wiki/Team-server.md",
+    "../../../docs/wiki/Integrations.md",
+    "../../../docs/wiki/Architecture.md",
+    "../../../docs/wiki/Data-and-licences.md",
+    "../../../docs/wiki/Development.md",
+    "../../../docs/wiki/Roadmap.md",
+    "../../../docs/wiki/FAQ.md",
+    "../../../docs/wiki/Home.md",
+  ],
+  { query: "?raw", import: "default", eager: true }
+) as Record<string, string>;
+
 const byFile = new Map(DOCS.map((d) => [d.file, d]));
 export const bySlug = new Map(DOCS.map((d) => [d.slug, d]));
 
 export function docSource(file: string): string {
+  if (!byFile.has(file)) return "";
   const key = Object.keys(RAW).find((k) => k.endsWith(`/${file}.md`));
   return key ? RAW[key] : "";
 }

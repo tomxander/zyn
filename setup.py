@@ -13,7 +13,8 @@ from setuptools.command.build_py import build_py
 
 ROOT = Path(__file__).resolve().parent
 BUNDLE_ITEMS = ("config.yaml", ".env.example", "knowledge.example.md",
-                "taxonomy_placeholder.yaml", "rules", "data/synthetic", "web/dist")
+                "taxonomy_placeholder.yaml", "rules", "data/synthetic", "web/dist",
+                "LICENSE", "THIRD_PARTY_NOTICES.md")
 
 
 class BuildWithBundle(build_py):

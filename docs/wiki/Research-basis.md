@@ -39,7 +39,7 @@ Inspecting and correcting candidate artifacts is the most reported cost (14 of 2
 | Finding | Zyn's response |
 |---|---|
 | Review existing work first | Sift Review and Anvil Review check work from any tool, not only Zyn's |
-| Plausible false facts | Quotes are verified by code; invented values, changed modal verbs and unknown signals are flagged |
+| Plausible false facts | Quotes are located by code; invented values, changed modal verbs and unknown signals are flagged |
 | Review cost | One key per decision; decisions carry over; the decision record shows how often people agreed with each kind of finding |
 | Weak tests | Anvil generates from checked templates and scores tests against injected faults |
 | Repeatability | Benchmarks report agreement between repeats; accepted answers are stored and replayed, not regenerated |

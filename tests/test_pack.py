@@ -5,11 +5,20 @@ from __future__ import annotations
 import csv
 import json
 import os
+from pathlib import Path
+
+import pytest
 
 from harness import pack
 from harness.config import load_config
 
+PROMISE_DATA = Path(__file__).resolve().parents[1] / "data" / "public" / "promise" / "nfr.arff"
 
+
+@pytest.mark.skipif(
+    not PROMISE_DATA.exists(),
+    reason="git-ignored public benchmark data (nfr.arff) not present in clean checkout",
+)
 def test_manifest_pins_every_file_and_marks_tasks_ready():
     m = pack.manifest()
     assert m["pack"] == pack.PACK_VERSION and set(m["tasks"]) == set(pack.TASKS)
@@ -41,6 +50,10 @@ def test_run_summarises_repeats_without_replay_or_knowledge(tmp_path):
     assert "ICX-100 requirement review" in md and "sha256" in md
 
 
+@pytest.mark.skipif(
+    not PROMISE_DATA.exists(),
+    reason="git-ignored public benchmark data (nfr.arff) not present in clean checkout",
+)
 def test_export_writes_inspect_and_promptfoo_files(tmp_path):
     res = pack.export(tmp_path, ["promise-type", "icx-review"])
     assert res["tasks"] == {"promise-type": 625, "icx-review": 46}

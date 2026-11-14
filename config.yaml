@@ -58,3 +58,28 @@ profiles:
     model: mistral-small3.2
     host: http://localhost:11434
     temperature: 0
+
+  # Enterprise Cloud & Gateway Tiers (Project 2 connectors):
+  # - OpenAI-compatible gateway or private vLLM:
+  # internal-vllm:
+  #   provider: openai
+  #   model: qwen-2.5-72b-instruct
+  #   base_url: http://vllm-host:8000/v1
+  #   local: true             # allows running in offline mode on internal network
+  # - Azure OpenAI:
+  # azure-gpt4o:
+  #   provider: azure
+  #   model: gpt-4o
+  #   endpoint: https://your-resource.openai.azure.com
+  #   deployment: gpt-4o-prod
+  # - AWS Bedrock (Claude or Converse API):
+  # bedrock-claude:
+  #   provider: bedrock
+  #   model: anthropic.claude-3-5-sonnet-20241022-v2:0
+  #   region: us-east-1
+  # - Google Cloud Vertex AI / Gemini:
+  # vertex-gemini:
+  #   provider: vertex
+  #   model: gemini-1.5-pro
+  #   project: your-gcp-project
+  #   location: us-central1

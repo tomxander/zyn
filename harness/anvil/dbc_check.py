@@ -20,6 +20,9 @@ the first fault) and report:
                       only; the parser silently reads these as little-endian)
 - mux_undefined:      a multiplexed signal (m0, m1...) in a message with no multiplexer (M);
                       the parser silently drops the multiplexing (DBC text only)
+- j1939_edp_reserved: Extended Data Page (bit 25) set to 1 with DP=0
+- j1939_global_source: source address is 255 (Global broadcast address used as sender)
+- j1939_dlc_exceeded: message length exceeds J1939 Transport Protocol limit (1785 bytes)
 
 Each finding names the message or signal and the numbers that show the problem. A clean
 result means these checks ran and found nothing, not that the DBC is correct.
@@ -31,10 +34,11 @@ import re
 from pathlib import Path
 
 from harness.anvil.dbc import load_raw, raw_range
+from harness.anvil.j1939 import J1939_CATEGORIES, check_j1939, is_j1939_database, is_j1939_message
 
 CATEGORIES = ("duplicate_frame_id", "signal_overlap", "outside_frame", "range_unreachable",
               "range_inverted", "range_missing", "unknown_node", "invalid_length",
-              "bad_encoding", "mux_undefined")
+              "bad_encoding", "mux_undefined", *J1939_CATEGORIES)
 _LENGTHS = set(range(9)) | {12, 16, 20, 24, 32, 48, 64}
 _BO = re.compile(r"^BO_\s+\d+\s+(\w+)\s*:", re.MULTILINE)
 _SG = re.compile(r"^\s*SG_\s+(\w+)\s*(M|m\d+M?)?\s*:\s*\d+\|\d+@(\S)(\S)",
@@ -70,6 +74,7 @@ def check_db(db, filename: str) -> list[dict]:
     undeclared: dict[str, list[str]] = {}
     no_range: list[str] = []
     total = 0
+    db_j1939 = is_j1939_database(db)
     for m in db.messages:
         if nodes:
             used = [(m.name, n, "sender") for n in m.senders or []] + [
@@ -77,7 +82,12 @@ def check_db(db, filename: str) -> list[dict]:
             for subject, n, role in used:
                 if n not in nodes and n not in _NO_NODE:
                     undeclared.setdefault(n, []).append(f"{role} of {subject}")
-        if m.length not in _LENGTHS:
+        m_j1939 = is_j1939_message(m, db_j1939)
+        if m_j1939:
+            # J1939 allows multi-packet payloads up to 1785 bytes via Transport Protocol.
+            # Payloads exceeding 1785 bytes are flagged by check_j1939 as j1939_dlc_exceeded.
+            pass
+        elif m.length not in _LENGTHS:
             add(m.name, "invalid_length", str(m.length),
                 f"{m.name} is {m.length} bytes long; CAN allows 0 to 8 and CAN FD 12, 16, 20, "
                 "24, 32, 48 or 64.", f"How long is {m.name}?")
@@ -141,6 +151,13 @@ def check_db(db, filename: str) -> list[dict]:
             f"{len(no_range)} of {total} signals have no minimum or maximum ({_some(no_range)})."
             " Zyn checks their values against the range their bits allow.",
             "What are the valid ranges of these signals?")
+
+    # SAE J1939 checks for commercial vehicle databases
+    for jf in check_j1939(db, filename):
+        p = jf["payload"]
+        subj = jf["target"].split(":")[-1]
+        add(subj, p["category"], p["subject"], p["problem"], p["question"])
+
     return out
 
 

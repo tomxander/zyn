@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from harness.team.settings import TeamSettings
 
@@ -113,6 +113,7 @@ class HarnessConfig(BaseModel):
     db_path: str
     max_attempts: int = 3
     offline: bool = False  # refuse every provider that sends data off this machine
+    offline_allowed_hosts: list[str] = Field(default_factory=list)
     # Reuse a stored answer when the same model already answered the same prompt and input.
     replay: bool = False
     # Plain-text house rules, terms and units added to every model call (None = no file).

@@ -69,6 +69,15 @@ def test_modal_and_weak_words():
     assert not checks.modal_changed("| Low fuel | Amber |", "The cluster shall light it.")
     assert checks.weak_words("should wake up quickly and adequately") == ["adequately", "quickly"]
     assert checks.weak_words("The cluster shall display speed.") == []
+    # Contextual exceptions for standard automotive definitions
+    assert checks.weak_words("The ECU shall support CAN Flexible Data-Rate communication.") == []
+    assert checks.weak_words("The port shall support Fast Ethernet at 100BASE-TX.") == []
+    assert checks.weak_words("The gateway shall route frames as required by ISO 11898.") == []
+    # True vague terms remain flagged (including vague 'normal' phrasing)
+    assert checks.weak_words("Under normal operating conditions, voltage shall stay within range.") == ["normal"]
+    assert checks.weak_words("The system shall have a flexible architecture.") == ["flexible"]
+    assert checks.weak_words("The voltage level shall be normal.") == ["normal"]
+    assert checks.weak_words("The gateway shall route frames as required.") == ["as required"]
 
 
 # ---- override rule -----------------------------------------------------------------------

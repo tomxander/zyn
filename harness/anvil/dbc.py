@@ -18,6 +18,7 @@ class Signal:
     choices: dict[int, str]
     cluster_receives: bool  # True: an input the test drives; False: sent by the cluster
     range_from_bits: bool = False  # the DBC gave no min/max; the range its bits allow is used
+    spn: int | None = None
 
     @property
     def boolean(self) -> bool:
@@ -49,7 +50,8 @@ class CanDb:
             for s in (self.signals[n] for n in m.signals):
                 ch = (" values " + ", ".join(f"{k}={v}" for k, v in s.choices.items())
                       if s.choices else "")
-                lines.append(f"  {s.name}: {s.unit or '-'}, {s.minimum}..{s.maximum}, "
+                spn_txt = f" (SPN {s.spn})" if s.spn is not None else ""
+                lines.append(f"  {s.name}{spn_txt}: {s.unit or '-'}, {s.minimum}..{s.maximum}, "
                              f"step {s.resolution}{ch}")
         return "\n".join(lines)
 
@@ -86,9 +88,18 @@ def load_dbc(path: Path | str, node: str = "ICX100") -> CanDb:
             lo, hi = raw_range(s) if missing else (
                 float(s.minimum if s.minimum is not None else raw_range(s)[0]),
                 float(s.maximum if s.maximum is not None else raw_range(s)[1]))
+            spn_val = getattr(s, "spn", None)
+            if spn_val is None and getattr(s, "dbc", None) and getattr(s.dbc, "attributes", None):
+                attr = s.dbc.attributes.get("SPN")
+                if attr is not None:
+                    spn_val = getattr(attr, "value", attr)
+            try:
+                spn_int = int(spn_val) if spn_val is not None else None
+            except (ValueError, TypeError):
+                spn_int = None
             signals[s.name] = Signal(
                 s.name, m.name, s.unit or "", lo, hi, float(s.scale),
                 {int(k): str(v) for k, v in (s.choices or {}).items()},
-                cluster_receives=not sends, range_from_bits=missing)
+                cluster_receives=not sends, range_from_bits=missing, spn=spn_int)
     return CanDb(path.name, hashlib.sha256(path.read_bytes()).hexdigest(), node, messages,
                  signals)

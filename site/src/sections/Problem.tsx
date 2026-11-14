@@ -27,13 +27,13 @@ export function Problem() {
         <div className="split__text">
           <Headline id="problem-title" plain="Writing is fast now." inked="Checking still takes days." />
           <p className="body">
-            AI can write a requirement set or a test suite in minutes. Checking it is where teams give up. In a public study of
-            23 discussions among embedded, test and automotive practitioners, <mark className="hl">14 of 23</mark> named inspecting and correcting AI output as the
-            biggest cost.
+            An AI assistant drafts a requirement set in minutes. A supplier sends a revised one on Friday. Someone still has
+            to read every line against the spec, and that is where the time goes. In 23 public discussions among embedded,
+            test and automotive practitioners, <mark className="hl">14 of 23</mark> named checking AI output as the biggest cost.
           </p>
           <p className="body body--strong">
-            Engineers don't reject AI tools for being slow. They reject them for being wrong in ways that look right. So Zyn
-            doesn't try to generate more. It makes the output checkable.
+            The danger isn't slow tools. It's work that is wrong in ways that look right. Zyn doesn't write more. It shows you
+            where to look.
           </p>
         </div>
 

@@ -2,7 +2,7 @@
 
 Checks tests from any tool against a CAN database and a requirement set. Code only: no model calls, same result every time.
 
-**Input:** test files (pytest, CAPL, Robot Framework, or plain text), a CAN database (DBC, KCD, SYM or ARXML), and optionally the requirement set the tests refer to.
+**Input:** test files (pytest, CAPL, Robot Framework, Vector vTESTstudio, or plain text), a CAN database (DBC, KCD, SYM or ARXML), and optionally the requirement set the tests refer to.
 **Output:** findings to confirm or dismiss, coverage, and a confirmation checklist.
 
 ## Step 1: the CAN database is checked first
@@ -21,6 +21,9 @@ Every finding about a signal name or a range rests on the database, so a faulty 
 | `invalid_length` | A length CAN or CAN FD does not allow |
 | `bad_encoding` | A byte-order or sign code the common parser silently reads as Intel unsigned |
 | `mux_undefined` | A multiplexed signal with no multiplexer; the parser silently drops the multiplexing |
+| `j1939_edp_reserved` | Extended Data Page (bit 25) set to 1 and Data Page (bit 24) set to 0 (EDP=1, DP=0 is reserved per SAE J1939-21) |
+| `j1939_global_source` | Source address 255 (Global broadcast address used as sender) |
+| `j1939_dlc_exceeded` | Message length exceeds J1939 Transport Protocol limit (1785 bytes). Standard DBC files do not carry a single-frame flag, so lengths from 9 to 1785 bytes are accepted as declared multi-packet messages. |
 
 An unreadable database, or one with no signals, is refused with the reason.
 

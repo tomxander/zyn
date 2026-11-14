@@ -51,8 +51,9 @@ export function Hero() {
         </span>
         <Rule className="rule--a" car={40} />
         <p className="hero__desc">
-          Requirements, tests and CAN databases, checked against their source before you sign. Code checks need no model.
-          An AI reviewer advises with quotes. A named person decides. On your desk, or inside your company's walls.
+          Suppliers and AI tools now hand you requirements, tests and CAN databases faster than anyone can read them. Zyn
+          flags what was changed, invented or weakened, with the source line beside it, so you know where to look
+          before you sign.
         </p>
         <Rule className="rule--b" car={28} />
         <span className="hero__break" />
@@ -75,7 +76,7 @@ export function Hero() {
             </a>
           </div>
           <p className="hero__aside">
-            Built for requirement and test engineers. Open to anyone who wants AI work they can check.
+            For requirement and test teams at vehicle makers and their suppliers.
           </p>
         </div>
         <Rule className="rule--e" car={20} />
