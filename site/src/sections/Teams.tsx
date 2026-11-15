@@ -138,7 +138,7 @@ export function Teams() {
   );
 }
 
-/** Where team mode runs: everything inside the customer's walls, nothing out to Zyn's makers. */
+/** Where team mode runs: everything inside the company's walls, nothing out to Zyn's makers. */
 function Walls() {
   const ref = useRef<HTMLDivElement>(null);
   useVisible(ref);

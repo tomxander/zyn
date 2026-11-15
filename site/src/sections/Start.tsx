@@ -202,7 +202,7 @@ function Logo() {
 }
 
 const AREAS = [
-  "Run a pilot on my team's work",
+  "Run a trial with my team",
   "Try it early as an engineer",
   "Review the answer key",
   "Checks and rules",
@@ -296,8 +296,8 @@ export function Contribute() {
             <Headline id="contribute-title" plain="Coming soon." inked="Help build it." />
             <p className="body">
               We're building Zyn with the engineers who will use it. Try it early on sample data, help review our answer key,
-              or take on something from the roadmap. Leading a team? Ask for a pilot: we measure review time with and
-              without Zyn on your own work, and tell you straight if it doesn't help.
+              or take on something from the roadmap. Leading a team? Run a trial on your own work and help measure
+              whether it saves time, even if the answer is no.
             </p>
             <ContributeForm />
           </div>

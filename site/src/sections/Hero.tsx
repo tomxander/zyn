@@ -76,7 +76,7 @@ export function Hero() {
             </a>
           </div>
           <p className="hero__aside">
-            For requirement and test teams at vehicle makers and their suppliers.
+            A hobby project for requirement and test engineers, built in the open and headed for open source.
           </p>
         </div>
         <Rule className="rule--e" car={20} />

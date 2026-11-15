@@ -235,7 +235,7 @@ export const FAQ = [
   { q: "Can the AI approve anything?", a: "No. The audit store refuses an approval from anything that is not a named person. Access tokens and service accounts can't approve either." },
   { q: "Why no confidence score?", a: "A model's rating of itself has not been shown to predict correctness. Zyn shows checks that raised findings or no flag, and quotes you can read." },
   { q: "The AI reviewer gives different answers each run. How is that handled?", a: "Zyn measures it instead of hiding it. Run several passes and see how many reported each finding. Your decisions carry over between runs." },
-  { q: "Will it save my team time?", a: "We don't claim a number. That needs a pilot with real engineers on real work. What Zyn measures is what it catches and what it misses." },
+  { q: "Will it save my team time?", a: "Nobody knows yet, so Zyn claims no number. Finding out needs real engineers on real work, and teams who try it can help measure it. What Zyn does measure is what it catches and what it misses." },
 ];
 
 // Hero lanes: records flowing through the checks. Each has the verdict it gets at the gate.
@@ -277,12 +277,12 @@ export const SECTIONS = [
   { id: "contribute", label: "Contribute" },
 ];
 
-// The measured pilot: the offer from docs/positioning. No price, no promised saving.
+// A team trial, run by the team on its own work, with results shared back. Nothing is sold.
 export const PILOT = [
-  { title: "Scope", text: "One real specification, its requirement set and tests, through one revision. Four to six weeks." },
-  { title: "Run", text: "On your own machines. Code checks first; the AI reviewer only with the models your IT allows." },
-  { title: "Measure", text: "Matched work with and without Zyn: active minutes per item, time spent on flags you dismiss, and which mistakes your engineers planted each side caught." },
-  { title: "Decide", text: "You keep every finding, decision and measurement as plain files. If there is no gain, the report says so." },
+  { title: "Pick the work", text: "One real specification, its requirement set and tests, through one revision. A few weeks is enough." },
+  { title: "Run it inside your walls", text: "On your own machines; your files never leave. Code checks first, the AI reviewer only with the models your IT allows." },
+  { title: "Measure both ways", text: "Matched work with and without Zyn: active minutes per item, time spent on flags you dismiss, and which planted mistakes each side caught." },
+  { title: "Share what you found", text: "You keep every file. Share the numbers you are comfortable with, gains or none, and they go into the open benchmarks." },
 ];
 
 // Outside evidence for the problem: published sources only, from "Zyn savings evidence.md".

@@ -15,6 +15,7 @@ import { Teams } from "./sections/Teams";
 import { Roadmap } from "./sections/Roadmap";
 import { Pilot } from "./sections/Pilot";
 import { Screens } from "./sections/Screens";
+import { Disclaimer } from "./components/Disclaimer";
 import { DocPage } from "./docs/DocPage";
 import { bySlug, HOME } from "./docs/docs";
 import { scrollToHash, usePage } from "./router";
@@ -74,6 +75,7 @@ export default function App() {
       </AnimatePresence>
       <Footer />
       <Palette open={palette} setOpen={setPalette} setTheme={setTheme} />
+      <Disclaimer />
       <Toaster
         position="bottom-center"
         toastOptions={{ unstyled: true, classNames: { toast: "slip", title: "slip__title", description: "slip__desc" } }}
