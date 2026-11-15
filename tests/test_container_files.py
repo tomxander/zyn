@@ -167,9 +167,10 @@ def test_it_guide_quality():
     guide_text = (PROJECT_ROOT / "docs" / "wiki" / "Team-server.md").read_text(encoding="utf-8")
     # No em dashes
     assert "—" not in guide_text
-    # States the container has not been run end to end yet
-    assert "Not yet verified" in guide_text
-    assert "end to end" in guide_text
+    # States what the container trial covers and what it does not
+    assert "Tested in a container, not yet at a company" in guide_text
+    assert "Not yet verified" not in guide_text
+    assert "verify-trial-docker.sh" in guide_text
     # Notes stderr for structured JSON logging and null principal for 401
     assert "stderr" in guide_text
     assert "401" in guide_text and "null" in guide_text

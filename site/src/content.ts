@@ -181,7 +181,7 @@ export const ROAD: { status: "Built" | "Next" | "Later"; items: RoadItem[] }[] =
   {
     status: "Built",
     items: [
-      { title: "Team server", text: "Built, not yet proven. Company sign-in, roles and walls per project, four eyes, a shared append-only PostgreSQL log, access tokens for CI and test benches, and a container package. Tested with a stand-in sign-in; the container has not yet been run end to end." },
+      { title: "Team server", text: "Built and tested in a container, not yet run at a company. Company sign-in, roles and walls per project, four eyes, a shared append-only PostgreSQL log, access tokens for CI and test benches, and a container package. The container builds, starts and signs in through a trial Keycloak on every change." },
       { title: "Light install", text: "One wheel, the zyn command and zyn demo. No Node.js needed." },
     ],
   },
@@ -218,7 +218,7 @@ export const LIMITS = [
   "Public and synthetic data only. No company or customer documents.",
   "The ICX-100 answer key was written by Claude and checked by an AI reviewer, not an engineer.",
   "No productivity claims. No benchmark here measures time saved.",
-  "Team mode is built but not proven. The container and real company sign-in have not yet been tried end to end.",
+  "Team mode is new. The container runs end to end with a trial Keycloak sign-in, but has not yet run behind a company's own sign-in or network.",
   "An advisory pre-review, not a qualified tool under ISO 26262. A draft tool confidence argument exists; a safety engineer has not reviewed it.",
 ];
 

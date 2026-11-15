@@ -51,7 +51,7 @@ export function Teams() {
           <Headline id="teams-title" plain="Try it on your desk." inked="Run it for your team." />
           <p className="body">
             Start on your own laptop in minutes, with no account and no key. When your team is ready, IT runs the same Zyn
-            on your own servers or cloud account, behind your company sign-in, with only the models they approve (built, not yet proven until tried on a live host).
+            on your own servers or cloud account, behind your company sign-in, with only the models they approve (tested in a container, not yet run at a company).
           </p>
           <div className="seg" role="tablist" aria-label="Which mode" onKeyDown={onKey}>
             {MODES.map((x, i) => (
@@ -79,8 +79,8 @@ export function Teams() {
             )}
           </div>
           <p className="teams__foot">
-            Team mode ships as a container image and a compose file. The container has not yet been run end to end, so it
-            is tried on a test host first.
+            Team mode ships as a container image and a compose file. Each change is built, started and signed in through a trial Keycloak
+            automatically; it has not yet run at a company, so try it on a test host first.
           </p>
         </div>
 

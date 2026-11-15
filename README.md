@@ -173,7 +173,7 @@ Zyn runs in two modes from the same install. The checks, tools and screen are th
 
 Team mode ships as a container image and a compose file, and also runs as `zyn serve --team` on an ordinary server. Zyn sends nothing home: no telemetry, no update checks, no licence calls.
 
-IT guide: [Team server](docs/wiki/Team-server.md). The container files have not yet been run end to end, so build and start them on a test host before anyone relies on them.
+IT guide: [Team server](docs/wiki/Team-server.md). GitHub builds and starts the container and signs in through a trial Keycloak on every change to the server; it has not yet run at a company, so try it on a test host first.
 
 ## Why Zyn
 
@@ -299,7 +299,7 @@ A checker that oversells itself is worthless, so here is where Zyn stops.
 - **Public and synthetic data only.** No company or customer documents were used.
 - **The ICX-100 answer key** was written by Claude and checked by an AI reviewer, not an engineer. Every score on it says so.
 - **No productivity claims.** Zyn reports what it measured, on named datasets, with the method beside the number.
-- **Team mode is new.** It is tested against PostgreSQL and a stand-in sign-in provider. The container and real company sign-in have not yet been tried end to end.
+- **Team mode is new.** It is tested against PostgreSQL, and the container runs end to end with a real sign-in through a trial Keycloak. It has not yet run behind a company's own sign-in or network.
 - **Not a qualified tool** under ISO 26262. A [draft tool confidence argument](docs/06-tool-confidence.md) exists; a safety engineer has not reviewed it.
 
 ## Documentation

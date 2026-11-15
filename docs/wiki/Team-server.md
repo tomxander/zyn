@@ -2,7 +2,7 @@
 
 This guide covers deployment, identity configuration, security architecture, and ongoing operations for running Zyn in **team server mode**.
 
-> **Not yet verified.** The container files have not yet been run end to end. Build and start them on a test host with Docker and Docker Compose before anyone relies on them.
+> **Tested in a container, not yet at a company.** On every change to the server or container files, GitHub builds the image on a clean Linux machine, starts the trial compose (PostgreSQL, schema upgrade, Keycloak and Zyn), signs in as a trial user through Keycloak, and checks the person, project and role the server reports. The first run passed on 15 November 2026. It has not yet run behind a company's own sign-in, network or database, so try it on a test host first.
 
 ---
 
@@ -236,6 +236,6 @@ When upgrading to a new Zyn release:
 
 ---
 
-## 10. Verification status
+## 10. Test status
 
-> **Not yet verified.** The container image and compose files have not yet been built and started end to end. Do that on a test host with Docker before anyone relies on them.
+> **Tested in a container, not yet at a company.** `.github/workflows/docker-trial.yml` runs `scripts/verify-trial-docker.sh` on a clean Linux machine: it builds the image, starts the trial compose, waits for every service, signs in end to end through Keycloak with PKCE, and checks that the signed-in person has the approver role on project `bcm`. You can run the same script on your own test host. It has not yet run against a real company identity provider, network or database.

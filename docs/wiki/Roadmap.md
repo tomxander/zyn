@@ -13,7 +13,7 @@
 
 ## Done
 
-- **Team server.** Company sign-in (OpenID Connect), roles per project, walls between projects, the four-eyes rule, a shared append-only PostgreSQL audit log, access tokens for CI and test benches (`zyn remote`), and a container package ([Team server](Team-server.md)). The container has not yet been run end to end.
+- **Team server.** Company sign-in (OpenID Connect), roles per project, walls between projects, the four-eyes rule, a shared append-only PostgreSQL audit log, access tokens for CI and test benches (`zyn remote`), and a container package ([Team server](Team-server.md)). The container runs end to end with a trial Keycloak sign-in on every change; not yet run at a company.
 - **Light install.** One wheel, the `zyn` command and `zyn demo`; no Node.js needed.
 
 ## Later

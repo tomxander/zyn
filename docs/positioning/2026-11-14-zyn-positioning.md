@@ -135,7 +135,7 @@ All three engineers objected to "proves". The code checks missed a word-number c
 | "Sonnet matched Opus on review at under half the cost per correct finding; 46 requirements cost about eight US cents." | "AI review is reliable." Only 60 percent of findings recur between runs |
 | "The AI reviewer found 63 of 72 real defects on public automotive requirements; more than half its weak-word flags were ones people would dismiss." | "Works with any model or private cloud." The code supports Anthropic and Ollama only |
 | "Code checks and offline mode send nothing out." | "Nothing leaves your machine" once an Anthropic key is set |
-| "Team mode is built and tested with a stand-in sign-in; the container has not yet run end to end." | "Enterprise-ready", "qualified", "certified" |
+| "Team mode runs end to end in a container with a trial Keycloak sign-in; it has not yet run at a company." | "Enterprise-ready", "qualified", "certified" |
 | "In 23 public practitioner discussions, checking AI output was the top cost (14)." Add: mostly embedded and QA, not only automotive | "Automotive engineers say" for the whole study |
 
 ## 8. Objections and answers
