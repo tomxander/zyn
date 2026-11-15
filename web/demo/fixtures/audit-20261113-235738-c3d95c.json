@@ -1,0 +1,345 @@
+{
+ "metrics": {
+  "run_id": "20261113-235738-c3d95c",
+  "model": {
+   "calls": 5,
+   "tokens_in": 9414,
+   "tokens_out": 7220,
+   "model_seconds": 68.8,
+   "cost_usd": 0.1821,
+   "cost_complete": true,
+   "schema_retries": 0,
+   "failed_calls": 0,
+   "blocked_offline": 0,
+   "replayed": 0,
+   "by_task": {
+    "review_set": {
+     "calls": 4,
+     "tokens_in": 6730,
+     "tokens_out": 6259,
+     "seconds": 59.0,
+     "cost_usd": 0.1521,
+     "models": [
+      "claude-opus-5-5"
+     ]
+    },
+    "review_set_conflicts": {
+     "calls": 1,
+     "tokens_in": 2684,
+     "tokens_out": 961,
+     "seconds": 9.8,
+     "cost_usd": 0.03,
+     "models": [
+      "claude-opus-5-5"
+     ]
+    }
+   }
+  },
+  "review": {
+   "finding": {
+    "items": 28,
+    "decided": 0,
+    "open": 28,
+    "status": {
+     "proposed": 28
+    },
+    "edited_items": 0,
+    "reviewers": [],
+    "median_minutes_to_first_decision": null,
+    "carried_over": 0
+   }
+  },
+  "agreement": {
+   "findings_by_source": {
+    "code": {
+     "confirmed": 0,
+     "dismissed": 0,
+     "open": 4,
+     "confirmed_share_of_decided": null
+    },
+    "ai": {
+     "confirmed": 0,
+     "dismissed": 0,
+     "open": 24,
+     "confirmed_share_of_decided": null
+    }
+   }
+  }
+ },
+ "knowledge": [],
+ "events": [
+  {
+   "event_id": 2940,
+   "ts": "2026-11-13T18:27:38.858+00:00",
+   "actor": "code:import",
+   "action": "ingested",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2941,
+   "ts": "2026-11-13T18:27:41.097+00:00",
+   "actor": "code:sift-check",
+   "action": "claimed",
+   "object_id": "check:batch-0",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2942,
+   "ts": "2026-11-13T18:27:41.105+00:00",
+   "actor": "code:sift-check",
+   "action": "claimed",
+   "object_id": "check:batch-1",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2943,
+   "ts": "2026-11-13T18:27:41.112+00:00",
+   "actor": "code:sift-check",
+   "action": "claimed",
+   "object_id": "check:batch-2",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2944,
+   "ts": "2026-11-13T18:27:41.120+00:00",
+   "actor": "code:sift-check",
+   "action": "claimed",
+   "object_id": "check:batch-3",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2945,
+   "ts": "2026-11-13T18:27:44.066+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "generated",
+   "object_id": null,
+   "object_version": null,
+   "model_served": "claude-opus-5-5",
+   "tokens_in": 1294,
+   "tokens_out": 210,
+   "latency_ms": 2928,
+   "attempt": 1
+  },
+  {
+   "event_id": 2950,
+   "ts": "2026-11-13T18:27:57.498+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "generated",
+   "object_id": null,
+   "object_version": null,
+   "model_served": "claude-opus-5-5",
+   "tokens_in": 1857,
+   "tokens_out": 1742,
+   "latency_ms": 16361,
+   "attempt": 1
+  },
+  {
+   "event_id": 2951,
+   "ts": "2026-11-13T18:27:58.175+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "generated",
+   "object_id": null,
+   "object_version": null,
+   "model_served": "claude-opus-5-5",
+   "tokens_in": 1724,
+   "tokens_out": 1911,
+   "latency_ms": 17039,
+   "attempt": 1
+  },
+  {
+   "event_id": 2953,
+   "ts": "2026-11-13T18:28:03.805+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "generated",
+   "object_id": null,
+   "object_version": null,
+   "model_served": "claude-opus-5-5",
+   "tokens_in": 1855,
+   "tokens_out": 2396,
+   "latency_ms": 22672,
+   "attempt": 1
+  },
+  {
+   "event_id": 2954,
+   "ts": "2026-11-13T18:28:05.737+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "finding_corroborated",
+   "object_id": "FND-0001@20261113-235738-c3d95c",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2955,
+   "ts": "2026-11-13T18:28:05.795+00:00",
+   "actor": "code:sift-check",
+   "action": "ai_batch_done",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2958,
+   "ts": "2026-11-13T18:28:07.710+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "finding_corroborated",
+   "object_id": "FND-0002@20261113-235738-c3d95c",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2959,
+   "ts": "2026-11-13T18:28:07.732+00:00",
+   "actor": "code:sift-check",
+   "action": "ai_batch_done",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2961,
+   "ts": "2026-11-13T18:28:09.894+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "finding_corroborated",
+   "object_id": "FND-0003@20261113-235738-c3d95c",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2962,
+   "ts": "2026-11-13T18:28:09.916+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "finding_corroborated",
+   "object_id": "FND-0004@20261113-235738-c3d95c",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2963,
+   "ts": "2026-11-13T18:28:09.924+00:00",
+   "actor": "code:sift-check",
+   "action": "ai_batch_done",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2964,
+   "ts": "2026-11-13T18:28:12.172+00:00",
+   "actor": "code:sift-check",
+   "action": "ai_batch_done",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2965,
+   "ts": "2026-11-13T18:28:12.228+00:00",
+   "actor": "code:sift-check",
+   "action": "claimed",
+   "object_id": "check:conflicts-0",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2972,
+   "ts": "2026-11-13T18:28:22.039+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "generated",
+   "object_id": null,
+   "object_version": null,
+   "model_served": "claude-opus-5-5",
+   "tokens_in": 2684,
+   "tokens_out": 961,
+   "latency_ms": 9800,
+   "attempt": 1
+  },
+  {
+   "event_id": 2976,
+   "ts": "2026-11-13T18:28:25.629+00:00",
+   "actor": "ai-reviewer:claude-opus",
+   "action": "finding_corroborated",
+   "object_id": "FND-0017@20261113-235738-c3d95c",
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 2977,
+   "ts": "2026-11-13T18:28:25.636+00:00",
+   "actor": "code:sift-check",
+   "action": "ai_conflicts_done",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  }
+ ]
+}

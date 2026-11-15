@@ -1,0 +1,160 @@
+{
+ "run_id": "20261113-175302-b02846",
+ "algorithm": "sha256(previous + canonical event JSON), starting from sha256(run_id)",
+ "events": [
+  {
+   "event_id": 392,
+   "ts": "2026-11-13T12:23:02.565+00:00",
+   "run_id": "20261113-175302-b02846",
+   "actor": "code:sift-delta",
+   "action": "ingested",
+   "object_type": "delta",
+   "object_id": null,
+   "object_version": null,
+   "model_profile": null,
+   "provider": null,
+   "model_requested": null,
+   "model_served": null,
+   "prompt_version": null,
+   "prompt_sha256": null,
+   "input_sha256": "fe6ffd6286bdf152433b15212e476c17331bef3eca29201aa048609a0e997eb2",
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null,
+   "actor_id": null,
+   "detail": {
+    "mode": "spec",
+    "base_run": "20261113-165443-9c129b",
+    "base_file": "icx100_srs.md",
+    "new_file": "icx100_srs_rev2.md",
+    "new_sha256": "fe6ffd6286bdf152433b15212e476c17331bef3eca29201aa048609a0e997eb2",
+    "approved_requirements": 39,
+    "unchanged": 32,
+    "counts": {
+     "changed": 5,
+     "removed": 1,
+     "moved": 1,
+     "new_text": 2
+    }
+   },
+   "chain": "4ab7dda0d3f2ae8876faf8771247ca8c124516e86f307a63bd899adee4e8d7f8"
+  },
+  {
+   "event_id": 724,
+   "ts": "2026-11-13T13:34:22.577+00:00",
+   "run_id": "20261113-175302-b02846",
+   "actor": "Demo reviewer",
+   "action": "rejected",
+   "object_type": "delta_entry",
+   "object_id": "DLT-0003@20261113-175302-b02846",
+   "object_version": 1,
+   "model_profile": null,
+   "provider": null,
+   "model_requested": null,
+   "model_served": null,
+   "prompt_version": null,
+   "prompt_sha256": null,
+   "input_sha256": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null,
+   "actor_id": null,
+   "detail": {
+    "comment": null,
+    "ai_override": false
+   },
+   "chain": "fdd17edb7dbc065a3f18bebb9e27b5c46911354dac1cfd65ec310f5300ed87f7"
+  },
+  {
+   "event_id": 725,
+   "ts": "2026-11-13T13:34:29.878+00:00",
+   "run_id": "20261113-175302-b02846",
+   "actor": "Demo reviewer",
+   "action": "approved",
+   "object_type": "delta_entry",
+   "object_id": "DLT-0003@20261113-175302-b02846",
+   "object_version": 1,
+   "model_profile": null,
+   "provider": null,
+   "model_requested": null,
+   "model_served": null,
+   "prompt_version": null,
+   "prompt_sha256": null,
+   "input_sha256": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null,
+   "actor_id": null,
+   "detail": {
+    "comment": null,
+    "ai_override": false
+   },
+   "chain": "44544ec654b455ca17acfa23f458bed3419d9ec8299cf612f7c52442e6e4898b"
+  },
+  {
+   "event_id": 726,
+   "ts": "2026-11-13T13:34:31.082+00:00",
+   "run_id": "20261113-175302-b02846",
+   "actor": "Demo reviewer",
+   "action": "rejected",
+   "object_type": "delta_entry",
+   "object_id": "DLT-0003@20261113-175302-b02846",
+   "object_version": 1,
+   "model_profile": null,
+   "provider": null,
+   "model_requested": null,
+   "model_served": null,
+   "prompt_version": null,
+   "prompt_sha256": null,
+   "input_sha256": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null,
+   "actor_id": null,
+   "detail": {
+    "comment": null,
+    "ai_override": false
+   },
+   "chain": "5714e356f8323542b98215f28012e6d362c609e01fcd3e3898dd130f2b981fcc"
+  },
+  {
+   "event_id": 3449,
+   "ts": "2026-11-15T05:52:28.652+00:00",
+   "run_id": "20261113-175302-b02846",
+   "actor": "Demo reviewer",
+   "action": "exported",
+   "object_type": "delta_entry",
+   "object_id": null,
+   "object_version": null,
+   "model_profile": null,
+   "provider": null,
+   "model_requested": null,
+   "model_served": null,
+   "prompt_version": null,
+   "prompt_sha256": null,
+   "input_sha256": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null,
+   "actor_id": null,
+   "detail": {
+    "count": 9,
+    "files": {
+     "json": "E:\\Claude\\Zyn\\runs\\demo-home\\runs\\exports\\20261113-175302-b02846\\delta.json",
+     "xlsx": "E:\\Claude\\Zyn\\runs\\demo-home\\runs\\exports\\20261113-175302-b02846\\delta.xlsx"
+    },
+    "sha256": {
+     "json": "9dcba8cdc9c6a5387d6dbd0f1af6f6ab08e3c064461ad90d55e6fddcca4fb6eb",
+     "xlsx": "654200f9ec638a09a7b74de71803c4b6b8793c57088c435813688399164df12a"
+    }
+   },
+   "chain": "a18c5637f30ecb58f0d97d6bcde4552a3544b8d111848e0711e5685a6148e846"
+  }
+ ],
+ "head": "a18c5637f30ecb58f0d97d6bcde4552a3544b8d111848e0711e5685a6148e846"
+}

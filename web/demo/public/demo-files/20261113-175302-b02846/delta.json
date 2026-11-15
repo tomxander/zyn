@@ -1,0 +1,392 @@
+{
+  "label": "Zyn prototype.",
+  "run_id": "20261113-175302-b02846",
+  "mode": "spec",
+  "base_run": "20261113-165443-9c129b",
+  "base_file": "icx100_srs.md",
+  "new_file": "icx100_srs_rev2.md",
+  "new_sha256": "fe6ffd6286bdf152433b15212e476c17331bef3eca29201aa048609a0e997eb2",
+  "approved_requirements": 39,
+  "unchanged": 32,
+  "counts": {
+    "changed": 5,
+    "removed": 1,
+    "moved": 1,
+    "new_text": 2
+  },
+  "entries": [
+    {
+      "requirement_id": "REQ-COM-002",
+      "requirement_item": "REQ-COM-002@20261113-165443-9c129b",
+      "requirement_text": "If a CAN signal is not received within three times its cycle time, the cluster shall treat the signal as invalid.",
+      "old_text": "If a CAN signal is not received within three times its cycle time, the cluster shall treat the signal as invalid.",
+      "old_section": "10",
+      "kind": "changed",
+      "new_text": "If a CAN signal is not received for more than 500 ms, the cluster shall treat the signal as invalid.",
+      "new_section": "10",
+      "new_heading": "Vehicle network communication",
+      "similarity": 0.73,
+      "diff": [
+        [
+          "equal",
+          "If a CAN signal is not received"
+        ],
+        [
+          "delete",
+          "within three times its cycle time,"
+        ],
+        [
+          "insert",
+          "for more than 500 ms,"
+        ],
+        [
+          "equal",
+          "the cluster shall treat the signal as invalid."
+        ]
+      ],
+      "facts": {
+        "values_removed": [],
+        "values_added": [
+          "500"
+        ],
+        "modal_old": "shall",
+        "modal_new": "shall",
+        "modal_changed": false,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "id": "DLT-0001",
+      "summary": "values - -> 500",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "requirement_id": "REQ-INP-003",
+      "requirement_item": "REQ-INP-003@20261113-165443-9c129b",
+      "requirement_text": "The cluster may offer a menu to change the display theme.",
+      "old_text": "The cluster may offer a menu to change the display theme.",
+      "old_section": "9",
+      "kind": "removed",
+      "new_text": "",
+      "new_section": null,
+      "similarity": 0.4,
+      "diff": [
+        [
+          "delete",
+          "The cluster may offer a menu to change the display theme."
+        ]
+      ],
+      "facts": {
+        "values_removed": [],
+        "values_added": [],
+        "modal_old": "may",
+        "modal_new": null,
+        "modal_changed": true,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "id": "DLT-0002",
+      "summary": "",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "requirement_id": "REQ-PWR-002",
+      "requirement_item": "REQ-PWR-002@20261113-165443-9c129b",
+      "requirement_text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s.",
+      "old_text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s and then enter the SLEEP state.",
+      "old_section": "3",
+      "kind": "changed",
+      "new_text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state.",
+      "new_section": "3",
+      "new_heading": "Power modes",
+      "similarity": 0.96,
+      "diff": [
+        [
+          "equal",
+          "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for"
+        ],
+        [
+          "delete",
+          "3"
+        ],
+        [
+          "insert",
+          "5"
+        ],
+        [
+          "equal",
+          "s and then enter the SLEEP state."
+        ]
+      ],
+      "facts": {
+        "values_removed": [
+          "3"
+        ],
+        "values_added": [
+          "5"
+        ],
+        "modal_old": "shall",
+        "modal_new": "shall",
+        "modal_changed": false,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "id": "DLT-0003",
+      "summary": "values 3 -> 5",
+      "status": "no action",
+      "decided_by": "Demo reviewer",
+      "comment": ""
+    },
+    {
+      "requirement_id": "REQ-PWR-003",
+      "requirement_item": "REQ-PWR-003@20261113-165443-9c129b",
+      "requirement_text": "When IGN changes from ON to OFF, the cluster shall enter the SLEEP state after displaying the goodbye screen for 3 s.",
+      "old_text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 3 s and then enter the SLEEP state.",
+      "old_section": "3",
+      "kind": "changed",
+      "new_text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state.",
+      "new_section": "3",
+      "new_heading": "Power modes",
+      "similarity": 0.96,
+      "diff": [
+        [
+          "equal",
+          "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for"
+        ],
+        [
+          "delete",
+          "3"
+        ],
+        [
+          "insert",
+          "5"
+        ],
+        [
+          "equal",
+          "s and then enter the SLEEP state."
+        ]
+      ],
+      "facts": {
+        "values_removed": [
+          "3"
+        ],
+        "values_added": [
+          "5"
+        ],
+        "modal_old": "shall",
+        "modal_new": "shall",
+        "modal_changed": false,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "id": "DLT-0004",
+      "summary": "values 3 -> 5",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "requirement_id": "REQ-PWR-005",
+      "requirement_item": "REQ-PWR-005@20261113-165443-9c129b",
+      "requirement_text": "The cluster should wake up quickly when a door is opened.",
+      "old_text": "The cluster should wake up quickly when a door is opened.",
+      "old_section": "3",
+      "kind": "changed",
+      "new_text": "The cluster shall wake up within 300 ms when a door is opened.",
+      "new_section": "3",
+      "new_heading": "Power modes",
+      "similarity": 0.75,
+      "diff": [
+        [
+          "equal",
+          "The cluster"
+        ],
+        [
+          "delete",
+          "should"
+        ],
+        [
+          "insert",
+          "shall"
+        ],
+        [
+          "equal",
+          "wake up"
+        ],
+        [
+          "delete",
+          "quickly"
+        ],
+        [
+          "insert",
+          "within 300 ms"
+        ],
+        [
+          "equal",
+          "when a door is opened."
+        ]
+      ],
+      "facts": {
+        "values_removed": [],
+        "values_added": [
+          "300"
+        ],
+        "modal_old": "should",
+        "modal_new": "shall",
+        "modal_changed": true,
+        "weak_words_old": [
+          "quickly"
+        ],
+        "weak_words_new": []
+      },
+      "id": "DLT-0005",
+      "summary": "values - -> 300; modal should -> shall",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "requirement_id": "REQ-SEC-001",
+      "requirement_item": "REQ-SEC-001@20261113-165443-9c129b",
+      "requirement_text": "Diagnostic services that write memory shall require successful security access authentication.",
+      "old_text": "Diagnostic services that write memory shall require successful security access authentication.",
+      "old_section": "13",
+      "kind": "moved",
+      "new_text": "Diagnostic services that write memory shall require successful security access authentication.",
+      "new_section": "11",
+      "new_heading": "Diagnostics",
+      "similarity": 1.0,
+      "diff": [
+        [
+          "equal",
+          "Diagnostic services that write memory shall require successful security access authentication."
+        ]
+      ],
+      "facts": {
+        "values_removed": [],
+        "values_added": [],
+        "modal_old": "shall",
+        "modal_new": "shall",
+        "modal_changed": false,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "id": "DLT-0006",
+      "summary": "section 13 -> 11",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "requirement_id": "REQ-TT-002",
+      "requirement_item": "REQ-TT-002@20261113-165443-9c129b",
+      "requirement_text": "The cluster shall flash the red Seat belt reminder telltale at 1 Hz when BeltUnfastened = 1 and vehicle speed is above 20 km/h.",
+      "old_text": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 20 km/h | Red | Flashing at 1 Hz |",
+      "old_section": "7",
+      "kind": "changed",
+      "new_text": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |",
+      "new_section": "7",
+      "new_heading": "Telltales",
+      "similarity": 0.95,
+      "diff": [
+        [
+          "equal",
+          "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above"
+        ],
+        [
+          "delete",
+          "20"
+        ],
+        [
+          "insert",
+          "25"
+        ],
+        [
+          "equal",
+          "km/h | Red | Flashing at 1 Hz |"
+        ]
+      ],
+      "facts": {
+        "values_removed": [
+          "20"
+        ],
+        "values_added": [
+          "25"
+        ],
+        "modal_old": null,
+        "modal_new": null,
+        "modal_changed": false,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "id": "DLT-0007",
+      "summary": "values 20 -> 25",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "kind": "new_text",
+      "requirement_id": null,
+      "old_text": "",
+      "new_text": "The cluster shall display the estimated remaining range in km below the fuel bar graph.",
+      "new_section": "6",
+      "new_heading": "Fuel level",
+      "diff": [
+        [
+          "insert",
+          "The cluster shall display the estimated remaining range in km below the fuel bar graph."
+        ]
+      ],
+      "facts": {
+        "values_removed": [],
+        "values_added": [],
+        "modal_old": null,
+        "modal_new": "shall",
+        "modal_changed": true,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "note": "New wording with a modal verb: extract it with Sift.",
+      "id": "DLT-0008",
+      "summary": "",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    },
+    {
+      "kind": "new_text",
+      "requirement_id": null,
+      "old_text": "",
+      "new_text": "The display brightness shall follow the AmbientLight signal with a transition time of no more than 1 s.",
+      "new_section": "16",
+      "new_heading": "Display lighting",
+      "diff": [
+        [
+          "insert",
+          "The display brightness shall follow the AmbientLight signal with a transition time of no more than 1 s."
+        ]
+      ],
+      "facts": {
+        "values_removed": [],
+        "values_added": [
+          "1"
+        ],
+        "modal_old": null,
+        "modal_new": "shall",
+        "modal_changed": true,
+        "weak_words_old": [],
+        "weak_words_new": []
+      },
+      "note": "New wording with a modal verb: extract it with Sift.",
+      "id": "DLT-0009",
+      "summary": "values - -> 1",
+      "status": "open",
+      "decided_by": "",
+      "comment": ""
+    }
+  ]
+}

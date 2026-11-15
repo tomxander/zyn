@@ -1,0 +1,60 @@
+{
+ "label": "Zyn prototype.",
+ "version": "0.2.0",
+ "roles": {
+  "generator": "claude-sonnet",
+  "reviewer": "claude-sonnet"
+ },
+ "enums": {
+  "req_type": [
+   "functional",
+   "performance",
+   "interface",
+   "safety",
+   "security",
+   "usability",
+   "reliability",
+   "constraint",
+   "other"
+  ],
+  "modal": [
+   "shall",
+   "must",
+   "will",
+   "should",
+   "may",
+   "none"
+  ],
+  "quality_flag": [
+   "weak_word",
+   "ambiguous",
+   "not_atomic",
+   "not_testable",
+   "missing_condition",
+   "missing_value",
+   "unclear_reference"
+  ]
+ },
+ "offline": false,
+ "replay": true,
+ "knowledge": {
+  "state": "empty",
+  "path": "knowledge.md"
+ },
+ "rule_profiles": [
+  {
+   "name": "default",
+   "description": "Built-in checks, EARS off"
+  },
+  {
+   "name": "ears",
+   "description": "Built-in checks plus the EARS sentence-pattern check"
+  }
+ ],
+ "sift_runs": [],
+ "mode": "personal",
+ "person": null,
+ "projects": [],
+ "admin": true,
+ "project": null
+}

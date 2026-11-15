@@ -30,7 +30,7 @@ const SETS: { id: string; label: string; pattern: Pattern; rows: ProofRow[]; hea
     pattern: "lattice",
     rows: TEMPLATES,
     head: "31 injected faults, seven requirements",
-    foot: "More tests did not mean more coverage. The same model asked twice wrote a different test set. The largest model was no better than the middle one. Across all 15 requirements, templates caught 66 of 67 faults with 43 tests; free-written tests caught 31 to 44 with 99 to 121.",
+    foot: "More tests did not mean more coverage. The same model asked twice wrote a different test set. The largest model was no better than the middle one. Across all 15 requirements, templates caught 66 of 67 faults with 43 tests; free-written tests caught 31 to 44 with 99 to 121. The simulation fully models seven of them and is built from Zyn's own specs, so these seven come first.",
   },
   {
     id: "real",
@@ -85,12 +85,12 @@ export function Proof() {
   return (
     <section id="proof" className="section" data-sa="2" aria-labelledby="proof-title">
       <div className="wrap">
-        <SectionHead>The proof</SectionHead>
+        <SectionHead>The evidence</SectionHead>
         <div className="proof__head">
           <Headline id="proof-title" plain="We planted mistakes." inked="Here is what code caught." />
           <p className="body">
-            We hid mistakes in clean requirements, tests and CAN databases, one at a time, and let Zyn look. No AI involved,
-            so the result is the same every run. We publish the misses too. Every number has its dataset, method and limits on
+            We hid mistakes in clean requirements, tests and CAN databases, one at a time, and let Zyn look. The first
+            tabs use no AI, so the result is the same every run; the last two ran Claude. We publish the misses too. Every number has its dataset, method and limits on
             the{" "}
             <a className="link" href={docHref("benchmarks")}>
               Benchmarks

@@ -31,7 +31,7 @@ export const LAYERS: Layer[] = [
     icon: "code-check",
     title: "Code checks",
     short: "Flag what they can find",
-    text: "Runs first, with no AI, no key and no cost. A changed number, an invented value or a signal that doesn't exist is flagged, the same way every time.",
+    text: "Runs first, with no AI, no key and no cost. A changed number, an invented value or a signal that doesn't exist is flagged by its check, the same way every time. Some mistakes slip past; the evidence section lists which.",
     record: [
       { k: "check", v: "number_changed" },
       { k: "source", v: "\"within 10 ms\"" },
@@ -119,19 +119,19 @@ export type Tool = {
 };
 
 export const TOOLS: Tool[] = [
-  { id: "sift-review", name: "Sift Review", mark: "sift", text: "Check a requirement set from a supplier or AI tool against its specification.", inputs: ["ReqIF", "Excel", "CSV"], outputs: ["ReqIF", "Evidence"] },
-  { id: "anvil-review", name: "Anvil Review", mark: "anvil", text: "Find tests that name signals that don't exist, cite missing requirements or can never fail.", inputs: ["DBC", "CSV", "vTESTstudio"], outputs: ["Evidence", "Excel"] },
-  { id: "sift-delta", name: "Sift Delta", mark: "sift", text: "A new spec revision? See every change, and which approved requirements it touches.", inputs: ["PDF", "DOCX"], outputs: ["ReqIF", "Excel"] },
+  { id: "sift-review", name: "Sift Review", mark: "sift", text: "Check a requirement set from a supplier or AI tool against its specification.", inputs: ["ReqIF", "Excel", "CSV"], outputs: ["ReqIF", "Excel", "Evidence"] },
+  { id: "anvil-review", name: "Anvil Review", mark: "anvil", text: "Find tests that name signals that don't exist, cite missing requirements or can never fail. Reads pytest, CAPL, Robot and vTESTstudio tests against a DBC, KCD, SYM or ARXML database.", inputs: ["Tests", "CAN database", "CSV"], outputs: ["Evidence", "Excel"] },
+  { id: "sift-delta", name: "Sift Delta", mark: "sift", text: "A new spec revision? See every change, and which approved requirements it touches.", inputs: ["PDF", "DOCX"], outputs: ["Excel", "JSON"] },
   { id: "sift", name: "Sift", mark: "sift", text: "Draft requirements from a specification, each tied to the words it came from.", inputs: ["PDF", "DOCX"], outputs: ["ReqIF", "Excel"] },
-  { id: "anvil", name: "Anvil", mark: "anvil", text: "Build tests from checked templates, and see which planted faults they catch.", inputs: ["ReqIF", "DBC"], outputs: ["pytest", "Robot", "CAPL"] },
-  { id: "assay", name: "Assay", mark: "assay", text: "Compare Claude and local Ollama models on public tests: accuracy, consistency and cost per right answer.", inputs: ["Answer keys"], outputs: ["Excel"] },
+  { id: "anvil", name: "Anvil", mark: "anvil", text: "Build tests from checked templates, and see which planted faults they catch.", inputs: ["ReqIF", "CAN database"], outputs: ["pytest", "Robot", "CAPL"] },
+  { id: "assay", name: "Assay", mark: "assay", text: "Compare models on public tests: accuracy, consistency and cost per right answer. Claude models so far; local Ollama models once someone runs them.", inputs: ["Answer keys"], outputs: ["Excel"] },
   { id: "scribe", name: "Scribe", mark: "scribe", text: "Documents. Planned.", inputs: [], outputs: [], planned: true },
   { id: "source", name: "Source", mark: "source", text: "Procurement. Planned.", inputs: [], outputs: [], planned: true },
 ];
 
 // The hub: what goes in on the left, what comes out on the right.
-export const HUB_IN = ["PDF", "DOCX", "ReqIF", "Excel", "CSV", "DBC", "vTESTstudio", "Answer keys"];
-export const HUB_OUT = ["ReqIF", "Excel", "pytest", "Robot", "CAPL", "Evidence"];
+export const HUB_IN = ["PDF", "DOCX", "ReqIF", "Excel", "CSV", "CAN database", "Tests", "Answer keys"];
+export const HUB_OUT = ["ReqIF", "Excel", "JSON", "pytest", "Robot", "CAPL", "Evidence"];
 
 export const WHY = [
   { title: "Works on anyone's output", text: "Requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn." },
@@ -152,7 +152,7 @@ export const WHEN = [
 ];
 
 export const FITS = [
-  { use: "DOORS Next, Polarion, Codebeamer", gets: "ReqIF files in and out, with review state and findings as attributes. Import into DOORS Next and Polarion not yet tested" },
+  { use: "DOORS Next, Polarion, Codebeamer", gets: "ReqIF files in and out, with review state and findings as attributes. Import into these tools not yet tested" },
   { use: "pytest, Robot Framework, CANoe", gets: "Test stubs in each format to map in your tool, plus a flat step table" },
   { use: "CI and test benches", gets: "zyn remote with an access token, against a team server" },
   { use: "An AI coding agent", gets: "An MCP server: the agent calls Zyn's checks inside its own loop" },
@@ -173,7 +173,7 @@ export const MODE_ROWS: { k: string; desk: string; team: string }[] = [
   { k: "programmes", desk: "one", team: "kept apart, per sign-in group" },
   { k: "approvals", desk: "yours", team: "four eyes: never your own work" },
   { k: "test benches", desk: "the command line", team: "tokens that can never approve" },
-  { k: "models", desk: "Claude or local Ollama", team: "only the ones IT allows" },
+  { k: "models", desk: "Claude, Ollama or a connector", team: "only the ones IT allows" },
 ];
 
 export type RoadItem = { title: string; text: string };
@@ -191,7 +191,9 @@ export const ROAD: { status: "Built" | "Next" | "Later"; items: RoadItem[] }[] =
     status: "Next",
     items: [
       { title: "Round trip with your requirement tool", text: "A requirement set and its review decisions go out to DOORS Next or Polarion and back, tested in the tools themselves." },
-      { title: "Trust pack", text: "An engineer-reviewed answer key, a tool-qualification kit, and a security pack with architecture, data flows and a software bill of materials." },
+      { title: "An engineer-reviewed answer key", text: "So every score stops saying \"AI-reviewed\". Plus notes on intended use and limits, and a plain description of the architecture and data flows." },
+      { title: "Local models, compared", text: "No published comparison of local and hosted models on automotive tasks exists. The benchmark pack is ready to run on Ollama models." },
+      { title: "AI reviewer for tests", text: "Error and edge-case coverage needs a reviewer that quotes the test; code alone can't decide it." },
       { title: "Swapped terms", text: "A signal or status swapped for another valid one passes every code check today. A term-level comparison against the source sentence is the next check to try." },
       { title: "Diagnostics", text: "A UDS and DTC catalogue checked against its ODX or CDD description." },
     ],
@@ -269,7 +271,7 @@ export const LANES: LaneItem[][] = [
 
 export const SECTIONS = [
   { id: "how", label: "How it works" },
-  { id: "proof", label: "Proof" },
+  { id: "proof", label: "Evidence" },
   { id: "tools", label: "Tools" },
   { id: "teams", label: "Teams" },
   { id: "work", label: "Daily work" },

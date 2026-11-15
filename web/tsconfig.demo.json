@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "resolveJsonModule": true, "types": ["vite/client"] },
+  "include": ["demo", "src", "vite.demo.config.ts"],
+  "exclude": ["src/**/*.test.tsx", "src/test-setup.ts"]
+}

@@ -155,7 +155,7 @@ function Walls() {
         </div>
         <div className="walls__drop">
           <Wire speed={1.8} down />
-          <Node title="Models IT allows" sub="Claude or your own Ollama; the rest refused" />
+          <Node title="Models IT allows" sub="Claude or Ollama today; anything else refused" />
         </div>
       </div>
       <div className="walls__out">

@@ -1,0 +1,16 @@
+/* The demo note: a small ink card in the corner, built from the review screen's own tokens. */
+.demo-bar {
+  position: fixed; left: var(--zyn-s4); bottom: var(--zyn-s4); z-index: 9999; max-width: min(520px, calc(100vw - 32px));
+  display: flex; align-items: center; gap: var(--zyn-s4); padding: var(--zyn-s3) var(--zyn-s4);
+  background: var(--zyn-ink); color: var(--zyn-on-ink); box-shadow: var(--zyn-shadow-float);
+  font-family: var(--zyn-font-body); font-size: 13px; line-height: 1.45;
+}
+.demo-bar b { font-weight: 600; }
+.demo-bar span { color: var(--zyn-on-ink-2); }
+.demo-bar span b { color: var(--zyn-on-ink); }
+.demo-bar a { flex: none; color: var(--zyn-on-ink); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.demo-bar button {
+  flex: none; background: none; border: 0; color: var(--zyn-on-ink-2); font: inherit; cursor: pointer; padding: 2px 4px;
+}
+.demo-bar button:hover { color: var(--zyn-on-ink); }
+@media (max-width: 640px) { .demo-bar { left: var(--zyn-s2); right: var(--zyn-s2); bottom: var(--zyn-s2); flex-wrap: wrap; } }

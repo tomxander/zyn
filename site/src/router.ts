@@ -42,6 +42,7 @@ export function usePage() {
       if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
       const url = new URL(a.href, window.location.href);
       if (url.origin !== window.location.origin || !(url.pathname === HOME || url.pathname.startsWith(BASE))) return;
+      if (url.pathname.startsWith(`${BASE}demo`)) return; // the online demo is its own app: a normal page load
       e.preventDefault();
       navigate(url.href);
     };

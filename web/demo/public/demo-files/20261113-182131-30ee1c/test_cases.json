@@ -1,0 +1,3945 @@
+{
+  "label": "Zyn prototype.",
+  "run_id": "20261113-182131-30ee1c",
+  "dbc_path": "E:\\Claude\\Zyn\\data\\synthetic\\icx100.dbc",
+  "cases": [
+    {
+      "case_id": "TC-REQ-COM-001-01",
+      "requirement_id": "REQ-COM-001",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Connect a CAN analyzer or oscilloscope to the powertrain CAN bus and measure the bit time of frames sent by the cluster (2 µs per bit for 500 kbit/s). Confirm the cluster communicates without error frames on a 500 kbit/s bus.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-COM-001",
+        "quote": "10.1 The cluster shall communicate on the powertrain CAN bus at a bit rate of 500 kbit/s."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-COM-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-COM-004-01",
+      "requirement_id": "REQ-COM-004",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Force a bus-off on the cluster with a CAN fault-injection tool, such as a short of CAN-H to CAN-L or error-frame injection. Then confirm with a bus trace that the cluster resumes transmitting ClusterStatus according to the recovery timing in the network management document.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-COM-004",
+        "quote": "10.4 After a bus-off event, the cluster shall attempt recovery as specified in the network management document."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-COM-004@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-006-01",
+      "requirement_id": "REQ-GAUGE-006",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Drive EngineSpeed on the bench at several values (for example 0, 1000, 4000, 8000 rpm) and visually check that the tachometer needle points to the matching value on the 0 to 8000 rpm scale.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-006",
+        "quote": "5.1 The cluster shall display engine speed from the EngineSpeed signal as a needle on a scale from 0 to 8000 rpm."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GAUGE-006@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-007-01",
+      "requirement_id": "REQ-GAUGE-007",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Set RedlineRpm to a known value in the cluster configuration, then visually check that the red zone of the tachometer scale starts exactly at that rpm mark; repeat with a second configured value.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-007",
+        "quote": "5.2 The red zone of the scale shall start at the value given by the configuration parameter RedlineRpm."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GAUGE-007@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-008-01",
+      "requirement_id": "REQ-GAUGE-008",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Step FuelLevel from 0 to 100 % on a HIL bench and visually confirm the gauge is drawn as a bar graph with exactly eight segments that fill up as the level rises; compare with FuelBarSegments once a level-to-segment mapping is specified.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-008",
+        "quote": "The cluster shall display the fuel level as a bar graph with eight segments."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GAUGE-008@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-009-01",
+      "requirement_id": "REQ-GAUGE-009",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Feed FuelLevel with a slow oscillation around a constant mean (simulating incline or slosh) and watch whether the fuel bar or FuelBarSegments stays steady; repeat in a vehicle on a grade.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-009",
+        "quote": "The fuel level display shall be filtered so that it does not fluctuate when the vehicle is driving on an incline."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GAUGE-009@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-010-01",
+      "requirement_id": "REQ-GAUGE-010",
+      "template": "threshold",
+      "title": "FuelLevel one step below 10",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 15.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 9.5
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_LowFuel",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "TT_LowFuel = 1 within 300 ms",
+      "boundary_rationale": "Smallest step (0.5 %) past the threshold.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-010",
+        "quote": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-010@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-010-02",
+      "requirement_id": "REQ-GAUGE-010",
+      "template": "threshold",
+      "title": "FuelLevel exactly 10",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 15.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 10.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_LowFuel",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "TT_LowFuel stays 0 for 300 ms",
+      "boundary_rationale": "'below' excludes the threshold itself.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-010",
+        "quote": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-010@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-010-03",
+      "requirement_id": "REQ-GAUGE-010",
+      "template": "threshold",
+      "title": "FuelLevel one step on the other side",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 15.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 10.5
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_LowFuel",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "TT_LowFuel stays 0 for 300 ms",
+      "boundary_rationale": "Smallest step (0.5 %) before the threshold.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-010",
+        "quote": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-010@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-010-04",
+      "requirement_id": "REQ-GAUGE-010",
+      "template": "threshold",
+      "title": "FuelLevel at range limit 0",
+      "kind": "range",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 15.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "FuelLevel",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_LowFuel",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "TT_LowFuel = 1 within 300 ms",
+      "boundary_rationale": "Signal range limit from the DBC.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-010",
+        "quote": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-010@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GEN-001-01",
+      "requirement_id": "REQ-GEN-001",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Apply supply power to the cluster while a high-speed camera films the display and a scope logs the supply line; measure the time from power-up to the first visible frame and check it is within 2 s (\"within 2 s of power-up\"). Repeat several cold starts.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GEN-001",
+        "quote": "15.1 The cluster shall display the first frame within 2 s of power-up."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GEN-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GEN-002-01",
+      "requirement_id": "REQ-GEN-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Film the display with a high-speed camera during speed and RPM sweeps and visual-heavy scenarios; review for stutter and dropped frames, and ask for a measurable frame-rate criterion.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GEN-002",
+        "quote": "15.2 The graphics shall run smoothly at all times."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GEN-002@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GEN-003-01",
+      "requirement_id": "REQ-GEN-003",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Run worst-case bus load and display scenarios while measuring CPU load with a debugger/trace or OS profiling tool; compute the average over every sliding 1 s window and check it never exceeds 70 percent.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GEN-003",
+        "quote": "15.3 CPU load shall not exceed 70 percent averaged over any 1 s window."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GEN-003@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-INP-002-01",
+      "requirement_id": "REQ-INP-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "On a bench cluster with a known trip value, select a trip counter. Press OK for clearly less than 2 s and check the counter is not reset. Then press OK for clearly more than 2 s and check on the display that the selected trip counter resets and the other trip counter is unchanged. Use a stopwatch or a timed button actuator.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-INP-002",
+        "quote": "A long press of the OK button for more than 2 s shall reset the selected trip counter."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-INP-002@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-PWR-001-01",
+      "requirement_id": "REQ-PWR-001",
+      "template": "event_response",
+      "title": "IGN 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "ClusterState",
+          "value": 1.0,
+          "within_ms": 1500
+        }
+      ],
+      "expected": "ClusterState = 1 within 1500 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-001",
+        "quote": "3.1 The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-PWR-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-PWR-001-02",
+      "requirement_id": "REQ-PWR-001",
+      "template": "event_response",
+      "title": "No IGN change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_absent",
+          "signal": "ClusterState",
+          "value": 1.0,
+          "for_ms": 1500
+        }
+      ],
+      "expected": "ClusterState never shows 1 for 1500 ms",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-001",
+        "quote": "3.1 The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-PWR-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-PWR-004-01",
+      "requirement_id": "REQ-PWR-004",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Bring the cluster into SLEEP (IGN OFF, wait until after the goodbye phase). Measure the battery supply current with a precision ammeter or power analyzer over a settled period. Verify it does not exceed 0.1 mA.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-004",
+        "quote": "3.3 In the SLEEP state, the cluster shall draw no more than 0.1 mA from the battery supply."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-PWR-004@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-SEC-001-01",
+      "requirement_id": "REQ-SEC-001",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "With a diagnostic tester, send a write-memory request (e.g. WriteDataByIdentifier / WriteMemoryByAddress) without security access and confirm a negative response (security access denied). Then unlock via SecurityAccess seed/key, repeat and confirm the write is accepted. Also try a wrong key and confirm the write is still refused.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-SEC-001",
+        "quote": "13.1 Diagnostic services that write memory shall require successful security access authentication."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-SEC-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-SEC-002-01",
+      "requirement_id": "REQ-SEC-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Clarify the requirement with the security team (e.g. keys stored in an HSM / secure storage, not readable via debug or diagnostics). Then do a security review and penetration test: try to read keys via diagnostic memory reads, the debug interface and a flash dump, and confirm no key material is exposed.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-SEC-002",
+        "quote": "13.2 The cluster shall protect cryptographic keys appropriately."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-SEC-002@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-001-01",
+      "requirement_id": "REQ-TT-001",
+      "template": "event_response",
+      "title": "BrakeWarn 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "BrakeWarn",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "BrakeWarn",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "TT_Brake = 1 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-TT-001",
+        "quote": "| Brake system warning | BrakeWarn = 1 | Red | Steady on |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-001-02",
+      "requirement_id": "REQ-TT-001",
+      "template": "event_response",
+      "title": "No BrakeWarn change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "BrakeWarn",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "TT_Brake stays 0",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-TT-001",
+        "quote": "| Brake system warning | BrakeWarn = 1 | Red | Steady on |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-003-01",
+      "requirement_id": "REQ-TT-003",
+      "template": "event_response",
+      "title": "FuelLow 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "FuelLow",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "FuelLow",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_LowFuel",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "TT_LowFuel = 1 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-TT-003",
+        "quote": "| Low fuel | FuelLow = 1 | Amber | Steady on |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-003@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-003-02",
+      "requirement_id": "REQ-TT-003",
+      "template": "event_response",
+      "title": "No FuelLow change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "FuelLow",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_LowFuel",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "TT_LowFuel stays 0",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-TT-003",
+        "quote": "| Low fuel | FuelLow = 1 | Amber | Steady on |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-003@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-004-01",
+      "requirement_id": "REQ-TT-004",
+      "template": "event_response",
+      "title": "MIL 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "MIL",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "MIL",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_MIL",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "TT_MIL = 1 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-TT-004",
+        "quote": "| Engine malfunction | MIL = 1 | Amber | Steady on |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-004@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-004-02",
+      "requirement_id": "REQ-TT-004",
+      "template": "event_response",
+      "title": "No MIL change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "MIL",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_MIL",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "TT_MIL stays 0",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-TT-004",
+        "quote": "| Engine malfunction | MIL = 1 | Amber | Steady on |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-004@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-005-01",
+      "requirement_id": "REQ-TT-005",
+      "template": "event_response",
+      "title": "IGN 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "TT_Brake = 1 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-TT-005",
+        "quote": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-005@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-005-02",
+      "requirement_id": "REQ-TT-005",
+      "template": "event_response",
+      "title": "TT_Brake holds for 2000 ms",
+      "kind": "timing",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 800,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 1.0,
+          "for_ms": 1600
+        },
+        {
+          "at_ms": 2800,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 0.0,
+          "within_ms": 200
+        }
+      ],
+      "expected": "TT_Brake = 1 for 2000 ms, then ends",
+      "boundary_rationale": "Duration from the requirement; checked to one 100 ms status cycle.",
+      "oracle": {
+        "requirement_id": "REQ-TT-005",
+        "quote": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-005@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-005-03",
+      "requirement_id": "REQ-TT-005",
+      "template": "event_response",
+      "title": "No IGN change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "TT_Brake stays 0",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-TT-005",
+        "quote": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-005@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-006-01",
+      "requirement_id": "REQ-TT-006",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Activate a red telltale (BrakeWarn = 1) and an amber telltale (MIL = 1) at the same time and visually check on the cluster that the red telltale is given priority as defined in the display specification.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-TT-006",
+        "quote": "Red telltales shall have priority over amber telltales."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-TT-006@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-007-01",
+      "requirement_id": "REQ-TT-007",
+      "template": "timeout",
+      "title": "Warnings silent just under 500 ms",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 500,
+          "do": "stop",
+          "message": "Warnings"
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 0.0,
+          "for_ms": 400
+        }
+      ],
+      "expected": "TT_Brake stays 0 for 400 ms",
+      "boundary_rationale": "One 100 ms message cycle short of the timeout.",
+      "oracle": {
+        "requirement_id": "REQ-TT-007",
+        "quote": "A telltale whose input signal has not been received for more than 500 ms shall be lit"
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-TT-007@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-TT-007-02",
+      "requirement_id": "REQ-TT-007",
+      "template": "timeout",
+      "title": "Warnings silent past 500 ms",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 500,
+          "do": "stop",
+          "message": "Warnings"
+        },
+        {
+          "at_ms": 1000,
+          "do": "expect",
+          "signal": "TT_Brake",
+          "value": 1.0,
+          "within_ms": 200
+        }
+      ],
+      "expected": "TT_Brake = 1 within 200 ms after the timeout",
+      "boundary_rationale": "Reaction must follow the stated timeout.",
+      "oracle": {
+        "requirement_id": "REQ-TT-007",
+        "quote": "A telltale whose input signal has not been received for more than 500 ms shall be lit"
+      },
+      "open_values": [
+        "reaction after the timeout not stated; cases allow 200 ms (two status cycles)"
+      ],
+      "spec_item": "TS-REQ-TT-007@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-UPD-001-01",
+      "requirement_id": "REQ-UPD-001",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Connect a diagnostic tester to the diagnostic connector and flash a new, validly signed software version. Then read the software version identifier with the tester and confirm that it matches the new version.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-UPD-001",
+        "quote": "12.1 The cluster software shall be updatable through the diagnostic connector."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-UPD-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-UPD-002-01",
+      "requirement_id": "REQ-UPD-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Use a diagnostic tester to attempt one update with a validly signed image and one with an invalid or tampered signature. Confirm that only the validly signed image is installed, using the software version read-out and the tester's negative response for the invalid image.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-UPD-002",
+        "quote": "12.2 A software update shall be accepted only if its digital signature is valid."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-UPD-002@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-UPD-003-01",
+      "requirement_id": "REQ-UPD-003",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Note the installed software version. Start an update with a diagnostic tester and interrupt it, e.g. by disconnecting power or the tester mid-transfer, or by sending a corrupted image. Restart the cluster and confirm that the previous version is reported and that the cluster resumes normal operation, e.g. ClusterStatus transmitted with ClusterState ACTIVE.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-UPD-003",
+        "quote": "12.3 If an update fails, the cluster shall return to the previously installed software version."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-UPD-003@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-AUD-001-01",
+      "requirement_id": "REQ-AUD-001",
+      "template": "event_response",
+      "title": "BeltUnfastened 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "BeltUnfastened",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "BeltUnfastened",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "ChimeActive",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "ChimeActive = 1 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-AUD-001",
+        "quote": "8.1 The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-AUD-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-AUD-001-02",
+      "requirement_id": "REQ-AUD-001",
+      "template": "event_response",
+      "title": "No BeltUnfastened change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "BeltUnfastened",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "ChimeActive",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "ChimeActive stays 0",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-AUD-001",
+        "quote": "8.1 The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-AUD-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-DIAG-001-01",
+      "requirement_id": "REQ-DIAG-001",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Induce a backlight driver fault on the bench (e.g. open the backlight LED string or use fault injection hardware), then read the fault memory with a diagnostic tester and check that the expected DTC is stored.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-DIAG-001",
+        "quote": "The cluster shall store a DTC when the display backlight driver reports a fault."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-DIAG-001@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-DIAG-002-01",
+      "requirement_id": "REQ-DIAG-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "With at least one known DTC stored, connect a diagnostic tester, issue a read-DTC request and check that the stored DTCs are returned correctly.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-DIAG-002",
+        "quote": "Stored DTCs shall be readable by a diagnostic tester."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-DIAG-002@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-DIAG-003-01",
+      "requirement_id": "REQ-DIAG-003",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Power up the cluster (IGN on) and watch the display (camera or by eye) to confirm the self-test sequence runs. Also confirm through a diagnostic tester or debug interface that the self-test executed.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-DIAG-003",
+        "quote": "The cluster shall perform a display self-test at startup"
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-DIAG-003@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-002-01",
+      "requirement_id": "REQ-GAUGE-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "Feed a constant VehicleSpeed (e.g. from a simulator), switch the unit setting between km/h and mph in the cluster menu, and check visually that the display shows the correct value and unit label for each setting.",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-002",
+        "quote": "in km/h or mph according to the unit setting"
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-GAUGE-002@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-005-01",
+      "requirement_id": "REQ-GAUGE-005",
+      "template": "periodic_tx",
+      "title": "ClusterStatus every 100 ms",
+      "kind": "timing",
+      "steps": [
+        {
+          "at_ms": 500,
+          "do": "expect_period",
+          "message": "ClusterStatus",
+          "period_ms": 100,
+          "tolerance_ms": 10,
+          "count": 50
+        }
+      ],
+      "expected": "50 intervals of 100 ms ± 10 ms",
+      "boundary_rationale": "Period from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-005",
+        "quote": "4.3 The speed value shall be updated at least every 100 ms."
+      },
+      "open_values": [
+        "tolerance not stated; cases allow ±10 ms (10 percent)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-005@20261113-182131-30ee1c",
+      "spec_version": 1
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-003-01",
+      "requirement_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "title": "VehicleSpeed = 0 km/h",
+      "kind": "range",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": 0.0,
+          "high": null,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within 0 .. - km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-003",
+        "quote": "The displayed speed shall never be lower than the actual vehicle speed"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-003-02",
+      "requirement_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "title": "VehicleSpeed = 6 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 6.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": 6.0,
+          "high": null,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within 6 .. - km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-003",
+        "quote": "The displayed speed shall never be lower than the actual vehicle speed"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-003-03",
+      "requirement_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "title": "VehicleSpeed = 75 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 75.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": 75.0,
+          "high": null,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within 75 .. - km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-003",
+        "quote": "The displayed speed shall never be lower than the actual vehicle speed"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-003-04",
+      "requirement_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "title": "VehicleSpeed = 150 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": 150.0,
+          "high": null,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within 150 .. - km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-003",
+        "quote": "The displayed speed shall never be lower than the actual vehicle speed"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-003-05",
+      "requirement_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "title": "VehicleSpeed = 225 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 225.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": 225.0,
+          "high": null,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within 225 .. - km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-003",
+        "quote": "The displayed speed shall never be lower than the actual vehicle speed"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-003-06",
+      "requirement_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "title": "VehicleSpeed = 300 km/h",
+      "kind": "range",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 300.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": 300.0,
+          "high": null,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within 300 .. - km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-003",
+        "quote": "The displayed speed shall never be lower than the actual vehicle speed"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-004-01",
+      "requirement_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "title": "VehicleSpeed = 0 km/h",
+      "kind": "range",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": null,
+          "high": 4.0,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within - .. 4 km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-004",
+        "quote": "shall not exceed it by more than 10 percent plus 4 km/h"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-004@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-004-02",
+      "requirement_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "title": "VehicleSpeed = 6 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 6.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": null,
+          "high": 10.6,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within - .. 10.6 km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-004",
+        "quote": "shall not exceed it by more than 10 percent plus 4 km/h"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-004@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-004-03",
+      "requirement_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "title": "VehicleSpeed = 75 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 75.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": null,
+          "high": 86.5,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within - .. 86.5 km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-004",
+        "quote": "shall not exceed it by more than 10 percent plus 4 km/h"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-004@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-004-04",
+      "requirement_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "title": "VehicleSpeed = 150 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": null,
+          "high": 169.0,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within - .. 169 km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-004",
+        "quote": "shall not exceed it by more than 10 percent plus 4 km/h"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-004@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-004-05",
+      "requirement_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "title": "VehicleSpeed = 225 km/h",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 225.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": null,
+          "high": 251.5,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within - .. 251.5 km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-004",
+        "quote": "shall not exceed it by more than 10 percent plus 4 km/h"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-004@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-GAUGE-004-06",
+      "requirement_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "title": "VehicleSpeed = 300 km/h",
+      "kind": "range",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 150.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 300.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_range",
+          "signal": "DisplayedSpeed",
+          "low": null,
+          "high": 330.0,
+          "after_ms": 220
+        }
+      ],
+      "expected": "DisplayedSpeed within - .. 330 km/h after 220 ms",
+      "boundary_rationale": "Spread over the DBC range, including the limits and a low value where a fixed offset matters most.",
+      "oracle": {
+        "requirement_id": "REQ-GAUGE-004",
+        "quote": "shall not exceed it by more than 10 percent plus 4 km/h"
+      },
+      "open_values": [
+        "update time not stated; cases read the output 220 ms after the change (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-GAUGE-004@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-002-01-v2",
+      "requirement_id": "REQ-PWR-002",
+      "template": "event_response",
+      "title": "IGN 1 -> 0",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "ClusterState",
+          "value": 2.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "ClusterState = 2 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-002",
+        "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-PWR-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-002-02-v2",
+      "requirement_id": "REQ-PWR-002",
+      "template": "event_response",
+      "title": "ClusterState holds for 5000 ms",
+      "kind": "timing",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 800,
+          "do": "expect",
+          "signal": "ClusterState",
+          "value": 2.0,
+          "for_ms": 4600
+        }
+      ],
+      "expected": "ClusterState = 2 for 5000 ms, then ends",
+      "boundary_rationale": "Duration from the requirement; checked to one 100 ms status cycle.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-002",
+        "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-PWR-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-002-03-v2",
+      "requirement_id": "REQ-PWR-002",
+      "template": "event_response",
+      "title": "No IGN change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_absent",
+          "signal": "ClusterState",
+          "value": 2.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "ClusterState never shows 2 for 300 ms",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-002",
+        "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-PWR-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-003-01-v2",
+      "requirement_id": "REQ-PWR-003",
+      "template": "event_response",
+      "title": "IGN 1 -> 0",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "IGN",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "ClusterState",
+          "value": 0.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "ClusterState = 0 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-003",
+        "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-PWR-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-003-02-v2",
+      "requirement_id": "REQ-PWR-003",
+      "template": "event_response",
+      "title": "No IGN change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "IGN",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_absent",
+          "signal": "ClusterState",
+          "value": 0.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "ClusterState never shows 0 for 300 ms",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-003",
+        "quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 300 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-PWR-003@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-005-01-v2",
+      "requirement_id": "REQ-PWR-005",
+      "template": "event_response",
+      "title": "DoorOpen 0 -> 1",
+      "kind": "positive",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "DoorOpen",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "DoorOpen",
+          "value": 1.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "ClusterState",
+          "value": 1.0,
+          "within_ms": 300
+        }
+      ],
+      "expected": "ClusterState = 1 within 300 ms",
+      "boundary_rationale": "The triggering change from the requirement.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-005",
+        "quote": "The cluster shall wake up within 300 ms when a door is opened."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-PWR-005@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-PWR-005-02-v2",
+      "requirement_id": "REQ-PWR-005",
+      "template": "event_response",
+      "title": "No DoorOpen change",
+      "kind": "negative",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "DoorOpen",
+          "value": 0.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect_absent",
+          "signal": "ClusterState",
+          "value": 1.0,
+          "for_ms": 300
+        }
+      ],
+      "expected": "ClusterState never shows 1 for 300 ms",
+      "boundary_rationale": "Without the trigger the output must not react.",
+      "oracle": {
+        "requirement_id": "REQ-PWR-005",
+        "quote": "The cluster shall wake up within 300 ms when a door is opened."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-PWR-005@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-TT-002-01-v2",
+      "requirement_id": "REQ-TT-002",
+      "template": "threshold",
+      "title": "VehicleSpeed one step above 25",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 24.9
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 25.01
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Belt",
+          "value": 1.0,
+          "within_ms": 220
+        }
+      ],
+      "expected": "TT_Belt = 1 within 220 ms",
+      "boundary_rationale": "Smallest step (0.01 km/h) past the threshold.",
+      "oracle": {
+        "requirement_id": "REQ-TT-002",
+        "quote": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 220 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-TT-002-02-v2",
+      "requirement_id": "REQ-TT-002",
+      "template": "threshold",
+      "title": "VehicleSpeed exactly 25",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 24.9
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 25.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Belt",
+          "value": 0.0,
+          "for_ms": 220
+        }
+      ],
+      "expected": "TT_Belt stays 0 for 220 ms",
+      "boundary_rationale": "'above' excludes the threshold itself.",
+      "oracle": {
+        "requirement_id": "REQ-TT-002",
+        "quote": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 220 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-TT-002-03-v2",
+      "requirement_id": "REQ-TT-002",
+      "template": "threshold",
+      "title": "VehicleSpeed one step on the other side",
+      "kind": "boundary",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 24.9
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 24.99
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Belt",
+          "value": 0.0,
+          "for_ms": 220
+        }
+      ],
+      "expected": "TT_Belt stays 0 for 220 ms",
+      "boundary_rationale": "Smallest step (0.01 km/h) before the threshold.",
+      "oracle": {
+        "requirement_id": "REQ-TT-002",
+        "quote": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 220 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-TT-002-04-v2",
+      "requirement_id": "REQ-TT-002",
+      "template": "threshold",
+      "title": "VehicleSpeed at range limit 300",
+      "kind": "range",
+      "steps": [
+        {
+          "at_ms": 0,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 24.9
+        },
+        {
+          "at_ms": 500,
+          "do": "set",
+          "signal": "VehicleSpeed",
+          "value": 300.0
+        },
+        {
+          "at_ms": 500,
+          "do": "expect",
+          "signal": "TT_Belt",
+          "value": 1.0,
+          "within_ms": 220
+        }
+      ],
+      "expected": "TT_Belt = 1 within 220 ms",
+      "boundary_rationale": "Signal range limit from the DBC.",
+      "oracle": {
+        "requirement_id": "REQ-TT-002",
+        "quote": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |"
+      },
+      "open_values": [
+        "reaction time not stated; cases allow 220 ms (two status cycles plus one input cycle)"
+      ],
+      "spec_item": "TS-REQ-TT-002@20261113-182131-30ee1c",
+      "spec_version": 2
+    },
+    {
+      "case_id": "TC-REQ-COM-002-01-v3",
+      "requirement_id": "REQ-COM-002",
+      "template": "not_automatable",
+      "title": "Manual check",
+      "kind": "manual",
+      "steps": [],
+      "expected": "For a received message, stop sending it for 450 ms, then for 550 ms. Confirm the cluster treats its signals as invalid only in the second case, using the reaction defined for that signal (for example the telltale behaviour in 7.4).",
+      "boundary_rationale": "No bus observable; checked by a person.",
+      "oracle": {
+        "requirement_id": "REQ-COM-002",
+        "quote": "If a CAN signal is not received for more than 500 ms, the cluster shall treat the signal as invalid."
+      },
+      "open_values": [],
+      "spec_item": "TS-REQ-COM-002@20261113-182131-30ee1c",
+      "spec_version": 3
+    }
+  ],
+  "left_out": [
+    {
+      "case_id": "TC-REQ-COM-002-01",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-INP-003-01",
+      "state": "stale"
+    },
+    {
+      "case_id": "TC-REQ-PWR-002-01",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-PWR-002-02",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-PWR-002-03",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-PWR-003-01",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-PWR-003-02",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-PWR-005-01",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-PWR-005-02",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-TT-002-01",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-TT-002-02",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-TT-002-03",
+      "state": "superseded"
+    },
+    {
+      "case_id": "TC-REQ-TT-002-04",
+      "state": "superseded"
+    }
+  ],
+  "specs": {
+    "TS-REQ-GAUGE-009@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-009",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "Filter time constant or settling time.",
+        "Maximum allowed change of the displayed fuel level (e.g. FuelBarSegments) during sloshing.",
+        "Amplitude and frequency of the fuel level fluctuation that counts as driving on an incline."
+      ],
+      "manual_test_idea": "Feed FuelLevel with a slow oscillation around a constant mean (simulating incline or slosh) and watch whether the fuel bar or FuelBarSegments stays steady; repeat in a vehicle on a grade.",
+      "rationale": "\"Does not fluctuate\" is vague and gives no filter time, amplitude or tolerance, so no measurable pass criterion remains.",
+      "requirement_text": "The fuel level display shall be filtered so that it does not fluctuate when the vehicle is driving on an incline.",
+      "requirement_quote": "The fuel level display shall be filtered so that it does not fluctuate when the vehicle is driving on an incline.",
+      "requirement_item": "REQ-GAUGE-009@20261113-165443-9c129b",
+      "section_number": "6",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GAUGE-010@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-010",
+      "template": "threshold",
+      "input_signal": "FuelLevel",
+      "initial_value": null,
+      "input_value": null,
+      "threshold": 10.0,
+      "direction": "below",
+      "output_signal": "TT_LowFuel",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [
+        {
+          "param": "threshold",
+          "quote": "below 10 percent"
+        }
+      ],
+      "assumptions": [
+        "\"The fuel level\" is the received signal Fuel.FuelLevel in % (percent of tank capacity), not the separate FuelLow flag.",
+        "The raw received FuelLevel is the reference; the filtering from REQ-GAUGE-009 is not considered.",
+        "\"The low-fuel telltale\" is ClusterStatus.TT_LowFuel, with 1 = lit."
+      ],
+      "missing": [
+        "Maximum latency from FuelLevel dropping below 10 % to TT_LowFuel = 1 (this matters especially if the filter from REQ-GAUGE-009 applies).",
+        "Hysteresis and the condition for switching the telltale off.",
+        "Whether the filtered or the raw fuel level is compared with 10 %.",
+        "Tolerance at the threshold (behaviour at exactly 10 %)."
+      ],
+      "manual_test_idea": null,
+      "rationale": "An input signal (FuelLevel) crossing a stated value (10 %) must switch an output signal (TT_LowFuel) on, which matches the threshold template.",
+      "requirement_text": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit. [Flags: ambiguous (reference for percentage and whether filtered or raw level applies), incomplete (no hysteresis or extinguish condition specified)]",
+      "requirement_quote": "When the fuel level is below 10 percent, the low-fuel telltale shall be lit.",
+      "requirement_item": "REQ-GAUGE-010@20261113-165443-9c129b",
+      "section_number": "6",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-PWR-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-PWR-002",
+      "template": "event_response",
+      "input_signal": "IGN",
+      "initial_value": 1.0,
+      "input_value": 0.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "ClusterState",
+      "expected_value": 2.0,
+      "max_latency_ms": null,
+      "hold_ms": 5000.0,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "track_bounds": [],
+      "value_sources": [
+        {
+          "param": "hold_ms",
+          "quote": "display the goodbye screen for 5 s"
+        }
+      ],
+      "assumptions": [
+        "Displaying the goodbye screen is reported as ClusterStatus.ClusterState = 2 (GOODBYE).",
+        "IGN ON is IGN = 1 and IGN OFF is IGN = 0."
+      ],
+      "missing": [
+        "Maximum time from IGN OFF until ClusterState becomes GOODBYE is not stated.",
+        "Tolerance on the 5 s goodbye duration is not stated."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Setting IGN from ON to OFF must make the cluster report the GOODBYE state and hold it for a stated duration, which matches an event response with a hold time.",
+      "track_low_factor": null,
+      "track_low_offset": null,
+      "track_high_factor": null,
+      "track_high_offset": null,
+      "requirement_text": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s.",
+      "requirement_quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state.",
+      "requirement_item": "REQ-PWR-002@20261113-165443-9c129b",
+      "section_number": "3",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-GEN-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-GEN-001",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [],
+      "manual_test_idea": "Apply supply power to the cluster while a high-speed camera films the display and a scope logs the supply line; measure the time from power-up to the first visible frame and check it is within 2 s (\"within 2 s of power-up\"). Repeat several cold starts.",
+      "rationale": "No ClusterStatus signal reports that a frame is shown, and power-up is not a DBC signal; ClusterState=ACTIVE after IGN=1 would only be a proxy the reviewer may choose to approve instead.",
+      "requirement_text": "The cluster shall display the first frame within 2 s of power-up.",
+      "requirement_quote": "15.1 The cluster shall display the first frame within 2 s of power-up.",
+      "requirement_item": "REQ-GEN-001@20261113-165443-9c129b",
+      "section_number": "15",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-TT-003@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-003",
+      "template": "event_response",
+      "input_signal": "FuelLow",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "TT_LowFuel",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [
+        "The amber Low fuel telltale is the ClusterStatus signal TT_LowFuel.",
+        "'Steady' is checked as TT_LowFuel staying 1 while FuelLow = 1; the colour cannot be checked on the bus."
+      ],
+      "missing": [
+        "Maximum reaction time from FuelLow = 1 to TT_LowFuel = 1.",
+        "How long TT_LowFuel must stay 1 to count as 'steady'."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Setting the input FuelLow to 1 must make TT_LowFuel take the value 1, which is an event-response check.",
+      "requirement_text": "The cluster shall turn on the amber Low fuel telltale steady when FuelLow = 1.",
+      "requirement_quote": "| Low fuel | FuelLow = 1 | Amber | Steady on |",
+      "requirement_item": "REQ-TT-003@20261113-165443-9c129b",
+      "section_number": "7",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-DIAG-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-DIAG-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No diagnostic request/response messages are defined in the CAN database"
+      ],
+      "manual_test_idea": "With at least one known DTC stored, connect a diagnostic tester, issue a read-DTC request and check that the stored DTCs are returned correctly.",
+      "rationale": "Reading DTCs needs diagnostic services that the CAN database does not define, so no template signal can observe it.",
+      "requirement_text": "Stored DTCs shall be readable by a diagnostic tester.",
+      "requirement_quote": "Stored DTCs shall be readable by a diagnostic tester.",
+      "requirement_item": "REQ-DIAG-002@20261113-165443-9c129b",
+      "section_number": "11",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GAUGE-005@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-005",
+      "template": "periodic_tx",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": "ClusterStatus",
+      "timeout_ms": null,
+      "period_ms": 100.0,
+      "value_sources": [
+        {
+          "param": "period_ms",
+          "quote": "at least every 100 ms"
+        }
+      ],
+      "assumptions": [
+        "The 'speed value' is the DisplayedSpeed signal, which the cluster sends in the ClusterStatus message.",
+        "An update of the speed value is observed as a transmission of ClusterStatus; the refresh of the physical display itself is not observable on the bus.",
+        "'At least every 100 ms' is read as a maximum period of 100 ms between transmissions."
+      ],
+      "missing": [
+        "The allowed tolerance or jitter on the period is not given."
+      ],
+      "manual_test_idea": null,
+      "rationale": "The requirement sets an update rate for the speed value, which on the bus is the transmission period of ClusterStatus carrying DisplayedSpeed.",
+      "requirement_text": "The speed value shall be updated at least every 100 ms.",
+      "requirement_quote": "4.3 The speed value shall be updated at least every 100 ms.",
+      "requirement_item": "REQ-GAUGE-005@20261113-165443-9c129b",
+      "section_number": "4",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-PWR-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-PWR-001",
+      "template": "event_response",
+      "input_signal": "IGN",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "ClusterState",
+      "expected_value": 1.0,
+      "max_latency_ms": 1500.0,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [
+        {
+          "param": "max_latency_ms",
+          "quote": "within 1.5 s"
+        }
+      ],
+      "assumptions": [
+        "IGN value 0 represents OFF and 1 represents ON.",
+        "The ACTIVE state is observed as ClusterStatus.ClusterState = 1 (ACTIVE)."
+      ],
+      "missing": [],
+      "manual_test_idea": null,
+      "rationale": "An IGN OFF-to-ON change must make ClusterState become ACTIVE within a stated time limit, which is a direct event-to-output reaction.",
+      "requirement_text": "The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+      "requirement_quote": "3.1 The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.",
+      "requirement_item": "REQ-PWR-001@20261113-165443-9c129b",
+      "section_number": "3",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-PWR-005@20261113-182131-30ee1c": {
+      "req_id": "REQ-PWR-005",
+      "template": "event_response",
+      "input_signal": "DoorOpen",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "ClusterState",
+      "expected_value": 1.0,
+      "max_latency_ms": 300.0,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "track_bounds": [],
+      "value_sources": [
+        {
+          "param": "max_latency_ms",
+          "quote": "wake up within 300 ms"
+        }
+      ],
+      "assumptions": [
+        "'A door is opened' maps to Body.DoorOpen changing from 0 to 1.",
+        "'Wake up' means ClusterStatus.ClusterState becomes 1 (ACTIVE).",
+        "Before the event the cluster is in SLEEP (ClusterState = 0) with IGN = 0.",
+        "Latency is measured from the DoorOpen change to the first ClusterStatus frame showing ACTIVE. ClusterStatus has a 100 ms cycle, and the cluster may send nothing while asleep."
+      ],
+      "missing": [],
+      "manual_test_idea": null,
+      "rationale": "Opening a door must make the cluster report ACTIVE within a stated time, which matches an event response with a maximum latency.",
+      "track_low_factor": null,
+      "track_low_offset": null,
+      "track_high_factor": null,
+      "track_high_offset": null,
+      "requirement_text": "The cluster shall wake up within 300 ms when a door is opened.",
+      "requirement_quote": "The cluster shall wake up within 300 ms when a door is opened.",
+      "requirement_item": "REQ-PWR-005@20261113-165443-9c129b",
+      "section_number": "3",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-DIAG-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-DIAG-001",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No CAN signal exists to inject or observe a backlight driver fault",
+        "DTC storage is not visible on the bus; it needs a diagnostic tester"
+      ],
+      "manual_test_idea": "Induce a backlight driver fault on the bench (e.g. open the backlight LED string or use fault injection hardware), then read the fault memory with a diagnostic tester and check that the expected DTC is stored.",
+      "rationale": "Neither the backlight fault nor the stored DTC appears in the CAN database, so the bus offers nothing to drive or observe.",
+      "requirement_text": "The cluster shall store a DTC when the display backlight driver reports a fault.",
+      "requirement_quote": "The cluster shall store a DTC when the display backlight driver reports a fault.",
+      "requirement_item": "REQ-DIAG-001@20261113-165443-9c129b",
+      "section_number": "11",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-TT-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-001",
+      "template": "event_response",
+      "input_signal": "BrakeWarn",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "TT_Brake",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [
+        "The red Brake system warning telltale is the ClusterStatus signal TT_Brake.",
+        "'Steady' is checked as TT_Brake staying 1 (no toggling) while BrakeWarn = 1; the colour cannot be checked on the bus."
+      ],
+      "missing": [
+        "Maximum reaction time from BrakeWarn = 1 to TT_Brake = 1.",
+        "How long TT_Brake must stay 1 to count as 'steady'."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Setting the input BrakeWarn to 1 must make TT_Brake take the value 1, which is an event-response check.",
+      "requirement_text": "The cluster shall turn on the red Brake system warning telltale steady when BrakeWarn = 1.",
+      "requirement_quote": "| Brake system warning | BrakeWarn = 1 | Red | Steady on |",
+      "requirement_item": "REQ-TT-001@20261113-165443-9c129b",
+      "section_number": "7",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-TT-007@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-007",
+      "template": "timeout",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "TT_Brake",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": "Warnings",
+      "timeout_ms": 500.0,
+      "period_ms": null,
+      "value_sources": [
+        {
+          "param": "timeout_ms",
+          "quote": "not been received for more than 500 ms"
+        }
+      ],
+      "assumptions": [
+        "The Warnings message (carrying BrakeWarn) is used as the representative telltale input, with TT_Brake as the output; the same check applies to Warnings/TT_MIL, Fuel/TT_LowFuel and Body/TT_Belt.",
+        "Before the timeout, BrakeWarn = 0 is sent so TT_Brake is 0 and the change is caused by the missing message."
+      ],
+      "missing": [
+        "Tolerance on how soon after 500 ms the telltale must be lit."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Stopping an input message for more than 500 ms must make the telltale signal take 1, which fits the timeout template.",
+      "requirement_text": "A telltale whose input signal has not been received for more than 500 ms shall be lit.",
+      "requirement_quote": "A telltale whose input signal has not been received for more than 500 ms shall be lit",
+      "requirement_item": "REQ-TT-007@20261113-165443-9c129b",
+      "section_number": "7",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GEN-003@20261113-182131-30ee1c": {
+      "req_id": "REQ-GEN-003",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [],
+      "manual_test_idea": "Run worst-case bus load and display scenarios while measuring CPU load with a debugger/trace or OS profiling tool; compute the average over every sliding 1 s window and check it never exceeds 70 percent.",
+      "rationale": "CPU load is an internal metric with no signal in the CAN database, so it cannot be observed on the bus.",
+      "requirement_text": "CPU load shall not exceed 70 percent averaged over any 1 s window.",
+      "requirement_quote": "15.3 CPU load shall not exceed 70 percent averaged over any 1 s window.",
+      "requirement_item": "REQ-GEN-003@20261113-165443-9c129b",
+      "section_number": "15",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-COM-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-COM-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": 500.0,
+      "period_ms": null,
+      "track_bounds": [],
+      "value_sources": [
+        {
+          "param": "timeout_ms",
+          "quote": "not received for more than 500 ms"
+        }
+      ],
+      "assumptions": [
+        "'A CAN signal' is read as any signal in a received message (VehicleSpeed, EngineSpeed, Fuel, Warnings, Body, Ambient). The test would be repeated once per message by stopping that message. The message is left null until a reviewer decides which ones to cover.",
+        "The 500 ms is treated as the silence time measured from the last received frame of the message that carries the signal."
+      ],
+      "missing": [
+        "Which received message or messages the test must stop. The requirement covers all signals generically.",
+        "Observable output: the requirement does not say how 'treat the signal as invalid' shows on ClusterStatus. It does not name a signal or value, for example DisplayedSpeed going to a substitute value or a telltale turning on.",
+        "Expected value of the output signal once the signal is invalid.",
+        "Tolerance or maximum latency on the 500 ms reaction. The DBC cycle times of 20 to 200 ms make the detection instant uncertain."
+      ],
+      "manual_test_idea": "For a received message, stop sending it for 450 ms, then for 550 ms. Confirm the cluster treats its signals as invalid only in the second case, using the reaction defined for that signal (for example the telltale behaviour in 7.4).",
+      "rationale": "The requirement describes a reaction to a message no longer being received after a stated time, which is the timeout template. However, the observable output and expected value must be defined before cases can be generated.",
+      "track_low_factor": null,
+      "track_low_offset": null,
+      "track_high_factor": null,
+      "track_high_offset": null,
+      "requirement_text": "If a CAN signal is not received for more than 500 ms, the cluster shall treat the signal as invalid.",
+      "requirement_quote": "If a CAN signal is not received for more than 500 ms, the cluster shall treat the signal as invalid.",
+      "requirement_item": "REQ-COM-002@20261113-165443-9c129b",
+      "section_number": "10",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-INP-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-INP-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "The CAN database has no OK button input signal.",
+        "The CAN database has no trip counter output signal in ClusterStatus."
+      ],
+      "manual_test_idea": "On a bench cluster with a known trip value, select a trip counter. Press OK for clearly less than 2 s and check the counter is not reset. Then press OK for clearly more than 2 s and check on the display that the selected trip counter resets and the other trip counter is unchanged. Use a stopwatch or a timed button actuator.",
+      "rationale": "Neither the OK button nor the trip counter appears on the bus, so a person must check the reset on the display.",
+      "requirement_text": "A long press of the OK button for more than 2 s shall reset the selected trip counter.",
+      "requirement_quote": "A long press of the OK button for more than 2 s shall reset the selected trip counter.",
+      "requirement_item": "REQ-INP-002@20261113-165443-9c129b",
+      "section_number": "9",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-COM-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-COM-001",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "Bit-timing tolerance and sample-point requirements, if the bit rate is to be verified beyond nominal value"
+      ],
+      "manual_test_idea": "Connect a CAN analyzer or oscilloscope to the powertrain CAN bus and measure the bit time of frames sent by the cluster (2 µs per bit for 500 kbit/s). Confirm the cluster communicates without error frames on a 500 kbit/s bus.",
+      "rationale": "The bit rate is a physical-layer property and is not reported by any ClusterStatus signal, so no template can check it.",
+      "requirement_text": "The cluster shall communicate on the powertrain CAN bus at a bit rate of 500 kbit/s.",
+      "requirement_quote": "10.1 The cluster shall communicate on the powertrain CAN bus at a bit rate of 500 kbit/s.",
+      "requirement_item": "REQ-COM-001@20261113-165443-9c129b",
+      "section_number": "10",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GAUGE-008@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-008",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [
+        "ClusterStatus.FuelBarSegments (0..8) reports the number of lit bar segments, but the requirement does not say which fuel level gives which segment count, so no bus check can be built from it alone."
+      ],
+      "missing": [
+        "Mapping from FuelLevel (%) to the number of lit segments, e.g. the level at which each segment turns on or off.",
+        "Fuel level that should show all eight segments (e.g. full tank)."
+      ],
+      "manual_test_idea": "Step FuelLevel from 0 to 100 % on a HIL bench and visually confirm the gauge is drawn as a bar graph with exactly eight segments that fill up as the level rises; compare with FuelBarSegments once a level-to-segment mapping is specified.",
+      "rationale": "The requirement describes how the gauge is drawn and gives no fuel-level-to-segment mapping, so no bus stimulus and expected value can be derived without inventing numbers.",
+      "requirement_text": "The cluster shall display the fuel level as a bar graph with eight segments.",
+      "requirement_quote": "The cluster shall display the fuel level as a bar graph with eight segments.",
+      "requirement_item": "REQ-GAUGE-008@20261113-165443-9c129b",
+      "section_number": "6",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-SEC-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-SEC-001",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "The CAN database has no diagnostic request/response messages, so write-memory services and security access cannot be driven or observed with the available signals",
+        "Which diagnostic services count as writing memory (e.g. specific UDS services) is not stated"
+      ],
+      "manual_test_idea": "With a diagnostic tester, send a write-memory request (e.g. WriteDataByIdentifier / WriteMemoryByAddress) without security access and confirm a negative response (security access denied). Then unlock via SecurityAccess seed/key, repeat and confirm the write is accepted. Also try a wrong key and confirm the write is still refused.",
+      "rationale": "The requirement concerns diagnostic security access, which needs a diagnostic tester and has no signal in the CAN database, so no template applies.",
+      "requirement_text": "Diagnostic services that write memory shall require successful security access authentication.",
+      "requirement_quote": "13.1 Diagnostic services that write memory shall require successful security access authentication.",
+      "requirement_item": "REQ-SEC-001@20261113-165443-9c129b",
+      "section_number": "13",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-UPD-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-UPD-001",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No CAN database signal or message reports the update process or the installed software version."
+      ],
+      "manual_test_idea": "Connect a diagnostic tester to the diagnostic connector and flash a new, validly signed software version. Then read the software version identifier with the tester and confirm that it matches the new version.",
+      "rationale": "Software updating over the diagnostic connector needs a diagnostic tester and has no observable in the given CAN database.",
+      "requirement_text": "The cluster software shall be updatable through the diagnostic connector.",
+      "requirement_quote": "12.1 The cluster software shall be updatable through the diagnostic connector.",
+      "requirement_item": "REQ-UPD-001@20261113-165443-9c129b",
+      "section_number": "12",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-DIAG-003@20261113-182131-30ee1c": {
+      "req_id": "REQ-DIAG-003",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No ClusterStatus signal reports the display self-test or its result",
+        "The requirement does not define what the self-test consists of or what result counts as a pass"
+      ],
+      "manual_test_idea": "Power up the cluster (IGN on) and watch the display (camera or by eye) to confirm the self-test sequence runs. Also confirm through a diagnostic tester or debug interface that the self-test executed.",
+      "rationale": "The display self-test is visual and internal, and no CAN signal in the database exposes it.",
+      "requirement_text": "The cluster shall perform a display self-test at startup.",
+      "requirement_quote": "The cluster shall perform a display self-test at startup",
+      "requirement_item": "REQ-DIAG-003@20261113-165443-9c129b",
+      "section_number": "11",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GAUGE-007@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-007",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No ClusterStatus signal reports the red zone start of the tachometer.",
+        "The value of the configuration parameter RedlineRpm is not given in the requirement or the CAN database."
+      ],
+      "manual_test_idea": "Set RedlineRpm to a known value in the cluster configuration, then visually check that the red zone of the tachometer scale starts exactly at that rpm mark; repeat with a second configured value.",
+      "rationale": "The red zone position is a graphical property set by a configuration parameter and has no observable signal on the bus.",
+      "requirement_text": "The red zone of the tachometer scale shall start at the value given by the configuration parameter RedlineRpm.",
+      "requirement_quote": "5.2 The red zone of the scale shall start at the value given by the configuration parameter RedlineRpm.",
+      "requirement_item": "REQ-GAUGE-007@20261113-165443-9c129b",
+      "section_number": "5",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GEN-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-GEN-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "Measurable definition of 'smoothly' (e.g. minimum frame rate or maximum frame-time jitter)"
+      ],
+      "manual_test_idea": "Film the display with a high-speed camera during speed and RPM sweeps and visual-heavy scenarios; review for stutter and dropped frames, and ask for a measurable frame-rate criterion.",
+      "rationale": "'Smoothly' is vague and describes graphics appearance, which is not observable on the bus.",
+      "requirement_text": "The graphics shall run smoothly at all times.",
+      "requirement_quote": "15.2 The graphics shall run smoothly at all times.",
+      "requirement_item": "REQ-GEN-002@20261113-165443-9c129b",
+      "section_number": "15",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-TT-005@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-005",
+      "template": "event_response",
+      "input_signal": "IGN",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "TT_Brake",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": 2000.0,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [
+        {
+          "param": "hold_ms",
+          "quote": "lit for 2 s"
+        }
+      ],
+      "assumptions": [
+        "Switching IGN from 0 to 1 causes the transition to the ACTIVE state (ClusterState = 1).",
+        "Table 1 is not provided; TT_Brake is used as the representative telltale, and the same check must be repeated for TT_Belt, TT_LowFuel and TT_MIL.",
+        "All telltale inputs (BrakeWarn, BeltUnfastened, FuelLow, MIL) are kept at 0 and their messages keep being sent, so the telltale is lit only by the bulb check and not by REQ-TT-007."
+      ],
+      "missing": [
+        "Contents of Table 1 (which telltales are included).",
+        "Maximum delay from entering ACTIVE to the telltales lighting.",
+        "Tolerance on the 2 s duration and when the telltales must go off afterwards."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Entering ACTIVE via IGN must light the telltale and keep it lit for 2 s, which is an event response with a stated hold time.",
+      "requirement_text": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check.",
+      "requirement_quote": "At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check.",
+      "requirement_item": "REQ-TT-005@20261113-165443-9c129b",
+      "section_number": "7",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GAUGE-003@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-003",
+      "template": "tracking",
+      "input_signal": "VehicleSpeed",
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "DisplayedSpeed",
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "track_bounds": [
+        {
+          "side": "lower",
+          "factor": 1.0,
+          "offset": 0.0
+        }
+      ],
+      "value_sources": [],
+      "assumptions": [
+        "'The displayed speed' is the ClusterStatus signal DisplayedSpeed.",
+        "'The actual vehicle speed' is the received signal VehicleSpeed.",
+        "No upper bound is checked because this requirement only constrains the lower side; REQ-GAUGE-004 covers the upper side."
+      ],
+      "missing": [
+        "Maximum time allowed for DisplayedSpeed to follow a change in VehicleSpeed (for example during acceleration)."
+      ],
+      "manual_test_idea": null,
+      "rationale": "'Never lower than the actual value' is a lower tracking bound of DisplayedSpeed relative to VehicleSpeed.",
+      "track_low_factor": 1.0,
+      "track_low_offset": 0.0,
+      "track_high_factor": null,
+      "track_high_offset": null,
+      "requirement_text": "The displayed speed shall never be lower than the actual vehicle speed.",
+      "requirement_quote": "The displayed speed shall never be lower than the actual vehicle speed",
+      "requirement_item": "REQ-GAUGE-003@20261113-165443-9c129b",
+      "section_number": "4",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-TT-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-002",
+      "template": "threshold",
+      "input_signal": "VehicleSpeed",
+      "initial_value": null,
+      "input_value": null,
+      "threshold": 25.0,
+      "direction": "above",
+      "output_signal": "TT_Belt",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "track_bounds": [],
+      "value_sources": [
+        {
+          "param": "threshold",
+          "quote": "vehicle speed is above 25 km/h"
+        }
+      ],
+      "assumptions": [
+        "The 'red Seat belt reminder telltale' is reported by the ClusterStatus signal TT_Belt.",
+        "'vehicle speed' is the received signal VehicleSpeed.",
+        "BeltUnfastened is held at 1 as a precondition throughout the test.",
+        "TT_Belt = 1 means the telltale is active (flashing); the database does not say whether TT_Belt toggles with the flash pattern or reports a steady active state."
+      ],
+      "missing": [
+        "Time limit for the telltale to activate after speed exceeds 25 km/h is not stated.",
+        "The 1 Hz flash rate cannot be checked by the threshold template, and the database does not define how flashing is encoded on TT_Belt (the 100 ms ClusterStatus cycle could sample toggling, but this is not specified). It needs a separate check or a manual test.",
+        "The red colour is not observable on the bus and needs a manual visual check.",
+        "Tolerance on the 1 Hz flash frequency is not stated."
+      ],
+      "manual_test_idea": null,
+      "rationale": "A measurable part remains: with BeltUnfastened = 1, VehicleSpeed crossing above 25 km/h must activate TT_Belt. The flash rate and colour are not covered by this template and are listed under missing.",
+      "track_low_factor": null,
+      "track_low_offset": null,
+      "track_high_factor": null,
+      "track_high_offset": null,
+      "requirement_text": "The cluster shall flash the red Seat belt reminder telltale at 1 Hz when BeltUnfastened = 1 and vehicle speed is above 25 km/h.",
+      "requirement_quote": "| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |",
+      "requirement_item": "REQ-TT-002@20261113-165443-9c129b",
+      "section_number": "7",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-GAUGE-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "The CAN database has no unit-setting signal and no signal reporting the displayed unit; DisplayedSpeed is defined only in km/h."
+      ],
+      "manual_test_idea": "Feed a constant VehicleSpeed (e.g. from a simulator), switch the unit setting between km/h and mph in the cluster menu, and check visually that the display shows the correct value and unit label for each setting.",
+      "rationale": "The unit setting and the displayed unit are not observable on the bus, so the behaviour can only be checked on the display.",
+      "requirement_text": "The cluster shall display the vehicle speed in km/h or mph according to the unit setting.",
+      "requirement_quote": "in km/h or mph according to the unit setting",
+      "requirement_item": "REQ-GAUGE-002@20261113-165443-9c129b",
+      "section_number": "4",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-UPD-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-UPD-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No CAN database signal or message reports signature check results or update acceptance."
+      ],
+      "manual_test_idea": "Use a diagnostic tester to attempt one update with a validly signed image and one with an invalid or tampered signature. Confirm that only the validly signed image is installed, using the software version read-out and the tester's negative response for the invalid image.",
+      "rationale": "Signature validation of updates is only observable through a diagnostic tester, not through the signals in the CAN database.",
+      "requirement_text": "A software update shall be accepted by the cluster only if the digital signature of the software update is valid.",
+      "requirement_quote": "12.2 A software update shall be accepted only if its digital signature is valid.",
+      "requirement_item": "REQ-UPD-002@20261113-165443-9c129b",
+      "section_number": "12",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-UPD-003@20261113-182131-30ee1c": {
+      "req_id": "REQ-UPD-003",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "No CAN database signal or message reports the installed software version or a rollback.",
+        "The requirement does not define what counts as a failed update (e.g. power loss, interrupted transfer, corrupted image)."
+      ],
+      "manual_test_idea": "Note the installed software version. Start an update with a diagnostic tester and interrupt it, e.g. by disconnecting power or the tester mid-transfer, or by sending a corrupted image. Restart the cluster and confirm that the previous version is reported and that the cluster resumes normal operation, e.g. ClusterStatus transmitted with ClusterState ACTIVE.",
+      "rationale": "Rollback to the previous software version is only verifiable with a diagnostic tester and fault injection, with no matching CAN database signal.",
+      "requirement_text": "If a software update fails, the cluster shall return to the previously installed software version.",
+      "requirement_quote": "12.3 If an update fails, the cluster shall return to the previously installed software version.",
+      "requirement_item": "REQ-UPD-003@20261113-165443-9c129b",
+      "section_number": "12",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-TT-006@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-006",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "Definition of what 'priority' means (display position, brightness, suppression, chime order).",
+        "Which telltales are red and which are amber (Table 1)."
+      ],
+      "manual_test_idea": "Activate a red telltale (BrakeWarn = 1) and an amber telltale (MIL = 1) at the same time and visually check on the cluster that the red telltale is given priority as defined in the display specification.",
+      "rationale": "Priority between red and amber telltales is not defined measurably and has no ClusterStatus signal that reports it.",
+      "requirement_text": "Red telltales shall have priority over amber telltales.",
+      "requirement_quote": "Red telltales shall have priority over amber telltales.",
+      "requirement_item": "REQ-TT-006@20261113-165443-9c129b",
+      "section_number": "7",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-AUD-001@20261113-182131-30ee1c": {
+      "req_id": "REQ-AUD-001",
+      "template": "event_response",
+      "input_signal": "BeltUnfastened",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "ChimeActive",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [
+        "\"the seat belt chime\" is reported by the ClusterStatus signal ChimeActive (1 = playing); the bus shows only that the chime is active, not that it is audible or the correct sound.",
+        "The seat belt reminder telltale is the ClusterStatus signal TT_Belt, and it flashes when the input BeltUnfastened is set to 1.",
+        "The cluster is awake and active during the test (IGN = 1, ClusterState = 1 ACTIVE).",
+        "ChimeActive is expected to return to 0 when BeltUnfastened returns to 0 and the telltale stops flashing."
+      ],
+      "missing": [
+        "The conditions that make the seat belt telltale flash (e.g. a vehicle speed or time condition) are not stated in this requirement.",
+        "TT_Belt is an on/off signal, so a flashing telltale cannot be told apart from a steady one on the bus.",
+        "No maximum latency between the telltale starting to flash and the chime becoming active.",
+        "No limit on how long the chime must play, beyond 'while' the telltale flashes."
+      ],
+      "manual_test_idea": null,
+      "rationale": "The chime state is observable as ChimeActive on ClusterStatus, so setting the belt-unfastened input and checking that ChimeActive goes to 1 is an event-response test, even though the flashing condition itself must be confirmed by a reviewer.",
+      "requirement_text": "The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.",
+      "requirement_quote": "8.1 The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.",
+      "requirement_item": "REQ-AUD-001@20261113-165443-9c129b",
+      "section_number": "8",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-GAUGE-004@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-004",
+      "template": "tracking",
+      "input_signal": "VehicleSpeed",
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "DisplayedSpeed",
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "track_bounds": [
+        {
+          "side": "upper",
+          "factor": 1.1,
+          "offset": 4.0
+        }
+      ],
+      "value_sources": [
+        {
+          "param": "track_bounds.upper.factor",
+          "quote": "10 percent"
+        },
+        {
+          "param": "track_bounds.upper.offset",
+          "quote": "plus 4 km/h"
+        }
+      ],
+      "assumptions": [
+        "'The displayed speed' is the ClusterStatus signal DisplayedSpeed.",
+        "'The actual vehicle speed' is the received signal VehicleSpeed.",
+        "No lower bound is checked because this requirement only constrains the upper side; REQ-GAUGE-003 covers the lower side."
+      ],
+      "missing": [
+        "Maximum time allowed for DisplayedSpeed to follow a change in VehicleSpeed (for example during deceleration)."
+      ],
+      "manual_test_idea": null,
+      "rationale": "The requirement limits how far DisplayedSpeed may exceed VehicleSpeed, which is an upper tracking bound of 1.1 x input + 4 km/h.",
+      "track_low_factor": null,
+      "track_low_offset": null,
+      "track_high_factor": 1.1,
+      "track_high_offset": 4.0,
+      "requirement_text": "The displayed speed shall not exceed the actual vehicle speed by more than 10 percent plus 4 km/h.",
+      "requirement_quote": "shall not exceed it by more than 10 percent plus 4 km/h",
+      "requirement_item": "REQ-GAUGE-004@20261113-165443-9c129b",
+      "section_number": "4",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-COM-004@20261113-182131-30ee1c": {
+      "req_id": "REQ-COM-004",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "Recovery behaviour and timing from the network management document (e.g. recovery delay, number of attempts)"
+      ],
+      "manual_test_idea": "Force a bus-off on the cluster with a CAN fault-injection tool, such as a short of CAN-H to CAN-L or error-frame injection. Then confirm with a bus trace that the cluster resumes transmitting ClusterStatus according to the recovery timing in the network management document.",
+      "rationale": "The requirement defers the expected behaviour to an external document and needs bus-off fault injection, which no template provides.",
+      "requirement_text": "After a bus-off event, the cluster shall attempt recovery as specified in the network management document.",
+      "requirement_quote": "10.4 After a bus-off event, the cluster shall attempt recovery as specified in the network management document.",
+      "requirement_item": "REQ-COM-004@20261113-165443-9c129b",
+      "section_number": "10",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-PWR-004@20261113-182131-30ee1c": {
+      "req_id": "REQ-PWR-004",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [],
+      "manual_test_idea": "Bring the cluster into SLEEP (IGN OFF, wait until after the goodbye phase). Measure the battery supply current with a precision ammeter or power analyzer over a settled period. Verify it does not exceed 0.1 mA.",
+      "rationale": "Supply current draw cannot be observed on the CAN bus.",
+      "requirement_text": "In the SLEEP state, the cluster shall draw no more than 0.1 mA from the battery supply.",
+      "requirement_quote": "3.3 In the SLEEP state, the cluster shall draw no more than 0.1 mA from the battery supply.",
+      "requirement_item": "REQ-PWR-004@20261113-165443-9c129b",
+      "section_number": "3",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-PWR-003@20261113-182131-30ee1c": {
+      "req_id": "REQ-PWR-003",
+      "template": "event_response",
+      "input_signal": "IGN",
+      "initial_value": 1.0,
+      "input_value": 0.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "ClusterState",
+      "expected_value": 0.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "track_bounds": [],
+      "value_sources": [],
+      "assumptions": [
+        "The SLEEP state is reported as ClusterStatus.ClusterState = 0 (SLEEP).",
+        "IGN ON is IGN = 1 and IGN OFF is IGN = 0.",
+        "SLEEP is expected to follow the 5 s GOODBYE phase from REQ-PWR-002. SLEEP must therefore not appear before 5 s after IGN OFF; this 5 s is a minimum delay, not a maximum latency.",
+        "The cluster may stop sending ClusterStatus once asleep, so the test must catch the last ClusterState value before transmission stops."
+      ],
+      "missing": [
+        "Tolerance or maximum time after the 5 s goodbye phase by which ClusterState must reach SLEEP is not stated."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Switching IGN from ON to OFF must lead to ClusterState SLEEP, an event response; the requirement gives only a 5 s minimum delay and no upper time limit, so max_latency_ms stays null.",
+      "track_low_factor": null,
+      "track_low_offset": null,
+      "track_high_factor": null,
+      "track_high_offset": null,
+      "requirement_text": "When IGN changes from ON to OFF, the cluster shall enter the SLEEP state after displaying the goodbye screen for 5 s.",
+      "requirement_quote": "When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state.",
+      "requirement_item": "REQ-PWR-003@20261113-165443-9c129b",
+      "section_number": "3",
+      "generated_by": "claude-opus",
+      "problems": []
+    },
+    "TS-REQ-GAUGE-006@20261113-182131-30ee1c": {
+      "req_id": "REQ-GAUGE-006",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "ClusterStatus has no signal reporting the displayed engine speed or needle position, so the needle shown cannot be observed on the bus."
+      ],
+      "manual_test_idea": "Drive EngineSpeed on the bench at several values (for example 0, 1000, 4000, 8000 rpm) and visually check that the tachometer needle points to the matching value on the 0 to 8000 rpm scale.",
+      "rationale": "The requirement concerns a graphical needle on a scale, and no ClusterStatus signal reports the displayed engine speed, so there is nothing observable on the bus.",
+      "requirement_text": "The cluster shall display engine speed from the EngineSpeed signal as a needle on a scale from 0 to 8000 rpm.",
+      "requirement_quote": "5.1 The cluster shall display engine speed from the EngineSpeed signal as a needle on a scale from 0 to 8000 rpm.",
+      "requirement_item": "REQ-GAUGE-006@20261113-165443-9c129b",
+      "section_number": "5",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-SEC-002@20261113-182131-30ee1c": {
+      "req_id": "REQ-SEC-002",
+      "template": "not_automatable",
+      "input_signal": null,
+      "initial_value": null,
+      "input_value": null,
+      "threshold": null,
+      "direction": null,
+      "output_signal": null,
+      "expected_value": null,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [],
+      "missing": [
+        "'Appropriately' is not defined: no protection mechanism, storage method or acceptance criterion is stated",
+        "No bus-observable behaviour is specified"
+      ],
+      "manual_test_idea": "Clarify the requirement with the security team (e.g. keys stored in an HSM / secure storage, not readable via debug or diagnostics). Then do a security review and penetration test: try to read keys via diagnostic memory reads, the debug interface and a flash dump, and confirm no key material is exposed.",
+      "rationale": "The requirement is vague ('appropriately') and has no observable on the bus, so it cannot be mapped to a template.",
+      "requirement_text": "The cluster shall protect cryptographic keys appropriately.",
+      "requirement_quote": "13.2 The cluster shall protect cryptographic keys appropriately.",
+      "requirement_item": "REQ-SEC-002@20261113-165443-9c129b",
+      "section_number": "13",
+      "problems": [],
+      "generated_by": "claude-opus"
+    },
+    "TS-REQ-TT-004@20261113-182131-30ee1c": {
+      "req_id": "REQ-TT-004",
+      "template": "event_response",
+      "input_signal": "MIL",
+      "initial_value": 0.0,
+      "input_value": 1.0,
+      "threshold": null,
+      "direction": null,
+      "output_signal": "TT_MIL",
+      "expected_value": 1.0,
+      "max_latency_ms": null,
+      "hold_ms": null,
+      "message": null,
+      "timeout_ms": null,
+      "period_ms": null,
+      "value_sources": [],
+      "assumptions": [
+        "The amber Engine malfunction telltale is the ClusterStatus signal TT_MIL.",
+        "'Steady' is checked as TT_MIL staying 1 while MIL = 1; the colour cannot be checked on the bus."
+      ],
+      "missing": [
+        "Maximum reaction time from MIL = 1 to TT_MIL = 1.",
+        "How long TT_MIL must stay 1 to count as 'steady'."
+      ],
+      "manual_test_idea": null,
+      "rationale": "Setting the input MIL to 1 must make TT_MIL take the value 1, which is an event-response check.",
+      "requirement_text": "The cluster shall turn on the amber Engine malfunction telltale steady when MIL = 1.",
+      "requirement_quote": "| Engine malfunction | MIL = 1 | Amber | Steady on |",
+      "requirement_item": "REQ-TT-004@20261113-165443-9c129b",
+      "section_number": "7",
+      "problems": [],
+      "generated_by": "claude-opus"
+    }
+  },
+  "fault_checks": {
+    "TS-REQ-COM-001@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-COM-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-COM-004@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-006@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-007@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-008@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-009@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-010@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "shift_up": {
+          "fault": "threshold one step higher",
+          "detected_by": [
+            "TC-REQ-GAUGE-010-02"
+          ]
+        },
+        "shift_down": {
+          "fault": "threshold one step lower",
+          "detected_by": [
+            "TC-REQ-GAUGE-010-01"
+          ]
+        },
+        "inclusive": {
+          "fault": "threshold value itself included",
+          "detected_by": [
+            "TC-REQ-GAUGE-010-02"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-GAUGE-010-01",
+            "TC-REQ-GAUGE-010-04"
+          ]
+        }
+      },
+      "detected": 4,
+      "total": 4
+    },
+    "TS-REQ-GEN-001@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GEN-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GEN-003@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-INP-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-INP-003@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-PWR-001@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-PWR-001-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-PWR-001-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-PWR-001-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-PWR-002@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-PWR-002-01",
+            "TC-REQ-PWR-002-02"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-PWR-002-01",
+            "TC-REQ-PWR-002-02"
+          ]
+        },
+        "hold_short": {
+          "fault": "output ends too early",
+          "detected_by": [
+            "TC-REQ-PWR-002-02"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-PWR-002-03"
+          ]
+        }
+      },
+      "detected": 4,
+      "total": 4
+    },
+    "TS-REQ-PWR-003@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-PWR-003-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-PWR-003-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-PWR-003-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-PWR-004@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-PWR-005@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-PWR-005-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-PWR-005-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-PWR-005-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-SEC-001@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-SEC-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-TT-001@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-TT-001-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-TT-001-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-TT-001-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-TT-002@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "shift_up": {
+          "fault": "threshold one step higher",
+          "detected_by": [
+            "TC-REQ-TT-002-01"
+          ]
+        },
+        "shift_down": {
+          "fault": "threshold one step lower",
+          "detected_by": [
+            "TC-REQ-TT-002-02"
+          ]
+        },
+        "inclusive": {
+          "fault": "threshold value itself included",
+          "detected_by": [
+            "TC-REQ-TT-002-02"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-TT-002-01",
+            "TC-REQ-TT-002-04"
+          ]
+        }
+      },
+      "detected": 4,
+      "total": 4
+    },
+    "TS-REQ-TT-003@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-TT-003-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-TT-003-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-TT-003-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-TT-004@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-TT-004-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-TT-004-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-TT-004-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-TT-005@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-TT-005-01",
+            "TC-REQ-TT-005-02"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-TT-005-01",
+            "TC-REQ-TT-005-02"
+          ]
+        },
+        "hold_short": {
+          "fault": "output ends too early",
+          "detected_by": [
+            "TC-REQ-TT-005-02"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-TT-005-02",
+            "TC-REQ-TT-005-03"
+          ]
+        }
+      },
+      "detected": 4,
+      "total": 4
+    },
+    "TS-REQ-TT-006@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-TT-007@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "early": {
+          "fault": "reacts before the timeout",
+          "detected_by": [
+            "TC-REQ-TT-007-01"
+          ]
+        },
+        "late": {
+          "fault": "reacts too late",
+          "detected_by": [
+            "TC-REQ-TT-007-02"
+          ]
+        },
+        "never": {
+          "fault": "never reacts",
+          "detected_by": [
+            "TC-REQ-TT-007-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-UPD-001@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-UPD-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-UPD-003@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-AUD-001@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "no_response": {
+          "fault": "no reaction",
+          "detected_by": [
+            "TC-REQ-AUD-001-01"
+          ]
+        },
+        "late": {
+          "fault": "reaction later than allowed",
+          "detected_by": [
+            "TC-REQ-AUD-001-01"
+          ]
+        },
+        "always": {
+          "fault": "reacts without the trigger",
+          "detected_by": [
+            "TC-REQ-AUD-001-02"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-DIAG-001@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-DIAG-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-DIAG-003@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-002@20261113-182131-30ee1c": {
+      "reference_passes": null,
+      "faults": {},
+      "detected": 0,
+      "total": 0
+    },
+    "TS-REQ-GAUGE-005@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "slow": {
+          "fault": "period 20 percent too long",
+          "detected_by": [
+            "TC-REQ-GAUGE-005-01"
+          ]
+        },
+        "fast": {
+          "fault": "period 20 percent too short",
+          "detected_by": [
+            "TC-REQ-GAUGE-005-01"
+          ]
+        }
+      },
+      "detected": 2,
+      "total": 2
+    },
+    "TS-REQ-GAUGE-003@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "under_read": {
+          "fault": "output one step below the lower bound",
+          "detected_by": [
+            "TC-REQ-GAUGE-003-01",
+            "TC-REQ-GAUGE-003-02",
+            "TC-REQ-GAUGE-003-03",
+            "TC-REQ-GAUGE-003-04",
+            "TC-REQ-GAUGE-003-05",
+            "TC-REQ-GAUGE-003-06"
+          ]
+        },
+        "frozen": {
+          "fault": "output does not follow the input",
+          "detected_by": [
+            "TC-REQ-GAUGE-003-04",
+            "TC-REQ-GAUGE-003-05",
+            "TC-REQ-GAUGE-003-06"
+          ]
+        },
+        "late": {
+          "fault": "output updates later than allowed",
+          "detected_by": [
+            "TC-REQ-GAUGE-003-04",
+            "TC-REQ-GAUGE-003-05",
+            "TC-REQ-GAUGE-003-06"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    },
+    "TS-REQ-GAUGE-004@20261113-182131-30ee1c": {
+      "reference_passes": true,
+      "faults": {
+        "over_read": {
+          "fault": "output one step above the upper bound",
+          "detected_by": [
+            "TC-REQ-GAUGE-004-01",
+            "TC-REQ-GAUGE-004-02",
+            "TC-REQ-GAUGE-004-03",
+            "TC-REQ-GAUGE-004-04",
+            "TC-REQ-GAUGE-004-05",
+            "TC-REQ-GAUGE-004-06"
+          ]
+        },
+        "frozen": {
+          "fault": "output does not follow the input",
+          "detected_by": [
+            "TC-REQ-GAUGE-004-01",
+            "TC-REQ-GAUGE-004-02",
+            "TC-REQ-GAUGE-004-03"
+          ]
+        },
+        "late": {
+          "fault": "output updates later than allowed",
+          "detected_by": [
+            "TC-REQ-GAUGE-004-01",
+            "TC-REQ-GAUGE-004-02",
+            "TC-REQ-GAUGE-004-03"
+          ]
+        }
+      },
+      "detected": 3,
+      "total": 3
+    }
+  },
+  "fault_score": {
+    "faults": 48,
+    "detected": 48,
+    "score": 1.0,
+    "specs_checked": 15,
+    "by_template": {
+      "threshold": {
+        "specs": 2,
+        "faults": 8,
+        "detected": 8
+      },
+      "event_response": {
+        "specs": 9,
+        "faults": 29,
+        "detected": 29
+      },
+      "timeout": {
+        "specs": 1,
+        "faults": 3,
+        "detected": 3
+      },
+      "periodic_tx": {
+        "specs": 1,
+        "faults": 2,
+        "detected": 2
+      },
+      "tracking": {
+        "specs": 2,
+        "faults": 6,
+        "detected": 6
+      }
+    },
+    "surviving": [],
+    "reference_failed": [],
+    "cases_detecting_nothing": [
+      "TC-REQ-GAUGE-010-03",
+      "TC-REQ-PWR-002-01-v2",
+      "TC-REQ-PWR-002-02-v2",
+      "TC-REQ-PWR-002-03-v2",
+      "TC-REQ-PWR-003-01-v2",
+      "TC-REQ-PWR-003-02-v2",
+      "TC-REQ-PWR-005-01-v2",
+      "TC-REQ-PWR-005-02-v2",
+      "TC-REQ-TT-002-01-v2",
+      "TC-REQ-TT-002-02-v2",
+      "TC-REQ-TT-002-03-v2",
+      "TC-REQ-TT-002-04-v2"
+    ],
+    "fault_list": {
+      "threshold": [
+        "shift_up",
+        "shift_down",
+        "inclusive",
+        "late",
+        "inverted",
+        "stuck_active",
+        "stuck_inactive"
+      ],
+      "event_response": [
+        "no_response",
+        "late",
+        "hold_short",
+        "always",
+        "wrong_value"
+      ],
+      "timeout": [
+        "early",
+        "late",
+        "never",
+        "always"
+      ],
+      "periodic_tx": [
+        "slow",
+        "fast",
+        "stops"
+      ],
+      "tracking": [
+        "under_read",
+        "over_read",
+        "frozen",
+        "late",
+        "stuck_min"
+      ]
+    },
+    "note": "Faults are injected into a simulated cluster built from each spec. The score measures the generated tests against this fixed fault list only, not the real cluster."
+  },
+  "lint": []
+}

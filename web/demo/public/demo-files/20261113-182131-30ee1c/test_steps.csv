@@ -1,0 +1,118 @@
+case_id,requirement_id,step,at_ms,action,signal_or_message,value,low,high,time_ms,tolerance_ms,expected,oracle_quote
+TC-REQ-GAUGE-010-01,REQ-GAUGE-010,1,0,set,FuelLevel,15.0,,,,,,"When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+TC-REQ-GAUGE-010-01,REQ-GAUGE-010,2,500,set,FuelLevel,9.5,,,,,,
+TC-REQ-GAUGE-010-01,REQ-GAUGE-010,3,500,expect,TT_LowFuel,1.0,,,300,,TT_LowFuel = 1 within 300 ms,
+TC-REQ-GAUGE-010-02,REQ-GAUGE-010,1,0,set,FuelLevel,15.0,,,,,,"When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+TC-REQ-GAUGE-010-02,REQ-GAUGE-010,2,500,set,FuelLevel,10.0,,,,,,
+TC-REQ-GAUGE-010-02,REQ-GAUGE-010,3,500,expect,TT_LowFuel,0.0,,,300,,TT_LowFuel stays 0 for 300 ms,
+TC-REQ-GAUGE-010-03,REQ-GAUGE-010,1,0,set,FuelLevel,15.0,,,,,,"When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+TC-REQ-GAUGE-010-03,REQ-GAUGE-010,2,500,set,FuelLevel,10.5,,,,,,
+TC-REQ-GAUGE-010-03,REQ-GAUGE-010,3,500,expect,TT_LowFuel,0.0,,,300,,TT_LowFuel stays 0 for 300 ms,
+TC-REQ-GAUGE-010-04,REQ-GAUGE-010,1,0,set,FuelLevel,15.0,,,,,,"When the fuel level is below 10 percent, the low-fuel telltale shall be lit."
+TC-REQ-GAUGE-010-04,REQ-GAUGE-010,2,500,set,FuelLevel,0.0,,,,,,
+TC-REQ-GAUGE-010-04,REQ-GAUGE-010,3,500,expect,TT_LowFuel,1.0,,,300,,TT_LowFuel = 1 within 300 ms,
+TC-REQ-PWR-001-01,REQ-PWR-001,1,0,set,IGN,0.0,,,,,,3.1 The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.
+TC-REQ-PWR-001-01,REQ-PWR-001,2,500,set,IGN,1.0,,,,,,
+TC-REQ-PWR-001-01,REQ-PWR-001,3,500,expect,ClusterState,1.0,,,1500,,ClusterState = 1 within 1500 ms,
+TC-REQ-PWR-001-02,REQ-PWR-001,1,0,set,IGN,0.0,,,,,,3.1 The cluster shall enter the ACTIVE state within 1.5 s of IGN changing from OFF to ON.
+TC-REQ-PWR-001-02,REQ-PWR-001,2,500,expect_absent,ClusterState,1.0,,,1500,,ClusterState never shows 1 for 1500 ms,
+TC-REQ-TT-001-01,REQ-TT-001,1,0,set,BrakeWarn,0.0,,,,,,| Brake system warning | BrakeWarn = 1 | Red | Steady on |
+TC-REQ-TT-001-01,REQ-TT-001,2,500,set,BrakeWarn,1.0,,,,,,
+TC-REQ-TT-001-01,REQ-TT-001,3,500,expect,TT_Brake,1.0,,,300,,TT_Brake = 1 within 300 ms,
+TC-REQ-TT-001-02,REQ-TT-001,1,0,set,BrakeWarn,0.0,,,,,,| Brake system warning | BrakeWarn = 1 | Red | Steady on |
+TC-REQ-TT-001-02,REQ-TT-001,2,500,expect,TT_Brake,0.0,,,300,,TT_Brake stays 0,
+TC-REQ-TT-003-01,REQ-TT-003,1,0,set,FuelLow,0.0,,,,,,| Low fuel | FuelLow = 1 | Amber | Steady on |
+TC-REQ-TT-003-01,REQ-TT-003,2,500,set,FuelLow,1.0,,,,,,
+TC-REQ-TT-003-01,REQ-TT-003,3,500,expect,TT_LowFuel,1.0,,,300,,TT_LowFuel = 1 within 300 ms,
+TC-REQ-TT-003-02,REQ-TT-003,1,0,set,FuelLow,0.0,,,,,,| Low fuel | FuelLow = 1 | Amber | Steady on |
+TC-REQ-TT-003-02,REQ-TT-003,2,500,expect,TT_LowFuel,0.0,,,300,,TT_LowFuel stays 0,
+TC-REQ-TT-004-01,REQ-TT-004,1,0,set,MIL,0.0,,,,,,| Engine malfunction | MIL = 1 | Amber | Steady on |
+TC-REQ-TT-004-01,REQ-TT-004,2,500,set,MIL,1.0,,,,,,
+TC-REQ-TT-004-01,REQ-TT-004,3,500,expect,TT_MIL,1.0,,,300,,TT_MIL = 1 within 300 ms,
+TC-REQ-TT-004-02,REQ-TT-004,1,0,set,MIL,0.0,,,,,,| Engine malfunction | MIL = 1 | Amber | Steady on |
+TC-REQ-TT-004-02,REQ-TT-004,2,500,expect,TT_MIL,0.0,,,300,,TT_MIL stays 0,
+TC-REQ-TT-005-01,REQ-TT-005,1,0,set,IGN,0.0,,,,,,"At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+TC-REQ-TT-005-01,REQ-TT-005,2,500,set,IGN,1.0,,,,,,
+TC-REQ-TT-005-01,REQ-TT-005,3,500,expect,TT_Brake,1.0,,,300,,TT_Brake = 1 within 300 ms,
+TC-REQ-TT-005-02,REQ-TT-005,1,0,set,IGN,0.0,,,,,,"At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+TC-REQ-TT-005-02,REQ-TT-005,2,500,set,IGN,1.0,,,,,,
+TC-REQ-TT-005-02,REQ-TT-005,3,800,expect,TT_Brake,1.0,,,1600,,,
+TC-REQ-TT-005-02,REQ-TT-005,4,2800,expect,TT_Brake,0.0,,,200,,"TT_Brake = 1 for 2000 ms, then ends",
+TC-REQ-TT-005-03,REQ-TT-005,1,0,set,IGN,0.0,,,,,,"At each transition to the ACTIVE state, all telltales in Table 1 shall be lit for 2 s as a bulb check."
+TC-REQ-TT-005-03,REQ-TT-005,2,500,expect,TT_Brake,0.0,,,300,,TT_Brake stays 0,
+TC-REQ-TT-007-01,REQ-TT-007,1,500,stop,Warnings,,,,,,,A telltale whose input signal has not been received for more than 500 ms shall be lit
+TC-REQ-TT-007-01,REQ-TT-007,2,500,expect,TT_Brake,0.0,,,400,,TT_Brake stays 0 for 400 ms,
+TC-REQ-TT-007-02,REQ-TT-007,1,500,stop,Warnings,,,,,,,A telltale whose input signal has not been received for more than 500 ms shall be lit
+TC-REQ-TT-007-02,REQ-TT-007,2,1000,expect,TT_Brake,1.0,,,200,,TT_Brake = 1 within 200 ms after the timeout,
+TC-REQ-AUD-001-01,REQ-AUD-001,1,0,set,BeltUnfastened,0.0,,,,,,8.1 The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.
+TC-REQ-AUD-001-01,REQ-AUD-001,2,500,set,BeltUnfastened,1.0,,,,,,
+TC-REQ-AUD-001-01,REQ-AUD-001,3,500,expect,ChimeActive,1.0,,,300,,ChimeActive = 1 within 300 ms,
+TC-REQ-AUD-001-02,REQ-AUD-001,1,0,set,BeltUnfastened,0.0,,,,,,8.1 The cluster shall play the seat belt chime while the seat belt reminder telltale is flashing.
+TC-REQ-AUD-001-02,REQ-AUD-001,2,500,expect,ChimeActive,0.0,,,300,,ChimeActive stays 0,
+TC-REQ-GAUGE-005-01,REQ-GAUGE-005,1,500,expect_period,ClusterStatus,,,,,10,50 intervals of 100 ms ± 10 ms,4.3 The speed value shall be updated at least every 100 ms.
+TC-REQ-GAUGE-003-01,REQ-GAUGE-003,1,0,set,VehicleSpeed,150.0,,,,,,The displayed speed shall never be lower than the actual vehicle speed
+TC-REQ-GAUGE-003-01,REQ-GAUGE-003,2,500,set,VehicleSpeed,0.0,,,,,,
+TC-REQ-GAUGE-003-01,REQ-GAUGE-003,3,500,expect_range,DisplayedSpeed,,0.0,,220,,DisplayedSpeed within 0 .. - km/h after 220 ms,
+TC-REQ-GAUGE-003-02,REQ-GAUGE-003,1,0,set,VehicleSpeed,150.0,,,,,,The displayed speed shall never be lower than the actual vehicle speed
+TC-REQ-GAUGE-003-02,REQ-GAUGE-003,2,500,set,VehicleSpeed,6.0,,,,,,
+TC-REQ-GAUGE-003-02,REQ-GAUGE-003,3,500,expect_range,DisplayedSpeed,,6.0,,220,,DisplayedSpeed within 6 .. - km/h after 220 ms,
+TC-REQ-GAUGE-003-03,REQ-GAUGE-003,1,0,set,VehicleSpeed,150.0,,,,,,The displayed speed shall never be lower than the actual vehicle speed
+TC-REQ-GAUGE-003-03,REQ-GAUGE-003,2,500,set,VehicleSpeed,75.0,,,,,,
+TC-REQ-GAUGE-003-03,REQ-GAUGE-003,3,500,expect_range,DisplayedSpeed,,75.0,,220,,DisplayedSpeed within 75 .. - km/h after 220 ms,
+TC-REQ-GAUGE-003-04,REQ-GAUGE-003,1,0,set,VehicleSpeed,0.0,,,,,,The displayed speed shall never be lower than the actual vehicle speed
+TC-REQ-GAUGE-003-04,REQ-GAUGE-003,2,500,set,VehicleSpeed,150.0,,,,,,
+TC-REQ-GAUGE-003-04,REQ-GAUGE-003,3,500,expect_range,DisplayedSpeed,,150.0,,220,,DisplayedSpeed within 150 .. - km/h after 220 ms,
+TC-REQ-GAUGE-003-05,REQ-GAUGE-003,1,0,set,VehicleSpeed,150.0,,,,,,The displayed speed shall never be lower than the actual vehicle speed
+TC-REQ-GAUGE-003-05,REQ-GAUGE-003,2,500,set,VehicleSpeed,225.0,,,,,,
+TC-REQ-GAUGE-003-05,REQ-GAUGE-003,3,500,expect_range,DisplayedSpeed,,225.0,,220,,DisplayedSpeed within 225 .. - km/h after 220 ms,
+TC-REQ-GAUGE-003-06,REQ-GAUGE-003,1,0,set,VehicleSpeed,150.0,,,,,,The displayed speed shall never be lower than the actual vehicle speed
+TC-REQ-GAUGE-003-06,REQ-GAUGE-003,2,500,set,VehicleSpeed,300.0,,,,,,
+TC-REQ-GAUGE-003-06,REQ-GAUGE-003,3,500,expect_range,DisplayedSpeed,,300.0,,220,,DisplayedSpeed within 300 .. - km/h after 220 ms,
+TC-REQ-GAUGE-004-01,REQ-GAUGE-004,1,0,set,VehicleSpeed,150.0,,,,,,shall not exceed it by more than 10 percent plus 4 km/h
+TC-REQ-GAUGE-004-01,REQ-GAUGE-004,2,500,set,VehicleSpeed,0.0,,,,,,
+TC-REQ-GAUGE-004-01,REQ-GAUGE-004,3,500,expect_range,DisplayedSpeed,,,4.0,220,,DisplayedSpeed within - .. 4 km/h after 220 ms,
+TC-REQ-GAUGE-004-02,REQ-GAUGE-004,1,0,set,VehicleSpeed,150.0,,,,,,shall not exceed it by more than 10 percent plus 4 km/h
+TC-REQ-GAUGE-004-02,REQ-GAUGE-004,2,500,set,VehicleSpeed,6.0,,,,,,
+TC-REQ-GAUGE-004-02,REQ-GAUGE-004,3,500,expect_range,DisplayedSpeed,,,10.6,220,,DisplayedSpeed within - .. 10.6 km/h after 220 ms,
+TC-REQ-GAUGE-004-03,REQ-GAUGE-004,1,0,set,VehicleSpeed,150.0,,,,,,shall not exceed it by more than 10 percent plus 4 km/h
+TC-REQ-GAUGE-004-03,REQ-GAUGE-004,2,500,set,VehicleSpeed,75.0,,,,,,
+TC-REQ-GAUGE-004-03,REQ-GAUGE-004,3,500,expect_range,DisplayedSpeed,,,86.5,220,,DisplayedSpeed within - .. 86.5 km/h after 220 ms,
+TC-REQ-GAUGE-004-04,REQ-GAUGE-004,1,0,set,VehicleSpeed,0.0,,,,,,shall not exceed it by more than 10 percent plus 4 km/h
+TC-REQ-GAUGE-004-04,REQ-GAUGE-004,2,500,set,VehicleSpeed,150.0,,,,,,
+TC-REQ-GAUGE-004-04,REQ-GAUGE-004,3,500,expect_range,DisplayedSpeed,,,169.0,220,,DisplayedSpeed within - .. 169 km/h after 220 ms,
+TC-REQ-GAUGE-004-05,REQ-GAUGE-004,1,0,set,VehicleSpeed,150.0,,,,,,shall not exceed it by more than 10 percent plus 4 km/h
+TC-REQ-GAUGE-004-05,REQ-GAUGE-004,2,500,set,VehicleSpeed,225.0,,,,,,
+TC-REQ-GAUGE-004-05,REQ-GAUGE-004,3,500,expect_range,DisplayedSpeed,,,251.5,220,,DisplayedSpeed within - .. 251.5 km/h after 220 ms,
+TC-REQ-GAUGE-004-06,REQ-GAUGE-004,1,0,set,VehicleSpeed,150.0,,,,,,shall not exceed it by more than 10 percent plus 4 km/h
+TC-REQ-GAUGE-004-06,REQ-GAUGE-004,2,500,set,VehicleSpeed,300.0,,,,,,
+TC-REQ-GAUGE-004-06,REQ-GAUGE-004,3,500,expect_range,DisplayedSpeed,,,330.0,220,,DisplayedSpeed within - .. 330 km/h after 220 ms,
+TC-REQ-PWR-002-01-v2,REQ-PWR-002,1,0,set,IGN,1.0,,,,,,"When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+TC-REQ-PWR-002-01-v2,REQ-PWR-002,2,500,set,IGN,0.0,,,,,,
+TC-REQ-PWR-002-01-v2,REQ-PWR-002,3,500,expect,ClusterState,2.0,,,300,,ClusterState = 2 within 300 ms,
+TC-REQ-PWR-002-02-v2,REQ-PWR-002,1,0,set,IGN,1.0,,,,,,"When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+TC-REQ-PWR-002-02-v2,REQ-PWR-002,2,500,set,IGN,0.0,,,,,,
+TC-REQ-PWR-002-02-v2,REQ-PWR-002,3,800,expect,ClusterState,2.0,,,4600,,"ClusterState = 2 for 5000 ms, then ends",
+TC-REQ-PWR-002-03-v2,REQ-PWR-002,1,0,set,IGN,1.0,,,,,,"When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+TC-REQ-PWR-002-03-v2,REQ-PWR-002,2,500,expect_absent,ClusterState,2.0,,,300,,ClusterState never shows 2 for 300 ms,
+TC-REQ-PWR-003-01-v2,REQ-PWR-003,1,0,set,IGN,1.0,,,,,,"When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+TC-REQ-PWR-003-01-v2,REQ-PWR-003,2,500,set,IGN,0.0,,,,,,
+TC-REQ-PWR-003-01-v2,REQ-PWR-003,3,500,expect,ClusterState,0.0,,,300,,ClusterState = 0 within 300 ms,
+TC-REQ-PWR-003-02-v2,REQ-PWR-003,1,0,set,IGN,1.0,,,,,,"When IGN changes from ON to OFF, the cluster shall display the goodbye screen for 5 s and then enter the SLEEP state."
+TC-REQ-PWR-003-02-v2,REQ-PWR-003,2,500,expect_absent,ClusterState,0.0,,,300,,ClusterState never shows 0 for 300 ms,
+TC-REQ-PWR-005-01-v2,REQ-PWR-005,1,0,set,DoorOpen,0.0,,,,,,The cluster shall wake up within 300 ms when a door is opened.
+TC-REQ-PWR-005-01-v2,REQ-PWR-005,2,500,set,DoorOpen,1.0,,,,,,
+TC-REQ-PWR-005-01-v2,REQ-PWR-005,3,500,expect,ClusterState,1.0,,,300,,ClusterState = 1 within 300 ms,
+TC-REQ-PWR-005-02-v2,REQ-PWR-005,1,0,set,DoorOpen,0.0,,,,,,The cluster shall wake up within 300 ms when a door is opened.
+TC-REQ-PWR-005-02-v2,REQ-PWR-005,2,500,expect_absent,ClusterState,1.0,,,300,,ClusterState never shows 1 for 300 ms,
+TC-REQ-TT-002-01-v2,REQ-TT-002,1,0,set,VehicleSpeed,24.9,,,,,,| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |
+TC-REQ-TT-002-01-v2,REQ-TT-002,2,500,set,VehicleSpeed,25.01,,,,,,
+TC-REQ-TT-002-01-v2,REQ-TT-002,3,500,expect,TT_Belt,1.0,,,220,,TT_Belt = 1 within 220 ms,
+TC-REQ-TT-002-02-v2,REQ-TT-002,1,0,set,VehicleSpeed,24.9,,,,,,| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |
+TC-REQ-TT-002-02-v2,REQ-TT-002,2,500,set,VehicleSpeed,25.0,,,,,,
+TC-REQ-TT-002-02-v2,REQ-TT-002,3,500,expect,TT_Belt,0.0,,,220,,TT_Belt stays 0 for 220 ms,
+TC-REQ-TT-002-03-v2,REQ-TT-002,1,0,set,VehicleSpeed,24.9,,,,,,| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |
+TC-REQ-TT-002-03-v2,REQ-TT-002,2,500,set,VehicleSpeed,24.99,,,,,,
+TC-REQ-TT-002-03-v2,REQ-TT-002,3,500,expect,TT_Belt,0.0,,,220,,TT_Belt stays 0 for 220 ms,
+TC-REQ-TT-002-04-v2,REQ-TT-002,1,0,set,VehicleSpeed,24.9,,,,,,| Seat belt reminder | BeltUnfastened = 1 and vehicle speed above 25 km/h | Red | Flashing at 1 Hz |
+TC-REQ-TT-002-04-v2,REQ-TT-002,2,500,set,VehicleSpeed,300.0,,,,,,
+TC-REQ-TT-002-04-v2,REQ-TT-002,3,500,expect,TT_Belt,1.0,,,220,,TT_Belt = 1 within 220 ms,

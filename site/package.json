@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/pages.mjs",
+    "build": "tsc -b && vite build && node scripts/pages.mjs && cd ../web && npx vite build -c vite.demo.config.ts --base /demo/ --outDir ../../site/dist/demo --emptyOutDir",
     "preview": "vite preview",
-    "build:thomasalex": "tsc -b && vite build --mode thomasalex && node scripts/pages.mjs"
+    "build:thomasalex": "tsc -b && vite build --mode thomasalex && node scripts/pages.mjs && cd ../web && npx vite build -c vite.demo.config.ts --base /zyn/demo/ --outDir ../../site/dist/demo --emptyOutDir"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.10.2",

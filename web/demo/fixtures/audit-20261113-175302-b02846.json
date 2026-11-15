@@ -1,0 +1,91 @@
+{
+ "metrics": {
+  "run_id": "20261113-175302-b02846",
+  "model": {
+   "calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "model_seconds": 0.0,
+   "cost_usd": 0.0,
+   "cost_complete": true,
+   "schema_retries": 0,
+   "failed_calls": 0,
+   "blocked_offline": 0,
+   "replayed": 0,
+   "by_task": {}
+  },
+  "review": {
+   "delta_entry": {
+    "items": 9,
+    "decided": 1,
+    "open": 8,
+    "status": {
+     "proposed": 8,
+     "rejected": 1
+    },
+    "edited_items": 0,
+    "reviewers": [
+     "Demo reviewer"
+    ],
+    "median_minutes_to_first_decision": 71.3,
+    "carried_over": null
+   }
+  },
+  "agreement": {}
+ },
+ "knowledge": [],
+ "events": [
+  {
+   "event_id": 392,
+   "ts": "2026-11-13T12:23:02.565+00:00",
+   "actor": "code:sift-delta",
+   "action": "ingested",
+   "object_id": null,
+   "object_version": null,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 724,
+   "ts": "2026-11-13T13:34:22.577+00:00",
+   "actor": "Demo reviewer",
+   "action": "rejected",
+   "object_id": "DLT-0003@20261113-175302-b02846",
+   "object_version": 1,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 725,
+   "ts": "2026-11-13T13:34:29.878+00:00",
+   "actor": "Demo reviewer",
+   "action": "approved",
+   "object_id": "DLT-0003@20261113-175302-b02846",
+   "object_version": 1,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  },
+  {
+   "event_id": 726,
+   "ts": "2026-11-13T13:34:31.082+00:00",
+   "actor": "Demo reviewer",
+   "action": "rejected",
+   "object_id": "DLT-0003@20261113-175302-b02846",
+   "object_version": 1,
+   "model_served": null,
+   "tokens_in": null,
+   "tokens_out": null,
+   "latency_ms": null,
+   "attempt": null
+  }
+ ]
+}

@@ -1,5 +1,5 @@
 import { SCREEN_POINTS } from "../content";
-import { Headline, SectionHead } from "../components/ui";
+import { Headline, Icon, SectionHead } from "../components/ui";
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -13,7 +13,7 @@ export function Screens() {
           <Headline id="screen-title" plain="Every finding shows its evidence." inked="Then it waits for you." />
           <p className="body">
             This is the prototype's review screen: Sift Review on a synthetic instrument cluster requirement set. No mock-up,
-            no staged numbers.
+            no staged numbers. You can try it yourself, in your browser, on the same data.
           </p>
         </div>
         <figure className="shot">
@@ -37,6 +37,16 @@ export function Screens() {
           </div>
           <figcaption className="shot__cap">Zyn prototype. Synthetic data (ICX-100). Screenshot from 14 November 2026.</figcaption>
         </figure>
+        <div className="shot__try">
+          <a className="btn btn--ink shot__go" href={`${BASE}demo/`}>
+            Try the review screen
+            <Icon name="chevron-right" size={12} />
+          </a>
+          <p className="shot__note">
+            The real screen, running in your browser on three recorded runs: confirm and dismiss findings, look through a
+            spec revision and generated tests, and download the real exports. Nothing is saved or sent.
+          </p>
+        </div>
         <ul className="shot__points">
           {SCREEN_POINTS.map((p) => (
             <li key={p.title}>

@@ -11,8 +11,8 @@ export function Roadmap() {
         <div className="proof__head">
           <Headline id="roadmap-title" plain="What comes next," inked="and what we won't build." />
           <p className="body">
-            The order comes from what engineers asked for, and from what a team's IT has to accept before Zyn can run
-            inside its walls. Every item here is open to{" "}
+            The order comes from what engineers asked for in public discussions, and from what it takes to run Zyn on
+            your own machines. Every item here is open to{" "}
             <a className="link" href="#contribute" onClick={(e) => (e.preventDefault(), goSection("contribute"))}>
               contributors
             </a>
