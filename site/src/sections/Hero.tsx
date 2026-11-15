@@ -45,41 +45,48 @@ export function Hero() {
       <h1 id="hero-title" className="sr-only">
         AI writes the work. Zyn checks it before you sign.
       </h1>
-      <div className="wrap hero__head" aria-hidden={false}>
-        <span className="hero__word" aria-hidden>
-          AI writes the work.
-        </span>
-        <Rule className="rule--a" car={40} />
-        <p className="hero__desc">
-          Suppliers and AI tools now hand you requirements, tests and CAN databases faster than anyone can read them. Zyn
-          flags what was changed, invented or weakened, with the source line beside it, so you know where to look
-          before you sign.
-        </p>
-        <Rule className="rule--b" car={28} />
-        <span className="hero__break" />
-        <Rule className="rule--c" car={20} />
-        <span className="hero__ink" aria-hidden>
-          Zyn checks it.
-          <i className="hero__ink-corner" />
-        </span>
-        <Rule className="rule--d" car={32} />
-        <div className="hero__cta">
-          <div className="soon">
-            <span className="soon__badge">
-              <i aria-hidden />
-              Coming soon
+      <div className="wrap hero__head">
+        {/* Left: the two headline lines, stacked tight. Right: what Zyn is, and the invitation.
+            Splitting them keeps the headline's spacing the same whatever the description's length. */}
+        <div className="hero__lines">
+          <div className="hero__line">
+            <span className="hero__word" aria-hidden>
+              AI writes the work.
             </span>
-            <span className="soon__text">In development. Help build it.</span>
-            <a className="soon__go" href="#contribute" onClick={(e) => (e.preventDefault(), goSection("contribute"))}>
-              Contribute
-              <Icon name="chevron-right" size={12} />
-            </a>
+            <Rule className="rule--a" car={40} />
           </div>
-          <p className="hero__aside">
-            A hobby project for requirement and test engineers, built in the open and headed for open source.
-          </p>
+          <div className="hero__line hero__line--ink">
+            <Rule className="rule--c" car={20} />
+            <span className="hero__ink" aria-hidden>
+              Zyn checks it.
+              <i className="hero__ink-corner" />
+            </span>
+            <Rule className="rule--d" car={32} />
+          </div>
         </div>
-        <Rule className="rule--e" car={20} />
+        <div className="hero__side">
+          <p className="hero__desc">
+            Suppliers and AI tools now hand you requirements, tests and CAN databases faster than anyone can read them.
+            Zyn flags what was changed, invented or weakened, with the source line beside it, so you know where to look
+            before you sign.
+          </p>
+          <div className="hero__cta">
+            <div className="soon">
+              <span className="soon__badge">
+                <i aria-hidden />
+                Coming soon
+              </span>
+              <span className="soon__text">In development. Help build it.</span>
+              <a className="soon__go" href="#contribute" onClick={(e) => (e.preventDefault(), goSection("contribute"))}>
+                Contribute
+                <Icon name="chevron-right" size={12} />
+              </a>
+            </div>
+            <p className="hero__aside">
+              A hobby project for requirement and test engineers, built in the open and headed for open source.
+            </p>
+          </div>
+        </div>
       </div>
 
       <HeroFlow />
