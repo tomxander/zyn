@@ -9,7 +9,7 @@ import { useReviewer } from "../lib/reviewer";
 import { DecisionBar } from "../components/Decision";
 import { Drawer } from "../components/Drawer";
 import { Button, Card, CardHead, Empty, Field, FilterGroup, ItemText, Msg, PageHeader, Select,
-  Stats, StatusBadge, Switch, Table, Tabs, useProgressive, Cards } from "../components/ui";
+  Stats, StatusBadge, Switch, Table, Tabs, useHidden, useProgressive, Cards } from "../components/ui";
 import { AuditTab, ExportTab, JobsStrip } from "./common";
 import { countStats } from "./SiftView";
 
@@ -24,7 +24,7 @@ export function AnvilView({ data }: { data: any }) {
   return (
     <>
       <PageHeader kicker="Anvil" title={`Test cases from Sift run ${m.sift_run}`}
-        sub={`${m.requirements} approved requirements · CAN database ${m.dbc_file} (sha256 ${m.dbc_sha256.slice(0, 16)}…) · the model proposes a template per requirement; code checks it, generates the cases and tests them against injected faults`} />
+        sub={`Input: ${m.requirements} approved requirements · CAN database: ${m.dbc_file} (sha256 ${m.dbc_sha256.slice(0, 16)}…) · Method: the model proposes a template per requirement; code checks it, generates the cases and tests them against injected faults`} />
       <JobsStrip jobKey={d.run_id} />
       <Tabs value={tab} onChange={setTab} tabs={[
         { value: "specs", label: "1. Test specs", count: d.specs.length },
@@ -55,9 +55,9 @@ function Specs({ d }: { d: any }) {
   const gen = useAction(d.run_id);
   const specs: any[] = d.specs;
   const templates: string[] = d.templates;
-  const [pick, setPick] = useState<Set<string>>(() => new Set(templates));
+  const tplF = useHidden(templates);
   const [onlyBad, setOnlyBad] = useState(false);
-  const shownAll = specs.filter((s) => (pick.has(s.payload.template) || !templates.includes(s.payload.template))
+  const shownAll = specs.filter((s) => tplF.selected.has(s.payload.template)
     && (!onlyBad || s.payload.problems.length));
   const { shown, more } = useProgressive(shownAll);
   const noName = !canAct ? noActReason : undefined;
@@ -88,7 +88,7 @@ function Specs({ d }: { d: any }) {
       <div className="toolbar">
         <Button variant={d.ready ? "primary" : "plain"} icon={Cog} disabled={!canAct || !d.ready}
           busy={gen.isPending}
-          tip={noName ?? "Code only, no model calls. Each spec's cases are also run against simulated faults."}
+          tip={noName ?? (!d.ready ? "No approved spec is waiting for cases. Approve specs in tab 1 first." : "Code only, no model calls. Each spec's cases are also run against simulated faults.")}
           onClick={() => gen.mutate({ name: "forge_generate" })}>
           Generate cases for {plural(d.ready, "approved spec")}</Button>
         {d.repropose > 0 && <Button icon={RefreshCw} disabled={!!noName}
@@ -107,7 +107,7 @@ function Specs({ d }: { d: any }) {
       ) : (
         <>
           <div className="filters" style={{ marginTop: "var(--zyn-s5)", marginBottom: "var(--zyn-s5)" }}>
-            <FilterGroup label="Template" selected={pick} onChange={setPick}
+            <FilterGroup label="Template" selected={tplF.selected} onChange={tplF.onChange}
               options={templates.map((t) => ({ value: t, label: t, count: specs.filter((s) => s.payload.template === t).length }))} />
           </div>
           <div className="toolbar">
@@ -120,7 +120,7 @@ function Specs({ d }: { d: any }) {
             </AnimatePresence>
           </Cards>
           {!shown.length && <Empty title="Nothing matches these filters" body="Turn a filter back on to see more."
-            action={<Button onClick={() => { setPick(new Set(templates)); setOnlyBad(false); }}>Show everything</Button>} />}
+            action={<Button onClick={() => { tplF.reset(); setOnlyBad(false); }}>Show everything</Button>} />}
           <div className="row" style={{ marginTop: "var(--zyn-s5)" }}>{more}</div>
         </>
       )}
@@ -240,7 +240,7 @@ function EditSpec({ s, options, open, onOpenChange }: {
         ))}
       </div>
       {bad.length > 0 && <Msg tone="bad">Not a number: {bad.join(", ")}.</Msg>}
-      <Field label="Manual test idea (for not_automatable)">
+      <Field label="Manual test idea (when the template is not automatable)">
         <textarea className="textarea" value={f.manual_test_idea} onChange={(e) => set("manual_test_idea", e.target.value)} />
       </Field>
       <Field label="Reason for edit"><input className="input" value={note} onChange={(e) => setNote(e.target.value)} /></Field>

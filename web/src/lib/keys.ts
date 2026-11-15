@@ -4,10 +4,11 @@
 
 import { useEffect } from "react";
 import { announce } from "./api";
+import { MS_ADVANCE } from "../components/motion";
 
 export const REVIEW_KEYS: [string, string][] = [
   ["j", "Next card"], ["k", "Previous card"], ["a", "Approve, confirm or needs action"],
-  ["r", "Reject, dismiss or no action"], ["e", "Edit the card"], ["Ctrl K", "Find a run or action"],
+  ["r", "Reject, dismiss or no action"], ["e", "Edit the card"], [/Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ K" : "Ctrl K", "Find a run or action"],
   ["Ctrl Enter", "Save in an open drawer"],
 ];
 
@@ -65,8 +66,9 @@ export function useReviewKeys() {
         }
         btn.click();
         // A decision by key moves on to the next sheet, unless a reason must be chosen first.
-        if ((k === "a" || k === "r") && !card.querySelector('[role="combobox"]')) {
-          setTimeout(() => step(card, +1), 160);
+        // (An optional reason picker, such as "Reason, if dismissing", does not stop it.)
+        if ((k === "a" || k === "r") && !card.querySelector("[data-reason-required]")) {
+          setTimeout(() => step(card, +1), MS_ADVANCE);
         }
       }
     };

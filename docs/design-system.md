@@ -193,6 +193,7 @@ The signature moment: press a, the sheet takes a solid mark, the wedge steps one
 | `Drawer` | Edit forms and new runs, a sheet sliding in from the right |
 | `Table` | Data tables with an ink header row |
 | `Empty` | Nothing to show yet, and the one next step |
+| `Boundary` | A render error in one part shows a failed message with Try again there, never a blank page; wraps the app, each run view and each drawer |
 | `Pixels`, `Shimmer`, `Loading`, `JobPanel`, `Dots`, `Skeleton` | Loading and thinking (section 6) |
 | `useProgressive` | Long lists render 40 at a time with a "Show more" button |
 

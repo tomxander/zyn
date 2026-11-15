@@ -10,7 +10,7 @@ import { useStartStage } from "../lib/jobs";
 import { useReviewer } from "../lib/reviewer";
 import { DecisionBar } from "../components/Decision";
 import { Badge, Button, Card, Disclosure, CardHead, Chip, Empty, Field, FilterGroup, Highlight, ItemText, Msg,
-  PageHeader, Select, Stats, Switch, Table, Tabs, useProgressive, Cards } from "../components/ui";
+  PageHeader, Select, Stats, Switch, Table, Tabs, useHidden, useProgressive, Cards } from "../components/ui";
 import { AuditTab, ExportTab, JobsStrip } from "./common";
 
 type State = "open" | "confirmed" | "dismissed";
@@ -31,9 +31,9 @@ export function CheckView({ data }: { data: any }) {
   return (
     <>
       <PageHeader kicker={d.tool ?? "Sift Review"} title={m.filename}
-        sub={`${m.count} ${m.kind === "tests" ? "tests" : "requirements"} · ${m.source_format} · columns used: ${Object.entries(m.columns_used as Record<string, string>)
+        sub={`Input: ${m.count} ${m.kind === "tests" ? "tests" : "requirements"} · Format: ${m.source_format} · Columns used: ${Object.entries(m.columns_used as Record<string, string>)
           .map(([k, v]) => `${k} = ${v}`).join(", ")} · sha256 ${m.sha256.slice(0, 16)}…`
-          + (m.rules ? ` · rule profile ${m.rules.name} (${m.rules.checks.length} checks${m.rules.custom_checks?.length ? `, ${m.rules.custom_checks.length} custom` : ""})` : "")} />
+          + (m.rules ? ` · Rule profile: ${m.rules.name} (${m.rules.checks.length} checks${m.rules.custom_checks?.length ? `, ${m.rules.custom_checks.length} custom` : ""})` : "")} />
       <JobsStrip jobKey={d.run_id} />
       <Tabs value={tab} onChange={setTab} tabs={[
         { value: "findings", label: `Findings (${openN} open of ${findings.length})` },
@@ -53,13 +53,6 @@ export function CheckView({ data }: { data: any }) {
 }
 
 /** Excluded values are stored, so categories that appear later start switched on. */
-function useHidden<T extends string>(all: T[]) {
-  const [hidden, setHidden] = useState<Set<T>>(() => new Set());
-  const selected = useMemo(() => new Set(all.filter((v) => !hidden.has(v))), [all, hidden]);
-  const onChange = (s: Set<T>) => setHidden(new Set(all.filter((v) => !s.has(v))));
-  return { selected, onChange };
-}
-
 function Findings({ d }: { d: any }) {
   const { canAct, noActReason } = useReviewer();
   const start = useStartStage(d.run_id);
@@ -108,7 +101,7 @@ function Findings({ d }: { d: any }) {
       )}
       {d.ai_available !== false && <div className="toolbar">
         <Button variant={left ? "primary" : "plain"} icon={Sparkles} disabled={!canAct || !left}
-          tip={!canAct ? noActReason
+          tip={!canAct ? noActReason : !left ? "Every batch and conflict pass has run"
             : "Each batch checks up to 15 requirements on their own; the conflict pass reads the whole set for contradictions."}
           onClick={() => start("ai_review")}>
           Run AI review ({ai.batches_left} of {ai.batches} batches and {ai.conflicts_left} of {ai.conflicts} set-wide conflict passes left)</Button>

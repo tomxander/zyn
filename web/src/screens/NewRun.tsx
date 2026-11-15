@@ -7,7 +7,7 @@ import { api, getActiveProject, useConfig, type Job } from "../lib/api";
 import { useAddJob } from "../lib/jobs";
 import { useReviewer } from "../lib/reviewer";
 import { Drawer } from "../components/Drawer";
-import { Button, Field, Select } from "../components/ui";
+import { Button, Field, Msg, Select } from "../components/ui";
 
 type Kind = "sift" | "check" | "tests" | "delta" | "forge";
 // Grouped by family: the Sift tools, then the Anvil tools. Each shows its family's mark.
@@ -47,6 +47,10 @@ export function NewRun({ open, onOpenChange, onStarted }: {
 
   const ready = kind === "sift" || kind === "check" || kind === "tests" ? !!files.file
     : kind === "forge" ? !!base : mode === "spec" ? !!(base && files.new) : !!(files.old && files.new);
+  // Why Start is off, in words (a disabled button always says why).
+  const notReady = kind === "forge" ? "Choose an approved Sift run first"
+    : kind === "delta" && mode === "spec" ? "Choose an approved Sift run and its new revision first"
+    : kind === "delta" ? "Choose both requirement sets first" : "Choose a file first";
 
   async function submit() {
     const project = getActiveProject() || cfg.data?.project;
@@ -83,9 +87,9 @@ export function NewRun({ open, onOpenChange, onStarted }: {
       description="Each run is recorded in the audit log under your name."
       footer={<>
         <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
-        <Button variant="primary" disabled={!ready || !canAct} tip={!canAct ? noActReason : undefined} busy={busy} onClick={submit}>Start</Button>
+        <Button variant="primary" disabled={!ready || !canAct} tip={!canAct ? noActReason : !ready ? notReady : undefined} busy={busy} onClick={submit}>Start</Button>
       </>}>
-      <div className="filter-group" data-marks role="radiogroup" aria-label="Tool">
+      <div className="filter-group" data-marks role="group" aria-label="Tool">
         {KINDS.map((k) => (
           <button key={k.kind} className="filter" aria-pressed={kind === k.kind} onClick={() => setKind(k.kind)}>
             <k.icon size={14} aria-hidden />{k.title}
@@ -114,12 +118,13 @@ export function NewRun({ open, onOpenChange, onStarted }: {
         <p className="small quiet">Code only, no model calls. The CAN database is checked first (duplicate frame IDs, overlapping bits, impossible ranges). Then each test: signal names and ranges, requirement references, values not in the requirement, exact comparisons with no tolerance, missing setup and duplicate tests. Coverage: requirements no test covers and signal limits never tested.</p>
       </>}
       {kind === "delta" && <>
-        <div className="filter-group">
+        <div className="filter-group" role="group" aria-label="What to compare">
           <button className="filter" aria-pressed={mode === "spec"} onClick={() => setMode("spec")}>New revision of an extracted spec</button>
           <button className="filter" aria-pressed={mode === "set"} onClick={() => setMode("set")}>Two requirement sets</button>
         </div>
         {mode === "spec" ? <>
-          <Field label="Approved Sift run"><Select value={base} onChange={setBase} placeholder="Choose a run" options={sift.map((s) => ({ value: s, label: s }))} /></Field>
+          {sift.length ? <Field label="Approved Sift run"><Select value={base} onChange={setBase} placeholder="Choose a run" options={sift.map((s) => ({ value: s, label: s }))} /></Field>
+          : <Msg tone="info">No Sift run has approved requirements yet. Approve some in a Sift run first.</Msg>}
           <FilePick label="New revision (PDF, DOCX, Markdown, text)" accept=".pdf,.docx,.md,.txt" file={files.new} onFile={f("new")} />
         </> : <>
           <FilePick label="Old set (ReqIF, Excel, CSV)" accept=".reqif,.xlsx,.csv" file={files.old} onFile={f("old")} />
@@ -127,7 +132,8 @@ export function NewRun({ open, onOpenChange, onStarted }: {
         </>}
       </>}
       {kind === "forge" && <>
-        <Field label="Approved Sift run"><Select value={base} onChange={setBase} placeholder="Choose a run" options={sift.map((s) => ({ value: s, label: s }))} /></Field>
+        {sift.length ? <Field label="Approved Sift run"><Select value={base} onChange={setBase} placeholder="Choose a run" options={sift.map((s) => ({ value: s, label: s }))} /></Field>
+          : <Msg tone="info">No Sift run has approved requirements yet. Approve some in a Sift run first.</Msg>}
         <FilePick label="CAN database (DBC). Leave empty for the synthetic ICX-100 one" accept=".dbc" file={files.dbc} onFile={f("dbc")} />
         <p className="small quiet">One model call per section. Code then checks every proposal.</p>
       </>}

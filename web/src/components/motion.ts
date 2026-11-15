@@ -5,6 +5,10 @@ import type { Transition, Variants } from "motion/react";
 export const EASE = [0.2, 0, 0, 1] as const;
 export const T_FAST: Transition = { duration: 0.15, ease: EASE };
 export const T_BASE: Transition = { duration: 0.24, ease: EASE };
+/** Pauses, in milliseconds: after a key decision before moving to the next sheet, and before a
+ *  cleanly finished job leaves the page. */
+export const MS_ADVANCE = 160;
+export const MS_DROP_DONE_JOB = 2500;
 export const T_LAYOUT: Transition = { type: "spring", stiffness: 420, damping: 40, mass: 0.8 };
 
 /** Page and tab content arriving. */

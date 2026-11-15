@@ -158,3 +158,11 @@ def test_undo_reopens_and_keeps_the_record(env):
     # reopening something not decided records nothing
     c.post("/api/decide", json={"item_id": "REQ-SMOKE-001", "decision": "reopened", "reviewer": "Tom"})
     assert [e["action"] for e in audit.events(object_id="REQ-SMOKE-001")] == actions
+
+
+def test_unknown_or_team_only_api_address_is_a_json_404_not_the_page(env):
+    # The tokens drawer once got the web page back here in local mode and blanked the screen.
+    _, _, _, c = env
+    for path in ("/api/tokens", "/api/team-settings", "/api/no-such-thing"):
+        r = c.get(path)
+        assert r.status_code == 404 and r.json() == {"error": "Not found"}, path

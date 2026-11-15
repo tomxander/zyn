@@ -20,6 +20,10 @@ WORKFLOW_NAME = {"sift": "Sift", "sift-check": "Sift Review",
                  "test-check": "Anvil Review"}
 
 
+# Mappings the model rated at least this high may be approved together, after a person reads them.
+BULK_MAPPING_RATING = 0.9
+
+
 def tool_name(workflow: str) -> str:
     """The name the screen shows for a workflow. Benchmark runs (eval-*) are Assay."""
     if workflow.startswith("eval-"):
@@ -274,8 +278,9 @@ def sift_view(
         "bulk_mappings": [
             m["item_id"]
             for m in maps
-            if m["status"] in ("proposed", "edited") and m["payload"]["confidence"] >= 0.9
+            if m["status"] in ("proposed", "edited") and m["payload"]["confidence"] >= BULK_MAPPING_RATING
         ],
+        "bulk_mapping_rating": BULK_MAPPING_RATING,
         "approved_sections": len(approved_maps),
         "waiting_sections": len(waiting),
         "requirements": cards,
@@ -553,6 +558,11 @@ def audit_view(audit: AuditStore, cfg: HarnessConfig, run_id: str) -> dict:
     ev_list = []
     for e in events:
         row = {k: e.get(k) for k in AUDIT_COLS}
+        # Runs recorded before a rename keep their old code actor in the log; the screen shows
+        # today's name (the stored record is unchanged).
+        old = (row.get("actor") or "").split(":", 1)
+        if len(old) == 2 and old[0] == "code" and old[1] in pipeline.LEGACY_WORKFLOWS:
+            row["actor"] = pipeline.CODE_ACTOR
         if cfg.is_team():
             actor = row.get("actor") or ""
             actor_id = e.get("actor_id")
@@ -608,8 +618,8 @@ def run_view(
     if run_id not in runs:
         raise KeyError(run_id)
     wf = runs[run_id]["workflow"]
-    base = {"run_id": run_id, "workflow": wf,
-            "tool": tool_name(wf)}
+    base = {"run_id": run_id, "workflow": wf, "tool": tool_name(wf),
+            "note": (runs[run_id].get("note") or "").split(" sha256=")[0]}
     if wf in (sift_check.WORKFLOW, "test-check"):
         return {**base, "kind": "check", **check_view(audit, run_id, rights=rights)}
     if wf == "forge":

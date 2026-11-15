@@ -7,6 +7,7 @@ import { fade } from "./components/motion";
 import { useReviewKeys } from "./lib/keys";
 import { useReviewer } from "./lib/reviewer";
 import { RotateCw } from "./components/icons";
+import { Boundary } from "./components/Boundary";
 import { Shell } from "./screens/Shell";
 import { Palette } from "./screens/Palette";
 import { NewRun } from "./screens/NewRun";
@@ -87,10 +88,15 @@ export default function App() {
       onOpenSettings={() => setSettingsOpen(true)}
     >
       <JobsStrip jobKey="new" onDone={(r) => r?.run_id && setRunId(r.run_id)} />
-      {runs.data && !runs.data.length ? (
+      {runs.isError ? (
+        <div className="stack">
+          <Msg tone="bad">The list of runs could not be read: {(runs.error as Error).message}</Msg>
+          <div><Button icon={RotateCw} onClick={() => runs.refetch()}>Try again</Button></div>
+        </div>
+      ) : runs.data && !runs.data.length ? (
         <Empty
           title="No runs yet"
-          body={canAct ? "Start one with Start new run in the sidebar." : "No runs in this project yet."}
+          body={canAct ? "Start one with Start new run in the sidebar." : cfg.data?.mode === "team" ? "No runs in this project yet." : "Enter your name under Reviewer, then use Start new run."}
         />
       ) : run.isError ? (
         <div className="stack">
@@ -102,14 +108,14 @@ export default function App() {
       ) : (
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div key={runId} variants={fade} initial="hidden" animate="show" exit="exit">
-            <View data={run.data} />
+            <Boundary what="This run" resetKey={runId}><View data={run.data} /></Boundary>
           </motion.div>
         </AnimatePresence>
       )}
       <Palette open={palette} onOpenChange={setPalette} onRun={setRunId} onNew={() => setNewRun(true)} />
       <NewRun open={newRun} onOpenChange={setNewRun} onStarted={(id) => id && setRunId(id)} />
-      <TokensDrawer open={tokensOpen} onOpenChange={setTokensOpen} />
-      <TeamSettingsDrawer open={settingsOpen} onOpenChange={setSettingsOpen} />
+      <Boundary what="Access tokens"><TokensDrawer open={tokensOpen} onOpenChange={setTokensOpen} /></Boundary>
+      <Boundary what="Team settings"><TeamSettingsDrawer open={settingsOpen} onOpenChange={setSettingsOpen} /></Boundary>
     </Shell>
   );
 }

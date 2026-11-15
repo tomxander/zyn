@@ -120,6 +120,7 @@
   --zyn-on-ink-2: var(--zyn-z3);
   --zyn-ink-hover: var(--zyn-z8);
   --zyn-mark-tint: rgba(247,246,242,.09);
+  --zyn-tracing-lines: linear-gradient(180deg, transparent calc(100% - 1px), var(--zyn-z2) calc(100% - 1px));
   --zyn-accent: #5C9DFF;
   --zyn-on-accent: #07111F;
   --zyn-ring: #5C9DFF;

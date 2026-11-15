@@ -1,13 +1,13 @@
 // App frame: sidebar (brand, reviewer, runs, start new, theme) and the main column.
 
-import { ZynMark, Command, Monitor, Moon, Plus, Search, Sun, TriangleAlert } from "../components/icons";
+import { ZynMark, Command, Monitor, Moon, Plus, RotateCw, Search, Sun, TriangleAlert } from "../components/icons";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useConfig, useRuns } from "../lib/api";
+import { ApiError, useConfig, useRuns } from "../lib/api";
 import { markFor } from "../components/ui";
 import { useReviewer } from "../lib/reviewer";
-import { Button, Skeleton, Tip } from "../components/ui";
-import { T_LAYOUT } from "../components/motion";
+import { Button, Msg, Skeleton, Tip } from "../components/ui";
+import { T_BASE, T_FAST, T_LAYOUT } from "../components/motion";
 import { PersonMenu } from "./PersonMenu";
 
 /** A run's tool mark, from the identity set. */
@@ -77,7 +77,7 @@ export function Shell({ runId, onRun, onNew, onPalette, onOpenTokens, onOpenSett
         </div>
 
         {cfg.isLoading ? (
-          <div className="side-loading" aria-busy="true">
+          <div className="stack-sm" aria-busy="true">
             <div className="side-label">Loading</div>
             <Skeleton height={34} />
           </div>
@@ -114,7 +114,9 @@ export function Shell({ runId, onRun, onNew, onPalette, onOpenTokens, onOpenSett
           </Tip>
         </div>
         <LayoutGroup>
-          <nav className="runs" aria-label="Runs" ref={runsRef}>
+          <nav className="runs" aria-label="Runs" ref={runsRef} aria-busy={runs.isLoading || undefined}>
+            {runs.isLoading && [0, 1, 2].map((i) => <div key={i} className="run-item"><Skeleton height={34} /></div>)}
+            {runs.isError && <p className="side-hint run-item">Runs could not be loaded. See the message on the page.</p>}
             {shown.map((r) => (
               <button key={r.run_id} className="run-item" onClick={() => onRun(r.run_id)}
                 aria-current={r.run_id === runId ? "page" : undefined}>
@@ -156,7 +158,7 @@ export function Shell({ runId, onRun, onNew, onPalette, onOpenTokens, onOpenSett
             ))}
             <span className="grow" />
             <Tip text="j k move between cards · a approve · r reject · e edit">
-              <span className="side-hint" tabIndex={0}>{MAC ? <span className="kbd"><Command size={10} /> K</span> : <span className="kbd">Ctrl K</span>}</span>
+              <span className="side-hint" tabIndex={0} aria-label="Keyboard shortcuts: j and k move between cards, a approves, r rejects, e edits, Ctrl K finds a run">{MAC ? <span className="kbd"><Command size={10} /> K</span> : <span className="kbd">Ctrl K</span>}</span>
             </Tip>
           </div>
         </div>
@@ -169,11 +171,17 @@ export function Shell({ runId, onRun, onNew, onPalette, onOpenTokens, onOpenSett
             <span><b>{cfg.data?.label ?? "Zyn prototype."}</b> Outputs are model-generated and unverified
               until a named reviewer approves them.</span>
           </div>
+          {cfg.isError && !(cfg.error instanceof ApiError && cfg.error.status === 401) && (
+            <div className="stack">
+              <Msg tone="bad">The settings could not be read from the server: {(cfg.error as Error).message}</Msg>
+              <div><Button icon={RotateCw} onClick={() => cfg.refetch()}>Try again</Button></div>
+            </div>
+          )}
           <AnimatePresence initial={false}>
-            {!isTeam && !reviewer && (
+            {!canAct && (
               <motion.p className="small quiet readonly-note" initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                Read-only until you enter your name under Reviewer.
+                animate={{ opacity: 1, height: "auto", transition: T_BASE }} exit={{ opacity: 0, height: 0, transition: T_FAST }}>
+                {!isTeam && !reviewer ? "Read-only until you enter your name under Reviewer." : `Read-only. ${noActReason ?? ""}`}
               </motion.p>
             )}
           </AnimatePresence>

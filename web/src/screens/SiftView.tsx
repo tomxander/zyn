@@ -9,7 +9,7 @@ import { useReviewer } from "../lib/reviewer";
 import { DecisionBar } from "../components/Decision";
 import { Drawer } from "../components/Drawer";
 import { Button, Card, CardHead, Checkbox, Disclosure, Empty, FilterGroup, Field, Msg, PageHeader,
-  Select, Stats, StatusBadge, Switch, Tabs, useProgressive, Cards } from "../components/ui";
+  Select, Stats, StatusBadge, Switch, Tabs, useHidden, useProgressive, Cards } from "../components/ui";
 import { useWrite, post } from "../lib/api";
 import { AuditTab, ExportTab, JobsStrip } from "./common";
 import { RequirementCard } from "./RequirementCard";
@@ -27,7 +27,7 @@ export function SiftView({ data }: { data: any }) {
   return (
     <>
       <PageHeader kicker="Sift" title={d.doc.title}
-        sub={`${d.doc.filename} · converter: ${d.doc.converter} · sha256 ${d.doc.sha256.slice(0, 16)}… · taxonomy: ${d.taxonomy.label}`} />
+        sub={`Source: ${d.doc.filename} · Converter: ${d.doc.converter} · sha256 ${d.doc.sha256.slice(0, 16)}… · Taxonomy: ${d.taxonomy.label}`} />
       <JobsStrip jobKey={d.run_id} />
       <Tabs value={tab} onChange={setTab} tabs={[
         { value: "map", label: "1. Section mapping", count: d.mappings.length },
@@ -54,15 +54,22 @@ function useBulk(runId: string) {
 function Mappings({ d }: { d: any }) {
   const { canAct, noActReason } = useReviewer();
   const bulk = useBulk(d.run_id);
+  const [read, setRead] = useState(false);
+  const rated = (d.mappings as any[]).filter((m) => d.bulk_mappings.includes(m.item_id));
+  const rating = Number(d.bulk_mapping_rating ?? 0.9).toFixed(2);
   return (
     <>
       <Stats items={countStats(d.mapping_counts)} />
-      {d.bulk_mappings.length > 0 && (
-        <div className="stack" style={{ marginBottom: "var(--zyn-s6)" }}>
-          <p className="small quiet">The rating is the model's own estimate. It has not been shown to predict correctness, so read the section previews before approving in bulk.</p>
-          <div><Button icon={CheckCheck} disabled={!canAct} tip={!canAct ? noActReason : undefined} busy={bulk.isPending}
-            onClick={() => bulk.mutate("mappings")}>
-            Approve all {d.bulk_mappings.length} pending mappings the model rated 0.90 or above</Button></div>
+      {rated.length > 0 && (
+        <div className="card" style={{ marginBottom: "var(--zyn-s6)" }}>
+          <Disclosure label={`Approve ${rated.length} pending mappings the model rated ${rating} or above`}>
+            <p className="small quiet">The rating is the model's own estimate. It has not been shown to predict correctness, so read each section and its subsystem before ticking the box.</p>
+            <ul className="small">{rated.map((m) => <li key={m.item_id}><code>§{m.payload.number || "-"}</code> {m.payload.heading} → {m.payload.subsystem_id}</li>)}</ul>
+            <Checkbox checked={read} onChange={setRead} label={`I have read these ${rated.length} mappings`} />
+            <div><Button variant="primary" icon={CheckCheck} disabled={!canAct || !read}
+              tip={!canAct ? noActReason : !read ? "Tick the box first" : undefined} busy={bulk.isPending}
+              onClick={() => bulk.mutate("mappings")}>Approve them</Button></div>
+          </Disclosure>
         </div>
       )}
       <Cards count={d.mappings.length}>
@@ -91,7 +98,7 @@ function MappingCardInner({ m, index, subsystems }: { m: any; index: number; sub
         description="Saved as a new version of this mapping."
         footer={<>
           <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-          <Button variant="primary" disabled={!canAct || sub === p.subsystem_id} tip={!canAct ? noActReason : undefined} busy={edit.isPending}
+          <Button variant="primary" disabled={!canAct || sub === p.subsystem_id} tip={!canAct ? noActReason : sub === p.subsystem_id ? "Choose a different subsystem first" : undefined} busy={edit.isPending}
             onClick={() => edit.mutate({ item_id: m.item_id, kind: "subsystem", subsystem_id: sub }, { onSuccess: () => setOpen(false) })}>Save</Button>
         </>}>
         <Field label="Subsystem">
@@ -109,12 +116,12 @@ function Requirements({ d }: { d: any }) {
   const bulk = useBulk(d.run_id);
   const reqs: any[] = d.requirements;
   const subs = useMemo(() => [...new Set(reqs.map((r) => r.payload.subsystem_id as string))].sort(), [reqs]);
-  const [pickSub, setPickSub] = useState<Set<string>>(() => new Set(subs));
-  const [pickStatus, setPickStatus] = useState<Set<Status>>(() => new Set(STATUSES));
+  const subF = useHidden(subs);
+  const statusF = useHidden(STATUSES as Status[]);
   const [attention, setAttention] = useState(false);
   const [read, setRead] = useState(false);
-  const shownAll = reqs.filter((r) => (pickSub.has(r.payload.subsystem_id) || !subs.includes(r.payload.subsystem_id))
-    && pickStatus.has(r.status) && (!attention || r.needs_attention));
+  const shownAll = reqs.filter((r) => subF.selected.has(r.payload.subsystem_id)
+    && statusF.selected.has(r.status) && (!attention || r.needs_attention));
   const { shown, more } = useProgressive(shownAll);
   const clean = reqs.filter((r) => d.bulk_requirements.includes(r.item_id));
 
@@ -124,10 +131,10 @@ function Requirements({ d }: { d: any }) {
         {d.approved_sections} approved sections with requirements · {d.waiting_sections} waiting for extraction. Only approved mappings are extracted.</p>
       <div className="toolbar">
         <Button variant={reqs.length ? "plain" : "primary"} icon={ArrowRight} disabled={!canAct || !d.waiting_sections}
-          tip={!canAct ? noActReason : undefined}
+          tip={!canAct ? noActReason : !d.waiting_sections ? "No approved section is waiting. Approve mappings in tab 1 first." : undefined}
           onClick={() => start("extract")}>Extract requirements from {d.waiting_sections} approved sections</Button>
         {reqs.length > 0 && <Button icon={Sparkles} disabled={!canAct || !d.clarify_candidates}
-          tip={!canAct ? noActReason : "Asks the generator model how vague source wording could be made testable. Missing values come back as <TBD: ...> placeholders, never invented. Advice only."}
+          tip={!canAct ? noActReason : !d.clarify_candidates ? "No requirement has flagged source wording" : "Asks the generator model how vague source wording could be made testable. Missing values come back as <TBD: ...> placeholders, never invented. Advice only."}
           onClick={() => start("clarify")}>Propose clarifications for {d.clarify_candidates} flagged requirements</Button>}
       </div>
       {!reqs.length ? (
@@ -136,9 +143,9 @@ function Requirements({ d }: { d: any }) {
         <>
           <Stats items={countStats(d.requirement_counts)} />
           <div className="filters" style={{ marginBottom: "var(--zyn-s5)" }}>
-            <FilterGroup label="Subsystem" selected={pickSub} onChange={setPickSub}
+            <FilterGroup label="Subsystem" selected={subF.selected} onChange={subF.onChange}
               options={subs.map((s) => ({ value: s, label: s, count: reqs.filter((r) => r.payload.subsystem_id === s).length }))} />
-            <FilterGroup label="Status" selected={pickStatus} onChange={setPickStatus}
+            <FilterGroup label="Status" selected={statusF.selected} onChange={statusF.onChange}
               options={STATUSES.map((s) => ({ value: s, label: cap(s), count: d.requirement_counts[s] ?? 0 }))} />
           </div>
           <div className="toolbar">
@@ -150,7 +157,7 @@ function Requirements({ d }: { d: any }) {
                 <p className="small quiet">Concrete checks only: quote located, modal verb kept, values from the source, vague words flagged, no open placeholders, AI accepted. Read them before ticking the box.</p>
                 <ul className="small">{clean.map((r) => <li key={r.item_id}><code>{r.display_id}</code> {r.payload.text}</li>)}</ul>
                 <Checkbox checked={read} onChange={setRead} label={`I have read these ${clean.length} requirements`} />
-                <div><Button variant="primary" icon={Wand2} disabled={!canAct || !read} tip={!canAct ? noActReason : undefined} busy={bulk.isPending}
+                <div><Button variant="primary" icon={Wand2} disabled={!canAct || !read} tip={!canAct ? noActReason : !read ? "Tick the box first" : undefined} busy={bulk.isPending}
                   onClick={() => bulk.mutate("requirements")}>Approve them</Button></div>
               </Disclosure>
             </div>
@@ -166,7 +173,7 @@ function Requirements({ d }: { d: any }) {
             </AnimatePresence>
           </Cards>
           {!shown.length && <Empty title="Nothing matches these filters" body="Turn a filter back on to see more."
-            action={<Button onClick={() => { setPickSub(new Set(subs)); setPickStatus(new Set(STATUSES)); setAttention(false); }}>Show everything</Button>} />}
+            action={<Button onClick={() => { subF.reset(); statusF.reset(); setAttention(false); }}>Show everything</Button>} />}
           <div className="row" style={{ marginTop: "var(--zyn-s5)" }}>{more}</div>
         </>
       )}

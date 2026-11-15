@@ -23,7 +23,7 @@ export function DeltaView({ data }: { data: any }) {
   return (
     <>
       <PageHeader kicker="Sift Delta" title={`${m.base_file} → ${m.new_file}`}
-        sub={`${m.base_run ? `Base run ${m.base_run} · ` : ""}${m.unchanged} unchanged (not listed) · found by code, no model calls`} />
+        sub={`${m.base_run ? `Base run: ${m.base_run} · ` : ""}Unchanged: ${m.unchanged}, not listed · Method: found by code, no model calls`} />
       <JobsStrip jobKey={d.run_id} />
       <Tabs value={tab} onChange={setTab} tabs={[
         { value: "changes", label: "Changes", count: d.entries.length },

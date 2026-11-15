@@ -97,7 +97,7 @@
 .hub__tile[data-hit] { background: var(--ink); color: var(--hi-on-ink); border-color: var(--ink); }
 .toollist__item { grid-template-columns: 24px 10ch 1fr 12px; }
 .toollist__hl { padding: 0 2px; margin: 0 -2px; transition: background-color 90ms var(--ease-sharp); }
-.toollist__chev { color: color-mix(in srgb, var(--ink) 40%, transparent); transition: color 90ms var(--ease-sharp), transform 90ms var(--ease-sharp); align-self: center; }
+.toollist__chev { color: color-mix(in srgb, var(--ink) 40%, transparent); transition: color 90ms var(--ease-sharp), transform 90ms var(--ease-sharp); align-self: start; margin-top: 9px; }
 .toollist__item:hover .toollist__hl { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--ink); }
 .toollist__item:hover .toollist__chev { color: currentColor; transform: translateX(2px); }
 

@@ -10,7 +10,7 @@ export function TeamSettingsDrawer({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const settings = useTeamSettings();
+  const settings = useTeamSettings(open);
   const data = settings.data;
 
   const projectsRows = data?.projects

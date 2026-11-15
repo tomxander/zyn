@@ -28,6 +28,9 @@ beforeAll(() => {
   });
 });
 
+// Every Button sits in a tooltip root, as in the app (main.tsx provides it).
+const TipProvider = ({ children }: { children: ReactNode }) => <Tooltip.Provider delayDuration={0}>{children}</Tooltip.Provider>;
+
 function createTestWrapper(initialData?: { config?: any; runs?: any; tokens?: any }) {
   const qc = new QueryClient({
     defaultOptions: {
@@ -67,7 +70,8 @@ describe("team mode ui components", () => {
         currentProject="alpha"
         onSelectProject={() => {}}
         onOpenTokens={() => {}}
-      />
+      />,
+      { wrapper: TipProvider }
     );
 
     expect(screen.getByText("Alice Smith")).toBeTruthy();
@@ -110,7 +114,7 @@ describe("team mode ui components", () => {
   });
 
   it("renders sign-in page", () => {
-    render(<SignIn />);
+    render(<SignIn />, { wrapper: TipProvider });
     expect(screen.getByText("Sign in with your company account")).toBeTruthy();
     expect(
       screen.getByRole("button", { name: "Sign in with company account" })

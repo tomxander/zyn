@@ -1,4 +1,5 @@
-// Smoke and evaluation runs: a single list of requirements, plus the audit log.
+// Smoke test and Assay (benchmark) runs: the run's items if it has any, and its audit log.
+// A benchmark run has no items to review, so it opens on the audit log.
 
 import { ListChecks } from "../components/icons";
 import { useState } from "react";
@@ -8,13 +9,19 @@ import { RequirementCard } from "./RequirementCard";
 import { countStats } from "./SiftView";
 
 export function SmokeView({ data: d }: { data: any }) {
-  const [tab, setTab] = useState("req");
+  const hasItems = d.requirements.length > 0;
+  const [tab, setTab] = useState(hasItems ? "req" : "audit");
+  const assay = d.tool === "Assay";
+  // A smoke run's note is its model settings ("generator=… reviewer=…"), not a title.
+  const title = assay ? d.note || `Run ${d.run_id}` : "Smoke test: synthetic fuel-gauge spec";
+  const sub = assay ? "Source: benchmark data, scored against its answer key · Run: " + d.run_id
+    : `Source: synthetic fuel-gauge specification${d.note ? ` · Models: ${d.note}` : ""} · Run: ${d.run_id}`;
   return (
     <>
-      <PageHeader kicker={d.tool} title={`Run ${d.run_id}`} sub={`Workflow ${d.workflow}`} />
+      <PageHeader kicker={d.tool} title={title} sub={sub} />
       <Tabs value={tab} onChange={setTab} tabs={[
-        { value: "req", label: "Requirements", count: d.requirements.length },
-        { value: "audit", label: "Audit log" },
+        ...(hasItems ? [{ value: "req", label: "Requirements", count: d.requirements.length }] : []),
+        { value: "audit", label: assay ? "Model calls and audit log" : "Audit log" },
       ]}>
         {tab === "req" && (d.requirements.length ? (
           <>

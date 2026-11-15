@@ -1204,6 +1204,9 @@ def create_app(
     async def index(request: Request):
         # files at the root of the built screen (the favicon) are served as themselves
         name = request.path_params.get("path", "")
+        # an API address that does not exist (or is team-only) is an error, never the page
+        if name == "api" or name.startswith("api/"):
+            return JSONResponse({"error": "Not found"}, status_code=404)
         root_file = (WEB_DIST / name).resolve()
         if name and "/" not in name and root_file.parent == WEB_DIST.resolve() and root_file.is_file():
             return FileResponse(root_file)

@@ -44,19 +44,20 @@ export function PersonMenu({
         <div className="person-menu-projects">
           <Select
             value={current?.id}
+            label="Project"
             onChange={(val) => val && onSelectProject(val)}
-            options={projects.map((p) => ({ value: p.id, label: `${p.name} (${p.role})` }))}
+            options={projects.map((p) => ({ value: p.id, label: `${p.name} (${p.role.charAt(0).toUpperCase() + p.role.slice(1)})` }))}
           />
         </div>
       )}
 
       <div className="person-menu-actions">
         <Button variant="ghost" size="sm" onClick={onOpenTokens}>
-          Tokens
+          Access tokens
         </Button>
         {isAdmin && onOpenSettings && (
           <Button variant="ghost" size="sm" onClick={onOpenSettings}>
-            Settings
+            Team settings
           </Button>
         )}
         <span className="grow" />
@@ -66,6 +67,8 @@ export function PersonMenu({
           onClick={async () => {
             try {
               await api("/auth/logout", { method: "POST" });
+            } catch {
+              // signed out or not, the start page shows the current state
             } finally {
               window.location.href = "/";
             }

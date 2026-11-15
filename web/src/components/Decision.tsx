@@ -33,7 +33,7 @@ export function DecisionBar({ itemId, decision, labels = ["Approve", "Reject"], 
         {needs_reason && status !== "approved" && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }} transition={T_BASE}>
-            <div className="stack">
+            <div className="stack" data-reason-required>
               {decision.earlier && (
                 <p className="small quiet">{decision.earlier.by} approved the same wording over an AI
                   objection in run {decision.earlier.run_id}. That reason is offered first.</p>
@@ -42,7 +42,7 @@ export function DecisionBar({ itemId, decision, labels = ["Approve", "Reject"], 
                 <Select value={pick} onChange={setPick} placeholder="Choose a reason"
                   options={[...decision.reasons, OTHER].map((r) => ({ value: r, label: r }))} />
               </Field>
-              {pick === OTHER && <input className="input" placeholder="Reason" value={other}
+              {pick === OTHER && <input className="input" placeholder="Reason" aria-label="Your reason for approving anyway" value={other}
                 onChange={(e) => setOther(e.target.value)} />}
             </div>
           </motion.div>
@@ -51,12 +51,12 @@ export function DecisionBar({ itemId, decision, labels = ["Approve", "Reject"], 
       <div className="card-actions">
         <Button variant="primary" wide icon={Check} data-key="a"
           disabled={!!disabledReason || !!block_approve || status === "approved" || (needs_reason && !reason)}
-          tip={disabledReason ?? block_approve ?? (needs_reason && !reason ? "Choose a reason first" : undefined)}
+          tip={disabledReason ?? block_approve ?? (status === "approved" ? "Already approved" : needs_reason && !reason ? "Choose a reason first" : undefined)}
           onClick={() => decide.mutate({ item_id: itemId, decision: "approved", comment: reason || undefined })}>
           {labels[0]}
         </Button>
         <Button wide icon={X} data-key="r"
-          disabled={!!disabledReason || status === "rejected"} tip={disabledReason}
+          disabled={!!disabledReason || status === "rejected"} tip={disabledReason ?? (status === "rejected" ? "Already rejected" : undefined)}
           onClick={() => decide.mutate({ item_id: itemId, decision: "rejected", comment })}>
           {labels[1]}
         </Button>

@@ -337,7 +337,7 @@ export function HeroFlow() {
         className="flow__row"
         data-row={ri}
         data-hot={eng.active && row.slots.some((s) => s?.id === eng.active) ? "" : undefined}
-        style={{ "--row-top": `${99 + ri * 100}px` } as CSSProperties}
+        style={{ "--ri": ri } as CSSProperties}
         ref={(el) => {
           rowRefs.current[ri] = el;
         }}
@@ -361,8 +361,8 @@ export function HeroFlow() {
           <Icon name="running" size={14} className="spin-steps" />
           Checking
         </span>
-        {[49, 149, 249, 349].map((y) => (
-          <span key={y} className="flow__dots" style={{ top: y }} aria-hidden />
+        {[0, 1, 2, 3].map((i) => (
+          <span key={i} className="flow__dots" style={{ "--i": i } as CSSProperties} aria-hidden />
         ))}
         {rows}
       </div>
@@ -487,7 +487,7 @@ function Ripple() {
     if (!c || reducedMotion()) return;
     const ctx = c.getContext("2d")!;
     const dpr = window.devicePixelRatio || 1;
-    const W = 272,
+    const W = 360,
       H = 64;
     c.width = W * dpr;
     c.height = H * dpr;
@@ -597,7 +597,7 @@ function SideWires({ side }: { side: "left" | "right" }) {
       }
       const period = segs.reduce((a, s) => a + s.width + s.gap, 0);
       const dur = period / ROWS[row].speed;
-      return { y: 50 + w * 50, segs, period, dur, delay: -dur * hash(key, 3) };
+      return { w, segs, period, dur, delay: -dur * hash(key, 3) };
     });
   }, [side]);
   return (
@@ -606,7 +606,7 @@ function SideWires({ side }: { side: "left" | "right" }) {
         <div
           key={i}
           className="wire"
-          style={{ top: w.y, width: w.period * 3, "--period": `${w.period}px`, animationDuration: `${w.dur}s`, animationDelay: `${w.delay}s` } as CSSProperties}
+          style={{ "--w": w.w, width: w.period * 3, "--period": `${w.period}px`, animationDuration: `${w.dur}s`, animationDelay: `${w.delay}s` } as CSSProperties}
         >
           {[0, 1, 2].flatMap((rep) =>
             w.segs.map((s, j) => (

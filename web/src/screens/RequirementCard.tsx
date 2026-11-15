@@ -61,7 +61,7 @@ function RequirementCardInner({ c, index }: { c: any; index: number }) {
         </Msg>
       )}
       {c.clarification?.problems?.length > 0 && <Msg tone="bad">Clarification cannot be used with one click (code check): {c.clarification.problems.join("; ")}. Use Edit if part of it is right.</Msg>}
-      {c.open_placeholders.length > 0 && <Msg tone="warn">{c.open_placeholders.length} placeholder(s) still open: {c.open_placeholders.join(", ")}. Fill them with Edit once the spec author answers, or approve with them as open items.</Msg>}
+      {c.open_placeholders.length > 0 && <Msg tone="warn">{c.open_placeholders.length === 1 ? "1 placeholder" : `${c.open_placeholders.length} placeholders`} still open: {c.open_placeholders.join(", ")}. Fill them with Edit once the spec author answers, or approve with them as open items.</Msg>}
       {p.clarification?.open_questions?.length > 0 && <p className="small quiet">Open questions carried into export: {p.clarification.open_questions.join("; ")}</p>}
       {c.own_problems.length > 0 && <Msg tone="bad">This version's text fails the code check: {c.own_problems.join("; ")}. Revert to original or edit it.</Msg>}
       {c.suggestion_problems.length > 0 && <Msg tone="bad">AI suggestion cannot be applied with one click (code check): {c.suggestion_problems.join("; ")}. Use Edit if part of it is right.</Msg>}

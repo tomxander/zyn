@@ -1,6 +1,6 @@
 // Tabs every run view shares: Export (and score) and Audit log.
 
-import { Download, FileCheck, FileDown, Target } from "../components/icons";
+import { Download, FileCheck, FileDown, RotateCw, Target } from "../components/icons";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, type ReactNode } from "react";
 import { downloadUrl, useAction, useAudit } from "../lib/api";
@@ -25,7 +25,7 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
       <p className="small">{intro}</p>
       <div className="row">
         <Button variant="primary" icon={FileDown} disabled={!canAct || disabled} busy={exp.isPending}
-          tip={!canAct ? noActReason : undefined}
+          tip={!canAct ? noActReason : disabled ? "Nothing to export yet" : undefined}
           onClick={() => exp.mutate({ name: "export" })}>{label}</Button>
       </div>
       <AnimatePresence>
@@ -65,7 +65,8 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
             hint="Scores count findings before human review. The answer key is author-made and AI-reviewed, not engineer-reviewed." />
           <div className="row">
             <div className="grow"><Field label="Answer key (JSON)"><input className="input" value={key} onChange={(e) => setKey(e.target.value)} /></Field></div>
-            <Button icon={Target} disabled={!key} busy={score.isPending} onClick={() => score.mutate({ name: "score", key_path: key })}>Score</Button>
+            <Button icon={Target} disabled={!canAct || !key} busy={score.isPending}
+              tip={!canAct ? noActReason : !key ? "Enter the path to an answer key first" : undefined} onClick={() => score.mutate({ name: "score", key_path: key })}>Score</Button>
           </div>
           {score.data && (
             <motion.div className="stack" variants={enter} initial="hidden" animate="show">
@@ -86,6 +87,12 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
 
 export function AuditTab({ runId }: { runId: string }) {
   const q = useAudit(runId);
+  if (q.isError) return (
+    <div className="stack">
+      <Msg tone="bad">The audit log could not be read: {(q.error as Error).message}</Msg>
+      <div><Button icon={RotateCw} onClick={() => q.refetch()}>Try again</Button></div>
+    </div>
+  );
   if (!q.data) return <Loading label="Reading the audit log" pattern="wave" />;
   const m = q.data.metrics;
   const mc = m.model;
@@ -113,8 +120,13 @@ export function AuditTab({ runId }: { runId: string }) {
         return <p className="small quiet">AI reviewer vs people: objections upheld {a.objection_upheld}, overruled {a.objection_overruled} · accepts confirmed {a.accept_confirmed}, overruled {a.accept_overruled} · undecided {a.undecided}</p>;
       })()}
       <div className="row">
-        <a className="btn" href={`data:application/json,${encodeURIComponent(JSON.stringify(events, null, 2))}`}
-          download={`audit-${runId}.json`}><Download aria-hidden />Download audit log (JSON)</a>
+        <Button icon={Download} onClick={() => {
+          // built on click, as a file, so a long log never sits in the page as a huge link
+          const url = URL.createObjectURL(new Blob([JSON.stringify(events, null, 2)], { type: "application/json" }));
+          const a = document.createElement("a");
+          a.href = url; a.download = `audit-${runId}.json`; a.click();
+          setTimeout(() => URL.revokeObjectURL(url), 0);
+        }}>Download audit log (JSON)</Button>
         <span className="small quiet">{events.length} events</span>
       </div>
       <Table rows={events.slice().reverse().slice(0, 300)} rowKey={(e) => e.event_id} cols={[

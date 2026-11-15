@@ -71,6 +71,10 @@ function FailedList({ failed }: { failed: Record<string, string> }) {
   );
 }
 
+/** Jobs whose end was already announced this session: coming back to a run shows the panel
+ *  again but does not repeat the toast, the refresh or onDone. */
+const announced = new Set<string>();
+
 /** A background stage: polls the job, shows the trace, refreshes the run when done. */
 export function JobPanel({ job: start, onDone, onClose, pattern = "orbit" }:
   { job: Job; onDone?: (j: Job) => void; onClose?: () => void; pattern?: Pattern }) {
@@ -81,7 +85,8 @@ export function JobPanel({ job: start, onDone, onClose, pattern = "orbit" }:
   });
   const job = data ?? start;
   useEffect(() => {
-    if (job.state === "running") return;
+    if (job.state === "running" || announced.has(job.id)) return;
+    announced.add(job.id);
     qc.invalidateQueries({ queryKey: ["run"] });
     qc.invalidateQueries({ queryKey: ["runs"] });
     const failed = job.result?.failed && Object.keys(job.result.failed).length;

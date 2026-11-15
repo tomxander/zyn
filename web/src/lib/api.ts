@@ -35,8 +35,12 @@ export async function api<T = any>(path: string, init?: RequestInit): Promise<T>
     headers.set("X-Zyn-Request", "1");
   }
   const res = await fetch(path, { ...init, headers });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new ApiError(data.error || res.statusText, res.status);
+  const NOT_DATA = Symbol();
+  const data = await res.json().catch(() => NOT_DATA);
+  if (!res.ok) throw new ApiError((data !== NOT_DATA && data?.error) || res.statusText, res.status);
+  // A page or an empty body where data was expected is an error, never an empty object a screen
+  // would then misread (that blanked the whole app once).
+  if (data === NOT_DATA) throw new ApiError("The server did not send data for this request.", res.status);
   return data as T;
 }
 
@@ -51,8 +55,9 @@ export interface TokenSummary {
   revoked: boolean;
 }
 
-export function useTokens() {
-  return useQuery({ queryKey: ["tokens"], queryFn: () => api<TokenSummary[]>("/api/tokens") });
+/** Team mode only: asks the server only while its drawer is open. */
+export function useTokens(enabled = true) {
+  return useQuery({ queryKey: ["tokens"], queryFn: () => api<TokenSummary[]>("/api/tokens"), enabled });
 }
 
 export function useCreateToken() {
@@ -80,8 +85,9 @@ export function getActiveProject(): string | null {
   return p || null;
 }
 
-export function useTeamSettings() {
-  return useQuery({ queryKey: ["team-settings"], queryFn: () => api("/api/team-settings") });
+/** Team mode only: asks the server only while its drawer is open. */
+export function useTeamSettings(enabled = true) {
+  return useQuery({ queryKey: ["team-settings"], queryFn: () => api("/api/team-settings"), enabled });
 }
 
 export function useConfig() {

@@ -1,7 +1,7 @@
 // Ctrl+K: jump to any run, start a new one, switch theme.
 
 import { Command } from "cmdk";
-import { Moon, Plus, Sun } from "../components/icons";
+import { Monitor, Moon, Plus, Sun } from "../components/icons";
 import { markFor } from "../components/ui";
 import { AnimatePresence, motion } from "motion/react";
 import { Dialog } from "radix-ui";
@@ -33,6 +33,7 @@ export function Palette({ open, onOpenChange, onRun, onNew }: {
                     <Command.Empty>Nothing matches.</Command.Empty>
                     <Command.Group heading="Actions">
                       <Command.Item onSelect={() => go(onNew)}><Plus />Start new run</Command.Item>
+                      <Command.Item onSelect={() => go(() => setTheme("system"))}><Monitor />System theme</Command.Item>
                       <Command.Item onSelect={() => go(() => setTheme("light"))}><Sun />Light theme</Command.Item>
                       <Command.Item onSelect={() => go(() => setTheme("dark"))}><Moon />Dark theme</Command.Item>
                     </Command.Group>

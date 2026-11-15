@@ -80,7 +80,7 @@ code, kbd, pre { font-family: var(--mono); }
 /* the claim: an indented ink bar in the section accent, then a separate ink block */
 .inked { display: inline-flex; align-items: stretch; gap: 8px; padding-left: 24px; max-width: 100%; }
 .inked__fill {
-  background: var(--ink); color: var(--hi-on-ink); padding: 0 8px 2px;
+  background: var(--ink); color: var(--hi-on-ink); padding: .06em .22em .12em;
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 .inked__block { flex: none; width: 12px; background: var(--ink); }
@@ -168,7 +168,7 @@ code, kbd, pre { font-family: var(--mono); }
 
 .pillars {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s6);
-  padding-top: var(--s7); padding-bottom: var(--s7);
+  padding-top: var(--s6); padding-bottom: var(--s6);
 }
 .pillar { display: grid; gap: var(--s3); align-content: start; }
 .pillar p { font-size: var(--t-small); color: var(--ink-2); line-height: 1.5; text-wrap: pretty; }
@@ -252,7 +252,8 @@ code, kbd, pre { font-family: var(--mono); }
   text-align: left; background: none; border: 0; border-bottom: var(--line) solid var(--rule-soft);
   padding: var(--s3) var(--s2); transition: background-color var(--fast) var(--ease);
 }
-.toollist__item .icon { align-self: center; }
+.toollist__item { align-items: start; }
+.toollist__item .icon { align-self: start; margin-top: 1px; }
 .toollist__name { font-weight: 600; font-size: 15px; }
 .toollist__text { font-size: var(--t-small); color: var(--ink-2); }
 .toollist__item[aria-pressed="true"] { background: var(--ink); color: var(--paper); }

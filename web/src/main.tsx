@@ -5,6 +5,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "sonner";
 import App from "./App";
+import { Boundary } from "./components/Boundary";
 import { ZynSprite } from "./components/icons";
 import { JobsProvider } from "./lib/jobs";
 import { ReviewerProvider, useReviewer } from "./lib/reviewer";
@@ -14,7 +15,7 @@ import "./styles/app.css";
 /** Toasts follow the app's own theme choice, not only the OS. */
 function ThemedToaster() {
   const { theme } = useReviewer();
-  return <Toaster position="bottom-right" theme={theme} closeButton toastOptions={{ className: "toast" }} />;
+  return <Toaster position="bottom-right" theme={theme} closeButton />;
 }
 
 const qc = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 1 } } });
@@ -28,7 +29,7 @@ createRoot(document.getElementById("root")!).render(
           <MotionConfig reducedMotion="user">
             <Tooltip.Provider delayDuration={600}>
               <ZynSprite />
-              <App />
+              <Boundary what="The review screen"><App /></Boundary>
               <ThemedToaster />
             </Tooltip.Provider>
           </MotionConfig>

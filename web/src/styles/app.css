@@ -30,8 +30,8 @@ button { font: inherit; color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* A legend: tall condensed capitals, tracked. The record's labelling voice. */
-.stat-label, .field > label, .label, .side-label, .filter-label, .tag, .badge,
-.chip, .who, .tab, .btn, .page-sub, .table th, .brand-tag, .run-tool {
+.stat-label, .field > label, .side-label, .filter-label, .tag, .badge,
+.chip, .who, .tab, .btn, .table th, .brand-tag, .run-tool {
   font-family: var(--zyn-font-display); font-variation-settings: var(--zyn-condensed); font-stretch: 75%; text-transform: uppercase; letter-spacing: var(--zyn-track);
 }
 
@@ -137,6 +137,7 @@ button { font: inherit; color: inherit; }
 }
 .btn-sm { height: var(--zyn-control-sm); padding: 0 var(--zyn-s4); font-size: var(--zyn-text-xs); }
 .btn-wide { min-width: 132px; }
+.btn-file:focus-within { outline: var(--zyn-line-heavy) solid var(--zyn-ring); outline-offset: 2px; }
 .btn-file { justify-content: flex-start; width: 100%; text-transform: none; letter-spacing: 0; font-family: var(--zyn-font-body); }
 
 .switch { display: inline-flex; align-items: center; gap: var(--zyn-s4); font-size: var(--zyn-text-md); cursor: pointer; }
@@ -206,7 +207,7 @@ button { font: inherit; color: inherit; }
                 letter-spacing: .01em; max-width: 32ch; margin-bottom: var(--zyn-s5); }
 .provenance { display: flex; flex-wrap: wrap; margin: 0; border: var(--zyn-line-strong) solid var(--zyn-rule); background: var(--zyn-sheet); }
 .provenance > div { padding: var(--zyn-s3) var(--zyn-s5); border-right: var(--zyn-line) solid var(--zyn-rule-soft); min-width: 0; }
-.provenance > div:last-child { border-right: 0; flex: 1; }
+.provenance > div:last-child { border-right: 0; flex: 1 1 calc(var(--zyn-s9) * 4); } /* wraps to its own line before it gets squeezed */
 .provenance dt { font-family: var(--zyn-font-display); font-variation-settings: var(--zyn-condensed); font-stretch: 75%; text-transform: uppercase; letter-spacing: var(--zyn-track);
                  font-size: var(--zyn-text-xs); color: var(--zyn-ink-3); }
 .provenance dd { margin: 0; font-size: var(--zyn-text-md); overflow-wrap: anywhere; }
@@ -263,6 +264,18 @@ button { font: inherit; color: inherit; }
 .wedge i[data-on]:nth-child(9) { background-color: var(--zyn-z1); }
 .wedge i[data-on]:nth-child(10) { background-color: var(--zyn-z0); }
 .wedge i[data-on]:nth-child(11) { background-color: var(--zyn-z0); }
+/* in the darkroom the ink is light, so the wedge fills the other way and still ends in full ink */
+[data-theme="dark"] .wedge i[data-on]:nth-child(1) { background-color: var(--zyn-z1); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(2) { background-color: var(--zyn-z2); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(3) { background-color: var(--zyn-z3); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(4) { background-color: var(--zyn-z4); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(5) { background-color: var(--zyn-z5); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(6) { background-color: var(--zyn-z6); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(7) { background-color: var(--zyn-z7); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(8) { background-color: var(--zyn-z8); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(9) { background-color: var(--zyn-z9); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(10) { background-color: var(--zyn-z10); }
+[data-theme="dark"] .wedge i[data-on]:nth-child(11) { background-color: var(--zyn-z10); }
 
 /* ---- sheets (cards) ------------------------------------------------------------------- */
 /* position: relative so cards leaving a filtered list keep their place while they fade */
@@ -469,7 +482,7 @@ mark { color: inherit; padding: 0 var(--zyn-s1); background-color: var(--zyn-mar
 [data-sonner-toaster] [data-sonner-toast] [data-close-button] { border-radius: 0; border-color: var(--zyn-rule); background: var(--zyn-sheet); color: var(--zyn-ink); }
 
 /* ---- sign-in, person menu, tokens, team settings ------------------------------------- */
-.signin-page { max-width: 440px; margin: var(--zyn-s9) auto; text-align: center; }
+.signin-page { max-width: 440px; margin: var(--zyn-s9) auto; padding: 0 var(--zyn-s5); text-align: center; }
 .signin-icon { display: flex; justify-content: center; margin-bottom: var(--zyn-s6); }
 .signin-copy { margin: var(--zyn-s5) 0 var(--zyn-s7); }
 .person-menu { padding: var(--zyn-s2) 0; border-bottom: var(--zyn-line) solid var(--zyn-rule-soft); }
@@ -477,7 +490,8 @@ mark { color: inherit; padding: 0 var(--zyn-s1); background-color: var(--zyn-mar
 .person-menu-projects { margin-top: var(--zyn-s3); }
 .person-menu-actions { display: flex; gap: var(--zyn-s3); margin-top: var(--zyn-s4); align-items: center; }
 .token-secret { padding: var(--zyn-s2); word-break: break-all; background: var(--zyn-bg); border: var(--zyn-line) solid var(--zyn-rule-soft); font-family: var(--zyn-font-mono); }
-.token-item { display: flex; justify-content: space-between; align-items: center; }
+.token-box { border: var(--zyn-line) solid var(--zyn-rule-soft); background: var(--zyn-sheet); padding: var(--zyn-s5); }
+.token-item { display: flex; flex-wrap: wrap; gap: var(--zyn-s4); justify-content: space-between; align-items: center; }
 .token-actions { display: flex; align-items: center; gap: var(--zyn-s4); }
 
 /* ---- small screens: the index column stacks above the record ------------------------ */
@@ -486,7 +500,7 @@ mark { color: inherit; padding: 0 var(--zyn-s1); background-color: var(--zyn-mar
   .runs { overflow: visible; flex: none; }
   .sidebar { position: static; height: auto; overflow: visible; border-right: 0; border-bottom: var(--zyn-line-strong) solid var(--zyn-rule); }
   .btn.runs-toggle { display: inline-flex; margin-left: auto; margin-right: var(--zyn-s2); }
-  .sidebar:not([data-runs-open]) .runs, .sidebar:not([data-runs-open]) .runs ~ .btn,
+  .sidebar:not([data-runs-open]) .runs, .sidebar:not([data-runs-open]) .runs ~ .btn, .sidebar:not([data-runs-open]) .runs ~ .side-hint,
   .sidebar:not([data-runs-open]) .side-foot { display: none; }
   .brand { padding: var(--zyn-s5) 0; }
   .main { padding: var(--zyn-s6) var(--zyn-s5) var(--zyn-s9); }

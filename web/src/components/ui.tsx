@@ -8,14 +8,15 @@ import { AlertTriangle, Check, ChevronDown, ChevronRight, CircleAlert, CircleChe
 import { AnimatePresence, motion } from "motion/react";
 import { Checkbox as RCheckbox, Collapsible, Select as RSelect, Switch as RSwitch, Tabs as RTabs,
   Tooltip } from "radix-ui";
-import { createContext, forwardRef, useContext, useEffect, useRef, useState, type ButtonHTMLAttributes,
+import { Children, cloneElement, createContext, forwardRef, isValidElement, useContext, useEffect, useId, useMemo, useRef, useState,
+  type ButtonHTMLAttributes, type ReactElement,
   type HTMLAttributes, type ReactNode } from "react";
 import type { Status, Tone } from "../lib/api";
 import { AUTO, enter, fade, item, swap, T_BASE, T_LAYOUT } from "./motion";
 
 /** Tool name to its identity mark (Sift Review and Sift Delta are Sift work, Anvil Review is Anvil work). */
 export const TOOL_MARK: Record<string, ZynIconType> = {
-  Sift, "Sift Review": Sift, "Sift Delta": Sift, Anvil, "Anvil Review": Anvil, Forge: Anvil, Scribe, Source, Assay,
+  Sift, "Sift Review": Sift, "Sift Delta": Sift, Anvil, "Anvil Review": Anvil, Scribe, Source, Assay,
 };
 /** A tool's mark; anything without its own (the smoke test) carries the Zyn mark. */
 export const markFor = (tool: string): ZynIconType => TOOL_MARK[tool] ?? ZynMark;
@@ -86,12 +87,14 @@ export const Button = forwardRef<HTMLButtonElement, BtnProps>(function Button(
       {busy ? <Dots /> : Icon && <Icon aria-hidden />}{children}
     </button>
   );
-  return tip ? <Tip text={tip}>{b}</Tip> : b;
+  return <Tip text={tip ?? ""}>{b}</Tip>;
 });
 
 export function Tip({ text, children }: { text: string; children: ReactNode }) {
+  // With no text the tooltip never opens, but the element stays the same one, so a button that
+  // gains or loses its reason keeps keyboard focus.
   return (
-    <Tooltip.Root delayDuration={600}>
+    <Tooltip.Root delayDuration={600} open={text ? undefined : false}>
       <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content className="tooltip" sideOffset={6} asChild>
@@ -173,12 +176,16 @@ export function Stats({ items }: { items: { label: string; value: number; of?: n
   const on = total ? Math.round((decided / total) * 11) : 0;
   return (
     <div className="stats">
-      {items.map((s) => (
-        <div className="stat" key={s.label} title={s.tip}>
-          <div className="stat-label">{s.label}</div>
-          <div className="stat-value"><NumberFlow value={s.value} />{s.of !== undefined && <small>of {s.of}</small>}</div>
-        </div>
-      ))}
+      {items.map((s) => {
+        const cell = (
+          <div className="stat" key={s.label} tabIndex={s.tip ? 0 : undefined}>
+            <div className="stat-label">{s.label}</div>
+            <div className="stat-value"><NumberFlow value={s.value} />{s.of !== undefined && <small>of {s.of}</small>}</div>
+          </div>
+        );
+        // a hint reaches keyboard and touch users too, not only a mouse hover
+        return s.tip ? <Tip key={s.label} text={s.tip}>{cell}</Tip> : cell;
+      })}
       {statusRow && total > 0 && (
         <div className="wedge-cell" role="img" aria-label={`${decided} of ${total} decided`}>
           <div className="stat-label">Decided {decided} of {total}</div>
@@ -341,9 +348,31 @@ export function Select({ value, onChange, options, placeholder, label }: {
   );
 }
 
-export const Field = ({ label, children }: { label: string; children: ReactNode }) => (
-  <div className="field"><label>{label}</label>{children}</div>
-);
+/** A labelled control. A plain input, textarea or select is tied to its label (click the label
+ *  to focus it; a screen reader reads the label); anything else is named as a group. */
+export function Field({ label, children }: { label: string; children: ReactNode }) {
+  const id = useId();
+  const only = Children.count(children) === 1 && isValidElement(children) ? (children as ReactElement<{ id?: string }>) : null;
+  const native = !!only && typeof only.type === "string" && ["input", "textarea", "select"].includes(only.type);
+  const controlId = native ? only!.props.id ?? id : undefined;
+  return (
+    <div className="field" role={native ? undefined : "group"} aria-labelledby={native ? undefined : `${id}-label`}>
+      <label id={`${id}-label`} htmlFor={controlId}>{label}</label>
+      {native ? cloneElement(only!, { id: controlId }) : children}
+    </div>
+  );
+}
+
+/** Filter state that stores what the reviewer hid, not what is shown: a value that appears
+ *  later (new requirements after an extraction, new specs) is shown until someone hides it. */
+export function useHidden<T extends string>(all: T[]) {
+  const [hidden, setHidden] = useState<Set<T>>(() => new Set());
+  const key = all.join("|");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const selected = useMemo(() => new Set(all.filter((v) => !hidden.has(v))), [key, hidden]);
+  const onChange = (s: Set<T>) => setHidden(new Set(all.filter((v) => !s.has(v))));
+  return { selected, onChange, reset: () => setHidden(new Set()) };
+}
 
 /** Toggle chips with counts, for filtering a list. */
 export function FilterGroup<T extends string>({ options, selected, onChange, label }: {
