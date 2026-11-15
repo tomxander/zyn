@@ -1,3 +1,4 @@
+import { Select } from "radix-ui";
 import { useRef, useState } from "react";
 import { Headline, Icon, SectionHead } from "../components/ui";
 import { PatternField } from "../components/PatternField";
@@ -216,6 +217,7 @@ type Status = { kind: "idle" | "sending" | "sent" | "error"; note?: string };
 
 function ContributeForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [area, setArea] = useState(AREAS[0]);
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
@@ -252,14 +254,33 @@ function ContributeForm() {
           <input name="email" type="email" required maxLength={120} autoComplete="email" />
         </label>
       </div>
-      <label className="cfield">
-        <span>Where you would like to help</span>
-        <select name="area" defaultValue={AREAS[0]}>
-          {AREAS.map((a) => (
-            <option key={a}>{a}</option>
-          ))}
-        </select>
-      </label>
+      {/* Drawn by the page, not the operating system, so the open list matches the site in every theme.
+          Radix keeps a hidden native field named "area", so the form sends the same data. */}
+      <div className="cfield">
+        <span id="area-label">Where you would like to help</span>
+        <Select.Root name="area" value={area} onValueChange={setArea}>
+          <Select.Trigger className="cselect__trigger" aria-labelledby="area-label">
+            <Select.Value />
+            <Select.Icon className="cselect__icon">
+              <Icon name="chevron-down" size={14} />
+            </Select.Icon>
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Content className="cselect__menu" position="popper" sideOffset={4}>
+              <Select.Viewport className="cselect__list">
+                {AREAS.map((a) => (
+                  <Select.Item key={a} value={a} className="cselect__item">
+                    <Select.ItemText>{a}</Select.ItemText>
+                    <Select.ItemIndicator className="cselect__tick">
+                      <Icon name="passed" size={14} />
+                    </Select.ItemIndicator>
+                  </Select.Item>
+                ))}
+              </Select.Viewport>
+            </Select.Content>
+          </Select.Portal>
+        </Select.Root>
+      </div>
       <label className="cfield">
         <span>What you would bring</span>
         <textarea name="message" required minLength={10} maxLength={2000} rows={4} placeholder="Your background, and the part of Zyn you would like to work on." />

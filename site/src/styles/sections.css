@@ -245,3 +245,30 @@
   .htab, .htab[data-active] { flex: none; }
   .htab + .htab { padding-left: 0; }
 }
+
+/* contribute form: the "where you would like to help" picker, drawn by the page (Radix Select) */
+.cselect__trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3); width: 100%;
+  font: inherit; font-size: 15px; color: var(--ink); background: var(--paper); text-align: left; cursor: pointer;
+  border: var(--line) solid var(--rule-soft); border-bottom-color: var(--ink); border-radius: 0; padding: 8px 10px;
+  transition: border-color 90ms var(--ease-sharp);
+}
+.cselect__trigger:hover { border-color: var(--ink); }
+.cselect__trigger:focus-visible { outline: var(--line-heavy) solid var(--accent); outline-offset: 0; border-color: var(--ink); }
+.cselect__icon { display: grid; color: var(--ink-2); transition: transform 120ms var(--ease-sharp); }
+.cselect__trigger[data-state="open"] .cselect__icon { transform: rotate(180deg); }
+.cselect__menu {
+  z-index: 200; width: var(--radix-select-trigger-width); max-height: var(--radix-select-content-available-height);
+  background: var(--paper); color: var(--ink); border: var(--line) solid var(--ink); box-shadow: var(--shadow-float);
+  transform-origin: var(--radix-select-content-transform-origin); animation: pop 120ms var(--ease-out);
+}
+.cselect__list { padding: 4px; }
+.cselect__item {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  padding: 8px 10px; font-size: 15px; line-height: 1.35; cursor: pointer; outline: none; user-select: none;
+}
+.cselect__item[data-highlighted] { background: var(--ink); color: var(--paper); }
+.cselect__item[data-state="checked"] { font-weight: 500; }
+.cselect__tick { display: grid; color: var(--accent); }
+.cselect__item[data-highlighted] .cselect__tick { color: var(--paper); }
+@media (prefers-reduced-motion: reduce) { .cselect__menu { animation: none; } }
