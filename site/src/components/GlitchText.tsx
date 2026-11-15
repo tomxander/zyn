@@ -98,9 +98,14 @@ async function rasterise(host: HTMLElement, text: HTMLElement) {
   const hr = host.getBoundingClientRect();
   const tr = range.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
-  const W = Math.round(hr.width * dpr);
-  const H = Math.round(hr.height * dpr);
-  if (W < 1 || H < 1 || !tr.width) return null;
+  if (!tr.width) return null;
+  // The canvas sits on the device-pixel grid, so its pixels land exactly on screen pixels:
+  // snap its top-left to the grid and size it in whole device pixels, never stretched.
+  const gx = Math.floor(hr.left * dpr) / dpr;
+  const gy = Math.floor(hr.top * dpr) / dpr;
+  const W = Math.ceil((hr.right - gx) * dpr);
+  const H = Math.ceil((hr.bottom - gy) * dpr);
+  if (W < 1 || H < 1) return null;
   const cs = getComputedStyle(text);
   const run = STYLE_PROPS.map((p) => `${p}:${cs.getPropertyValue(p)}`).join(";");
   const family = cs.fontFamily.split(",")[0].replace(/["']/g, "").trim();
@@ -108,31 +113,54 @@ async function rasterise(host: HTMLElement, text: HTMLElement) {
   if (!faces) return null;
   const w = W / dpr;
   const h = H / dpr;
-  const left = tr.left - hr.left;
-  const top = tr.top - hr.top;
-  const svg =
+  const left = tr.left - gx;
+  const top = tr.top - gy;
+  // A 1 px marker on the baseline (an inline-block sits on it) lets us find where the copy's baseline
+  // landed, to compare with the live text's.
+  const svg = (marker: boolean) =>
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${w} ${h}"><style>${esc(faces)}</style>` +
     `<foreignObject x="0" y="0" width="${w}" height="${h}"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:${w}px;height:${h}px">` +
-    `<div style="${esc(`position:absolute;left:${left}px;top:${top}px;${run};line-height:${tr.height}px;white-space:pre;color:#fff`)}">${esc(content)}</div></div></foreignObject></svg>`;
-  const img = new Image();
-  img.decoding = "sync";
-  img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-  try {
+    `<div style="${esc(`position:absolute;left:${left}px;top:${top}px;${run};line-height:${tr.height}px;white-space:pre;color:${marker ? "transparent" : "#fff"}`)}">` +
+    (marker ? '<span style="display:inline-block;width:8px;height:1px;margin-right:-8px;background:#fff"></span>' : "") +
+    `${esc(content)}</div></div></foreignObject></svg>`;
+  const paint = async (markup: string, dy: number) => {
+    const img = new Image();
+    img.decoding = "sync";
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(markup)}`;
     await img.decode();
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const ctx = c.getContext("2d", { willReadFrequently: true })!;
+    ctx.drawImage(img, 0, dy, W, H);
+    return ctx;
+  };
+  try {
+    // Where the copy's baseline is: the first opaque row under the marker, plus one.
+    const m = await paint(svg(true), 0);
+    const mx = Math.min(W - 1, Math.max(0, Math.floor(left * dpr)));
+    const mw = Math.min(W - mx, Math.ceil(8 * dpr));
+    const md = m.getImageData(mx, 0, mw, H).data;
+    let copyBase = -1;
+    for (let yy = 0; yy < H && copyBase < 0; yy++)
+      for (let xx = 0; xx < mw; xx++) if (md[(yy * mw + xx) * 4 + 3] >= 128) { copyBase = yy + 1; break; }
+    // Where the live text's baseline is: a zero-size inline-block sits on it.
+    const probe = document.createElement("span");
+    probe.style.cssText = "display:inline-block;width:0;height:0";
+    text.append(probe);
+    const liveBase = Math.round(probe.getBoundingClientRect().top * dpr) - Math.round(gy * dpr);
+    probe.remove();
+    const step = Math.round(dpr);
+    const dy = copyBase < 0 ? 0 : Math.max(-step, Math.min(step, liveBase - copyBase));
+    const ctx = await paint(svg(false), dy);
+    const alpha = ctx.getImageData(0, 0, W, H).data;
+    let sum = 0;
+    for (let i = 3; i < alpha.length; i += 4) sum += alpha[i];
+    if (sum === 0) return null;
+    return { alpha, W, H, dpr, left: gx - hr.left, top: gy - hr.top };
   } catch {
     return null;
   }
-  const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return null;
-  ctx.drawImage(img, 0, 0, W, H);
-  const alpha = ctx.getImageData(0, 0, W, H).data;
-  let sum = 0;
-  for (let i = 3; i < alpha.length; i += 4) sum += alpha[i];
-  if (sum === 0) return null;
-  return { alpha, W, H, dpr };
 }
 
 type Field = Awaited<ReturnType<typeof rasterise>> & {};
@@ -446,8 +474,13 @@ export function GlitchText({ children, className }: { children: ReactNode; class
       (building ??= (async () => {
         const [R, field] = await Promise.all([loadRapier(), rasterise(el, txt)]);
         if (dead || !field) return;
+        // exact device pixels, placed on the pixel grid: the copy lines up with the live text
         cv.width = field.W;
         cv.height = field.H;
+        cv.style.left = `${field.left}px`;
+        cv.style.top = `${field.top}px`;
+        cv.style.width = `${field.W / field.dpr}px`;
+        cv.style.height = `${field.H / field.dpr}px`;
         effect = createEffect(R, cv, field, () => getComputedStyle(txt).color);
       })().catch(() => { building = null; }));
 
