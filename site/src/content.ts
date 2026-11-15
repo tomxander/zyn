@@ -72,7 +72,7 @@ export const LAYERS: Layer[] = [
     icon: "audit-log",
     title: "Audit log",
     short: "Remembers who and when",
-    text: "Every step is added, never overwritten: in team mode the database refuses edits and deletes; in desk mode the evidence export's hash chain shows any change. Export it as an evidence report when the assessor asks.",
+    text: "Every step is added, never overwritten. On a team server the database itself refuses edits; on one PC the evidence report shows if anything was changed. Hand it over when the assessor asks.",
     record: [
       { k: "0412", v: "proposed   REQ-014" },
       { k: "0413", v: "check      number_changed  failed", tone: "bad" },
@@ -119,10 +119,10 @@ export type Tool = {
 };
 
 export const TOOLS: Tool[] = [
-  { id: "sift-review", name: "Sift Review", mark: "sift", text: "Check a requirement set from a supplier or AI tool against its specification.", inputs: ["ReqIF", "Excel", "CSV"], outputs: ["ReqIF", "Evidence report"] },
-  { id: "anvil-review", name: "Anvil Review", mark: "anvil", text: "Find tests that name signals that don't exist, cite missing requirements or can never fail.", inputs: ["DBC", "CSV"], outputs: ["Evidence report", "Excel"] },
+  { id: "sift-review", name: "Sift Review", mark: "sift", text: "Check a requirement set from a supplier or AI tool against its specification.", inputs: ["ReqIF", "Excel", "CSV"], outputs: ["ReqIF", "Evidence"] },
+  { id: "anvil-review", name: "Anvil Review", mark: "anvil", text: "Find tests that name signals that don't exist, cite missing requirements or can never fail.", inputs: ["DBC", "CSV", "vTESTstudio"], outputs: ["Evidence", "Excel"] },
   { id: "sift-delta", name: "Sift Delta", mark: "sift", text: "A new spec revision? See every change, and which approved requirements it touches.", inputs: ["PDF", "DOCX"], outputs: ["ReqIF", "Excel"] },
-  { id: "sift", name: "Sift", mark: "sift", text: "Draft requirements from a specification, each tied to the words it came from.", inputs: ["PDF", "DOCX", "Markdown"], outputs: ["ReqIF", "Excel"] },
+  { id: "sift", name: "Sift", mark: "sift", text: "Draft requirements from a specification, each tied to the words it came from.", inputs: ["PDF", "DOCX"], outputs: ["ReqIF", "Excel"] },
   { id: "anvil", name: "Anvil", mark: "anvil", text: "Build tests from checked templates, and see which planted faults they catch.", inputs: ["ReqIF", "DBC"], outputs: ["pytest", "Robot", "CAPL"] },
   { id: "assay", name: "Assay", mark: "assay", text: "Compare Claude and local Ollama models on public tests: accuracy, consistency and cost per right answer.", inputs: ["Answer keys"], outputs: ["Excel"] },
   { id: "scribe", name: "Scribe", mark: "scribe", text: "Documents. Planned.", inputs: [], outputs: [], planned: true },
@@ -130,8 +130,8 @@ export const TOOLS: Tool[] = [
 ];
 
 // The hub: what goes in on the left, what comes out on the right.
-export const HUB_IN = ["PDF", "DOCX", "Markdown", "ReqIF", "Excel", "CSV", "DBC", "Answer keys"];
-export const HUB_OUT = ["ReqIF", "Excel", "pytest", "Robot", "CAPL", "Evidence report"];
+export const HUB_IN = ["PDF", "DOCX", "ReqIF", "Excel", "CSV", "DBC", "vTESTstudio", "Answer keys"];
+export const HUB_OUT = ["ReqIF", "Excel", "pytest", "Robot", "CAPL", "Evidence"];
 
 export const WHY = [
   { title: "Works on anyone's output", text: "Requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn." },
@@ -168,12 +168,12 @@ export const MODES = [
 export const MODE_ROWS: { k: string; desk: string; team: string }[] = [
   { k: "runs on", desk: "your own computer", team: "your network or cloud account" },
   { k: "you are", desk: "a name you type", team: "your company sign-in" },
-  { k: "record", desk: "a file on your PC", team: "shared database where the running app can only add records" },
+  { k: "record", desk: "a file on your PC", team: "one shared record, add-only" },
   { k: "roles", desk: "you", team: "viewer, engineer, approver" },
   { k: "programmes", desk: "one", team: "kept apart, per sign-in group" },
   { k: "approvals", desk: "yours", team: "four eyes: never your own work" },
   { k: "test benches", desk: "the command line", team: "tokens that can never approve" },
-  { k: "models", desk: "Claude or local Ollama", team: "only those IT allows" },
+  { k: "models", desk: "Claude or local Ollama", team: "only the ones IT allows" },
 ];
 
 export type RoadItem = { title: string; text: string };
@@ -181,15 +181,16 @@ export const ROAD: { status: "Built" | "Next" | "Later"; items: RoadItem[] }[] =
   {
     status: "Built",
     items: [
-      { title: "Team server", text: "Built and tested in a container, not yet run at a company. Company sign-in, roles and walls per project, four eyes, a shared append-only PostgreSQL log, access tokens for CI and test benches, and a container package. The container builds, starts and signs in through a trial Keycloak on every change." },
+      { title: "Team server", text: "Company sign-in, roles and walls per programme, four eyes, one shared record and tokens for test benches, in a container IT can run. It starts and signs in end to end on every change; not yet run at a company." },
+      { title: "Model connectors", text: "Point Zyn at AWS Bedrock, Google Vertex, Azure or an OpenAI-style server such as vLLM, and forbid everything else. Built; not yet tried against live endpoints." },
+      { title: "Commercial vehicles and Vector", text: "First J1939 checks for CAN databases, and reviews of Vector vTESTstudio tests. Tried on synthetic files only so far." },
       { title: "Light install", text: "One wheel, the zyn command and zyn demo. No Node.js needed." },
     ],
   },
   {
     status: "Next",
     items: [
-      { title: "Model connectors", text: "Built, not tried against live endpoints. An admin points Zyn at AWS Bedrock, Google Vertex, Azure or an OpenAI-style endpoint such as vLLM by configuration, and can forbid anything else." },
-      { title: "Daily-workflow fit", text: "A requirement set and its review state go round trip with a requirement tool. Test reviews cover CANoe CAPL and vTESTstudio. J1939 checks for commercial vehicles join here." },
+      { title: "Round trip with your requirement tool", text: "A requirement set and its review decisions go out to DOORS Next or Polarion and back, tested in the tools themselves." },
       { title: "Trust pack", text: "An engineer-reviewed answer key, a tool-qualification kit, and a security pack with architecture, data flows and a software bill of materials." },
       { title: "Swapped terms", text: "A signal or status swapped for another valid one passes every code check today. A term-level comparison against the source sentence is the next check to try." },
       { title: "Diagnostics", text: "A UDS and DTC catalogue checked against its ODX or CDD description." },
@@ -223,10 +224,14 @@ export const LIMITS = [
 ];
 
 export const FAQ = [
+  { q: "Does it replace the engineer?", a: "No. It shows the engineer where to look. Zyn flags; a named person decides every item, and the AI can never approve anything." },
+  { q: "Do my engineers have to leave their tools?", a: "No. Zyn reads the files they already have (ReqIF, Excel, CSV, DBC, pytest, CAPL, Robot, vTESTstudio) and hands back ReqIF and Excel for the tools they already use." },
   { q: "Do I have to generate with Zyn to use it?", a: "No. Sift Review and Anvil Review check work from any tool or person. That is the main use." },
   { q: "Does my data leave my machine?", a: "Only if you let it. The code checks never call a model. Once you set an Anthropic key, the AI reviewer sends requirement text to Anthropic's API; run local models through Ollama instead, or set offline mode and every cloud call is refused. Zyn sends nothing to its makers." },
   { q: "What does a run with no code-check findings mean?", a: "That Zyn's code checks found nothing, not that the work is right. They miss a signal name swapped for another valid one (1 of 52 caught) and a flipped expected value (0 of 15). A person still reviews every item." },
   { q: "Can a whole team use it?", a: "Yes. Team mode runs on a server in your network or cloud account, with company sign-in, roles per programme, a shared PostgreSQL audit log and four eyes on by default." },
+  { q: "Which AI models can it use?", a: "Claude, or local models through Ollama, today. Connectors for AWS Bedrock, Google Vertex, Azure and OpenAI-style servers are built and not yet tried live. The code checks use no model at all." },
+  { q: "Does it help with ASPICE or ISO 26262?", a: "It helps you keep the record. Each evidence report lists the ASPICE processes its record may support, as a pointer for your assessor. It is not an assessment, and Zyn is not a qualified tool under ISO 26262." },
   { q: "Can the AI approve anything?", a: "No. The audit store refuses an approval from anything that is not a named person. Access tokens and service accounts can't approve either." },
   { q: "Why no confidence score?", a: "A model's rating of itself has not been shown to predict correctness. Zyn shows checks that raised findings or no flag, and quotes you can read." },
   { q: "The AI reviewer gives different answers each run. How is that handled?", a: "Zyn measures it instead of hiding it. Run several passes and see how many reported each finding. Your decisions carry over between runs." },
@@ -270,4 +275,12 @@ export const SECTIONS = [
   { id: "work", label: "Daily work" },
   { id: "roadmap", label: "Roadmap" },
   { id: "contribute", label: "Contribute" },
+];
+
+// The measured pilot: the offer from docs/positioning. No price, no promised saving.
+export const PILOT = [
+  { title: "Scope", text: "One real specification, its requirement set and tests, through one revision. Four to six weeks." },
+  { title: "Run", text: "On your own machines. Code checks first; the AI reviewer only with the models your IT allows." },
+  { title: "Measure", text: "Matched work with and without Zyn: active minutes per item, time spent on flags you dismiss, and which mistakes your engineers planted each side caught." },
+  { title: "Decide", text: "You keep every finding, decision and measurement as plain files. If there is no gain, the report says so." },
 ];

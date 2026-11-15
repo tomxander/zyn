@@ -124,6 +124,32 @@ export function Proof() {
               <i className="demo__px demo__px--tr" />
               <i className="demo__px demo__px--bl" />
               <i className="demo__px demo__px--br" />
+              {/* Invisible copies of every set, stacked in one cell: the sheet is always as tall as
+                  the tallest set, so nothing is cut off and switching tabs never changes its size. */}
+              {SETS.map((s) => (
+                <div key={s.id} className="ledger ledger--sizer" aria-hidden>
+                  <div className="ledger__head">
+                    <span>{s.head}</span>
+                    <span>Caught</span>
+                  </div>
+                  <ol className="ledger__rows">
+                    {s.rows.map((r) => (
+                      <li key={r.mistake} className="ledger__row">
+                        <span className="ledger__mistake">
+                          {r.mistake}
+                          {r.note && <span className="ledger__note">{r.note}</span>}
+                        </span>
+                        <span className="ledger__bar" />
+                        <span className="ledger__n">
+                          {r.caught}
+                          <span className="ledger__of"> of {r.of}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                  <p className="ledger__foot">{s.foot}</p>
+                </div>
+              ))}
               <AnimatePresence initial={false} custom={dir} mode="popLayout">
                 <motion.div
                   key={set.id}

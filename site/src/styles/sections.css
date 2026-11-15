@@ -231,10 +231,11 @@
 /* the proof: equal tabs that never resize; the ledger keeps one height across result sets */
 .htab, .htab[data-active] { flex: 1 1 0; min-width: 0; }
 .htab .htab__label, .htab .htab__count { transition: color 90ms var(--ease-sharp), opacity 90ms var(--ease-sharp); }
-.demo__sheet { height: 500px; min-height: 0; overflow: hidden; }
+.demo__sheet { height: auto; min-height: 0; overflow: hidden; }
 .demo__sheet > .ledger { height: 100%; display: flex; flex-direction: column; }
+.demo__sheet > .ledger--sizer { visibility: hidden; pointer-events: none; }
 .demo__sheet .ledger__foot { margin-top: auto; border-top: var(--line) solid var(--rule-soft); }
-@media (max-width: 900px) { .demo__sheet { height: auto; min-height: 0; } }
+
 .hub__wire--base { opacity: 0; transition: opacity 350ms var(--ease-house); }
 .hub__wire--base[data-on] { opacity: 1; }
 .hub__packet { transition: opacity 120ms var(--ease-out); will-change: offset-distance; }

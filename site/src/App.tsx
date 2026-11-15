@@ -13,6 +13,7 @@ import { Tools } from "./sections/Tools";
 import { Work } from "./sections/Why";
 import { Teams } from "./sections/Teams";
 import { Roadmap } from "./sections/Roadmap";
+import { Pilot } from "./sections/Pilot";
 import { DocPage } from "./docs/DocPage";
 import { bySlug, HOME } from "./docs/docs";
 import { scrollToHash, usePage } from "./router";
@@ -61,6 +62,7 @@ export default function App() {
               <Teams />
               <Work />
               <Roadmap />
+              <Pilot />
               <Contribute />
             </>
           ) : (
