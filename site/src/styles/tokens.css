@@ -3,16 +3,25 @@
    one blue accent), opened up for a public page: three colour fields carry the sections,
    the way a print shop uses coloured stock. Light is the default; [data-theme="dark"] is the darkroom. */
 
+/* Type, after the studied reference: Alpha Lyrae for titles, Inter for text, Paper Mono for labels and
+   code. All three are SIL Open Font License fonts, served unmodified from their official sources with
+   their licences beside them in /fonts. Alpha Lyrae has one weight (500): use it only at 500. */
 @font-face {
-  font-family: "Zyn Grotesk";
-  src: url("/fonts/SpaceGrotesk.ttf") format("truetype");
-  font-weight: 300 700;
+  font-family: "Alpha Lyrae";
+  src: url("/fonts/AlphaLyrae-Medium.woff2") format("woff2");
+  font-weight: 500;
   font-display: swap;
 }
 @font-face {
-  font-family: "Zyn Mono";
-  src: url("/fonts/IBMPlexMono-Regular.ttf") format("truetype");
-  font-weight: 400;
+  font-family: "Inter";
+  src: url("/fonts/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Paper Mono";
+  src: url("/fonts/PaperMono-wght.woff2") format("woff2");
+  font-weight: 100 800;
   font-display: swap;
 }
 
@@ -67,21 +76,22 @@
   --shadow-float: 0 22px 50px -24px rgba(18, 18, 17, .45), 0 2px 6px rgba(18, 18, 17, .08);
 
   /* type */
-  --font: "Zyn Grotesk", "Bahnschrift", "Segoe UI", system-ui, sans-serif;
-  --mono: "Zyn Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
-  --t-display: clamp(40px, 5.3vw, 76px);
-  --t-h2: clamp(32px, 4.2vw, 52px);
+  --font-title: "Alpha Lyrae", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font: "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: "Paper Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+  --t-display: clamp(40px, 5.6vw, 80px);   /* reference: 80/88, -1.6px */
+  --t-h2: clamp(32px, 3.9vw, 48px);        /* reference: 48/56, -0.96px */
   --t-h3: 22px;
   --t-lead: 18px;
   --t-body: 16px;
   --t-small: 14px;
   --t-mono: 13px;
   --t-tiny: 12px;
-  --lead-display: 1.02;
-  --lead-h: 1.08;
+  --lead-display: 1.1;
+  --lead-h: 1.1667;
   --lead: 1.55;
-  --track-display: -.035em;
-  --track-h: -.025em;
+  --track-display: -.02em;
+  --track-h: -.02em;
   --measure: 62ch;
 
   /* space: a 4px rhythm */

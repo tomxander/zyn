@@ -65,6 +65,7 @@ code, kbd, pre { font-family: var(--mono); }
 
 /* ---------- type ---------- */
 .headline {
+  font-family: var(--font-title);
   font-weight: 500;
   font-size: var(--t-h2);
   line-height: var(--lead-h);
@@ -76,7 +77,8 @@ code, kbd, pre { font-family: var(--mono); }
   margin-block: var(--s6) var(--s5);
 }
 .headline--display { font-size: var(--t-display); line-height: var(--lead-display); letter-spacing: var(--track-display); margin: 0; }
-.headline__plain { display: block; }
+.headline__plain { display: block; text-wrap: balance; }
+.inked__fill { text-wrap: balance; }
 /* the claim: an indented ink bar in the section accent, then a separate ink block */
 .inked { display: inline-flex; align-items: stretch; gap: 8px; padding-left: 24px; max-width: 100%; }
 .inked__fill {
@@ -253,7 +255,7 @@ code, kbd, pre { font-family: var(--mono); }
   padding: var(--s3) var(--s2); transition: background-color var(--fast) var(--ease);
 }
 .toollist__item { align-items: start; }
-.toollist__item .icon { align-self: start; margin-top: 1px; }
+.toollist__item .icon { align-self: start; margin-top: 3px; }
 .toollist__name { font-weight: 600; font-size: 15px; }
 .toollist__text { font-size: var(--t-small); color: var(--ink-2); }
 .toollist__item[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
@@ -324,7 +326,7 @@ a.hub__core:hover .hub__core-planned { color: var(--paper); text-decoration: und
   width: 100%; display: flex; justify-content: space-between; gap: var(--s4); align-items: center;
   background: none; border: 0; padding: var(--s3) 0; text-align: left; font-size: 15px; font-weight: 500;
 }
-.faq__chev { transition: transform var(--base) var(--ease); }
+.faq__chev { flex: none; align-self: start; margin-top: .3em; transition: transform var(--base) var(--ease); }
 .faq__trigger[data-state="open"] .faq__chev { transform: rotate(180deg); }
 .faq__content { overflow: hidden; }
 .faq__content[data-state="open"] { animation: open var(--base) var(--ease-out); }
@@ -366,7 +368,7 @@ a.hub__core:hover .hub__core-planned { color: var(--paper); text-decoration: und
 /* footer */
 .footer { padding-bottom: var(--s5); }
 .footer__cols { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: var(--s6); padding-top: var(--s8); padding-bottom: var(--s7); }
-.footer__tagline { font-size: 28px; font-weight: 500; line-height: 1.12; letter-spacing: -.02em; }
+.footer__tagline { font-family: var(--font-title); font-size: 28px; font-weight: 500; line-height: 1.12; letter-spacing: -.02em; }
 .footer__small { margin-top: var(--s4); font-size: var(--t-small); color: var(--ink-2); }
 .footer__col h3 { font-size: var(--t-small); font-weight: 600; margin-bottom: var(--s3); }
 .footer__col li { margin-bottom: 6px; }

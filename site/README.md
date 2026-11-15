@@ -17,7 +17,7 @@ Everything inside that layout is Zyn's own:
 | Reference pattern | Zyn version |
 | --- | --- |
 | Yellow, cyan, green, pink fields | Zyn's light table and zone-ramp sheets, with Zyn blue as the one colour |
-| Pixel-glitch display face | Space Grotesk and IBM Plex Mono from `zyn-identity/fonts` |
+| Type: Alpha Lyrae titles, Inter text, Paper Mono labels | The same three fonts and scale (display 80/88, headlines 48/56, -0.02em). All SIL Open Font License, taken unmodified from their official repositories, licences in `public/fonts` |
 | API calls flowing through lanes | Requirement, test and CAN records flowing through the code-check gate, taking Zyn's verdict marks (solid, hatch, cross-hatch) |
 | Checkerboard band | The same two-row checker, growing out from the centre |
 | Fisheye, arc and wave line art | Zyn's own patterns (fisheye, waves, arcs, fan, lattice, mesh, bow, tunnel) on a canvas, with ink traffic |

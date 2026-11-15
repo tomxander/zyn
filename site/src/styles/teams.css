@@ -176,7 +176,7 @@
 .outside__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .outside__cell { display: grid; align-content: start; gap: var(--s2); padding: var(--s5) var(--s5) var(--s5) 0; border-bottom: var(--line) solid var(--rule-soft); }
 .outside__cell + .outside__cell { padding-left: var(--s5); border-left: var(--line) solid var(--rule-soft); }
-.outside__big { font-size: clamp(28px, 3vw, 40px); font-weight: 500; line-height: 1.05; letter-spacing: -.02em; }
+.outside__big { font-family: var(--font-title); font-size: clamp(28px, 3vw, 40px); font-weight: 500; line-height: 1.05; letter-spacing: -.02em; }
 .outside__unit { font-size: var(--t-small); font-weight: 400; color: var(--ink-2); letter-spacing: 0; }
 .outside__text { font-size: 15px; color: var(--ink); text-wrap: pretty; }
 .outside__src { font-family: var(--mono); font-size: var(--t-tiny); color: var(--ink-3); }
@@ -217,7 +217,7 @@
 .note__card::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; background: var(--accent); }
 .note__head { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s5); }
 .note__tag { font-family: var(--mono); font-size: var(--t-tiny); color: var(--ink-2); }
-.note__title { font-size: clamp(28px, 4vw, 40px); font-weight: 500; line-height: 1.1; letter-spacing: -.02em; margin-bottom: var(--s5); }
+.note__title { font-family: var(--font-title); font-size: clamp(28px, 4vw, 40px); font-weight: 500; line-height: 1.1; letter-spacing: -.02em; margin-bottom: var(--s5); }
 .note__body { display: grid; gap: var(--s4); font-size: 16px; line-height: 1.6; color: var(--ink); max-width: 60ch; }
 .note__body p { text-wrap: pretty; }
 .note__small { font-size: var(--t-small); color: var(--ink-2); }

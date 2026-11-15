@@ -8,14 +8,14 @@
 
 /* headline: two tight lines on the left, description and invitation on the right */
 .hero__head {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 470px); gap: var(--s5) var(--s7);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 440px); gap: var(--s5) var(--s7);
   align-items: center; padding-bottom: var(--s5);
 }
 .hero__lines { display: grid; gap: var(--s3); min-width: 0; }
 .hero__line { display: flex; align-items: center; gap: var(--s5); min-width: 0; }
 .hero__side { display: grid; gap: var(--s5); align-content: center; }
 .hero__word, .hero__ink {
-  font-size: var(--t-display); line-height: 1.1; letter-spacing: var(--track-display); font-weight: 500; white-space: nowrap;
+  font-family: var(--font-title); font-size: var(--t-display); line-height: 1.1; letter-spacing: var(--track-display); font-weight: 500; white-space: nowrap;
 }
 .hero__ink {
   position: relative; background: var(--ink); color: var(--hi-on-ink); padding: .06em .2em .12em;

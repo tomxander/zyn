@@ -23,7 +23,7 @@
 .sheet { max-width: 440px; box-shadow: none; }
 .sheet--study { width: 100%; }
 .study__total { display: grid; grid-template-columns: auto auto 1fr; align-items: baseline; gap: 4px var(--s2); padding: var(--s4) var(--s4) var(--s2); }
-.study__big { font-size: 52px; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; width: 2ch; text-align: right; }
+.study__big { font-family: var(--font-title); font-weight: 500; font-size: 52px; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; width: 2ch; text-align: right; }
 .study__of-big { font-family: var(--mono); font-size: var(--t-tiny); color: var(--on-ink-2); }
 .study__cap { grid-column: 1 / -1; font-size: var(--t-small); color: var(--on-ink-2); }
 .study { padding: var(--s2) var(--s4) var(--s4); display: grid; gap: var(--s3); border-top: var(--line) solid color-mix(in srgb, var(--paper) 14%, transparent); }
