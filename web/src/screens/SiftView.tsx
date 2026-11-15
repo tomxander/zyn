@@ -61,7 +61,7 @@ function Mappings({ d }: { d: any }) {
     <>
       <Stats items={countStats(d.mapping_counts)} />
       {rated.length > 0 && (
-        <div className="card" style={{ marginBottom: "var(--zyn-s6)" }}>
+        <div className="card">
           <Disclosure label={`Approve ${rated.length} pending mappings the model rated ${rating} or above`}>
             <p className="small quiet">The rating is the model's own estimate. It has not been shown to predict correctness, so read each section and its subsystem before ticking the box.</p>
             <ul className="small">{rated.map((m) => <li key={m.item_id}><code>§{m.payload.number || "-"}</code> {m.payload.heading} → {m.payload.subsystem_id}</li>)}</ul>
@@ -127,7 +127,7 @@ function Requirements({ d }: { d: any }) {
 
   return (
     <>
-      <p className="small quiet" style={{ marginBottom: "var(--zyn-s4)" }}>
+      <p className="small quiet">
         {d.approved_sections} approved sections with requirements · {d.waiting_sections} waiting for extraction. Only approved mappings are extracted.</p>
       <div className="toolbar">
         <Button variant={reqs.length ? "plain" : "primary"} icon={ArrowRight} disabled={!canAct || !d.waiting_sections}
@@ -142,7 +142,7 @@ function Requirements({ d }: { d: any }) {
       ) : (
         <>
           <Stats items={countStats(d.requirement_counts)} />
-          <div className="filters" style={{ marginBottom: "var(--zyn-s5)" }}>
+          <div className="filters">
             <FilterGroup label="Subsystem" selected={subF.selected} onChange={subF.onChange}
               options={subs.map((s) => ({ value: s, label: s, count: reqs.filter((r) => r.payload.subsystem_id === s).length }))} />
             <FilterGroup label="Status" selected={statusF.selected} onChange={statusF.onChange}
@@ -152,7 +152,7 @@ function Requirements({ d }: { d: any }) {
             <Switch checked={attention} onChange={setAttention} label="Only items needing attention (a check failed or the AI objected)" />
           </div>
           {clean.length > 0 && (
-            <div className="card" style={{ marginBottom: "var(--zyn-s6)" }}>
+            <div className="card">
               <Disclosure label={`Approve ${clean.length} requirements where every check passed and the AI reviewer accepted`}>
                 <p className="small quiet">Concrete checks only: quote located, modal verb kept, values from the source, vague words flagged, no open placeholders, AI accepted. Read them before ticking the box.</p>
                 <ul className="small">{clean.map((r) => <li key={r.item_id}><code>{r.display_id}</code> {r.payload.text}</li>)}</ul>
@@ -167,14 +167,14 @@ function Requirements({ d }: { d: any }) {
               <ul>{d.missed.map((m: any, i: number) => <li key={i}>§{m.section}: {m.text}</li>)}</ul>
             </Disclosure></Msg>
           )}
-          <Cards count={shown.length} style={{ marginTop: "var(--zyn-s5)" }}>
+          <Cards count={shown.length}>
             <AnimatePresence mode="popLayout" initial={false}>
               {shown.map((r, i) => <RequirementCard key={r.item_id} c={r} index={i} />)}
             </AnimatePresence>
           </Cards>
           {!shown.length && <Empty title="Nothing matches these filters" body="Turn a filter back on to see more."
             action={<Button onClick={() => { subF.reset(); statusF.reset(); setAttention(false); }}>Show everything</Button>} />}
-          <div className="row" style={{ marginTop: "var(--zyn-s5)" }}>{more}</div>
+          <div className="row">{more}</div>
         </>
       )}
     </>

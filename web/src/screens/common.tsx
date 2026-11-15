@@ -22,7 +22,7 @@ export function ExportTab({ runId, intro, label, disabled, scoreKey, after }: {
   const res = exp.data;
   return (
     <div className="stack-lg">
-      <p className="small">{intro}</p>
+      <Section title="Export" hint={intro} />
       <div className="row">
         <Button variant="primary" icon={FileDown} disabled={!canAct || disabled} busy={exp.isPending}
           tip={!canAct ? noActReason : disabled ? "Nothing to export yet" : undefined}

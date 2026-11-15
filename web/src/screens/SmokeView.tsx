@@ -19,7 +19,8 @@ export function SmokeView({ data: d }: { data: any }) {
   return (
     <>
       <PageHeader kicker={d.tool} title={title} sub={sub} />
-      <Tabs value={tab} onChange={setTab} tabs={[
+      {/* one tab would be a bar with one choice in it: show the audit log as the page instead */}
+      {!hasItems ? <div className="tab-body"><AuditTab runId={d.run_id} /></div> : <Tabs value={tab} onChange={setTab} tabs={[
         ...(hasItems ? [{ value: "req", label: "Requirements", count: d.requirements.length }] : []),
         { value: "audit", label: assay ? "Model calls and audit log" : "Audit log" },
       ]}>
@@ -30,7 +31,7 @@ export function SmokeView({ data: d }: { data: any }) {
           </>
         ) : <Empty icon={ListChecks} title="No items in this run" body="This run recorded model calls only. See the audit log." />)}
         {tab === "audit" && <AuditTab runId={d.run_id} />}
-      </Tabs>
+      </Tabs>}
     </>
   );
 }

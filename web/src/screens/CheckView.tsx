@@ -133,7 +133,7 @@ function Findings({ d }: { d: any }) {
             { label: "Dismissed", value: count((f) => f.state === "dismissed") },
             { label: d.meta.kind === "tests" ? "Tests with findings" : "Requirements with findings", value: new Set(findings.map((f) => f.payload.req_id)).size, aside: true },
           ]} />
-          <div className="filters" style={{ marginBottom: "var(--zyn-s5)" }}>
+          <div className="filters">
             <FilterGroup label="Finding" selected={pickCat.selected} onChange={pickCat.onChange}
               options={cats.map((c) => ({ value: c, label: c, count: count((f) => f.payload.category === c) }))} />
             {d.ai_available !== false && <FilterGroup label="Found by" selected={pickSrc.selected} onChange={pickSrc.onChange}
@@ -147,14 +147,14 @@ function Findings({ d }: { d: any }) {
                 label="Only AI findings seen in every pass (code findings always shown)" />
             </div>
           )}
-          <Cards count={shown.length} style={{ marginTop: "var(--zyn-s5)" }}>
+          <Cards count={shown.length}>
             <AnimatePresence mode="popLayout" initial={false}>
               {shown.map((f, i) => <FindingCard key={f.item_id} f={f} index={i} reasons={d.dismiss_reasons} tests={d.ai_available === false} />)}
             </AnimatePresence>
           </Cards>
           {!shown.length && <Empty title="Nothing matches these filters" body="Turn a filter back on to see more."
             action={<Button onClick={() => { pickCat.onChange(new Set(cats)); pickSrc.onChange(new Set(SOURCES.map((s) => s.value))); pickState.onChange(new Set(STATES)); setOnlyStable(false); }}>Show everything</Button>} />}
-          <div className="row" style={{ marginTop: "var(--zyn-s5)" }}>{moreBtn}</div>
+          <div className="row">{moreBtn}</div>
         </>
       )}
     </>

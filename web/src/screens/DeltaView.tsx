@@ -60,7 +60,7 @@ function Changes({ d }: { d: any }) {
     <>
       <Stats items={[{ label: "Unchanged", value: d.meta.unchanged },
         ...Object.entries(d.meta.counts as Record<string, number>).map(([k, v]) => ({ label: label(k), value: v }))]} />
-      <div className="filters" style={{ marginBottom: "var(--zyn-s5)" }}>
+      <div className="filters">
         <FilterGroup label="Show" selected={pick} onChange={setPick}
           options={kinds.map((k) => ({ value: k, label: label(k), count: entries.filter((e) => e.payload.kind === k).length }))} />
       </div>
@@ -71,7 +71,7 @@ function Changes({ d }: { d: any }) {
       </Cards>
       {!shown.length && <Empty title="Nothing matches these filters" body="Turn a filter back on to see more."
             action={<Button onClick={() => { setPick(new Set(kinds)); }}>Show everything</Button>} />}
-      <div className="row" style={{ marginTop: "var(--zyn-s5)" }}>{more}</div>
+      <div className="row">{more}</div>
     </>
   );
 }

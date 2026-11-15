@@ -301,7 +301,7 @@ export function Tabs({ tabs, value, onChange, children }: {
         ))}
       </RTabs.List>
       {/* Switching tabs is frequent: a quick fade in, no exit wait. */}
-      <motion.div key={value} variants={fade} initial="hidden" animate="show">{children}</motion.div>
+      <motion.div key={value} className="tab-body" variants={fade} initial="hidden" animate="show">{children}</motion.div>
     </RTabs.Root>
   );
 }
@@ -383,6 +383,7 @@ export function FilterGroup<T extends string>({ options, selected, onChange, lab
   return (
     <div className="filter-group" role="group" aria-label={label}>
       {label && <span className="filter-label" aria-hidden>{label}</span>}
+      <div className="filter-items">
       {options.map((o) => {
         const on = selected.has(o.value);
         return (
@@ -393,6 +394,7 @@ export function FilterGroup<T extends string>({ options, selected, onChange, lab
           }}>{on && <Check aria-hidden />}{o.label}<span className="count"><NumberFlow value={o.count} /></span></button>
         );
       })}
+      </div>
     </div>
   );
 }

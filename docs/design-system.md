@@ -140,6 +140,16 @@ Eleven greys, zone 0 (ink) to zone 10 (paper). The only greys anywhere.
 
 A 4px rhythm: `--zyn-s1` 2, `--zyn-s2` 4, `--zyn-s3` 6, `--zyn-s4` 8, `--zyn-s5` 12, `--zyn-s6` 16, `--zyn-s7` 24, `--zyn-s8` 32, `--zyn-s9` 48 (px). Controls: `--zyn-control` 34px, `--zyn-control-sm` 28px. Layout: `--zyn-page-width` 1080px, `--zyn-sidebar-width` 288px, `--zyn-drawer-width` 540px. Stacking: `--zyn-z-sticky`, `--zyn-z-overlay`, `--zyn-z-toast`. Corners are square everywhere; there is no radius token.
 
+How the steps are used, so every screen has the same rhythm (children never add their own margins; the container sets the gap):
+
+- **Page:** notice, then 24px to the page head; page head (title and provenance row), then 24px to the tabs; tabs, then 16px to the tab body.
+- **Tab body** (`.tab-body`, set by `Tabs`): controls, counts, filters and messages 12px apart; the list of sheets or the table 24px below them. Sections inside a tab (`Section`) open with a 32px space and a rule; the first section in a tab has none.
+- **Sheet:** head to text 8px; text to evidence 12px; consecutive evidence lines 6px; actions behind a rule, 12px above and below it. An optional reason picker sits on the action line, at the right.
+- **Rows of controls:** 8px apart, all the same height (34px, or 28px small). A key letter is always a full-height cell at the right of its button: accent on the primary, ruled on the others.
+- **Filter strips:** the label cell runs the full height; chips wrap beside it, never under it.
+- **Counts row:** always the full width; its cells share the space.
+- **Phones:** a sheet's id and status share the first line, its details run underneath, spaced rather than ruled.
+
 ### Motion and state
 
 | Token | Value | Use |

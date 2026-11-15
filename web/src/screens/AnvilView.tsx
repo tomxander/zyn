@@ -79,7 +79,7 @@ function Specs({ d }: { d: any }) {
       {missing.length > 0 && (
         <Msg tone="warn">
           {missing.length} approved requirements have no spec (a model call failed): {missing.join(", ")}
-          <div className="row" style={{ marginTop: "var(--zyn-s3)" }}>
+          <div className="row">
             <Button icon={RotateCcw} disabled={!!noName} tip={noName}
               onClick={() => start("forge_resume")}>Retry those requirements</Button>
           </div>
@@ -106,7 +106,7 @@ function Specs({ d }: { d: any }) {
         <Empty icon={FlaskConical} title="No test specs yet" body="The model proposes one spec per approved requirement. Check the running stage above." />
       ) : (
         <>
-          <div className="filters" style={{ marginTop: "var(--zyn-s5)", marginBottom: "var(--zyn-s5)" }}>
+          <div className="filters">
             <FilterGroup label="Template" selected={tplF.selected} onChange={tplF.onChange}
               options={templates.map((t) => ({ value: t, label: t, count: specs.filter((s) => s.payload.template === t).length }))} />
           </div>
@@ -121,7 +121,7 @@ function Specs({ d }: { d: any }) {
           </Cards>
           {!shown.length && <Empty title="Nothing matches these filters" body="Turn a filter back on to see more."
             action={<Button onClick={() => { tplF.reset(); setOnlyBad(false); }}>Show everything</Button>} />}
-          <div className="row" style={{ marginTop: "var(--zyn-s5)" }}>{more}</div>
+          <div className="row">{more}</div>
         </>
       )}
     </>
@@ -275,7 +275,7 @@ function Cases({ d }: { d: any }) {
         </>;
       })()}
       {d.stale > 0 && <Msg tone="warn">{d.stale} cases are stale or superseded and are left out of exports.</Msg>}
-      <div className="cards" style={{ marginTop: "var(--zyn-s5)" }}>
+      <div className="cards">
         {groups.map((g, i) => <CaseGroup key={g.spec_item} g={g} index={i} />)}
       </div>
     </>
