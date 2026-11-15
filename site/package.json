@@ -10,6 +10,7 @@
     "build:thomasalex": "tsc -b && vite build --mode thomasalex && node scripts/pages.mjs && cd ../web && npx vite build -c vite.demo.config.ts --base /zyn/demo/ --outDir ../../site/dist/demo --emptyOutDir"
   },
   "dependencies": {
+    "@dimforge/rapier2d-compat": "0.21.0",
     "@formkit/auto-animate": "^0.10.2",
     "@number-flow/react": "^0.6.2",
     "cmdk": "^1.1.1",

@@ -198,3 +198,7 @@
   .hero__side { gap: var(--s3); }
   .hero .pillars { padding-top: var(--s4); padding-bottom: var(--s4); }
 }
+
+/* the title's pointer effect (components/GlitchText.tsx): the canvas lies exactly over the text */
+.glitch { position: relative; display: inline-block; }
+.glitch__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; visibility: hidden; }

@@ -1,3 +1,4 @@
+import { GlitchText } from "../components/GlitchText";
 import { useEffect, useRef, useState } from "react";
 import { PILLARS } from "../content";
 import { goSection } from "../router";
@@ -51,14 +52,14 @@ export function Hero() {
         <div className="hero__lines">
           <div className="hero__line">
             <span className="hero__word" aria-hidden>
-              AI writes the work.
+              <GlitchText>AI writes the work.</GlitchText>
             </span>
             <Rule className="rule--a" car={40} />
           </div>
           <div className="hero__line hero__line--ink">
             <Rule className="rule--c" car={20} />
             <span className="hero__ink" aria-hidden>
-              Zyn checks it.
+              <GlitchText>Zyn checks it.</GlitchText>
               <i className="hero__ink-corner" />
             </span>
             <Rule className="rule--d" car={32} />
