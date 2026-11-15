@@ -284,3 +284,33 @@ export const PILOT = [
   { title: "Measure", text: "Matched work with and without Zyn: active minutes per item, time spent on flags you dismiss, and which mistakes your engineers planted each side caught." },
   { title: "Decide", text: "You keep every finding, decision and measurement as plain files. If there is no gain, the report says so." },
 ];
+
+// Outside evidence for the problem: published sources only, from "Zyn savings evidence.md".
+// Each carries its source in plain text (the site links to nothing outside itself yet).
+export const OUTSIDE = [
+  { big: "1 to 6", unit: "pages an hour", text: "The pace of careful requirement review.", source: "Gilb and Graham, Software Inspection; NASA inspection guidance" },
+  { big: "~60%", unit: "of defects", text: "What a peer review finds, at the median. The rest go downstream.", source: "Boehm and Basili, IEEE Computer, 2001" },
+  { big: "250", unit: "pages", text: "One component specification at one carmaker, about 400 of them per new car.", source: "Houdek, cited in Staron, Automotive Software Architectures" },
+  { big: "2 in 3", unit: "developers", text: "Name AI output that is \"almost right\" as a top frustration (49,000 surveyed).", source: "Stack Overflow Developer Survey, 2025" },
+];
+
+export const REAL_DBC: ProofRow[] = [
+  { mistake: "Files read and checked", caught: 50, of: 58, note: "22,909 signals" },
+  { mistake: "Files refused, each with the parser's reason", caught: 8, of: 58, note: "extended IDs written as standard, syntax errors" },
+  { mistake: "Files with at least one finding", caught: 49, of: 50 },
+  { mistake: "Signals whose limits their bits cannot carry", caught: 545, of: 22909 },
+];
+
+export const AI_REVIEW: ProofRow[] = [
+  { mistake: "Real defects the AI reviewer found", caught: 63, of: 72, note: "200 human-labelled automotive requirements (QuRE)" },
+  { mistake: "Weak-word flags people judged acceptable, Sonnet", caught: 85, of: 148, note: "dismissed with one key" },
+  { mistake: "Weak-word flags people judged acceptable, Opus", caught: 81, of: 144 },
+];
+
+// The review screen: what each finding shows. Real screenshots of the prototype on synthetic data.
+export const SCREEN_POINTS = [
+  { title: "The words it rests on", text: "Each finding quotes the requirement, and code confirms the quote is really there." },
+  { title: "Who raised it", text: "A code check or the AI reviewer, and which model. Never a confidence score." },
+  { title: "One key to decide", text: "Confirm or dismiss with a reason. A dismissal stays on unchanged text in later runs." },
+  { title: "What people decided before", text: "How often findings of this kind were confirmed, so you know how much to trust it." },
+];

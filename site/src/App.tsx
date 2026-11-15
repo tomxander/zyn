@@ -14,6 +14,7 @@ import { Work } from "./sections/Why";
 import { Teams } from "./sections/Teams";
 import { Roadmap } from "./sections/Roadmap";
 import { Pilot } from "./sections/Pilot";
+import { Screens } from "./sections/Screens";
 import { DocPage } from "./docs/DocPage";
 import { bySlug, HOME } from "./docs/docs";
 import { scrollToHash, usePage } from "./router";
@@ -57,6 +58,7 @@ export default function App() {
               <CheckerBand />
               <Problem />
               <How />
+              <Screens />
               <Proof />
               <Tools />
               <Teams />

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useRef } from "react";
-import { STUDY } from "../content";
+import { OUTSIDE, STUDY } from "../content";
 import { Headline, SectionHead } from "../components/ui";
 import { Panel } from "../components/Panel";
 import { HOUSE, QUART, useVisibleClock } from "../components/runtime";
@@ -78,6 +78,23 @@ export function Problem() {
             </motion.p>
           </motion.div>
         </Panel>
+      </div>
+
+      <div className="wrap">
+        <div className="outside" aria-labelledby="outside-title">
+          <h3 id="outside-title" className="outside__title">What published research adds</h3>
+          <ul className="outside__grid">
+            {OUTSIDE.map((o) => (
+              <li key={o.big} className="outside__cell">
+                <p className="outside__big">
+                  {o.big} <span className="outside__unit">{o.unit}</span>
+                </p>
+                <p className="outside__text">{o.text}</p>
+                <p className="outside__src">{o.source}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

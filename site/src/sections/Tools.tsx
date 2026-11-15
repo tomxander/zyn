@@ -171,7 +171,15 @@ export function Tools() {
       if (el.packet) {
         const show = f.phase === "stream";
         el.packet.style.opacity = show ? "1" : "0";
-        el.packet.style.offsetDistance = `${Math.max(0, Math.min(f.len, f.pos))}px`;
+        if (show) {
+          // Place the dash on the wire itself, in the same coordinates the SVG draws in,
+          // and turn it to the direction of the segment it is on.
+          const at = Math.max(0, Math.min(f.len, f.pos));
+          const p = el.path.getPointAtLength(at);
+          const q = el.path.getPointAtLength(at < f.len - 1 ? at + 1 : Math.max(0, at - 1));
+          const ang = at < f.len - 1 ? Math.atan2(q.y - p.y, q.x - p.x) : Math.atan2(p.y - q.y, p.x - q.x);
+          el.packet.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${ang}rad)`;
+        }
       }
     }
     if (changed) setFlows([...flowState.current.keys()]);
@@ -264,7 +272,7 @@ export function Tools() {
                 <span
                   key={`p-${w.name}`}
                   className="hub__packet"
-                  style={{ offsetPath: `path("${w.d}")`, opacity: 0 }}
+                  style={{ opacity: 0 }}
                   ref={(el) => {
                     const cur = els.current.get(w.name) ?? { path: null, packet: null };
                     cur.packet = el;

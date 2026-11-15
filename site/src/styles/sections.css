@@ -90,7 +90,7 @@
 .hubpanel .panel__bar { height: 24px; }
 .hub__wire { stroke: var(--sa-line); }
 .hub__wire.is-live { stroke: var(--ink); stroke-width: 1.5; animation: none; stroke-dasharray: 0 9999; }
-.hub__packet { width: 30px; height: 6px; margin: -3px 0 0 -15px; offset-rotate: auto; animation: none; }
+.hub__packet { width: 30px; height: 6px; margin: -3px 0 0 -15px; offset-path: none; animation: none; transform-origin: 15px 3px; }
 .hub__burst { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; color: var(--ink); }
 .hub__tile { background: var(--sa); border-color: var(--sa-line); color: color-mix(in srgb, var(--ink) 55%, transparent); transition: background-color 350ms var(--ease-house), color 350ms var(--ease-house), border-color 350ms var(--ease-house); }
 .hub__tile[data-live="1"] { background: var(--sa); color: var(--ink); border-color: var(--ink); }
@@ -230,6 +230,8 @@
 
 /* the proof: equal tabs that never resize; the ledger keeps one height across result sets */
 .htab, .htab[data-active] { flex: 1 1 0; min-width: 0; }
+.htab + .htab { padding-left: var(--s4); }   /* space after each divider, so labels never touch it */
+.htab:last-child { border-right: 0; }
 .htab .htab__label, .htab .htab__count { transition: color 90ms var(--ease-sharp), opacity 90ms var(--ease-sharp); }
 .demo__sheet { height: auto; min-height: 0; overflow: hidden; }
 .demo__sheet > .ledger { height: 100%; display: flex; flex-direction: column; }
@@ -238,4 +240,8 @@
 
 .hub__wire--base { opacity: 0; transition: opacity 350ms var(--ease-house); }
 .hub__wire--base[data-on] { opacity: 1; }
-.hub__packet { transition: opacity 120ms var(--ease-out); will-change: offset-distance; }
+.hub__packet { transition: opacity 120ms var(--ease-out); will-change: transform; }
+@media (max-width: 900px) {
+  .htab, .htab[data-active] { flex: none; }
+  .htab + .htab { padding-left: 0; }
+}

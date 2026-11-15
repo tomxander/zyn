@@ -9,7 +9,7 @@ export function Pilot() {
       <div className="wrap">
         <SectionHead>Pilot</SectionHead>
         <div className="proof__head">
-          <Headline id="pilot-title" plain="Don't take our word for it." inked="Measure it on your work." />
+          <Headline id="pilot-title" plain="Don't take our word." inked="Measure it on your work." />
           <p className="body">
             We don't quote a time saving, because nobody has measured one yet. A pilot measures it with your engineers, on
             your specification, with and without Zyn.

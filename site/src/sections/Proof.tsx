@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
-import { CAUGHT, type ProofRow, STOPS, TEMPLATES } from "../content";
+import { AI_REVIEW, CAUGHT, type ProofRow, REAL_DBC, STOPS, TEMPLATES } from "../content";
 import { Headline, SectionHead } from "../components/ui";
 import { docHref } from "../docs/docs";
 import type { Pattern } from "../components/PatternField";
@@ -26,11 +26,27 @@ const SETS: { id: string; label: string; pattern: Pattern; rows: ProofRow[]; hea
   },
   {
     id: "templates",
-    label: "Templates vs free-written",
+    label: "Template tests",
     pattern: "lattice",
     rows: TEMPLATES,
     head: "31 injected faults, seven requirements",
-    foot: "More tests did not mean more coverage. The same model asked twice wrote a different test set. The largest model was no better than the middle one.",
+    foot: "More tests did not mean more coverage. The same model asked twice wrote a different test set. The largest model was no better than the middle one. Across all 15 requirements, templates caught 66 of 67 faults with 43 tests; free-written tests caught 31 to 44 with 99 to 121.",
+  },
+  {
+    id: "real",
+    label: "Real CAN files",
+    pattern: "mesh",
+    rows: REAL_DBC,
+    head: "comma.ai opendbc: 58 public CAN databases",
+    foot: "No answer key exists for real files, so this is not a precision figure. Also found: 191 messages with signals sharing bits, 85 undeclared nodes.",
+  },
+  {
+    id: "ai",
+    label: "The AI reviewer",
+    pattern: "waves",
+    rows: AI_REVIEW,
+    head: "Public automotive requirements, human-labelled",
+    foot: "It finds most real defects and raises many flags people dismiss, so dismissing is one key and sticks. About 60% of its findings recur between runs, so Zyn shows how many runs agreed. Reviewing 46 requirements cost about USD 0.08 with Sonnet.",
   },
 ];
 const ADVANCE = 5;

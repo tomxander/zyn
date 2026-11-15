@@ -169,3 +169,37 @@
 .pilot__note { font-size: var(--t-small); color: var(--ink-2); }
 @media (max-width: 900px) { .pilot { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .pilot { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- problem: outside evidence ---------- */
+.outside { margin-top: var(--s8); }
+.outside__title { font-size: 17px; font-weight: 600; padding-bottom: var(--s3); border-bottom: var(--line) solid var(--rule); }
+.outside__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.outside__cell { display: grid; align-content: start; gap: var(--s2); padding: var(--s5) var(--s5) var(--s5) 0; border-bottom: var(--line) solid var(--rule-soft); }
+.outside__cell + .outside__cell { padding-left: var(--s5); border-left: var(--line) solid var(--rule-soft); }
+.outside__big { font-size: clamp(28px, 3vw, 40px); font-weight: 500; line-height: 1.05; letter-spacing: -.02em; }
+.outside__unit { font-size: var(--t-small); font-weight: 400; color: var(--ink-2); letter-spacing: 0; }
+.outside__text { font-size: 15px; color: var(--ink); text-wrap: pretty; }
+.outside__src { font-family: var(--mono); font-size: var(--t-tiny); color: var(--ink-3); }
+
+/* ---------- the review screen ---------- */
+.shot { margin: 0; }
+.shot__frame { position: relative; border: var(--line) solid var(--ink); background: var(--paper); box-shadow: var(--shadow-float); overflow: hidden; }
+.shot__frame::before { content: ""; display: block; height: 24px; background: var(--ink); }
+.shot__img { display: block; width: 100%; height: auto; }
+.shot__img--dark { display: none; }
+[data-theme="dark"] .shot__img--light { display: none; }
+[data-theme="dark"] .shot__img--dark { display: block; }
+.shot__cap { margin-top: var(--s3); font-family: var(--mono); font-size: var(--t-tiny); color: var(--ink-3); }
+.shot__points { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5); margin-top: var(--s6); }
+.shot__points li { padding-top: var(--s3); border-top: var(--line) solid var(--rule); }
+.shot__points h3 { font-size: 16px; font-weight: 600; margin-bottom: var(--s1); }
+.shot__points p { font-size: var(--t-small); color: var(--ink-2); text-wrap: pretty; }
+
+@media (max-width: 900px) {
+  .outside__grid, .shot__points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .outside__cell:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 640px) {
+  .outside__grid, .shot__points { grid-template-columns: minmax(0, 1fr); }
+  .outside__cell, .outside__cell + .outside__cell { padding-left: 0; border-left: 0; }
+}

@@ -293,7 +293,7 @@ export function Contribute() {
           <span className="panel__bar panel__bar--top" aria-hidden />
           <span className="panel__bar panel__bar--bottom" aria-hidden />
           <div className="start__copy">
-            <Headline id="contribute-title" plain="Zyn is coming soon." inked="Help build it." />
+            <Headline id="contribute-title" plain="Coming soon." inked="Help build it." />
             <p className="body">
               We're building Zyn with the engineers who will use it. Try it early on sample data, help review our answer key,
               or take on something from the roadmap. Leading a team? Ask for a pilot: we measure review time with and
