@@ -1,5 +1,11 @@
 # Zyn positioning
 
+> **Replaced on 15 November 2026. Kept for the record only.**
+>
+> This document plans Zyn as a product to sell to vehicle makers, through paid pilots. That is no longer the plan. Zyn is a hobby project, built to experiment and learn, not for any sort of gain. It will be open sourced and is meant to become a community project.
+>
+> What still holds: the claim discipline (say what Zyn catches and misses, never a time-saving percentage), the "checks it before you sign" wording, and the engineers' notes on what to fix. What no longer holds: the buyer, pricing, pilot-offer and go-to-market sections. The public framing is set by the note that opens the website (`site/src/components/Disclaimer.tsx`).
+
 14 November 2026. Working positioning, to be tested in the first pilots.
 
 Sources: the internal test team (requirement, test and IT engineers, on synthetic and public data only), the market analysis, the product marketer's notes, "Zyn savings evidence.md" and the repo docs.
