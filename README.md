@@ -71,7 +71,7 @@ flowchart LR
 Three layers, in order of trust.
 
 1. **Code checks decide what code can check.** Changed numbers, invented values, weakened wording, misspelt signals, tests that can never fail. No model, no key, no cost. Same input, same result, every run.
-2. **The AI reviewer only advises, and only with quotes.** A finding without a quote that code can locate in the source is never shown. There are no confidence scores.
+2. **The AI reviewer only advises, and only with quotes.** Code looks for each finding's quote in the source. If the words aren't there, the finding is shown with a warning to treat it with caution, and a finding on a requirement ID that doesn't exist is dropped. There are no confidence scores.
 3. **A named person makes every final call.** The AI can never approve. Every proposal, check and decision is appended to a log the database itself refuses to change.
 
 Read more: [How Zyn decides](docs/wiki/How-Zyn-decides.md).
@@ -180,7 +180,7 @@ IT guide: [Team server](docs/wiki/Team-server.md). GitHub builds and starts the 
 | | |
 |---|---|
 | **Works on anyone's output** | Requirements and tests from any tool or any person. You don't have to generate with Zyn to check with Zyn. |
-| **Quotes located by code** | An AI finding without a quote that code can locate is never shown. |
+| **Quotes located by code** | Code looks for every AI finding's quote in the source. A quote it can't find carries a caution warning, and a finding on an unknown requirement ID is dropped. |
 | **No confidence scores** | You see which checks flagged and which raised no flag, not a model's opinion of itself. |
 | **No silent pass** | Empty or junk input is refused or reported as skipped. It is never reported as no flag. |
 | **Decisions persist** | Dismiss a finding once. It stays dismissed on later runs of the same text. |
