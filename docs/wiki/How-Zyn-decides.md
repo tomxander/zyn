@@ -18,7 +18,7 @@ flowchart LR
 
 **2. Code checks.** Deterministic checks run on every item: is the quote really in the source, did a value appear that the source never gives, did "should" become "shall", is the signal in the CAN database, is the value inside its range. A check either fires on evidence or stays silent. When there is nothing to check, Zyn says "skipped", never "passed". See the [Checks reference](Checks-reference.md).
 
-**3. An AI reviewer advises.** A second model pass reviews each item. Every finding must quote words that code then confirms are in the item. The reviewer asks the author a question rather than rewriting. Its verdict is shown as advice. The audit store refuses an approval from any actor that is not a named person.
+**3. An AI reviewer advises.** A second model pass reviews each item. Every finding must quote words from the item, and code checks that they are there. A quote it can't find is flagged on the card as one to treat with caution. The reviewer asks the author a question rather than rewriting. Its verdict is shown as advice. The audit store refuses an approval from any actor that is not a named person.
 
 **4. A named person decides.** Approve, reject or edit, one key or one click. Undo adds a "reopened" record; nothing is erased. Approving over an objection requires a reason. Decisions on unchanged text carry over to later runs with one click.
 
